@@ -10,3 +10,15 @@ C:\Users\diego\Documents\GitHub\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net
 C:\Users\diego\Documents\GitHub\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\refint\BC.dll
 C:\Users\diego\Documents\GitHub\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.pdb
 C:\Users\diego\Documents\GitHub\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\ref\BC.dll
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\bin\Debug\net8.0\BC.deps.json
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\bin\Debug\net8.0\BC.dll
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\bin\Debug\net8.0\BC.pdb
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.AssemblyInfoInputs.cache
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.AssemblyInfo.cs
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.sourcelink.json
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.dll
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\refint\BC.dll
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\BC.pdb
+C:\Users\User\Desktop\Solitel_Backend\Backend_Solitel\BC\obj\Debug\net8.0\ref\BC.dll

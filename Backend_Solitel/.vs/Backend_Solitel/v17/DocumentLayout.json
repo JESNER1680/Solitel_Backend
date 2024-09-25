@@ -1,18 +1,310 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\",
+  "WorkspaceRootPath": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\contexto\\solitelcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\contexto\\solitelcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_usuario_oficina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_usuario_oficina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\entidades\\fiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\fiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\fiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\acciones\\gestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_loggerda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_loggerda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_modalidadda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_modalidadda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_objetivoanalisis_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_objetivoanalisis_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_objetivoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_objetivoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_oficinada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_oficinada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_permisoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_permisoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_proveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_proveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_requerimentoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_requerimentoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_requerimientoproveedor_datorequeridoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_requerimientoproveedor_datorequeridoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_requerimientoproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_requerimientoproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_rol_permisoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_rol_permisoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_rolda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_rolda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_solicitudanalisis_archivoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_solicitudanalisis_archivoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_solicitudanalisis_condicion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_solicitudanalisis_condicion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_solicitudproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_solicitudproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_submodalidadda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_submodalidadda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_tipoanalisis_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_tipoanalisis_solicitudanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_tipoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_tipoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_tipodatoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_tipodatoda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_tiposolicitud_requerimientoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_tiposolicitud_requerimientoanalisisda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_usuario_oficinada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_usuario_oficinada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\entidades\\tsolitel_usuarioda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\entidades\\tsolitel_usuarioda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_usuario_oficinadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_usuario_oficinadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_tiposolicitud_requerimientoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_tiposolicitud_requerimientoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tiposolicitud_requerimientoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tiposolicitud_requerimientoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tiposolicitudda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tiposolicitudda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_tiposolicituddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_tiposolicituddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tiposolicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tiposolicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_tipodatodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_tipodatodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tipodato.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tipodato.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_tipoanalisis_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_tipoanalisis_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tipoanalisis_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tipoanalisis_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_tipoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_tipoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_tipoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_tipoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_submodalidaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_submodalidaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_submodalidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_submodalidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_solicitudproveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_solicitudproveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_solicitudproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_solicitudproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_solicitudanalisis_condicion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_solicitudanalisis_condicion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_solicitudanalisis_condiciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_solicitudanalisis_condiciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_solicitudanalisis_archivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_solicitudanalisis_archivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\acciones\\gestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\acciones\\gestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\da\\contexto\\solitelcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\contexto\\solitelcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bw\\interfaces\\da\\igestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|solutionrelative:bw\\interfaces\\da\\igestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_solicitudanalisis_archivodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_solicitudanalisis_archivodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_rol_permisodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_rol_permisodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_rol_permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_rol_permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_roldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_roldto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_rol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_requerimientoproveedor_datorequeridodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_requerimientoproveedor_datorequeridodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_requerimientoproveedor_datorequerido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_requerimientoproveedor_datorequerido.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_requerimientoproveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_requerimientoproveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_requerimientoproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_requerimientoproveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_requerimentoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_requerimentoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_requerimentoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_requerimentoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_proveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_proveedordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_proveedor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_permisodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_permisodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_permiso.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_oficinadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_oficinadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_oficina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_oficina.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_objetivoanalisis_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_objetivoanalisis_solicitudanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_objetivoanalisis_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_objetivoanalisis_solicitudanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_objetivoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_objetivoanalisisdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_objetivoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_objetivoanalisis.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_modalidaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_modalidaddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_modalidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_modalidad.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_loggerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_loggerdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|c:\\users\\user\\desktop\\solitel_backend\\backend_solitel\\bc\\modelos\\tsolitel_logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{25ED4ACF-300F-4632-90FF-B55686143867}|BC\\BC.csproj|solutionrelative:bc\\modelos\\tsolitel_logger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,53 +314,998 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FiscaliaDA.cs",
-              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\FiscaliaDA.cs",
-              "RelativeDocumentMoniker": "DA\\Entidades\\FiscaliaDA.cs",
-              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\FiscaliaDA.cs",
-              "RelativeToolTip": "DA\\Entidades\\FiscaliaDA.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAuAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAAvAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T10:30:29.307Z",
+              "WhenOpened": "2024-09-25T20:18:15.952Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TSOLITEL_ModalidadDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ModalidadDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_ModalidadDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ModalidadDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_ModalidadDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:10:23.648Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "GestionarFiscaliaDA.cs",
-              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
-              "RelativeDocumentMoniker": "DA\\Acciones\\GestionarFiscaliaDA.cs",
-              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
-              "RelativeToolTip": "DA\\Acciones\\GestionarFiscaliaDA.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAAwBgAAAAiAAAAAAAAAA==",
+              "Title": "TSOLITEL_LoggerDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_LoggerDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_LoggerDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_LoggerDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_LoggerDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T09:38:16.783Z",
+              "WhenOpened": "2024-09-25T20:05:53.504Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FiscaliaDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\FiscaliaDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\FiscaliaDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\FiscaliaDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\FiscaliaDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:23:57.961Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SolitelContext.cs",
-              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
-              "RelativeDocumentMoniker": "DA\\Contexto\\SolitelContext.cs",
-              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
-              "RelativeToolTip": "DA\\Contexto\\SolitelContext.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAABPAAAAAAAAAA==",
+              "Title": "TSOLITEL_Usuario_Oficina.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Usuario_Oficina.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Usuario_Oficina.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Usuario_Oficina.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Usuario_Oficina.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-25T06:37:41.495Z",
+              "WhenOpened": "2024-09-25T22:25:20.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TSOLITEL_ObjetivoAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ObjetivoAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_ObjetivoAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ObjetivoAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_ObjetivoAnalisisDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:14:31.523Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "TSOLITEL_OficinaDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_OficinaDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_OficinaDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_OficinaDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_OficinaDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:22:42.616Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TSOLITEL_PermisoDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_PermisoDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_PermisoDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_PermisoDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_PermisoDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:28:10.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TSOLITEL_ProveedorDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ProveedorDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_ProveedorDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_ProveedorDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_ProveedorDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:39:56.519Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "TSOLITEL_RequerimentoAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimentoAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_RequerimentoAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimentoAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_RequerimentoAnalisisDA.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAACEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:47:23.081Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "TSOLITEL_RequerimientoProveedor_DatoRequeridoDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:04:49.034Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TSOLITEL_RequerimientoProveedorDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimientoProveedorDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_RequerimientoProveedorDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RequerimientoProveedorDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_RequerimientoProveedorDA.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAAAB0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:51:39.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TSOLITEL_Rol_PermisoDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_Rol_PermisoDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_Rol_PermisoDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_Rol_PermisoDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_Rol_PermisoDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:11:30.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "TSOLITEL_RolDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RolDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_RolDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_RolDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_RolDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:08:40.453Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TSOLITEL_SolicitudAnalisis_ArchivoDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisis_ArchivoDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_SolicitudAnalisis_ArchivoDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisis_ArchivoDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_SolicitudAnalisis_ArchivoDA.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAAABsAAAAlAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:17:13.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:21:25.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "TSOLITEL_SolicitudAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_SolicitudAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_SolicitudAnalisisDA.cs",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACcAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:14:46.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "TSOLITEL_SolicitudProveedorDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudProveedorDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_SolicitudProveedorDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SolicitudProveedorDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_SolicitudProveedorDA.cs",
+              "ViewState": "AQIAAE0AAAAAAAAAAAAAABIAAAAwAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:31:41.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "TSOLITEL_SubModalidadDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SubModalidadDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_SubModalidadDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_SubModalidadDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_SubModalidadDA.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAAABIAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:35:10.091Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "TSOLITEL_TipoAnalisis_SolicitudAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:44:33.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "TSOLITEL_TipoAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_TipoAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_TipoAnalisisDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:39:07.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "TSOLITEL_TipoDatoDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoDatoDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_TipoDatoDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoDatoDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_TipoDatoDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:48:04.883Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "TSOLITEL_TipoSolicitud_RequerimientoAnalisisDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:06:39.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "TSOLITEL_Usuario_OficinaDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_Usuario_OficinaDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_Usuario_OficinaDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_Usuario_OficinaDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_Usuario_OficinaDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:27:14.961Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "TSOLITEL_UsuarioDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_UsuarioDA.cs",
+              "RelativeDocumentMoniker": "DA\\Entidades\\TSOLITEL_UsuarioDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Entidades\\TSOLITEL_UsuarioDA.cs",
+              "RelativeToolTip": "DA\\Entidades\\TSOLITEL_UsuarioDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:16:12.363Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "TSOLITEL_UsuarioDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_UsuarioDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_UsuarioDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_UsuarioDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_UsuarioDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:14:31.592Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "TSOLITEL_Usuario_OficinaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_Usuario_OficinaDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_Usuario_OficinaDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_Usuario_OficinaDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_Usuario_OficinaDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:26:34.016Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "TSOLITEL_Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Usuario.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Usuario.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Usuario.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Usuario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:14:07.607Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "TSOLITEL_TipoSolicitud_RequerimientoAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitud_RequerimientoAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:02:53.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "TSOLITEL_TipoSolicitud_RequerimientoAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitud_RequerimientoAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoSolicitud_RequerimientoAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitud_RequerimientoAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoSolicitud_RequerimientoAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T22:02:20.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "TSOLITEL_TipoSolicitudDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitudDA.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoSolicitudDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitudDA.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoSolicitudDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:50:03.018Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "TSOLITEL_TipoSolicitudDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitudDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitudDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitudDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_TipoSolicitudDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:49:35.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "TSOLITEL_TipoSolicitud.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitud.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoSolicitud.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoSolicitud.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoSolicitud.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:49:08.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "TSOLITEL_TipoDatoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoDatoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_TipoDatoDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoDatoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_TipoDatoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:47:30.256Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "TSOLITEL_TipoDato.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoDato.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoDato.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoDato.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoDato.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:46:42.506Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "TSOLITEL_TipoAnalisis_SolicitudAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisis_SolicitudAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:43:45.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "TSOLITEL_TipoAnalisis_SolicitudAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoAnalisis_SolicitudAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoAnalisis_SolicitudAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoAnalisis_SolicitudAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoAnalisis_SolicitudAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:43:09.527Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "TSOLITEL_TipoAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_TipoAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:38:41.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "TSOLITEL_TipoAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_TipoAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_TipoAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_TipoAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:38:07.54Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "TSOLITEL_SubModalidadDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SubModalidadDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_SubModalidadDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SubModalidadDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_SubModalidadDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:34:42.912Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "TSOLITEL_SubModalidad.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SubModalidad.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_SubModalidad.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SubModalidad.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_SubModalidad.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:34:19.4Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "TSOLITEL_SolicitudProveedorDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudProveedorDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudProveedorDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudProveedorDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudProveedorDTO.cs",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAABkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:31:03.21Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "TSOLITEL_SolicitudProveedor.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudProveedor.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_SolicitudProveedor.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudProveedor.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_SolicitudProveedor.cs",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAAB8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:30:27.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Condicion.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:26:31.842Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "GestionarFiscaliaDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "RelativeDocumentMoniker": "DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "RelativeToolTip": "DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:24:10.283Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "SolitelContext.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
+              "RelativeDocumentMoniker": "DA\\Contexto\\SolitelContext.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
+              "RelativeToolTip": "DA\\Contexto\\SolitelContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:23:45.985Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "TSOLITEL_SolicitudAnalisis_CondicionDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_CondicionDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_CondicionDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_CondicionDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_CondicionDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:22:25.619Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "IGestionarFiscaliaDA.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BW\\Interfaces\\DA\\IGestionarFiscaliaDA.cs",
+              "RelativeDocumentMoniker": "BW\\Interfaces\\DA\\IGestionarFiscaliaDA.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BW\\Interfaces\\DA\\IGestionarFiscaliaDA.cs",
+              "RelativeToolTip": "BW\\Interfaces\\DA\\IGestionarFiscaliaDA.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:24:02.551Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "TSOLITEL_SolicitudAnalisis_Archivo.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Archivo.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Archivo.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Archivo.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis_Archivo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:16:17.178Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "TSOLITEL_SolicitudAnalisis_ArchivoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_ArchivoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_ArchivoDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_ArchivoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisis_ArchivoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:16:49.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "TSOLITEL_SolicitudAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_SolicitudAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:13:33.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "TSOLITEL_SolicitudAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_SolicitudAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_SolicitudAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:13:05.356Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "TSOLITEL_Rol_PermisoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_Rol_PermisoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_Rol_PermisoDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_Rol_PermisoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_Rol_PermisoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:10:57.057Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "TSOLITEL_Rol_Permiso.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Rol_Permiso.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Rol_Permiso.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Rol_Permiso.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Rol_Permiso.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:10:28.213Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "TSOLITEL_RolDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RolDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_RolDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RolDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_RolDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:08:09.004Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "TSOLITEL_Rol.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Rol.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Rol.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Rol.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Rol.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T21:07:27.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "TSOLITEL_RequerimientoProveedor_DatoRequeridoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedor_DatoRequeridoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:57:46.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "TSOLITEL_RequerimientoProveedor_DatoRequerido.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimientoProveedor_DatoRequerido.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_RequerimientoProveedor_DatoRequerido.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimientoProveedor_DatoRequerido.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_RequerimientoProveedor_DatoRequerido.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:57:08.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "TSOLITEL_RequerimientoProveedorDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedorDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedorDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedorDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_RequerimientoProveedorDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:51:16.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "TSOLITEL_RequerimientoProveedor.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimientoProveedor.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_RequerimientoProveedor.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimientoProveedor.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_RequerimientoProveedor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:50:56.114Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "TSOLITEL_RequerimentoAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimentoAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_RequerimentoAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_RequerimentoAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_RequerimentoAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:45:17.073Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "TSOLITEL_RequerimentoAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimentoAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_RequerimentoAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_RequerimentoAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_RequerimentoAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:44:55.104Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "TSOLITEL_ProveedorDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ProveedorDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_ProveedorDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ProveedorDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_ProveedorDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:39:15.445Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "TSOLITEL_Proveedor.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Proveedor.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Proveedor.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Proveedor.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Proveedor.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:33:30.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "TSOLITEL_PermisoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_PermisoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_PermisoDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_PermisoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_PermisoDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:26:47.573Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "TSOLITEL_Permiso.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Permiso.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Permiso.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Permiso.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Permiso.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:26:22.627Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "TSOLITEL_OficinaDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_OficinaDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_OficinaDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_OficinaDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_OficinaDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:20:38.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "TSOLITEL_Oficina.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Oficina.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Oficina.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Oficina.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Oficina.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:20:11.723Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:17:40.643Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:17:11.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "TSOLITEL_ObjetivoAnalisisDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisisDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisisDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisisDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_ObjetivoAnalisisDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:13:55.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "TSOLITEL_ObjetivoAnalisis.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_ObjetivoAnalisis.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_ObjetivoAnalisis.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_ObjetivoAnalisis.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_ObjetivoAnalisis.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:13:27.237Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "TSOLITEL_ModalidadDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ModalidadDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_ModalidadDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ModalidadDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_ModalidadDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:09:02.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "TSOLITEL_Modalidad.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Modalidad.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Modalidad.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Modalidad.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Modalidad.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:08:33.268Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "TSOLITEL_LoggerDTO.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_LoggerDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_LoggerDTO.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_LoggerDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_LoggerDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:05:27.45Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "TSOLITEL_Logger.cs",
+              "DocumentMoniker": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Logger.cs",
+              "RelativeDocumentMoniker": "BC\\Modelos\\TSOLITEL_Logger.cs",
+              "ToolTip": "C:\\Users\\User\\Desktop\\Solitel_Backend\\Backend_Solitel\\BC\\Modelos\\TSOLITEL_Logger.cs",
+              "RelativeToolTip": "BC\\Modelos\\TSOLITEL_Logger.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T20:04:57.977Z",
               "EditorCaption": ""
             }
           ]

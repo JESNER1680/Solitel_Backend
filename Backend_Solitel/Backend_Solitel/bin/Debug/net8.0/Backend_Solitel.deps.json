@@ -558,10 +558,7 @@
       },
       "BC/1.0.0": {
         "runtime": {
-          "BC.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BC.dll": {}
         }
       },
       "BW/1.0.0": {
@@ -569,10 +566,7 @@
           "BC": "1.0.0"
         },
         "runtime": {
-          "BW.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BW.dll": {}
         }
       },
       "DA/1.0.0": {
@@ -582,10 +576,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.8"
         },
         "runtime": {
-          "DA.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "DA.dll": {}
         }
       },
       "SG/1.0.0": {
@@ -593,10 +584,7 @@
           "BC": "1.0.0"
         },
         "runtime": {
-          "SG.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "SG.dll": {}
         }
       }
     }

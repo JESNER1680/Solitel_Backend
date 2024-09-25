@@ -563,10 +563,7 @@
       },
       "BC/1.0.0": {
         "runtime": {
-          "BC.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BC.dll": {}
         }
       },
       "BW/1.0.0": {
@@ -574,10 +571,7 @@
           "BC": "1.0.0"
         },
         "runtime": {
-          "BW.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "BW.dll": {}
         }
       }
     }
