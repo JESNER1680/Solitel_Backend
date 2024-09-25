@@ -1102,7 +1102,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "BW": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "8.0.8"
+          "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.8"
         },
         "compile": {
           "bin/placeholder/DA.dll": {}

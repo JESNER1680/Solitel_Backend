@@ -20,13 +20,13 @@ namespace DA.Acciones
 
         public async Task<bool> insertarFiscalia(string nombre)
         {
-            Entidades.FiscaliaDA nuevaFiscaliaDA = new()
+            Entidades.TSOLITEL_Fiscalia nuevaFiscaliaDA = new()
             {
-                Id = 0,
-                Nombre = nombre,
+                TN_IdFiscalia = 0,
+                TC_Nombre = nombre,
             };
 
-            _context.FiscaliaDA.Add(nuevaFiscaliaDA);
+            _context.TSOLITEL_Fiscalia.Add(nuevaFiscaliaDA);
 
             var resultado = await _context.SaveChangesAsync();
 

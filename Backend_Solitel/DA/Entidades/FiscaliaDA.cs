@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DA.Entidades
 {
-    public class FiscaliaDA
+    public class TSOLITEL_Fiscalia
     {
-        public int Id { get; set; }
-
-        public string Nombre { get; set; }
+        public int TN_IdFiscalia { get; set; }
+        public string TC_Nombre { get; set; }
     }
 }

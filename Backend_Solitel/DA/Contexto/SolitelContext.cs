@@ -1,5 +1,6 @@
 ﻿using DA.Entidades;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace DA.Contexto
         {
         }
 
-        public DbSet<FiscaliaDA> FiscaliaDA {  get; set; } 
+        public DbSet<TSOLITEL_Fiscalia> TSOLITEL_Fiscalia {  get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TSOLITEL_Fiscalia>().ToTable("TSOLITEL_Fiscalia").HasKey(p => p.TN_IdFiscalia);
+            
+        }
     }
 }

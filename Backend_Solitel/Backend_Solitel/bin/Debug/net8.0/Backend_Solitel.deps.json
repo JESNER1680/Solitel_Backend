@@ -578,7 +578,8 @@
       "DA/1.0.0": {
         "dependencies": {
           "BW": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "8.0.8"
+          "Microsoft.EntityFrameworkCore": "8.0.8",
+          "Microsoft.EntityFrameworkCore.SqlServer": "8.0.8"
         },
         "runtime": {
           "DA.dll": {
