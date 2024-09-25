@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj": {}
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj": {
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj",
         "projectName": "Backend_Solitel",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\Backend_Solitel\\obj\\",
+        "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Backend_Solitel.csproj",
+        "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,17 +29,17 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\BW.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\BW.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\DA.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\DA.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\DA.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\DA.csproj"
               },
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\SG.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\SG.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\SG.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\SG.csproj"
               }
             }
           }
@@ -91,21 +91,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj": {
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj",
         "projectName": "BC",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\obj\\",
+        "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj",
+        "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -152,21 +152,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\BW.csproj": {
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\BW.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj",
         "projectName": "BW",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\BW.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BW\\obj\\",
+        "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj",
+        "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -181,8 +181,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj"
               }
             }
           }
@@ -217,21 +217,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\DA.csproj": {
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\DA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\DA.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\DA.csproj",
         "projectName": "DA",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\DA.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\DA\\obj\\",
+        "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\DA.csproj",
+        "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -245,7 +245,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\BW.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -284,21 +288,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\SG.csproj": {
+    "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\SG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\SG.csproj",
+        "projectUniqueName": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\SG.csproj",
         "projectName": "SG",
-        "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\SG.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\SG\\obj\\",
+        "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\SG.csproj",
+        "packagesPath": "C:\\Users\\diego\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\SG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\diego\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -313,8 +317,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj": {
-                "projectPath": "C:\\Users\\User\\source\\repos\\Backend_Solitel\\BC\\BC.csproj"
+              "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj": {
+                "projectPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BC\\BC.csproj"
               }
             }
           }
@@ -349,7 +353,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
