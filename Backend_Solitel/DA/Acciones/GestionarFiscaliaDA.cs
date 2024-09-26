@@ -1,5 +1,9 @@
-﻿using BW.Interfaces.DA;
+﻿using BC.Modelos;
+using BW.Interfaces.DA;
 using DA.Contexto;
+using DA.Entidades;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +24,31 @@ namespace DA.Acciones
 
         public async Task<bool> insertarFiscalia(string nombre)
         {
-            Entidades.TSOLITEL_Fiscalia nuevaFiscaliaDA = new()
-            {
-                TN_IdFiscalia = 0,
-                TC_Nombre = nombre,
-            };
+            var nombreParam = new SqlParameter("@pNombre", nombre);
 
-            _context.TSOLITEL_Fiscalia.Add(nuevaFiscaliaDA);
+            _context.Database.ExecuteSqlRaw("EXEC PA_InsertarFiscalia @pNombre", nombreParam);
 
             var resultado = await _context.SaveChangesAsync();
 
             return resultado >= 0 ? true : false;
         }
+
+        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        {
+            var fiscaliasDA = _context.TSOLITEL_FiscaliaDA
+            .FromSqlRaw("EXEC PA_VerFiscalias")
+            .ToList();
+
+            var fiscalias = fiscaliasDA.Select(da => new TSOLITEL_Fiscalia
+            {
+                TN_IdFiscalia = da.TN_IdFiscalia,
+                TC_Nombre = da.TC_Nombre
+            }).ToList();
+
+
+
+            return fiscalias;
+        }
+
     }
 }

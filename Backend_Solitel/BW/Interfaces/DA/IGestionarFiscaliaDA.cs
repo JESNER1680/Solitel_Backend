@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BC.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,7 @@ namespace BW.Interfaces.DA
     public interface IGestionarFiscaliaDA
     {
         public Task<bool> insertarFiscalia(string nombre);
+
+        public List<TSOLITEL_Fiscalia> obtenerFiscalias();
     }
 }

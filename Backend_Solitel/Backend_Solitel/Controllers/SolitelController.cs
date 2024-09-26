@@ -1,4 +1,5 @@
-﻿using BW.Interfaces.BW;
+﻿using BC.Modelos;
+using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,12 @@ namespace Backend_Solitel.Controllers
         public async Task<ActionResult<bool>> insertarFiscalia(string nombre)
         {
             return await this.bw.insertarFiscalia(nombre);
+        }
+
+        [HttpGet]
+        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        {
+            return this.bw.obtenerFiscalias();
         }
     }
 }

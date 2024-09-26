@@ -17,7 +17,7 @@ namespace DA.Entidades
 
         [Required]
         [StringLength(50)]
-        public string TC_Nombre { get; set; }
+        public required string TC_Nombre { get; set; }
     }
 
 }

@@ -16,7 +16,10 @@
       },
       "BC/1.0.0": {
         "runtime": {
-          "BC.dll": {}
+          "BC.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

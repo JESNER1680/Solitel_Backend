@@ -1,4 +1,5 @@
-﻿using BW.Interfaces.BW;
+﻿using BC.Modelos;
+using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,12 @@ namespace BW.CU
 
             //llamar a reglas de negocio aqui
             return await this.gestionarFiscaliaDA.insertarFiscalia(nombre);
-        } 
+        }
+
+        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        {
+            //llamar a reglas de negocio aqui
+            return this.gestionarFiscaliaDA.obtenerFiscalias();
+        }
     }
 }
