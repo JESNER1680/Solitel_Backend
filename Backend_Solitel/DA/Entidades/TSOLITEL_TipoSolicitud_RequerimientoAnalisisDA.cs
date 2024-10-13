@@ -21,7 +21,7 @@ namespace DA.Entidades
         public int TN_IdRequerimientoAnalisis { get; set; }
 
         [ForeignKey("TN_IdTipoSolicitud")]
-        public virtual TSOLITEL_TipoSolicitudDA TSOLITEL_TipoSolicitud { get; set; }
+        public virtual TipoSolicitudDA TSOLITEL_TipoSolicitud { get; set; }
 
         [ForeignKey("TN_IdRequerimientoAnalisis")]
         public virtual TSOLITEL_RequerimentoAnalisisDA TSOLITEL_RequerimentoAnalisis { get; set; }

@@ -33,13 +33,13 @@ namespace DA.Acciones
             return resultado >= 0 ? true : false;
         }
 
-        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        public List<Fiscalia> obtenerFiscalias()
         {
             var fiscaliasDA = _context.TSOLITEL_FiscaliaDA
             .FromSqlRaw("EXEC PA_VerFiscalias")
             .ToList();
 
-            var fiscalias = fiscaliasDA.Select(da => new TSOLITEL_Fiscalia
+            var fiscalias = fiscaliasDA.Select(da => new Fiscalia
             {
                 TN_IdFiscalia = da.TN_IdFiscalia,
                 TC_Nombre = da.TC_Nombre
