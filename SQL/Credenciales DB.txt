@@ -1,0 +1,7 @@
+Base de datos
+
+SQL Server address: Proyecto_Analisis.mssql.somee.com
+Login name: Ernesto224_SQLLogin_1
+Login password: erp9bj4xh9
+
+workstation id=Proyecto_Analisis.mssql.somee.com;packet size=4096;user id=Ernesto224_SQLLogin_1;pwd=erp9bj4xh9;data source=Proyecto_Analisis.mssql.somee.com;persist security info=False;initial catalog=Proyecto_Analisis;TrustServerCertificate=True
