@@ -19,4 +19,8 @@
     <ProjectReference Include="..\SG\SG.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Utility\" />
+  </ItemGroup>
+
 </Project>

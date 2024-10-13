@@ -23,7 +23,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        public List<Fiscalia> obtenerFiscalias()
         {
             return this.bw.obtenerFiscalias();
         }

@@ -22,8 +22,7 @@ builder.Services.AddTransient<IGestionarFiscaliaDA, GestionarFiscaliaDA>();
 builder.Services.AddDbContext<SolitelContext>(options =>
 {
     // Usar la cadena de conexión desde la configuración
-    var connectionString = "Server=tcp:163.178.107.10;User Id=laboratorios;Password=_)Ui7%-cX!?xw=t\"$;Initial Catalog=Solitel_Database;TrustServerCertificate=true;";
-    options.UseSqlServer(connectionString);
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DBSomee.com"));
     // Otros ajustes del contexto de base de datos pueden ser configurados aquí, si es necesario
 });
 var app = builder.Build();

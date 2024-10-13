@@ -25,7 +25,7 @@ namespace BW.CU
             return await this.gestionarFiscaliaDA.insertarFiscalia(nombre);
         }
 
-        public List<TSOLITEL_Fiscalia> obtenerFiscalias()
+        public List<Fiscalia> obtenerFiscalias()
         {
             //llamar a reglas de negocio aqui
             return this.gestionarFiscaliaDA.obtenerFiscalias();
