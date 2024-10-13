@@ -1,10 +1,12 @@
+
 USE Solitel_Database;
 
 -- Tabla TSOLITEL_Proveedor
 CREATE TABLE TSOLITEL_Proveedor (
     TN_IdProveedor INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
-    CONSTRAINT [PK_TSOLITEL_Proveedor] PRIMARY KEY NONCLUSTERED (TN_IdProveedor ASC)
+    TB_Borrado BIT DEFAULT 0,
+	CONSTRAINT [PK_TSOLITEL_Proveedor] PRIMARY KEY NONCLUSTERED (TN_IdProveedor ASC)
 );
 
 -- Tabla TSOLITEL_Usuario
@@ -39,7 +41,8 @@ CREATE TABLE TSOLITEL_CategoriaDelito (
     TN_IdCategoriaDelito INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
-    CONSTRAINT [PK_TSOLITEL_CategoriaDelito] PRIMARY KEY NONCLUSTERED (TN_IdCategoriaDelito ASC)
+    TB_Borrado BIT DEFAULT 0,
+	CONSTRAINT [PK_TSOLITEL_CategoriaDelito] PRIMARY KEY NONCLUSTERED (TN_IdCategoriaDelito ASC)
 );
 
 -- Tabla TSOLITEL_Estado
@@ -55,7 +58,8 @@ CREATE TABLE TSOLITEL_Modalidad (
     TN_IdModalidad INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
-    CONSTRAINT [PK_TSOLITEL_Modalidad] PRIMARY KEY NONCLUSTERED (TN_IdModalidad ASC)
+    TB_Borrado BIT DEFAULT 0,
+	CONSTRAINT [PK_TSOLITEL_Modalidad] PRIMARY KEY NONCLUSTERED (TN_IdModalidad ASC)
 );
 
 -- Tabla TSOLITEL_SubModalidad
@@ -63,6 +67,7 @@ CREATE TABLE TSOLITEL_SubModalidad (
     TN_IdSubModalidad INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     TN_IdModalida INT NOT NULL,
     CONSTRAINT [PK_TSOLITEL_SubModalidad] PRIMARY KEY NONCLUSTERED (TN_IdSubModalidad ASC),
     CONSTRAINT FK_TSOLITEL_SubModalidad_TSOLITEL_Modalidad FOREIGN KEY (TN_IdModalida) REFERENCES TSOLITEL_Modalidad (TN_IdModalidad)
@@ -72,13 +77,15 @@ CREATE TABLE TSOLITEL_SubModalidad (
 CREATE TABLE TSOLITEL_Oficina (
     TN_IdOficina INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
-    CONSTRAINT [PK_TSOLITEL_Oficina] PRIMARY KEY NONCLUSTERED (TN_IdOficina ASC)
+    TB_Borrado BIT DEFAULT 0,
+	CONSTRAINT [PK_TSOLITEL_Oficina] PRIMARY KEY NONCLUSTERED (TN_IdOficina ASC)
 );
 
 -- Tabla TSOLITEL_Fiscalia
 CREATE TABLE TSOLITEL_Fiscalia (
     TN_IdFiscalia INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_Fiscalia] PRIMARY KEY NONCLUSTERED (TN_IdFiscalia ASC)
 );
 
@@ -87,14 +94,16 @@ CREATE TABLE TSOLITEL_TipoSolicitud (
     TN_IdTipoSolicitud INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_TipoSolicitud] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud ASC)
 );
 
 -- Tabla TSOLITEL_TipoDato
 CREATE TABLE TSOLITEL_TipoDato (
-    TN_IdTIpoDato INT IDENTITY NOT NULL,
+    TN_IdTipoDato INT IDENTITY NOT NULL,
     TC_Nombre VARBINARY(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_TipoDato] PRIMARY KEY NONCLUSTERED (TN_IdTIpoDato ASC)
 );
 
@@ -103,6 +112,7 @@ CREATE TABLE TSOLITEL_Delito (
     TN_IdDelito INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     TN_IdCategoriaDelito INT NOT NULL,
     CONSTRAINT [PK_TSOLITEL_Delito] PRIMARY KEY NONCLUSTERED (TN_IdDelito ASC),
     CONSTRAINT FK_TSOLITEL_Delito_TSOLITEL_CategoriaDelito FOREIGN KEY (TN_IdCategoriaDelito) REFERENCES TSOLITEL_CategoriaDelito (TN_IdCategoriaDelito)
@@ -172,6 +182,7 @@ CREATE TABLE TSOLITEL_RequerimientoProveedor_DatoRequerido (
     CONSTRAINT FK_TSOLITEL_RequerimientoProveedor_DatoRequerido_TSOLITEL_DatoRequerido FOREIGN KEY (TN_IdDatoRequerido) REFERENCES TSOLITEL_DatoRequerido (TN_IdDatoRequerido)
 );
 
+-- PENDIENTE DE REVISAR
 -- Tabla TSOLITEL_Archivo
 CREATE TABLE TSOLITEL_Archivo (
     TN_IdArchivo INT IDENTITY NOT NULL,
@@ -212,6 +223,7 @@ CREATE TABLE TSOLITEL_RequerimentoAnalisis (
     CONSTRAINT FK_TSOLITEL_RequerimentoAnalisis_TSOLITEL_SolicitudAnalisis FOREIGN KEY (TN_IdAnalisis) REFERENCES TSOLITEL_SolicitudAnalisis (TN_IdSolicitudAnalisis)
 );
 
+-- PENDIENTE DE REVISION
 -- Tabla TSOLITEL_Asignacion
 CREATE TABLE TSOLITEL_Asignacion (
     TN_IdUsuario INT NOT NULL,
@@ -229,6 +241,7 @@ CREATE TABLE TSOLITEL_ObjetivoAnalisis (
     TN_IdObjetivoAnalisis INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_ObjetivoAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdObjetivoAnalisis ASC)
 );
 
@@ -246,6 +259,7 @@ CREATE TABLE TSOLITEL_Condicion (
     TN_IdCondicion INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_Condicion] PRIMARY KEY NONCLUSTERED (TN_IdCondicion ASC)
 );
 
@@ -263,6 +277,7 @@ CREATE TABLE TSOLITEL_TipoAnalisis (
     TN_IdTipoAnalisis INT IDENTITY NOT NULL,
     TC_Nombre VARCHAR(50) NOT NULL,
     TC_Descripcion VARCHAR(255) NOT NULL,
+	TB_Borrado BIT DEFAULT 0,
     CONSTRAINT [PK_TSOLITEL_TipoAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdTipoAnalisis ASC)
 );
 
@@ -305,6 +320,7 @@ CREATE TABLE TSOLITEL_Usuario_Oficina (
     CONSTRAINT FK_TSOLITEL_Usuario_Oficina_TSOLITEL_Rol FOREIGN KEY (TN_IdRol) REFERENCES TSOLITEL_Rol (TN_IdRol)
 );
 
+-- PENDIENTE DE REVISION
 -- Tabla TSOLITEL_SolicitudAnalisis_Archivo
 CREATE TABLE TSOLITEL_SolicitudAnalisis_Archivo (
     TN_IdAnalisis INT NOT NULL,
@@ -315,11 +331,11 @@ CREATE TABLE TSOLITEL_SolicitudAnalisis_Archivo (
     CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Archivo_TSOLITEL_Archivo FOREIGN KEY (TN_IdAchivo) REFERENCES TSOLITEL_Archivo (TN_IdArchivo)
 );
 
-
--- Tabla TSOLITEL_TipoSolicitud_RequerimientoAnalisis
-CREATE TABLE TSOLITEL_TipoSolicitud_RequerimientoAnalisis (
+-- REVISAR
+-- Tabla TSOLITEL_TipoSolicitud_RequerimientoProveedor
+CREATE TABLE TSOLITEL_TipoSolicitud_RequerimientoProveedor (
     TN_IdTipoSolicitud INT NOT NULL,
-    TN_IdRequerimientoAnalisis INT NOT NULL,
+    TN_IdRequerimientos INT NOT NULL,
     CONSTRAINT [PK_TSOLITEL_TipoSolicitud_RequerimientoAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud, TN_IdRequerimientoAnalisis ASC),
     CONSTRAINT FK_TSOLITEL_TipoSolicitud_RequerimientoAnalisis_TSOLITEL_TipoSolicitud FOREIGN KEY (TN_IdTipoSolicitud) REFERENCES TSOLITEL_TipoSolicitud (TN_IdTipoSolicitud),
     CONSTRAINT FK_TSOLITEL_TipoSolicitud_RequerimientoAnalisis_TSOLITEL_RequerimentoAnalisis FOREIGN KEY (TN_IdRequerimientoAnalisis) REFERENCES TSOLITEL_RequerimentoAnalisis (TN_IdRequerimientoAnalisis)
