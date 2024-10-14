@@ -32,6 +32,12 @@ builder.Services.AddTransient<IGestionarModalidadDA, GestionarModalidadDA>();
 builder.Services.AddTransient<IGestionarSubModalidadBW, GestionarSubModalidadBW>();
 builder.Services.AddTransient<IGestionarSubModalidadDA, GestionarSubModalidadDA>();
 
+builder.Services.AddTransient<IGestionarTipoSolicitudBW, GestionarTipoSolicitudBW>();
+builder.Services.AddTransient<IGestionarTipoSolicitudDA, GestionarTipoSolicitudDA>();
+
+builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
+builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
+
 //Conexión a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
 {

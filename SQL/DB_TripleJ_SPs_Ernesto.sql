@@ -687,7 +687,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_SubModalidad
 -- =============================================
-CREATE PROCEDURE dbo.PA_InsertarSubModalidad
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarSubModalidad
     @pTC_Nombre VARCHAR(50),
     @pTC_Descripcion VARCHAR(255),
     @pTN_IdModalidad INT
@@ -760,7 +760,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_SubModalidad
 -- =============================================
-CREATE PROCEDURE dbo.PA_ConsultarSubModalidad
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSubModalidad
     @pTN_IdSubModalidad INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
 BEGIN
@@ -803,7 +803,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_SubModalidad
 -- =============================================
-CREATE PROCEDURE dbo.PA_EliminarSubModalidad
+CREATE OR ALTER PROCEDURE dbo.PA_EliminarSubModalidad
     @pTN_IdSubModalidad INT
 AS
 BEGIN
@@ -854,3 +854,332 @@ BEGIN
 END
 GO
 
+-- TSOLITEL_TipoSolicitud
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoSolicitud
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoSolicitud
+    @pTC_Nombre VARCHAR(50),
+    @pTC_Descripcion VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Insertar un nuevo tipo de solicitud
+        INSERT INTO dbo.TSOLITEL_TipoSolicitud
+            (TC_Nombre, TC_Descripcion, TB_Borrado)
+        VALUES
+            (@pTC_Nombre, @pTC_Descripcion, 0);  -- TB_Borrado por defecto es 0 (no borrado)
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Consulta los registros de la tabla TSOLITEL_TipoSolicitud
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoSolicitud
+    @pTN_IdTipoSolicitud INT = NULL  -- Parámetro opcional para filtrar por Id
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            TN_IdTipoSolicitud,
+            TC_Nombre,
+            TC_Descripcion,
+            TB_Borrado
+        FROM dbo.TSOLITEL_TipoSolicitud WITH (NOLOCK)
+        WHERE (@pTN_IdTipoSolicitud IS NULL OR TN_IdTipoSolicitud = @pTN_IdTipoSolicitud)
+          AND TB_Borrado = 0  -- Solo mostrar tipos de solicitud que no están borrados lógicamente
+        ORDER BY TN_IdTipoSolicitud ASC;
+    END TRY
+    BEGIN CATCH
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_TipoSolicitud
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoSolicitud
+    @pTN_IdTipoSolicitud INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Eliminar lógicamente cambiando TB_Borrado a 1
+        UPDATE dbo.TSOLITEL_TipoSolicitud
+        SET TB_Borrado = 1
+        WHERE TN_IdTipoSolicitud = @pTN_IdTipoSolicitud;
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+-- TSOLITEL_TipoDato
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoDato
+-- =============================================
+CREATE PROCEDURE dbo.PA_InsertarTipoDato
+    @pTC_Nombre VARBINARY(50),
+    @pTC_Descripcion VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Insertar un nuevo tipo de dato
+        INSERT INTO dbo.TSOLITEL_TipoDato
+            (TC_Nombre, TC_Descripcion, TB_Borrado)
+        VALUES
+            (@pTC_Nombre, @pTC_Descripcion, 0);  -- TB_Borrado por defecto es 0 (no borrado)
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Consulta los registros de la tabla TSOLITEL_TipoDato
+-- =============================================
+CREATE PROCEDURE dbo.PA_ConsultarTipoDato
+    @pTN_IdTipoDato INT = NULL  -- Parámetro opcional para filtrar por Id
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            TN_IdTipoDato,
+            TC_Nombre,
+            TC_Descripcion,
+            TB_Borrado
+        FROM dbo.TSOLITEL_TipoDato WITH (NOLOCK)
+        WHERE (@pTN_IdTipoDato IS NULL OR TN_IdTipoDato = @pTN_IdTipoDato)
+          AND TB_Borrado = 0  -- Solo mostrar tipos de datos que no están borrados lógicamente
+        ORDER BY TN_IdTipoDato ASC;
+    END TRY
+    BEGIN CATCH
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_TipoDato
+-- =============================================
+CREATE PROCEDURE dbo.PA_EliminarTipoDato
+    @pTN_IdTipoDato INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Eliminar lógicamente cambiando TB_Borrado a 1
+        UPDATE dbo.TSOLITEL_TipoDato
+        SET TB_Borrado = 1
+        WHERE TN_IdTipoDato = @pTN_IdTipoDato;
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
