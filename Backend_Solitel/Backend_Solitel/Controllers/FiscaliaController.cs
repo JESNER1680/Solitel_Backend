@@ -7,11 +7,11 @@ namespace Backend_Solitel.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SolitelController : ControllerBase
+    public class FiscaliaController : ControllerBase
     {
         private readonly IGestionarFiscaliaBW bw;
 
-        public SolitelController(IGestionarFiscaliaBW bw)
+        public FiscaliaController(IGestionarFiscaliaBW bw)
         {
             this.bw = bw;
         }

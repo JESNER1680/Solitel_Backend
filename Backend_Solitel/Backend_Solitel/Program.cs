@@ -17,6 +17,20 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IGestionarFiscaliaBW, GestionarFiscaliaBW>();
 builder.Services.AddTransient<IGestionarFiscaliaDA, GestionarFiscaliaDA>();
 
+builder.Services.AddTransient<IGestionarDelitoBW, GestionarDelitoBW>();
+builder.Services.AddTransient<IGestionarDelitoDA, GestionarDelitoDA>();
+
+builder.Services.AddTransient<IGestionarCategoriaDelitoBW, GestionarCategoriaDelitoBW>();
+builder.Services.AddTransient<IGestionarCategoriaDelitoDA, GestionarCategoriaDelitoDA>();
+
+builder.Services.AddTransient<IGestionarCondicionBW, GestionarCondicionBW>();
+builder.Services.AddTransient<IGestionarCondicionDA, GestionarCondicionDA>();
+
+builder.Services.AddTransient<IGestionarModalidadBW, GestionarModalidadBW>();
+builder.Services.AddTransient<IGestionarModalidadDA, GestionarModalidadDA>();
+
+builder.Services.AddTransient<IGestionarSubModalidadBW, GestionarSubModalidadBW>();
+builder.Services.AddTransient<IGestionarSubModalidadDA, GestionarSubModalidadDA>();
 
 //Conexión a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
