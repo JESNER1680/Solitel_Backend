@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DA.Acciones
 {
-    internal class GestionarSolicituAnalistaDA
+    internal class GestionarSolicitudAnalistaDA
     {
     }
 }
