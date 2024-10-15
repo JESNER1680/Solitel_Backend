@@ -1,4 +1,6 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,14 +21,15 @@ namespace Backend_Solitel.Controllers
         // Método para insertar una nueva categoría de delito
         [HttpPost]
         [Route("insertarCategoriaDelito")]
-        public async Task<ActionResult<CategoriaDelito>> InsertarCategoriaDelito([FromBody] CategoriaDelito categoriaDelito)
+        public async Task<ActionResult<CategoriaDelitoDTO>> InsertarCategoriaDelito(CategoriaDelitoDTO categoriaDelito)
         {
             try
             {
-                var result = await this.gestionarCategoriaDelitoBW.insertarCategoriaDelito(categoriaDelito);
+                var result = await this.gestionarCategoriaDelitoBW.
+                    insertarCategoriaDelito(CategoriaDelitoMapper.ToModel(categoriaDelito));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(CategoriaDelitoMapper.ToDTO(result));
                 }
                 else
                 {
@@ -43,14 +46,14 @@ namespace Backend_Solitel.Controllers
         // Método para obtener la lista de categorías de delito
         [HttpGet]
         [Route("obtenerCategoriaDelito")]
-        public async Task<ActionResult<List<CategoriaDelito>>> ObtenerCategoriaDelito()
+        public async Task<ActionResult<List<CategoriaDelitoDTO>>> ObtenerCategoriaDelito()
         {
             try
             {
                 var categorias = await this.gestionarCategoriaDelitoBW.obtenerCategoriaDelito();
                 if (categorias != null && categorias.Count > 0)
                 {
-                    return Ok(categorias);
+                    return Ok(CategoriaDelitoMapper.ToDTO(categorias));
                 }
                 else
                 {
@@ -67,14 +70,14 @@ namespace Backend_Solitel.Controllers
         // Método para eliminar (lógicamente) una categoría de delito
         [HttpDelete]
         [Route("eliminarCategoriaDelito/{id}")]
-        public async Task<ActionResult<CategoriaDelito>> EliminarCategoriaDelito(int id)
+        public async Task<ActionResult<CategoriaDelitoDTO>> EliminarCategoriaDelito(int id)
         {
             try
             {
                 var result = await this.gestionarCategoriaDelitoBW.eliminarCategoriaDelito(id);
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(CategoriaDelitoMapper.ToDTO(result));
                 }
                 else
                 {

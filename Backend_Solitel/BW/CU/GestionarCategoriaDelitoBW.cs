@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -25,6 +26,7 @@ namespace BW.CU
 
         public async Task<CategoriaDelito> insertarCategoriaDelito(CategoriaDelito categoriaDelito)
         {
+            CategoriaDelitoBR.ValidarCategoriaDelito(categoriaDelito);
             return await this.gestionarCategoriaDelitoDA.insertarCategoriaDelito(categoriaDelito);
         }
 
