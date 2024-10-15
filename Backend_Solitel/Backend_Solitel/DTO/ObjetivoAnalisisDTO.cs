@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_ObjetivoAnalisisDTO
+    public class ObjetivoAnalisisDTO
     {
         public int TN_IdObjetivoAnalisis { get; set; }
 

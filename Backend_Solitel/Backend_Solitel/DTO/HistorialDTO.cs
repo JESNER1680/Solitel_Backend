@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_HistorialDTO
+    public class HistorialDTO
     {
         public int TN_IdHistorial { get; set; }
 

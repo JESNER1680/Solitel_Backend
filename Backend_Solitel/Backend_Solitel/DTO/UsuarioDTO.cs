@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_UsuarioDTO
+    public class UsuarioDTO
     {
         public int TN_IdUsuario { get; set; }
         public string TC_Nombre { get; set; }
