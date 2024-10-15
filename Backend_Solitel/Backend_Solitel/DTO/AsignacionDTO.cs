@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_AsignacionDTO
+    public class AsignacionDTO
     {
         public int TN_IdUsuario { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_SolicitudProveedorDTO
+    public class SolicitudProveedorDTO
     {
         public int TN_IdSolicitudProveedor { get; set; }
         public int? TN_NumeroUnico { get; set; }

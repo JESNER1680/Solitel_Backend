@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_EstadoDTO
+    public class EstadoDTO
     {
         public int TN_IdEstado { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_TipoDatoDTO
+    public class TipoDatoDTO
     {
         public int TN_IdTipoDato { get; set; }
         public byte[] TC_Nombre { get; set; }

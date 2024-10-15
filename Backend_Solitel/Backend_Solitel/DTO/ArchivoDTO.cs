@@ -2,7 +2,7 @@
 
 namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_ArchivoDTO
+    public class ArchivoDTO
     {
         public int TN_IdArchivo { get; set; }
 

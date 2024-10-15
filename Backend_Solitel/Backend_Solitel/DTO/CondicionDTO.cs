@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_CondicionDTO
+    public class CondicionDTO
     {
         public int TN_IdCondicion { get; set; }
 
