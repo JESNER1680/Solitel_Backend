@@ -3,8 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\backend_solitel\\controllers\\solitelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\controllers\\solitelcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\bw\\cu\\gestionarfiscaliabw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|solutionrelative:bw\\cu\\gestionarfiscaliabw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\backend_solitel\\dto\\tsolitel_archivodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D1D95FF2-243F-4190-8559-DB7643E21983}|Backend_Solitel\\Backend_Solitel.csproj|solutionrelative:backend_solitel\\dto\\tsolitel_archivodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\bw\\interfaces\\bw\\igestionarfiscaliabw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FA647464-E022-4CF9-AA57-486C603D8C8B}|BW\\BW.csproj|solutionrelative:bw\\interfaces\\bw\\igestionarfiscaliabw.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\acciones\\gestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\acciones\\gestionarfiscaliada.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\acciones\\gestionarproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|solutionrelative:da\\acciones\\gestionarproveedorda.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{9B91725B-0CE7-4FF8-A4AF-554E35EAF411}|DA\\DA.csproj|c:\\users\\diego\\documents\\github\\solitel_backend\\backend_solitel\\da\\contexto\\solitelcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -18,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,28 +50,94 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TSOLITEL_ArchivoDTO.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ArchivoDTO.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\DTO\\TSOLITEL_ArchivoDTO.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\DTO\\TSOLITEL_ArchivoDTO.cs",
+              "RelativeToolTip": "Backend_Solitel\\DTO\\TSOLITEL_ArchivoDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T07:06:18.847Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "SolitelController.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Controllers\\SolitelController.cs",
+              "RelativeDocumentMoniker": "Backend_Solitel\\Controllers\\SolitelController.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\Backend_Solitel\\Controllers\\SolitelController.cs*",
+              "RelativeToolTip": "Backend_Solitel\\Controllers\\SolitelController.cs*",
+              "ViewState": "AgIAABUAAAAAAAAAAAAYwAsAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T06:49:11.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IGestionarFiscaliaBW.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\Interfaces\\BW\\IGestionarFiscaliaBW.cs",
+              "RelativeDocumentMoniker": "BW\\Interfaces\\BW\\IGestionarFiscaliaBW.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\Interfaces\\BW\\IGestionarFiscaliaBW.cs",
+              "RelativeToolTip": "BW\\Interfaces\\BW\\IGestionarFiscaliaBW.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T06:48:30.603Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GestionarFiscaliaDA.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "RelativeDocumentMoniker": "DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "RelativeToolTip": "DA\\Acciones\\GestionarFiscaliaDA.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAA4AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T06:41:17.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GestionarProveedorDA.cs",
+              "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarProveedorDA.cs",
+              "RelativeDocumentMoniker": "DA\\Acciones\\GestionarProveedorDA.cs",
+              "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Acciones\\GestionarProveedorDA.cs",
+              "RelativeToolTip": "DA\\Acciones\\GestionarProveedorDA.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-13T06:41:13.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "GestionarFiscaliaBW.cs",
               "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\CU\\GestionarFiscaliaBW.cs",
               "RelativeDocumentMoniker": "BW\\CU\\GestionarFiscaliaBW.cs",
               "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\BW\\CU\\GestionarFiscaliaBW.cs",
               "RelativeToolTip": "BW\\CU\\GestionarFiscaliaBW.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAB0AAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-26T01:15:26.055Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "SolitelContext.cs",
               "DocumentMoniker": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
               "RelativeDocumentMoniker": "DA\\Contexto\\SolitelContext.cs",
               "ToolTip": "C:\\Users\\diego\\Documents\\GitHub\\Solitel_Backend\\Backend_Solitel\\DA\\Contexto\\SolitelContext.cs",
               "RelativeToolTip": "DA\\Contexto\\SolitelContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T01:15:22.166Z"
+              "WhenOpened": "2024-09-26T01:15:22.166Z",
+              "EditorCaption": ""
             }
           ]
         }
