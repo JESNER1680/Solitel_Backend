@@ -770,14 +770,16 @@ BEGIN
 
     BEGIN TRY
         SELECT 
-            TN_IdSubModalidad,
-            TC_Nombre,
-            TC_Descripcion,
-            TN_IdModalida,
-            TB_Borrado
-        FROM dbo.TSOLITEL_SubModalidad WITH (NOLOCK)
-        WHERE (@pTN_IdSubModalidad IS NULL OR TN_IdSubModalidad = @pTN_IdSubModalidad)
-          AND TB_Borrado = 0  -- Solo mostrar submodalidades que no están borradas lógicamente
+            TSubModalidad.TN_IdSubModalidad,
+            TSubModalidad.TC_Nombre,
+            TSubModalidad.TC_Descripcion,
+            TSubModalidad.TN_IdModalida,
+            TSubModalidad.TB_Borrado
+        FROM dbo.TSOLITEL_SubModalidad AS TSubModalidad WITH (NOLOCK)
+		INNER JOIN dbo.TSOLITEL_Modalidad AS TModalidad WITH (NOLOCK)
+		ON TSubModalidad.TN_IdModalida = TModalidad.TN_IdModalidad
+        WHERE (@pTN_IdSubModalidad IS NULL OR TSubModalidad.TN_IdSubModalidad = @pTN_IdSubModalidad)
+          AND (TSubModalidad.TB_Borrado = 0) AND (TModalidad.TB_Borrado = 0)  -- Solo mostrar submodalidades que no están borradas lógicamente
         ORDER BY TN_IdSubModalidad ASC;
     END TRY
     BEGIN CATCH
@@ -1033,8 +1035,8 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoDato
 -- =============================================
-CREATE PROCEDURE dbo.PA_InsertarTipoDato
-    @pTC_Nombre VARBINARY(50),
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoDato
+    @pTC_Nombre VARCHAR(50),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
