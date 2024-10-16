@@ -11,6 +11,6 @@ namespace BW.Interfaces.DA
     {
         public Task<bool> insertarFiscalia(string nombre);
 
-        public List<TSOLITEL_Fiscalia> obtenerFiscalias();
+        public List<Fiscalia> obtenerFiscalias();
     }
 }
