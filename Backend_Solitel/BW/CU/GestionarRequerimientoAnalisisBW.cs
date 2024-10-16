@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BW.CU
 {
-    internal class GestionarRequerimientoAnalisisBW
+    public class GestionarRequerimientoAnalisisBW
     {
     }
 }
