@@ -11,5 +11,6 @@ namespace BW.Interfaces.BW
     {
         public Task<bool> EditarRequerimientoAnalisis(RequerimentoAnalisis requerimento);
         public Task<bool> EliminarRequerimientoAnalisis(int idRequerimiento);
+        public Task<bool> IngresarRequerimientoAnalisis(List<RequerimentoAnalisis>requerimento);
     }
 }

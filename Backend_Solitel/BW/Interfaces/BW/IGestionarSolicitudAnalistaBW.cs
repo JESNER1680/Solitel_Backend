@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BW.Interfaces.BW
 {
-    internal interface IGestionarSolicitudAnalistaBW
+    public interface IGestionarSolicitudAnalistaBW
     {
         public Task<bool> CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis);
     }

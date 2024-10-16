@@ -23,6 +23,7 @@ namespace BC.Modelos
         public int TN_NumeroSolicitud { get; set; }
 
         public int TN_IdOficina { get; set; }
+        public List<RequerimentoAnalisis>requerimentos{ get; set; }
     }
 
 }
