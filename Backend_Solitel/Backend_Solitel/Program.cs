@@ -38,6 +38,12 @@ builder.Services.AddTransient<IGestionarTipoSolicitudDA, GestionarTipoSolicitudD
 builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
 builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
 
+builder.Services.AddTransient<IGestionarTipoAnalisisBW, GestionarTipoAnalisisBW>();
+builder.Services.AddTransient<IGestionarTipoAnalisisDA, GestionarTipoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
 //Conexión a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
 {
