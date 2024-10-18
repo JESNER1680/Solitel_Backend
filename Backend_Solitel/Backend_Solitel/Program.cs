@@ -45,6 +45,17 @@ builder.Services.AddDbContext<SolitelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBSomee.com"));
     // Otros ajustes del contexto de base de datos pueden ser configurados aquí, si es necesario
 });
+
+// Habilitar CORS para localhost:4200
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,6 +66,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 
