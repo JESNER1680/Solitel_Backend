@@ -9,8 +9,8 @@ namespace BC.Modelos
     public class SolicitudProveedor
     {
         public int TN_IdSolicitudProveedor { get; set; }
-        public int? TN_NumeroUnico { get; set; }
-        public int? TN_NumeroCaso { get; set; }
+        public int TN_NumeroUnico { get; set; }
+        public int TN_NumeroCaso { get; set; }
         public string TC_Imputado { get; set; }
         public string TC_Ofendido { get; set; }
         public string? TC_Resennia { get; set; }
