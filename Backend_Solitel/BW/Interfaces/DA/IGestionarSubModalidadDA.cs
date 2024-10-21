@@ -14,5 +14,9 @@ namespace BW.Interfaces.DA
         public Task<SubModalidad> eliminarSubModalidad(int id);
 
         public Task<List<SubModalidad>> obtenerSubModalidad();
+
+        public Task<List<SubModalidad>> obtenerSubModalidadPorModalidad(int id);
+
+        public Task<SubModalidad> obtenerSubModalidad(int id);
     }
 }

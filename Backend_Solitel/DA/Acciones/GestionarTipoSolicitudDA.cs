@@ -104,5 +104,44 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al eliminar el tipo de solicitud: {ex.Message}", ex);
             }
         }
+
+        public async Task<TipoSolicitud> obtenerTipoSolicitud(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar un tipo de solicitud por ID
+                var tipoSolicitudDA = await _context.TSOLITEL_TipoSolicitudDA
+                    .FromSqlRaw("EXEC PA_ConsultarTipoSolicitud @pTN_IdTipoSolicitud = {0}", id)
+                    .ToListAsync();  // Obtener el resultado como lista
+
+                var tipoSolicitud = tipoSolicitudDA.FirstOrDefault();  // Obtener el primer elemento si hay uno
+
+                // Verificar si se encontró el tipo de solicitud
+                if (tipoSolicitud == null)
+                {
+                    throw new Exception($"No se encontró un tipo de solicitud con el ID {id}.");
+                }
+
+                // Mapear el resultado a la entidad TipoSolicitud
+                var tipoSolicitudResult = new TipoSolicitud
+                {
+                    TN_IdTipoSolicitud = tipoSolicitud.TN_IdTipoSolicitud,
+                    TC_Nombre = tipoSolicitud.TC_Nombre,
+                    TC_Descripcion = tipoSolicitud.TC_Descripcion
+                };
+
+                return tipoSolicitudResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener el tipo de solicitud con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener el tipo de solicitud con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace BW.Interfaces.DA
 
         public Task<TipoDato> eliminarTipoDato(int id);
 
+        public Task<TipoDato> obtenerTipoDato(int id);
     }
 }

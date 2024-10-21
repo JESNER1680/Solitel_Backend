@@ -1,4 +1,5 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,60 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        // Método para obtener un delito por ID
+        [HttpGet]
+        [Route("obtenerDelito/{id}")]
+        public async Task<ActionResult<DelitoDTO>> ObtenerDelito(int id)
+        {
+            try
+            {
+                // Llamada al método del servicio para obtener el delito por ID
+                var delito = await this.gestionarDelitoBW.obtenerDelitos(id);
+
+                if (delito != null)
+                {
+                    // Mapear la entidad Delito al DTO y devolver la respuesta
+                    return Ok(delito);
+                }
+                else
+                {
+                    // Si no se encuentra el delito, devolver un 404
+                    return NotFound($"No se encontró un delito con el ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener el delito con ID {id}: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("obtenerDelitosPorCategoria/{id}")]
+        public async Task<ActionResult<List<DelitoDTO>>> ObtenerDelitosPorCategoria(int id)
+        {
+            try
+            {
+                // Llamar al método del servicio para obtener delitos por categoría
+                var delitos = await this.gestionarDelitoBW.obtenerDelitosPorCategoria(id);
+
+                // Verificar si se encontraron delitos
+                if (delitos != null && delitos.Count > 0)
+                {
+                    return Ok(delitos);  // Mapear a DTO y retornar en la respuesta
+                }
+                else
+                {
+                    return NotFound($"No se encontraron delitos para la categoría con ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener los delitos de la categoría con ID {id}: {ex.Message}");
+            }
+        }
+
         // Método para eliminar un delito (eliminación lógica)
         [HttpDelete]
         [Route("eliminarDelito/{id}")]
@@ -87,5 +142,6 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, $"Error al eliminar el delito: {ex.Message}");
             }
         }
+
     }
 }

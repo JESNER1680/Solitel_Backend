@@ -119,5 +119,81 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al eliminar la submodalidad: {ex.Message}", ex);
             }
         }
+
+        public async Task<List<SubModalidad>> obtenerSubModalidadPorModalidad(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar las submodalidades por modalidad
+                var subModalidadesDA = await _context.TSOLITEL_SubModalidadDA
+                    .FromSqlRaw("EXEC PA_ConsultarSubModalidadPorModalidad @pTN_IdModalidad = {0}", id)
+                    .ToListAsync(); // Traer la lista completa
+
+                // Verificar si hay resultados
+                if (subModalidadesDA == null || !subModalidadesDA.Any())
+                {
+                    throw new Exception($"No se encontraron submodalidades para la modalidad con ID {id}.");
+                }
+
+                // Mapear los resultados a la entidad SubModalidad
+                var subModalidades = subModalidadesDA.Select(subModalidad => new SubModalidad
+                {
+                    TN_IdSubModalidad = subModalidad.TN_IdSubModalidad,
+                    TC_Nombre = subModalidad.TC_Nombre,
+                    TC_Descripcion = subModalidad.TC_Descripcion,
+                    TN_IdModalida = subModalidad.TN_IdModalida
+                }).ToList();
+
+                return subModalidades;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al obtener las submodalidades para la modalidad con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al obtener las submodalidades para la modalidad con ID {id}: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<SubModalidad> obtenerSubModalidad(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar una submodalidad por ID
+                var subModalidadDA = await _context.TSOLITEL_SubModalidadDA
+                    .FromSqlRaw("EXEC PA_ConsultarSubModalidad @pTN_IdSubModalidad = {0}", id)
+                    .ToListAsync();  // Obtener el resultado como lista
+
+                var subModalidad = subModalidadDA.FirstOrDefault();  // Obtener el primer elemento si hay uno
+
+                // Verificar si se encontró la submodalidad
+                if (subModalidad == null)
+                {
+                    throw new Exception($"No se encontró una submodalidad con el ID {id}.");
+                }
+
+                // Mapear el resultado a la entidad SubModalidad
+                var subModalidadResult = new SubModalidad
+                {
+                    TN_IdSubModalidad = subModalidad.TN_IdSubModalidad,
+                    TC_Nombre = subModalidad.TC_Nombre,
+                    TC_Descripcion = subModalidad.TC_Descripcion,
+                    TN_IdModalida = subModalidad.TN_IdModalida
+                };
+
+                return subModalidadResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la submodalidad con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la submodalidad con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }

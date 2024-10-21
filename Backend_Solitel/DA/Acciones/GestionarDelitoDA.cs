@@ -119,5 +119,77 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de delitos: {ex.Message}", ex);
             }
         }
+
+        public async Task<Delito> obtenerDelitos(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar un delito por ID
+                var delitoDA = await _context.TSOLITEL_DelitoDA
+                    .FromSqlRaw("EXEC PA_ConsultarDelito @pTN_IdDelito = {0}", id)
+                    .ToListAsync(); // Usar ToListAsync para convertir la consulta en una lista
+
+                var delito = delitoDA.FirstOrDefault();  // Obtener el primer elemento si existe
+
+                // Verificar si se encontró el delito
+                if (delito == null)
+                {
+                    throw new Exception($"No se encontró un delito con el ID {id}.");
+                }
+
+                // Mapear los resultados a la entidad Delito
+                var delitoEntidad = new Delito
+                {
+                    TN_IdDelito = delito.TN_IdDelito,
+                    TC_Nombre = delito.TC_Nombre,
+                    TC_Descripcion = delito.TC_Descripcion,
+                    TN_IdCategoriaDelito = delito.TN_IdCategoriaDelito
+                };
+
+                return delitoEntidad;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener el delito con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener el delito con ID {id}: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<Delito>> obtenerDelitosPorCategoria(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar delitos por categoría
+                var delitosDA = await _context.TSOLITEL_DelitoDA
+                    .FromSqlRaw("EXEC PA_ConsultarDelitosPorCategoria @pTN_IdCategoriaDelito = {0}", id)
+                    .ToListAsync();  // Obtener la lista de delitos
+
+                // Mapear los resultados a la entidad Delito
+                var delitos = delitosDA.Select(da => new Delito
+                {
+                    TN_IdDelito = da.TN_IdDelito,
+                    TC_Nombre = da.TC_Nombre,
+                    TC_Descripcion = da.TC_Descripcion,
+                    TN_IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                }).ToList();
+
+                return delitos;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener los delitos de la categoría con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener los delitos de la categoría con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }
