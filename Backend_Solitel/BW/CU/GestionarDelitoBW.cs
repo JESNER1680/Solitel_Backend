@@ -32,5 +32,15 @@ namespace BW.CU
         {
             return await this.gestionarDelitoDA.obtenerDelitos();
         }
+
+        public async Task<Delito> obtenerDelitos(int id)
+        {
+            return await this.gestionarDelitoDA.obtenerDelitos(id);
+        }
+
+        public async Task<List<Delito>> obtenerDelitosPorCategoria(int id)
+        {
+            return await this.gestionarDelitoDA.obtenerDelitosPorCategoria(id);
+        }
     }
 }

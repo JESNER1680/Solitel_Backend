@@ -117,5 +117,44 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de categorías de delito: {ex.Message}", ex);
             }
         }
+
+        public async Task<CategoriaDelito> obtenerCategoriaDelito(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar una categoría de delito por ID
+                var categoriaDelitoDA = await _context.TSOLITEL_CategoriaDelitoDA
+                    .FromSqlRaw("EXEC PA_ConsultarCategoriaDelito @pTN_IdCategoriaDelito = {0}", id)
+                    .ToListAsync(); // Usar FirstOrDefaultAsync para obtener un único resultado
+
+                var categoriaDelito = categoriaDelitoDA.FirstOrDefault();  // Obtener el primer elemento si hay
+
+                // Verificar si se encontró la categoría
+                if (categoriaDelito == null)
+                {
+                    throw new Exception($"No se encontró una categoría de delito con el ID {id}.");
+                }
+
+                // Mapear los resultados a la entidad CategoriaDelito
+                var categoria = new CategoriaDelito
+                {
+                    TN_IdCategoriaDelito = categoriaDelito.TN_IdCategoriaDelito,
+                    TC_Nombre = categoriaDelito.TC_Nombre,
+                    TC_Descripcion = categoriaDelito.TC_Descripcion
+                };
+
+                return categoria;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la categoría de delito con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la categoría de delito con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }

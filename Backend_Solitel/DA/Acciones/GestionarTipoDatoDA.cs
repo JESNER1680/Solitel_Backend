@@ -104,5 +104,44 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al eliminar el tipo de dato: {ex.Message}", ex);
             }
         }
+
+        public async Task<TipoDato> obtenerTipoDato(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar un tipo de dato por ID
+                var tipoDatoDA = await _context.TSOLITEL_TipoDatoDA
+                    .FromSqlRaw("EXEC PA_ConsultarTipoDato @pTN_IdTipoDato = {0}", id)
+                    .ToListAsync();  // Obtener el resultado como lista
+
+                var tipoDato = tipoDatoDA.FirstOrDefault();  // Obtener el primer elemento si hay uno
+
+                // Verificar si se encontró el tipo de dato
+                if (tipoDato == null)
+                {
+                    throw new Exception($"No se encontró un tipo de dato con el ID {id}.");
+                }
+
+                // Mapear el resultado a la entidad TipoDato
+                var tipoDatoResult = new TipoDato
+                {
+                    TN_IdTipoDato = tipoDato.TN_IdTipoDato,
+                    TC_Nombre = tipoDato.TC_Nombre,
+                    TC_Descripcion = tipoDato.TC_Descripcion
+                };
+
+                return tipoDatoResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener el tipo de dato con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener el tipo de dato con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }

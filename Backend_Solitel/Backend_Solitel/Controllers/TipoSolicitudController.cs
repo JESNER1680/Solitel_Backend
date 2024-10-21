@@ -1,4 +1,5 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,29 @@ namespace Backend_Solitel.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al obtener los tipos de solicitud: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("obtenerTipoSolicitud/{id}")]
+        public async Task<ActionResult<TipoSolicitudDTO>> ObtenerTipoSolicitud(int id)
+        {
+            try
+            {
+                var tipoSolicitud = await this.gestionarTipoSolicitudBW.obtenerTipoSolicitud(id);
+                if (tipoSolicitud != null)
+                {
+                    return Ok(tipoSolicitud);
+                }
+                else
+                {
+                    return NotFound($"No se encontró un tipo de solicitud con el ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener el tipo de solicitud con ID {id}: {ex.Message}");
             }
         }
 

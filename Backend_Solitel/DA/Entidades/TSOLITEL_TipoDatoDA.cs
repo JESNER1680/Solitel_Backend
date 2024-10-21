@@ -17,7 +17,7 @@ namespace DA.Entidades
         public int TN_IdTipoDato { get; set; }
 
         [Required]
-        public byte[] TC_Nombre { get; set; }
+        public string TC_Nombre { get; set; }
 
         [Required]
         [StringLength(255)]

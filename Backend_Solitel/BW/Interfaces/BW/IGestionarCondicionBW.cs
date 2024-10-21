@@ -14,5 +14,7 @@ namespace BW.Interfaces.BW
         public Task<Condicion> eliminarCondicion(int id);
 
         public Task<List<Condicion>> obtenerCondicion();
+
+        public Task<Condicion> obtenerCondicion(int id);
     }
 }

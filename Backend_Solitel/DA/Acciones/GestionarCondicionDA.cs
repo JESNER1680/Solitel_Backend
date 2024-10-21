@@ -117,5 +117,44 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al eliminar la condición: {ex.Message}", ex);
             }
         }
+
+        public async Task<Condicion> obtenerCondicion(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar una condición por ID
+                var condicionDA = await _context.TSOLITEL_CondicionDA
+                    .FromSqlRaw("EXEC PA_ConsultarCondicion @pTN_IdCondicion = {0}", id)
+                    .ToListAsync();  // Usar ToListAsync y luego FirstOrDefault() para obtener un único resultado
+
+                var condicion = condicionDA.FirstOrDefault();  // Obtener el primer elemento si hay
+
+                // Verificar si se encontró la condición
+                if (condicion == null)
+                {
+                    throw new Exception($"No se encontró una condición con el ID {id}.");
+                }
+
+                // Mapear los resultados a la entidad Condicion
+                var condicionResult = new Condicion
+                {
+                    TN_IdCondicion = condicion.TN_IdCondicion,
+                    TC_Nombre = condicion.TC_Nombre,
+                    TC_Descripcion = condicion.TC_Descripcion
+                };
+
+                return condicionResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la condición con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la condición con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }
