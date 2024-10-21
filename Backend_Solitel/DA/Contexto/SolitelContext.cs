@@ -30,6 +30,8 @@ namespace DA.Contexto
 
         public DbSet<TSOLITEL_ProveedorDA> TSOLITEL_ProveedorDA { get; set; }
 
+        public DbSet<TSOLITEL_OficinaDA> TSOLITEL_OficinaDA { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TSOLITEL_FiscaliaDA>().ToTable("TSOLITEL_Fiscalia").HasKey(p => p.TN_IdFiscalia);
@@ -41,6 +43,7 @@ namespace DA.Contexto
             modelBuilder.Entity<TSOLITEL_TipoSolicitudDA>().ToTable("TSOLITEL_TipoSolicitudDA").HasKey(p => p.TN_IdTipoSolicitud);
             modelBuilder.Entity<TSOLITEL_TipoDatoDA>().ToTable("TSOLITEL_TipoDatoDA").HasKey(p => p.TN_IdTipoDato);
             modelBuilder.Entity<TSOLITEL_ProveedorDA>().ToTable("TSOLITEL_Proveedor").HasKey(p => p.TN_IdProveedor);
+            modelBuilder.Entity<TSOLITEL_OficinaDA>().ToTable("TSOLITEL_Oficina").HasKey(p => p.TN_IdOficina);
         }
     }
 }
