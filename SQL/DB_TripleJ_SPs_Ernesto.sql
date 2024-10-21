@@ -19,14 +19,16 @@ BEGIN
 
     BEGIN TRY
         SELECT 
-            TN_IdDelito,
-            TC_Nombre,
-            TC_Descripcion,
-            TN_IdCategoriaDelito,
-            TB_Borrado
-        FROM dbo.TSOLITEL_Delito WITH (NOLOCK)
-        WHERE (@pTN_IdDelito IS NULL OR TN_IdDelito = @pTN_IdDelito) 
-		AND TB_Borrado = 0 -- Filtro opcional
+            Delito.TN_IdDelito,
+            Delito.TC_Nombre,
+            Delito.TC_Descripcion,
+            Delito.TN_IdCategoriaDelito,
+            Delito.TB_Borrado
+        FROM dbo.TSOLITEL_Delito AS Delito WITH (NOLOCK)
+		INNER JOIN dbo.TSOLITEL_CategoriaDelito AS CatDelito WITH (NOLOCK)
+		ON Delito.TN_IdCategoriaDelito = CatDelito.TN_IdCategoriaDelito
+        WHERE (@pTN_IdDelito IS NULL OR Delito.TN_IdDelito = @pTN_IdDelito) 
+		AND (Delito.TB_Borrado = 0) AND (CatDelito.TB_Borrado = 0) -- Filtro opcional
         ORDER BY TN_IdDelito ASC;
     END TRY
     BEGIN CATCH

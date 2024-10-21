@@ -1,12 +1,14 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_CondicionDTO
+    public class DelitoDTO
     {
-        public int TN_IdCondicion { get; set; }
+        public int TN_IdDelito { get; set; }
 
         public string TC_Nombre { get; set; }
 
         public string TC_Descripcion { get; set; }
+
+        public int TN_IdCategoriaDelito { get; set; }
     }
 
 }
