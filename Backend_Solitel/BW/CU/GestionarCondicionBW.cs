@@ -32,5 +32,10 @@ namespace BW.CU
         {
             return await this.gestionarCondicionDA.obtenerCondicion();
         }
+
+        public async Task<Condicion> obtenerCondicion(int id)
+        {
+            return await this.gestionarCondicionDA.obtenerCondicion(id);
+        }
     }
 }

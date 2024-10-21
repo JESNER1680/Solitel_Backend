@@ -14,5 +14,7 @@ namespace BW.Interfaces.BW
         public Task<List<TipoSolicitud>> obtenerTipoSolicitud();
 
         public Task<TipoSolicitud> eliminarTipoSolicitud(int id);
+
+        public Task<TipoSolicitud> obtenerTipoSolicitud(int id);
     }
 }

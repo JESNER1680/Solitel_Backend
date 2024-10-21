@@ -59,6 +59,15 @@ builder.Services.AddDbContext<SolitelContext>(options =>
 });
 var app = builder.Build();
 
+//configuracion de cores
+app.UseCors("AllowOrigin");
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

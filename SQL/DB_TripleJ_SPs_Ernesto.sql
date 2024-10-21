@@ -52,6 +52,52 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
+-- Autor:			    Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Consulta los registros de la tabla TSOLITEL_Delito
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelitosPorCategoria
+    @pTN_IdCategoriaDelito INT = NULL  -- Parámetro opcional para filtrar por Id de Categoría
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            Delito.TN_IdDelito,
+            Delito.TC_Nombre,
+            Delito.TC_Descripcion,
+            Delito.TN_IdCategoriaDelito,
+            Delito.TB_Borrado
+        FROM dbo.TSOLITEL_Delito AS Delito WITH (NOLOCK)
+        INNER JOIN dbo.TSOLITEL_CategoriaDelito AS CatDelito WITH (NOLOCK)
+        ON Delito.TN_IdCategoriaDelito = CatDelito.TN_IdCategoriaDelito
+        WHERE (@pTN_IdCategoriaDelito IS NULL OR Delito.TN_IdCategoriaDelito = @pTN_IdCategoriaDelito)
+        AND (Delito.TB_Borrado = 0)  -- Aseguramos que no esté marcado como borrado
+        AND (CatDelito.TB_Borrado = 0)  -- Filtramos categorías no borradas
+        ORDER BY TN_IdDelito ASC;  -- Ordenamos por Id de Delito
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+        
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1; -- Indicar que la operación falló
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_Delito
@@ -770,18 +816,65 @@ BEGIN
 
     BEGIN TRY
         SELECT 
-            TN_IdSubModalidad,
-            TC_Nombre,
-            TC_Descripcion,
-            TN_IdModalida,
-            TB_Borrado
-        FROM dbo.TSOLITEL_SubModalidad WITH (NOLOCK)
-        WHERE (@pTN_IdSubModalidad IS NULL OR TN_IdSubModalidad = @pTN_IdSubModalidad)
-          AND TB_Borrado = 0  -- Solo mostrar submodalidades que no están borradas lógicamente
+            TSubModalidad.TN_IdSubModalidad,
+            TSubModalidad.TC_Nombre,
+            TSubModalidad.TC_Descripcion,
+            TSubModalidad.TN_IdModalida,
+            TSubModalidad.TB_Borrado
+        FROM dbo.TSOLITEL_SubModalidad AS TSubModalidad WITH (NOLOCK)
+		INNER JOIN dbo.TSOLITEL_Modalidad AS TModalidad WITH (NOLOCK)
+		ON TSubModalidad.TN_IdModalida = TModalidad.TN_IdModalidad
+        WHERE (@pTN_IdSubModalidad IS NULL OR TSubModalidad.TN_IdSubModalidad = @pTN_IdSubModalidad)
+          AND (TSubModalidad.TB_Borrado = 0) AND (TModalidad.TB_Borrado = 0)  -- Solo mostrar submodalidades que no están borradas lógicamente
         ORDER BY TN_IdSubModalidad ASC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		       Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Consulta los registros de la tabla TSOLITEL_SubModalidad
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSubModalidadPorModalidad
+    @pTN_IdModalidad INT = NULL  -- Parámetro opcional para filtrar por Id de Modalidad
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            TSubModalidad.TN_IdSubModalidad,
+            TSubModalidad.TC_Nombre,
+            TSubModalidad.TC_Descripcion,
+            TSubModalidad.TN_IdModalida,
+            TSubModalidad.TB_Borrado
+        FROM dbo.TSOLITEL_SubModalidad AS TSubModalidad WITH (NOLOCK)
+        INNER JOIN dbo.TSOLITEL_Modalidad AS TModalidad WITH (NOLOCK)
+        ON TSubModalidad.TN_IdModalida = TModalidad.TN_IdModalidad
+        WHERE (@pTN_IdModalidad IS NULL OR TSubModalidad.TN_IdModalida = @pTN_IdModalidad)
+          AND (TSubModalidad.TB_Borrado = 0) AND (TModalidad.TB_Borrado = 0)  -- Solo mostrar submodalidades que no están borradas lógicamente
+        ORDER BY TSubModalidad.TN_IdSubModalidad ASC;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT 
             @ErrorMessage = ERROR_MESSAGE(),
@@ -1033,8 +1126,8 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoDato
 -- =============================================
-CREATE PROCEDURE dbo.PA_InsertarTipoDato
-    @pTC_Nombre VARBINARY(50),
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoDato
+    @pTC_Nombre VARCHAR(50),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN

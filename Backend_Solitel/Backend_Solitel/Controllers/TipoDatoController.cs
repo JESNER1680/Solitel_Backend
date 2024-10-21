@@ -1,4 +1,5 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +58,29 @@ namespace Backend_Solitel.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al obtener los tipos de dato: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("obtenerTipoDato/{id}")]
+        public async Task<ActionResult<TipoDatoDTO>> ObtenerTipoDato(int id)
+        {
+            try
+            {
+                var tipoDato = await this.gestionarTipoDatoBW.obtenerTipoDato(id);
+                if (tipoDato != null)
+                {
+                    return Ok(tipoDato);
+                }
+                else
+                {
+                    return NotFound($"No se encontró un tipo de dato con el ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener el tipo de dato con ID {id}: {ex.Message}");
             }
         }
 

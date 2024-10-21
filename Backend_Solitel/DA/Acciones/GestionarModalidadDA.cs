@@ -117,5 +117,44 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al eliminar la modalidad: {ex.Message}", ex);
             }
         }
+
+        public async Task<Modalidad> obtenerModalidad(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar una modalidad por ID
+                var modalidadDA = await _context.TSOLITEL_ModalidadDA
+                    .FromSqlRaw("EXEC PA_ConsultarModalidad @pTN_IdModalidad = {0}", id)
+                    .ToListAsync();  // Obtener el resultado como lista
+
+                var modalidad = modalidadDA.FirstOrDefault();  // Obtener el primer elemento si hay uno
+
+                // Verificar si se encontró la modalidad
+                if (modalidad == null)
+                {
+                    throw new Exception($"No se encontró una modalidad con el ID {id}.");
+                }
+
+                // Mapear el resultado a la entidad Modalidad
+                var modalidadResult = new Modalidad
+                {
+                    TN_IdModalidad = modalidad.TN_IdModalidad,
+                    TC_Nombre = modalidad.TC_Nombre,
+                    TC_Descripcion = modalidad.TC_Descripcion
+                };
+
+                return modalidadResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la modalidad con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la modalidad con ID {id}: {ex.Message}", ex);
+            }
+        }
     }
 }

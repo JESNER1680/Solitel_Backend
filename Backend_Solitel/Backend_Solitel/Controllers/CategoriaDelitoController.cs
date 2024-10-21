@@ -67,6 +67,35 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        // Método para obtener una única categoría de delito por ID
+        [HttpGet]
+        [Route("obtenerCategoriaDelito/{id}")]
+        public async Task<ActionResult<CategoriaDelitoDTO>> ObtenerCategoriaDelito(int id)
+        {
+            try
+            {
+                // Llama al método para obtener una categoría por ID
+                var categoria = await this.gestionarCategoriaDelitoBW.obtenerCategoriaDelito(id);
+
+                // Verifica si la categoría fue encontrada
+                if (categoria != null)
+                {
+                    // Mapea la entidad a DTO y la retorna con el código 200 (OK)
+                    return Ok(CategoriaDelitoMapper.ToDTO(categoria));
+                }
+                else
+                {
+                    // Si no se encontró la categoría, devuelve 404 (NotFound)
+                    return NotFound($"No se encontró una categoría de delito con ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener la categoría de delito: {ex.Message}");
+            }
+        }
+
         // Método para eliminar (lógicamente) una categoría de delito
         [HttpDelete]
         [Route("eliminarCategoriaDelito/{id}")]

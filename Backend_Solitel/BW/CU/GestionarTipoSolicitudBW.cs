@@ -32,5 +32,10 @@ namespace BW.CU
         {
             return await this.gestionarTipoSolicitudDA.obtenerTipoSolicitud();
         }
+
+        public async Task<TipoSolicitud> obtenerTipoSolicitud(int id)
+        {
+            return await this.gestionarTipoSolicitudDA.obtenerTipoSolicitud(id);
+        }
     }
 }

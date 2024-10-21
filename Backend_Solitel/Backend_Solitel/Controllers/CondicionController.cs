@@ -1,4 +1,5 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,34 @@ namespace Backend_Solitel.Controllers
             {
                 // Manejo de errores
                 return StatusCode(500, $"Error al obtener las condiciones: {ex.Message}");
+            }
+        }
+
+        // Método para obtener una condición por ID
+        [HttpGet]
+        [Route("obtenerCondicion/{id}")]
+        public async Task<ActionResult<CondicionDTO>> ObtenerCondicion(int id)
+        {
+            try
+            {
+                // Llamada al método del servicio para obtener la condición por ID
+                var condicion = await this.gestionarCondicionBW.obtenerCondicion(id);
+
+                if (condicion != null)
+                {
+                    // Mapear la entidad Condicion al DTO y devolver la respuesta
+                    return Ok(condicion);
+                }
+                else
+                {
+                    // Si no se encuentra la condición, devolver un 404
+                    return NotFound($"No se encontró una condición con el ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener la condición con ID {id}: {ex.Message}");
             }
         }
 
