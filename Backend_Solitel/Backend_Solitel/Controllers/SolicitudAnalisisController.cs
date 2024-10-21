@@ -12,17 +12,15 @@ namespace Backend_Solitel.Controllers
     public class SolicitudAnalisisController : ControllerBase
     {
         private readonly IGestionarSolicitudAnalistaBW gestionarSolicitudAnalistaBW;
-        private readonly IGestionarRequerimientoAnalsisBW requerimientoAnalsisBW;
         
-        public SolicitudAnalisisController(IGestionarSolicitudAnalistaBW gestionarSolicitudAnalistaBW, IGestionarRequerimientoAnalsisBW requerimientoAnalsisBW)
+        public SolicitudAnalisisController(IGestionarSolicitudAnalistaBW gestionarSolicitudAnalistaBW)
         {
-            this.requerimientoAnalsisBW = requerimientoAnalsisBW;
             this.gestionarSolicitudAnalistaBW = gestionarSolicitudAnalistaBW;
         }
         [HttpPost]
         public async Task<bool> IngresarSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
         {
-            return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(solicitudAnalisis) && await this.requerimientoAnalsisBW.IngresarRequerimientoAnalisis(solicitudAnalisis.requerimentos);
+            return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(solicitudAnalisis);
         }
     }
 }

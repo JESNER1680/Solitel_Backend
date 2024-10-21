@@ -8,14 +8,9 @@ using System.Threading.Tasks;
 
 namespace DA.Acciones
 {
-    public class GestionarSolicitudAnalistaDA : IGestionarRequerimientoAnalisisDA
+    public class GestionarSolicitudAnalistaDA : IGestionarSolicitudAnalistaDA
     {
-        public Task<bool> EditarRequerimientoAnalisis(RequerimentoAnalisis requerimento)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> EliminarRequerimientoAnalisis(int idRequerimiento)
+        public Task<bool> CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
         {
             throw new NotImplementedException();
         }
