@@ -20,6 +20,114 @@ namespace DA.Acciones
         {
             this._context = _context;
         }
+
+        public async Task<List<DatoRequerido>> ConsultarDatosRequeridos(int idRequerimientoProveedor)
+        {
+            try
+            {
+                var idRequerimientoProveedorParam = new SqlParameter("@PN_IdRequerimientoProveedor", idRequerimientoProveedor);
+
+                // Ejecutar el procedimiento almacenado
+                var datosRequeridosDA = await _context.TSOLITEL_DatoRequeridoDA
+                    .FromSqlRaw("EXEC PA_ConsultarDatosRequeridos @PN_IdRequerimientoProveedor", idRequerimientoProveedorParam)
+                    .ToListAsync();
+
+                // Mapeo de los resultados
+                var datosRequeridos = datosRequeridosDA.Select(da => new DatoRequerido
+                {
+                    TN_IdDatoRequerido = da.TN_IdDatoRequerido,
+                    TC_DatoRequerido = da.TC_DatoRequerido,
+                    TC_Motivacion = da.TC_Motivacion,
+                    TN_IdTipoDato = da.TN_IdTipoDato
+
+                }).ToList();
+
+                return datosRequeridos;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener solicitudProveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<RequerimientoProveedor>> ConsultarRequerimientosProveedor(int idSolicitudProveedor)
+        {
+            try
+            {
+                var idSolicitudProveedorParam = new SqlParameter("@PN_IdSolicitudProveedor", idSolicitudProveedor);
+
+                // Ejecutar el procedimiento almacenado
+                var requerimientosProveedorDA = await _context.TSOLITEL_RequerimientoProveedorDA
+                    .FromSqlRaw("EXEC PA_ConsultarRequerimientosProveedor @PN_IdSolicitudProveedor", idSolicitudProveedorParam)
+                    .ToListAsync();
+
+                // Mapeo de los resultados
+                var requerimientosProveedor = requerimientosProveedorDA.Select(da => new RequerimientoProveedor
+                {
+                    TN_IdRequerimientoProveedor = da.TN_IdRequerimientoProveedor,
+                    TF_FechaFinal = da.TF_FechaFinal,
+                    TF_FechaInicio = da.TF_FechaInicio,
+                    TC_Requerimiento = da.TC_Requerimiento,
+                    TN_NumeroSolicitud = da.TN_NumeroSolicitud,
+                    datosRequeridos = new List<DatoRequerido>(),
+                    tipoSolicitudes = new List<TipoSolicitud>()
+
+                }).ToList();
+
+                return requerimientosProveedor;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener solicitudProveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<TipoSolicitud>> ConsultarTipoSolicitudes(int idRequerimientoProveedor)
+        {
+            try
+            {
+                var idRequerimientoProveedorParam = new SqlParameter("@PN_IdRequerimientoProveedor", idRequerimientoProveedor);
+
+                // Ejecutar el procedimiento almacenado
+                var tipoSolicitudesDA = await _context.TSOLITEL_TipoSolicitudDA
+                    .FromSqlRaw("EXEC PA_ConsultarTipoSolicitudes @PN_IdRequerimientoProveedor", idRequerimientoProveedorParam)
+                    .ToListAsync();
+
+                // Mapeo de los resultados
+                var tipoSolicitudes = tipoSolicitudesDA.Select(da => new TipoSolicitud
+                {
+                    TN_IdTipoSolicitud = da.TN_IdTipoSolicitud,
+                    TC_Nombre = da.TC_Nombre,
+                    TC_Descripcion = da.TC_Descripcion
+
+                }).ToList();
+
+                return tipoSolicitudes;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener solicitudProveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
+            }
+        }
+
         public async Task<bool> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
         {
             try

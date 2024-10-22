@@ -21,5 +21,21 @@ namespace Backend_Solitel.Utility
 
             return tipoSolicitudes;
         }
+
+        public static List<TipoSolicitudDTO> ToDTO(List<TipoSolicitud> tipoSolicitudesDTO)
+        {
+            List<TipoSolicitudDTO> tipoSolicitudes = new List<TipoSolicitudDTO>();
+            foreach (TipoSolicitud tipoSolicitudDTO in tipoSolicitudesDTO)
+            {
+                tipoSolicitudes.Add(new TipoSolicitudDTO
+                {
+                    TN_IdTipoSolicitud = tipoSolicitudDTO.TN_IdTipoSolicitud,
+                    TC_Nombre = tipoSolicitudDTO.TC_Nombre,
+                    TC_Descripcion = tipoSolicitudDTO.TC_Descripcion
+                });
+            }
+
+            return tipoSolicitudes;
+        }
     }
 }
