@@ -12,6 +12,49 @@ GO
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Delito
 -- =============================================
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelito
+    @pTN_IdDelito INT = NULL,       -- Parámetro opcional para filtrar por Id
+    @PageNumber INT = 1,            -- Número de página, por defecto 1
+    @PageSize INT = 10              -- Cantidad de registros por página, por defecto 10
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Calcular el OFFSET (cantidad de registros a saltar)
+        DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
+
+        -- Obtener los registros con paginación
+        SELECT 
+            Delito.TN_IdDelito,
+            Delito.TC_Nombre,
+            Delito.TC_Descripcion,
+            Delito.TN_IdCategoriaDelito,
+            Delito.TB_Borrado
+        FROM dbo.TSOLITEL_Delito AS Delito WITH (NOLOCK)
+        INNER JOIN dbo.TSOLITEL_CategoriaDelito AS CatDelito WITH (NOLOCK)
+        ON Delito.TN_IdCategoriaDelito = CatDelito.TN_IdCategoriaDelito
+        WHERE (@pTN_IdDelito IS NULL OR Delito.TN_IdDelito = @pTN_IdDelito)
+        AND Delito.TB_Borrado = 0
+        AND CatDelito.TB_Borrado = 0
+        ORDER BY TN_IdDelito ASC
+        OFFSET @Offset ROWS            -- Saltar el número de registros especificados
+        FETCH NEXT @PageSize ROWS ONLY; -- Obtener el siguiente conjunto de registros
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1; -- Indicar que la operación falló
+    END CATCH
+END
+Go
+
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelito
     @pTN_IdDelito INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
 BEGIN
