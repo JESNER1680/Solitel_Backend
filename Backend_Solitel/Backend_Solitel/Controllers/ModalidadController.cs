@@ -1,4 +1,5 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -59,6 +60,32 @@ namespace Backend_Solitel.Controllers
             {
                 // Manejo de errores
                 return StatusCode(500, $"Error al obtener las modalidades: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("obtenerModalidad/{id}")]
+        public async Task<ActionResult<ModalidadDTO>> ObtenerModalidad(int id)
+        {
+            try
+            {
+                // Llamar al método del servicio para obtener la modalidad por ID
+                var modalidad = await this.gestionarModalidadBW.obtenerModalidad(id);
+
+                // Verificar si se encontró la modalidad
+                if (modalidad != null)
+                {
+                    return Ok(modalidad);  // Mapear a DTO y retornar en la respuesta
+                }
+                else
+                {
+                    return NotFound($"No se encontró una modalidad con el ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, $"Error al obtener la modalidad con ID {id}: {ex.Message}");
             }
         }
 

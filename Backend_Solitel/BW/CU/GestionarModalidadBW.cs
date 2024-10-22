@@ -32,5 +32,10 @@ namespace BW.CU
         {
             return await this.gestionarModalidadDA.obtenerModalidad();
         }
+
+        public async Task<Modalidad> obtenerModalidad(int id)
+        {
+            return await this.gestionarModalidadDA.obtenerModalidad(id);
+        }
     }
 }

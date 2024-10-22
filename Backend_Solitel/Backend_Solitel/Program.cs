@@ -38,11 +38,31 @@ builder.Services.AddTransient<IGestionarTipoSolicitudDA, GestionarTipoSolicitudD
 builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
 builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
 
+<<<<<<< HEAD
 builder.Services.AddTransient<IGestionarSolicitudAnalistaBW, GestionarSolicitudAnalistaBW>();
 builder.Services.AddTransient<IGestionarSolicitudAnalistaDA, GestionarSolicitudAnalistaDA>();
 
 builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
 builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
+=======
+builder.Services.AddTransient<IGestionarTipoAnalisisBW, GestionarTipoAnalisisBW>();
+builder.Services.AddTransient<IGestionarTipoAnalisisDA, GestionarTipoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarSolicitudProveedorBW, GestionarSolicitudProveedorBW>();
+builder.Services.AddTransient<IGestionarSolicitudProveedorDA, GestionarSolicitudProveedorDA>();
+
+builder.Services.AddTransient<IGestionarRequerimientoProveedorBW, GestionarRequerimientoProveedorBW>();
+builder.Services.AddTransient<IGestionarRequerimientoProveedorDA, GestionarRequerimientoProveedorDA>();
+
+builder.Services.AddTransient<IGestionarProveedorBW, GestionarProveedorBW>();
+builder.Services.AddTransient<IGestionarProveedorDA, GestionarProveedorDA>();
+
+builder.Services.AddTransient<IGestionarOficinaBW, GestionarOficinaBW>();
+builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
+>>>>>>> origin/PreproducciÃ³n
 
 //Conexión a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
@@ -52,6 +72,15 @@ builder.Services.AddDbContext<SolitelContext>(options =>
     // Otros ajustes del contexto de base de datos pueden ser configurados aquí, si es necesario
 });
 var app = builder.Build();
+
+//configuracion de cores
+app.UseCors("AllowOrigin");
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

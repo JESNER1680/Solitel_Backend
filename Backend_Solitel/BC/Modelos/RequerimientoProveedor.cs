@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BC.Modelos
+﻿namespace BC.Modelos
 {
     public class RequerimientoProveedor
     {
@@ -17,6 +11,10 @@ namespace BC.Modelos
         public string TC_Requerimiento { get; set; }
 
         public int TN_NumeroSolicitud { get; set; }
+
+        public List<TipoSolicitud> tipoSolicitudes { get; set; }
+
+        public List<DatoRequerido> datosRequeridos { get; set; }
     }
 
 }
