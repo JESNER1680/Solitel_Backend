@@ -18,6 +18,11 @@ namespace BW.CU
             this.gestionarProveedorDA = gestionarProveedorDA;
         }
 
+        public async Task<Proveedor> ConsultarProveedor(int idProveedor)
+        {
+            return await this.gestionarProveedorDA.ConsultarProveedor(idProveedor);
+        }
+
         public Task<List<Proveedor>> ConsultarProveedores()
         {
             //Reglas de Negocio

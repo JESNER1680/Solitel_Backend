@@ -14,6 +14,45 @@ namespace DA.Acciones
         {
             this._context = solitelContext;
         }
+
+        public async Task<Proveedor> ConsultarProveedor(int idProveedor)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar el proveedor por ID
+                var proveedorData = await _context.TSOLITEL_ProveedorDA
+                    .FromSqlRaw("EXEC PA_ConsultarProveedorPorId @TN_IdProveedor = {0}", idProveedor)
+                    .ToListAsync();  // Convertir la consulta a una lista
+
+                var proveedor = proveedorData.FirstOrDefault();  // Obtener el primer elemento si existe
+
+                // Verificar si se encontró el proveedor
+                if (proveedor == null)
+                {
+                    throw new Exception($"No se encontró un proveedor con el ID {idProveedor}.");
+                }
+
+                // Mapear los resultados a la entidad Proveedor (si es necesario)
+                var proveedorEntidad = new Proveedor
+                {
+                    TN_IdProveedor = proveedor.TN_IdProveedor,
+                    TC_Nombre = proveedor.TC_Nombre
+                };
+
+                return proveedorEntidad;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener el proveedor con ID {idProveedor}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener el proveedor con ID {idProveedor}: {ex.Message}", ex);
+            }
+        }
+
         public async Task<List<Proveedor>> ConsultarProveedores()
         {
             try

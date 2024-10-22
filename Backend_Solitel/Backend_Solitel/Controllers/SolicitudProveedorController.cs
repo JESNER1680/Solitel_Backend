@@ -16,11 +16,15 @@ namespace Backend_Solitel.Controllers
 
         private readonly IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW;
 
+        private readonly IGestionarProveedorBW gestionarProveedorBW;
+
         public SolicitudProveedorController(IGestionarSolicitudProveedorBW gestionarSolicitudProveedorBW,
-            IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW)
+            IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW,
+            IGestionarProveedorBW gestionarProveedorBW)
         {
             this.gestionarRequerimientoProveedorBW = gestionarRequerimientoProveedorBW;
             this.gestionarSolicitudProveedorBW = gestionarSolicitudProveedorBW;
+            this.gestionarProveedorBW = gestionarProveedorBW;
         }
 
         [HttpPost]
@@ -48,13 +52,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("consultarSolicitudesProveedor")]
+        [Route("consultarSolicitudesProveedor/{pageNumber}/{pageSize}")]
         public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor(int pageNumber, int pageSize)
         {
             var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor(pageNumber, pageSize));
 
             foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
             {
+
                 solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
                     .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
 
@@ -63,8 +68,10 @@ namespace Backend_Solitel.Controllers
                     requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.TN_IdRequerimientoProveedor));
 
                     requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.TN_IdRequerimientoProveedor));
+
                 }
             }
+
             return solicitudesProveedor;
         }
 

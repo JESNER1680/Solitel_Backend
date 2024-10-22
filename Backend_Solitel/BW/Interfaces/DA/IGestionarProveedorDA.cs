@@ -14,5 +14,7 @@ namespace BW.Interfaces.DA
         public Task<List<Proveedor>> ConsultarProveedores();
 
         public Task<bool> EliminarProveedor(int idProveedor);
+
+        public Task<Proveedor> ConsultarProveedor(int idProveedor);
     }
 }
