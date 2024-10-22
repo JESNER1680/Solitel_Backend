@@ -9,6 +9,8 @@
         public string TC_Motivacion { get; set; }
 
         public int TN_IdTipoDato { get; set; }
+
+        //public int TN_IdTipoDato { get; set; }
     }
 
 }

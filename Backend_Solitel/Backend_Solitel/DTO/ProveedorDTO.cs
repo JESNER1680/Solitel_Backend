@@ -1,6 +1,6 @@
 ﻿namespace Backend_Solitel.DTO
 {
-    public class TSOLITEL_ProveedorDTO
+    public class ProveedorDTO
     {
         public int TN_IdProveedor { get; set; }
 
