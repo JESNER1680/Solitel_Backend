@@ -18,17 +18,24 @@ namespace BW.CU
             this.gestionarFiscaliaDA = gestionarFiscaliaDA;
         }
 
+        public async Task<Fiscalia> eliminarFiscalia(int id)
+        {
+            return await this.gestionarFiscaliaDA.eliminarFiscalia(id);
+        }
+
         public async Task<bool> insertarFiscalia(string nombre)
         {
-
-            //llamar a reglas de negocio aqui
             return await this.gestionarFiscaliaDA.insertarFiscalia(nombre);
         }
 
-        public List<Fiscalia> obtenerFiscalias()
+        public async Task<Fiscalia> obtenerFiscalia(int id)
         {
-            //llamar a reglas de negocio aqui
-            return this.gestionarFiscaliaDA.obtenerFiscalias();
+            return await this.gestionarFiscaliaDA.obtenerFiscalia(id);
+        }
+
+        public async Task<List<Fiscalia>> obtenerFiscalias()
+        {
+            return await this.gestionarFiscaliaDA.obtenerFiscalias();
         }
     }
 }
