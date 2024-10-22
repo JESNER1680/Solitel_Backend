@@ -16,8 +16,8 @@ namespace DA.Entidades
         [Required]
         public int TN_IdSolicitudProveedor { get; set; }
 
-        public int? TN_NumeroUnico { get; set; }
-        public int? TN_NumeroCaso { get; set; }
+        public int TN_NumeroUnico { get; set; }
+        public int TN_NumeroCaso { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -48,29 +48,48 @@ namespace DA.Entidades
         [Required]
         public int TN_IdUsuarioCreador { get; set; }
 
+        public string TC_NombreUsuarioCreador { get;set; }
+
         [Required]
         public int TN_IdDelito { get; set; }
+
+        public string TC_NombreDelito { get; set; }
+
 
         [Required]
         public int TN_IdCategoriaDelito { get; set; }
 
+        public string TC_NombreCategoriaDelito { get; set; }
+
         [Required]
-        public int TN_IdModalida { get; set; }
+        public int TN_IdModalidad { get; set; }
+
+        public string TC_NombreModalidad { get; set; }
 
         [Required]
         public int TN_IdEstado { get; set; }
 
+        public string TC_NombreEstado { get; set; }
+
         [Required]
         public int TN_IdProveedor { get; set; }
+
+        public string TC_NombreProveedor { get; set; }
 
         [Required]
         public int TN_IdFiscalia { get; set; }
 
+        public string TC_NombreFiscalia { get; set; }
+
         [Required]
         public int TN_IdOficina { get; set; }
 
+        public string TC_NombreOficina { get; set; }
+
         [Required]
         public int TN_IdSubModalidad { get; set; }
+
+        public string TC_NombreSubModalidad { get;set; }
 
         [ForeignKey("TN_IdCategoriaDelito")]
         public virtual TSOLITEL_CategoriaDelitoDA CategoriaDelito { get; set; }
@@ -84,7 +103,7 @@ namespace DA.Entidades
         [ForeignKey("TN_IdFiscalia")]
         public virtual TSOLITEL_FiscaliaDA Fiscalia { get; set; }
 
-        [ForeignKey("TN_IdModalida")]
+        [ForeignKey("TN_IdModalidad")]
         public virtual TSOLITEL_ModalidadDA Modalidad { get; set; }
 
         [ForeignKey("TN_IdOficina")]

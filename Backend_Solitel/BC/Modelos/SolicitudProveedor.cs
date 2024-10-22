@@ -1,33 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BC.Modelos
+﻿namespace BC.Modelos
 {
     public class SolicitudProveedor
     {
-        public int TN_IdSolicitudProveedor { get; set; }
-        public int TN_NumeroUnico { get; set; }
-        public int TN_NumeroCaso { get; set; }
-        public string TC_Imputado { get; set; }
-        public string TC_Ofendido { get; set; }
-        public string? TC_Resennia { get; set; }
-        public int TN_DiasTranscurridos { get; set; }
-        public bool TB_Urgente { get; set; }
-        public bool TB_Aprobado { get; set; }
-        public DateTime TF_FechaCrecion { get; set; }
-        public DateTime TF_FechaModificacion { get; set; }
-        public int TN_IdUsuarioCreador { get; set; }
-        public int TN_IdDelito { get; set; }
-        public int TN_IdCategoriaDelito { get; set; }
-        public int TN_IdModalida { get; set; }
-        public int TN_IdEstado { get; set; }
-        public int TN_IdProveedor { get; set; }
-        public int TN_IdFiscalia { get; set; }
-        public int TN_IdOficina { get; set; }
-        public int TN_IdSubModalidad { get; set; }
+        public int IdSolicitudProveedor { get; set; }
+        public int NumeroUnico { get; set; }
+        public int NumeroCaso { get; set; }
+        public string Imputado { get; set; }
+        public string Ofendido { get; set; }
+        public string? Resennia { get; set; }
+        public int DiasTranscurridos { get; set; }
+        public bool Urgente { get; set; }
+        public bool Aprobado { get; set; }
+        public DateTime FechaCrecion { get; set; }
+        public DateTime FechaModificacion { get; set; }
+        public Usuario UsuarioCreador { get; set; }
+        public Delito Delito { get; set; }
+        public CategoriaDelito CategoriaDelito { get; set; }
+        public Estado Estado { get; set; }
+        public Fiscalia Fiscalia { get; set; }
+        public Oficina Oficina { get; set; }
+        public Modalidad Modalidad { get; set; }
+        public SubModalidad SubModalidad { get; set; }
+        public Proveedor Proveedor { get; set; }
+
     }
 
 }
