@@ -23,7 +23,7 @@ namespace Backend_Solitel.Controllers
             return await this.gestionarObjetivoAnalisisBW.InsertarObjetivoAnalisis(ObjetivoAnalisisMapper.ToModel(objetivoAnalisisDTO));
         }
 
-        [HttpPut]
+        [HttpDelete]
         [Route("eliminarObjetivoAnalisis")]
         public async Task<bool> EliminarObjetivoAnalisis(int idObjetivoAnalisis)
         {

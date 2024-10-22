@@ -26,11 +26,11 @@ namespace DA.Acciones
             try
             {
                 // Definir el parámetro para el procedimiento almacenado
-                var idObjetivoAnalisisParam = new SqlParameter("@PC_IdObjetivoAnalisis", idObjetivoAnalisis);
+                var idObjetivoAnalisisParam = new SqlParameter("@PN_IdObjetivoAnalisis", idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado para eliminar (lógicamente)
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_EliminarObjetivoAnalisis @PC_IdObjetivoAnalisis", idObjetivoAnalisisParam);
+                    "EXEC PA_EliminarObjetivoAnalisis @PN_IdObjetivoAnalisis", idObjetivoAnalisisParam);
 
                 var resultado = await _context.SaveChangesAsync();
 
