@@ -18,6 +18,21 @@ namespace BW.CU
             this.gestionarRequerimientoProveedorDA = gestionarRequerimientoProveedorDA;
         }
 
+        public async Task<List<DatoRequerido>> ConsultarDatosRequeridos(int idRequerimientoProveedor)
+        {
+            return await this.gestionarRequerimientoProveedorDA.ConsultarDatosRequeridos(idRequerimientoProveedor);
+        }
+
+        public async Task<List<RequerimientoProveedor>> ConsultarRequerimientosProveedor(int idSolicitudProveedor)
+        {
+            return await this.gestionarRequerimientoProveedorDA.ConsultarRequerimientosProveedor(idSolicitudProveedor);
+        }
+
+        public Task<List<TipoSolicitud>> ConsultarTipoSolicitudes(int idRequerimientoProveedor)
+        {
+            return this.gestionarRequerimientoProveedorDA.ConsultarTipoSolicitudes(idRequerimientoProveedor);
+        }
+
         public async Task<bool> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
         {
             //Reglas de Negocio

@@ -21,5 +21,22 @@ namespace Backend_Solitel.Utility
 
             return datosRequeridos;
         }
+
+        public static List<DatoRequeridoDTO> ToDTO(List<DatoRequerido> datosRequeridos)
+        {
+            List<DatoRequeridoDTO> datosRequeridosDTO = new List<DatoRequeridoDTO>();
+            foreach (DatoRequerido datoRequerido in datosRequeridos)
+            {
+                datosRequeridosDTO.Add(new DatoRequeridoDTO
+                {
+                    TN_IdDatoRequerido = datoRequerido.TN_IdDatoRequerido,
+                    TC_DatoRequerido = datoRequerido.TC_DatoRequerido,
+                    TC_Motivacion = datoRequerido.TC_Motivacion,
+                    TN_IdTipoDato = datoRequerido.TN_IdTipoDato
+                });
+            }
+
+            return datosRequeridosDTO;
+        }
     }
 }

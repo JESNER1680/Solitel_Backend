@@ -6,7 +6,6 @@ namespace Backend_Solitel.Utility
 {
     public static class SolicitudProveedorMapper
     {
-        // Mapeo de SolicitudProveedorDTO a SolicitudProveedor
         public static SolicitudProveedor ToModel(SolicitudProveedorDTO solicitudProveedorDTO, int idProveedor)
         {
             if (solicitudProveedorDTO == null)
@@ -16,38 +15,64 @@ namespace Backend_Solitel.Utility
 
             return new SolicitudProveedor
             {
-                TN_IdSolicitudProveedor = 0,
-                TN_NumeroUnico = solicitudProveedorDTO.NumeroUnico,
-                TN_NumeroCaso= solicitudProveedorDTO.NumeroCaso,
-                TC_Imputado = solicitudProveedorDTO.Imputado,
-                TC_Ofendido = solicitudProveedorDTO.Ofendido,
-                TC_Resennia = solicitudProveedorDTO.Resennia,
-                TN_DiasTranscurridos = 0,
-                TB_Urgente = solicitudProveedorDTO.Urgente,
-                TB_Aprobado = false,
-                TF_FechaCrecion = fechaActual,
-                TF_FechaModificacion = fechaActual,
-                TN_IdUsuarioCreador = solicitudProveedorDTO.IdUsuarioCreador,
-                TN_IdDelito = solicitudProveedorDTO.IdDelito,
-                TN_IdCategoriaDelito = solicitudProveedorDTO.IdCategoriaDelito,
-                TN_IdModalida = solicitudProveedorDTO.IdModalida,
-                TN_IdEstado = solicitudProveedorDTO.IdEstado,
-                TN_IdProveedor = idProveedor,
-                TN_IdFiscalia = solicitudProveedorDTO.IdFiscalia,
-                TN_IdOficina = solicitudProveedorDTO.IdOficina,
-                TN_IdSubModalidad = solicitudProveedorDTO.IdSubModalidad
+                IdSolicitudProveedor = 0,
+                NumeroUnico = solicitudProveedorDTO.NumeroUnico,
+                NumeroCaso= solicitudProveedorDTO.NumeroCaso,
+                Imputado = solicitudProveedorDTO.Imputado,
+                Ofendido = solicitudProveedorDTO.Ofendido,
+                Resennia = solicitudProveedorDTO.Resennia,
+                DiasTranscurridos = 0,
+                Urgente = solicitudProveedorDTO.Urgente,
+                Aprobado = false,
+                FechaCrecion = fechaActual,
+                FechaModificacion = fechaActual,
+                UsuarioCreador = UsuarioMapper.ToModel(solicitudProveedorDTO.UsuarioCreador),
+                Delito = DelitoMapper.ToModel(solicitudProveedorDTO.Delito),
+                CategoriaDelito = CategoriaDelitoMapper.ToModel(solicitudProveedorDTO.CategoriaDelito),
+                Modalidad = ModalidadMapper.ToModel(solicitudProveedorDTO.Modalidad),
+                Estado = EstadoMapper.ToModel(solicitudProveedorDTO.Estado),
+                Proveedor = new Proveedor { TN_IdProveedor = idProveedor, TC_Nombre = "" },
+                Fiscalia = FiscaliaMapper.ToModel(solicitudProveedorDTO.Fiscalia),
+                Oficina = OficinaMapper.ToModel(solicitudProveedorDTO.Oficina),
+                SubModalidad = SubModalidadMapper.ToModel(solicitudProveedorDTO.SubModalidad)
             };
         }
 
-        public static TSOLITEL_SolicitudProveedorDA toEntity(SolicitudAnalisis solicitudAnalisis)
+        public static SolicitudProveedorDTO ToDTO(SolicitudProveedor solicitudProveedor)
         {
-            if (solicitudAnalisis == null)
+            if (solicitudProveedor == null)
                 return null;
 
-            return new TSOLITEL_SolicitudProveedorDA
-            {
 
+            return new SolicitudProveedorDTO
+            {
+                IdSolicitudProveedor = solicitudProveedor.IdSolicitudProveedor,
+                NumeroUnico = solicitudProveedor.NumeroUnico,
+                NumeroCaso = solicitudProveedor.NumeroCaso,
+                Imputado = solicitudProveedor.Imputado,
+                Ofendido = solicitudProveedor.Ofendido,
+                Resennia = solicitudProveedor.Resennia,
+                Urgente = solicitudProveedor.Urgente,
+                UsuarioCreador = UsuarioMapper.ToDTO(solicitudProveedor.UsuarioCreador),
+                Delito = DelitoMapper.ToDTO(solicitudProveedor.Delito),
+                CategoriaDelito = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
+                Modalidad = ModalidadMapper.ToDTO(solicitudProveedor.Modalidad),
+                Estado = EstadoMapper.ToDTO(solicitudProveedor.Estado),
+                Fiscalia = FiscaliaMapper.ToDTO(solicitudProveedor.Fiscalia),
+                Oficina = OficinaMapper.ToDTO(solicitudProveedor.Oficina),
+                SubModalidad = SubModalidadMapper.ToDTO(solicitudProveedor.SubModalidad),
+                Requerimientos = new List<RequerimientoProveedorDTO>(),
+                Operadoras = new List<ProveedorDTO>()
             };
         }
+
+        public static List<SolicitudProveedorDTO> ToDTO(List<SolicitudProveedor> solicitudesProveedor)
+        {
+            if (solicitudesProveedor == null)
+                return null;
+
+            return solicitudesProveedor.Select(c => SolicitudProveedorMapper.ToDTO(c)).ToList();
+        }
+
     }
 }

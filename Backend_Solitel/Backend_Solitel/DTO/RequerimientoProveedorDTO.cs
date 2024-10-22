@@ -14,7 +14,6 @@
 
         public List<DatoRequeridoDTO> datosRequeridos { get; set; }
 
-        //public int TN_NumeroSolicitud { get; set; }
     }
 
 }

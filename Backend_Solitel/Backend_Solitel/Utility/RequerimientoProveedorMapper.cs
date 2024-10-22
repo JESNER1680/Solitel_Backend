@@ -19,5 +19,27 @@ namespace Backend_Solitel.Utility
 
             };
         }
+
+        public static RequerimientoProveedorDTO ToDTO(RequerimientoProveedor requerimientoProveedor, int idSolicitudProveedor)
+        {
+            return new RequerimientoProveedorDTO
+            {
+                TN_IdRequerimientoProveedor = requerimientoProveedor.TN_IdRequerimientoProveedor,
+                TF_FechaInicio = requerimientoProveedor.TF_FechaInicio,
+                TF_FechaFinal = requerimientoProveedor.TF_FechaFinal,
+                TC_Requerimiento = requerimientoProveedor.TC_Requerimiento,
+                tipoSolicitudes = TipoSolicitudMapper.ToDTO(requerimientoProveedor.tipoSolicitudes),
+                datosRequeridos = DatoRequeridoMapper.ToDTO(requerimientoProveedor.datosRequeridos)
+
+            };
+        }
+
+        public static List<RequerimientoProveedorDTO> ToDTO(List<RequerimientoProveedor> requerimientosProveedor, int idSolicitudProveedor)
+        {
+            if (requerimientosProveedor == null)
+                return null;
+
+            return requerimientosProveedor.Select(c => RequerimientoProveedorMapper.ToDTO(c, idSolicitudProveedor)).ToList();
+        }
     }
 }

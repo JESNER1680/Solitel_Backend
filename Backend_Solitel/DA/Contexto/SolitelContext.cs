@@ -32,6 +32,12 @@ namespace DA.Contexto
 
         public DbSet<TSOLITEL_OficinaDA> TSOLITEL_OficinaDA { get; set; }
 
+        public DbSet<TSOLITEL_SolicitudProveedorDA> TSOLITEL_SolicitudProveedorDA { get; set; }
+
+        public DbSet<TSOLITEL_RequerimientoProveedorDA> TSOLITEL_RequerimientoProveedorDA { get; set; }
+
+        public DbSet<TSOLITEL_DatoRequeridoDA> TSOLITEL_DatoRequeridoDA { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TSOLITEL_FiscaliaDA>().ToTable("TSOLITEL_Fiscalia").HasKey(p => p.TN_IdFiscalia);
@@ -44,6 +50,9 @@ namespace DA.Contexto
             modelBuilder.Entity<TSOLITEL_TipoDatoDA>().ToTable("TSOLITEL_TipoDatoDA").HasKey(p => p.TN_IdTipoDato);
             modelBuilder.Entity<TSOLITEL_ProveedorDA>().ToTable("TSOLITEL_Proveedor").HasKey(p => p.TN_IdProveedor);
             modelBuilder.Entity<TSOLITEL_OficinaDA>().ToTable("TSOLITEL_Oficina").HasKey(p => p.TN_IdOficina);
+            modelBuilder.Entity<TSOLITEL_SolicitudProveedorDA>().ToTable("TSOLITEL_SolicitudProveedor").HasKey(p => p.TN_IdSolicitudProveedor);
+            modelBuilder.Entity<TSOLITEL_RequerimientoProveedorDA>().ToTable("TSOLITEL_RequerimientoProveedor").HasKey(p => p.TN_IdRequerimientoProveedor);
+            modelBuilder.Entity<TSOLITEL_DatoRequeridoDA>().ToTable("TSOLITEL_DatoRequerido").HasKey(p => p.TN_IdDatoRequerido);
         }
     }
 }
