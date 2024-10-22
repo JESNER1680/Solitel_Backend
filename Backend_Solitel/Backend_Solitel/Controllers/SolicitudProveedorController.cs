@@ -16,7 +16,7 @@ namespace Backend_Solitel.Controllers
 
         private readonly IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW;
 
-        public SolicitudProveedorController(IGestionarSolicitudProveedorBW gestionarSolicitudProveedorBW, 
+        public SolicitudProveedorController(IGestionarSolicitudProveedorBW gestionarSolicitudProveedorBW,
             IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW)
         {
             this.gestionarRequerimientoProveedorBW = gestionarRequerimientoProveedorBW;
@@ -33,7 +33,7 @@ namespace Backend_Solitel.Controllers
                 int idSolicitudCreada = await this.gestionarSolicitudProveedorBW
                     .InsertarSolicitudProveedor(SolicitudProveedorMapper.ToModel(solicitudProveedorDTO, proveedorDTO.TN_IdProveedor));
 
-                if(idSolicitudCreada != 0)
+                if (idSolicitudCreada != 0)
                 {
                     foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
                     {
@@ -41,7 +41,7 @@ namespace Backend_Solitel.Controllers
                             .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO, idSolicitudCreada));
                     }
                 }
-                
+
             }
 
             return true;
@@ -66,6 +66,21 @@ namespace Backend_Solitel.Controllers
                 }
             }
             return solicitudesProveedor;
+        }
+
+        [HttpGet]
+        [Route("listarNumerosUnicosTramitados")]
+        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        {
+            return await this.gestionarSolicitudProveedorBW.ListarNumerosUnicosTramitados();
+        }
+
+        [HttpGet]
+        [Route("consultarSolicitudesProveedorPorNumeroUnico")]
+        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        {
+            List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
+            return SolicitudProveedorMapper.FiltrarListaSolicitudesProveedor(solicitudes);
         }
     }
 }

@@ -20,10 +20,20 @@ namespace BW.CU
             gestionarSolicitudProveedorDA = dA;
         }
 
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        {
+            return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
+        }
+
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor)
         {
             //Aplicar reglas de negocio
             return this.gestionarSolicitudProveedorDA.InsertarSolicitudProveedor(solicitudProveedor);
+        }
+
+        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        {
+            return await this.gestionarSolicitudProveedorDA.ListarNumerosUnicosTramitados();
         }
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)

@@ -74,5 +74,20 @@ namespace Backend_Solitel.Utility
             return solicitudesProveedor.Select(c => SolicitudProveedorMapper.ToDTO(c)).ToList();
         }
 
+        public static List<SolicitudFiltradaProveedorDTO> FiltrarListaSolicitudesProveedor(List<SolicitudProveedor> solicitudesProveedor)
+        {
+            List<SolicitudFiltradaProveedorDTO> listaFiltrada = new List<SolicitudFiltradaProveedorDTO>();
+            foreach (SolicitudProveedor solicitudProveedor in solicitudesProveedor)
+            {
+                listaFiltrada.Add(new SolicitudFiltradaProveedorDTO
+                {
+                    IdSolicitudProveedor = solicitudProveedor.IdSolicitudProveedor,
+                    NombreProveedor = solicitudProveedor.Proveedor.TC_Nombre,
+                    NumeroUnico = solicitudProveedor.NumeroUnico
+                });
+            }
+            return listaFiltrada;
+        }
+
     }
 }
