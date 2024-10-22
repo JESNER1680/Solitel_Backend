@@ -32,7 +32,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminarOficina")]
+        [Route("eliminarOficina/{idOficina}")]
         public async Task<bool> EliminarOficina(int idOficina)
         {
             return await this.gestionarOficinaBW.EliminarOficina(idOficina);

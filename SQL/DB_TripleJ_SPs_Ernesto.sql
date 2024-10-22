@@ -12,6 +12,49 @@ GO
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Delito
 -- =============================================
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelito
+    @pTN_IdDelito INT = NULL,       -- Parámetro opcional para filtrar por Id
+    @PageNumber INT = 1,            -- Número de página, por defecto 1
+    @PageSize INT = 10              -- Cantidad de registros por página, por defecto 10
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Calcular el OFFSET (cantidad de registros a saltar)
+        DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
+
+        -- Obtener los registros con paginación
+        SELECT 
+            Delito.TN_IdDelito,
+            Delito.TC_Nombre,
+            Delito.TC_Descripcion,
+            Delito.TN_IdCategoriaDelito,
+            Delito.TB_Borrado
+        FROM dbo.TSOLITEL_Delito AS Delito WITH (NOLOCK)
+        INNER JOIN dbo.TSOLITEL_CategoriaDelito AS CatDelito WITH (NOLOCK)
+        ON Delito.TN_IdCategoriaDelito = CatDelito.TN_IdCategoriaDelito
+        WHERE (@pTN_IdDelito IS NULL OR Delito.TN_IdDelito = @pTN_IdDelito)
+        AND Delito.TB_Borrado = 0
+        AND CatDelito.TB_Borrado = 0
+        ORDER BY TN_IdDelito ASC
+        OFFSET @Offset ROWS            -- Saltar el número de registros especificados
+        FETCH NEXT @PageSize ROWS ONLY; -- Obtener el siguiente conjunto de registros
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1; -- Indicar que la operación falló
+    END CATCH
+END
+Go
+
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelito
     @pTN_IdDelito INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
 BEGIN
@@ -1273,6 +1316,171 @@ BEGIN
             @ErrorSeverity = ERROR_SEVERITY(),
             @ErrorState = ERROR_STATE();
 
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:			    Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-21
+-- Descripción:		    Consulta los registros de la tabla TSOLITEL_Fiscalia
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarFiscalia
+    @pTN_IdFiscalia INT = NULL  -- Parámetro opcional para filtrar por Id
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            Fiscalia.TN_IdFiscalia,
+            Fiscalia.TC_Nombre,
+            Fiscalia.TB_Borrado
+        FROM dbo.TSOLITEL_Fiscalia AS Fiscalia WITH (NOLOCK)
+        WHERE (@pTN_IdFiscalia IS NULL OR Fiscalia.TN_IdFiscalia = @pTN_IdFiscalia) 
+		AND (Fiscalia.TB_Borrado = 0)  -- Filtro para registros no eliminados
+        ORDER BY TN_IdFiscalia ASC;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+        
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1; -- Indicar que la operación falló
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:			    Ernesto Vega Rodriguez		        
+-- Fecha de creación: 	2024-10-21
+-- Descripción:		    Inserta un registro en la tabla TSOLITEL_Fiscalia
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarFiscalia
+    @pTC_Nombre VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+    
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        INSERT INTO dbo.TSOLITEL_Fiscalia
+            (TC_Nombre, TB_Borrado)
+        VALUES
+            (@pTC_Nombre, 0);
+        
+        -- Comprobar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0
+        BEGIN
+            -- Hacer rollback si hay un error
+            ROLLBACK TRANSACTION;
+            RETURN -1;  -- Salir del procedimiento si hubo un error
+        END
+
+        -- Si todo salió bien, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        IF @@TRANCOUNT > 0
+        BEGIN
+            -- Si la transacción sigue activa, revertir
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Levantar el error
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+        
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-21
+-- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_Fiscalia
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_EliminarFiscalia
+    @pTN_IdFiscalia INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Eliminar de forma lógica cambiando TB_Borrado a 1
+        UPDATE dbo.TSOLITEL_Fiscalia
+        SET TB_Borrado = 1
+        WHERE TN_IdFiscalia = @pTN_IdFiscalia;
+
+        -- Comprobar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            -- Hacer rollback si hay un error o si no se encontró el registro
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;  -- Salir del procedimiento si hubo un error
+        END
+
+        -- Si todo salió bien, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        IF @@TRANCOUNT > 0
+        BEGIN
+            -- Si la transacción sigue activa, revertir
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Levantar el error
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+        
         RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
         RETURN -1;
     END CATCH

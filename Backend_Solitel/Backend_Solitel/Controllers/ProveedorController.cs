@@ -32,7 +32,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminarProveedor")]
+        [Route("eliminarProveedor/{idProveedor}")]
         public async Task<bool> EliminarProveedor(int idProveedor)
         {
             return await this.gestionarProveedorBW.EliminarProveedor(idProveedor);
