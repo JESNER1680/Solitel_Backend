@@ -44,7 +44,7 @@ namespace Backend_Solitel.Utility
                 return null;
 
 
-            return new SolicitudProveedorDTO
+            var solicitudProveedorDTO = new SolicitudProveedorDTO
             {
                 IdSolicitudProveedor = solicitudProveedor.IdSolicitudProveedor,
                 NumeroUnico = solicitudProveedor.NumeroUnico,
@@ -64,6 +64,11 @@ namespace Backend_Solitel.Utility
                 Requerimientos = new List<RequerimientoProveedorDTO>(),
                 Operadoras = new List<ProveedorDTO>()
             };
+
+
+            solicitudProveedorDTO.Operadoras.Add(ProveedorMapper.ToDTO(solicitudProveedor.Proveedor));
+
+            return solicitudProveedorDTO;
         }
 
         public static List<SolicitudProveedorDTO> ToDTO(List<SolicitudProveedor> solicitudesProveedor)
