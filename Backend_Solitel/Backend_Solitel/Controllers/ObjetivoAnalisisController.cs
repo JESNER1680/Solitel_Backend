@@ -29,5 +29,11 @@ namespace Backend_Solitel.Controllers
         {
             return await this.gestionarObjetivoAnalisisBW.EliminarObjetivoAnalisis(idObjetivoAnalisis);
         }
+        [HttpGet]
+        [Route("obtenerObjetivoAnalisis")]
+        public async Task<List<ObjetivoAnalisisDTO>>ObtenerObjetivoAnalisis(int idObtenerObjetivoAnalisis){
+            var ObjetivosObtenidos = await this.gestionarObjetivoAnalisisBW.ObtenerObjetivoAnalisis(idObtenerObjetivoAnalisis);
+            return Utility.ObjetivoAnalisisMapper.ToDTOS(ObjetivosObtenidos);
+        }
     }
 }

@@ -18,9 +18,9 @@ namespace Backend_Solitel.Controllers
             this.gestionarSolicitudAnalistaBW = gestionarSolicitudAnalistaBW;
         }
         [HttpPost]
-        public async Task<bool> IngresarSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
+        public async Task<bool> IngresarSolicitudAnalista(SolicitudAnalisisDTO solicitudAnalisis)
         {
-            return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(solicitudAnalisis);
+            return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(Utility.SolicitudAnalisisMapper.ToModel(solicitudAnalisis));
         }
     }
 }
