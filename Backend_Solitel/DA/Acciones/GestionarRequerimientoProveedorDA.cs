@@ -74,7 +74,7 @@ namespace DA.Acciones
                     TF_FechaFinal = da.TF_FechaFinal,
                     TF_FechaInicio = da.TF_FechaInicio,
                     TC_Requerimiento = da.TC_Requerimiento,
-                    TN_NumeroSolicitud = da.TN_NumeroSolicitud,
+                    TN_NumeroSolicitud = 0,
                     datosRequeridos = new List<DatoRequerido>(),
                     tipoSolicitudes = new List<TipoSolicitud>()
 
@@ -128,7 +128,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<bool> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
+        public async Task<int> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
         {
             try
             {
@@ -136,7 +136,6 @@ namespace DA.Acciones
                 var fechaInicioParam = new SqlParameter("@PF_FechaInicio", requerimientoProveedor.TF_FechaInicio);
                 var fechaFinalParam = new SqlParameter("@PF_FechaFinal", requerimientoProveedor.TF_FechaFinal);
                 var requerimientoParam = new SqlParameter("@PC_Requerimiento", requerimientoProveedor.TC_Requerimiento);
-                var idSolicitudProveedorParam = new SqlParameter("@PN_IdSolicitudProveedor", requerimientoProveedor.TN_NumeroSolicitud);
 
                 var idRequerimientoInsertadoParam = new SqlParameter("@IdRequerimientoInsertado", System.Data.SqlDbType.Int)
                 {
@@ -145,8 +144,8 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsetarRequerimientoProveedor @PF_FechaInicio, @PF_FechaFinal, @PC_Requerimiento, @PN_IdSolicitudProveedor, @IdRequerimientoInsertado OUTPUT",
-                    fechaInicioParam, fechaFinalParam, requerimientoParam, idSolicitudProveedorParam, idRequerimientoInsertadoParam);
+                    "EXEC PA_InsertarRequerimientoProveedor @PF_FechaInicio, @PF_FechaFinal, @PC_Requerimiento, @IdRequerimientoInsertado OUTPUT",
+                    fechaInicioParam, fechaFinalParam, requerimientoParam, idRequerimientoInsertadoParam);
 
                 
 
@@ -177,7 +176,6 @@ namespace DA.Acciones
                 }
 
                 var resultadoRequerimiento = await _context.SaveChangesAsync();
-                //var resultadoDatosRequerimiento = await _context.SaveChangesAsync();
 
 
                 if (resultadoRequerimiento < 0)
@@ -185,7 +183,7 @@ namespace DA.Acciones
                     throw new Exception("Error al insertar el requerimiento.");
                 }
 
-                return resultadoRequerimiento >= 0 ? true : false;
+                return idRequerimientoInsertado;
             }
             catch (SqlException ex)
             {

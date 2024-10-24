@@ -9,7 +9,7 @@ namespace BW.Interfaces.BW
 {
     public interface IGestionarRequerimientoProveedorBW
     {
-        public Task<bool> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor);
+        public Task<int> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor);
 
         public Task<List<RequerimientoProveedor>> ConsultarRequerimientosProveedor(int idSolicitudProveedor);
 
