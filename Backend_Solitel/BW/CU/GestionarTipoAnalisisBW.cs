@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -19,13 +20,22 @@ namespace BW.CU
         }
         public async Task<bool> EliminarTipoAnalisis(int idTipoAnalisis)
         {
-            //Reglas de Negocio
             return await this.gestionarTipoAnalisisDA.EliminarTipoAnalisis(idTipoAnalisis);
         }
 
-        public async Task<bool> InsertarTipoAnalisis(TipoAnalisis tipoAnalisis)
+        public async Task<List<TipoAnalisis>> obtenerTipoAnalisis()
         {
-            //Reglas de Negocio
+            return await this.gestionarTipoAnalisisDA.obtenerTipoAnalisis();
+        }
+
+        public async Task<TipoAnalisis> obtenerTipoAnalisis(int id)
+        {
+            return await this.gestionarTipoAnalisisDA.obtenerTipoAnalisis(id);
+        }
+
+        public async Task<TipoAnalisis> InsertarTipoAnalisis(TipoAnalisis tipoAnalisis)
+        {
+            TipoAnalisisBR.ValidarTipoAnalisis(tipoAnalisis);
             return await this.gestionarTipoAnalisisDA.InsertarTipoAnalisis(tipoAnalisis);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
 using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
@@ -18,15 +19,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPost]
-        [Route("insertarModalidad")]
-        public async Task<ActionResult<Modalidad>> InsertarModalidad([FromBody] Modalidad modalidad)
+        public async Task<ActionResult<ModalidadDTO>> InsertarModalidad([FromBody] ModalidadDTO modalidad)
         {
             try
             {
-                var result = await this.gestionarModalidadBW.insertarModalidad(modalidad);
+                var result = await this.gestionarModalidadBW.insertarModalidad(ModalidadMapper.ToModel(modalidad));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(ModalidadMapper.ToDTO(result));
                 }
                 else
                 {
@@ -41,15 +41,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerModalidad")]
-        public async Task<ActionResult<List<Modalidad>>> ObtenerModalidad()
+        public async Task<ActionResult<List<ModalidadDTO>>> ObtenerModalidad()
         {
             try
             {
                 var modalidades = await this.gestionarModalidadBW.obtenerModalidad();
                 if (modalidades != null && modalidades.Count > 0)
                 {
-                    return Ok(modalidades);
+                    return Ok(ModalidadMapper.ToDTO(modalidades));
                 }
                 else
                 {
@@ -64,7 +63,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerModalidad/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<ModalidadDTO>> ObtenerModalidad(int id)
         {
             try
@@ -75,7 +74,7 @@ namespace Backend_Solitel.Controllers
                 // Verificar si se encontró la modalidad
                 if (modalidad != null)
                 {
-                    return Ok(modalidad);  // Mapear a DTO y retornar en la respuesta
+                    return Ok(ModalidadMapper.ToDTO(modalidad));  // Mapear a DTO y retornar en la respuesta
                 }
                 else
                 {
@@ -90,13 +89,13 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminarModalidad/{id}")]
-        public async Task<ActionResult<Modalidad>> EliminarModalidad(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarModalidad(int id)
         {
             try
             {
                 var result = await this.gestionarModalidadBW.eliminarModalidad(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result);
                 }

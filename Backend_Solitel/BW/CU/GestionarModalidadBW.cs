@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,13 +19,14 @@ namespace BW.CU
             this.gestionarModalidadDA = gestionarModalidadDA;
         }
 
-        public async Task<Modalidad> eliminarModalidad(int id)
+        public async Task<bool> eliminarModalidad(int id)
         {
             return await this.gestionarModalidadDA.eliminarModalidad(id);
         }
 
         public async Task<Modalidad> insertarModalidad(Modalidad modalidad)
         {
+            ModalidadBR.ValidarModalidad(modalidad);
             return await this.gestionarModalidadDA.insertarModalidad(modalidad);
         }
 

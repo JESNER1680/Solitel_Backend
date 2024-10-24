@@ -11,10 +11,10 @@ namespace BW.Interfaces.BW
     {
         public Task<Condicion> insertarCondicion(Condicion condicion);
 
-        public Task<Condicion> eliminarCondicion(int id);
+        public Task<bool> eliminarCondicion(int id);
 
-        public Task<List<Condicion>> obtenerCondicion();
+        public Task<List<Condicion>> obtenerCondicionesTodas();
 
-        public Task<Condicion> obtenerCondicion(int id);
+        public Task<Condicion> obtenerCondicionId(int id);
     }
 }

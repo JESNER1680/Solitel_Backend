@@ -11,7 +11,7 @@ namespace BW.Interfaces.DA
     {
         public Task<CategoriaDelito> insertarCategoriaDelito(CategoriaDelito categoriaDelito);
 
-        public Task<CategoriaDelito> eliminarCategoriaDelito(int id);
+        public Task<bool> eliminarCategoriaDelito(int id);
 
         public Task<List<CategoriaDelito>> obtenerCategoriaDelito();
 

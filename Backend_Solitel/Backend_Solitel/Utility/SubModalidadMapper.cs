@@ -5,26 +5,34 @@ namespace Backend_Solitel.Utility
 {
     public static class SubModalidadMapper
     {
-        public static SubModalidad ToModel(SubModalidadDTO subModalidadDTO)
+        public static SubModalidad ToModel(this SubModalidadDTO subModalidadDTO)
         {
             return new SubModalidad
             {
-                TN_IdModalida = subModalidadDTO.TN_IdModalida,
-                TC_Nombre = subModalidadDTO.TC_Nombre,
-                TC_Descripcion = subModalidadDTO.TC_Descripcion,
-                TN_IdSubModalidad = subModalidadDTO.TN_IdSubModalidad
+                TN_IdModalida = subModalidadDTO.IdModalida,
+                TC_Nombre = subModalidadDTO.Nombre,
+                TC_Descripcion = subModalidadDTO.Descripcion,
+                TN_IdSubModalidad = subModalidadDTO.IdSubModalidad
             };
         }
 
-        public static SubModalidadDTO ToDTO(SubModalidad subModalidad)
+        public static SubModalidadDTO ToDTO(this SubModalidad subModalidad)
         {
             return new SubModalidadDTO
             {
-                TN_IdModalida = subModalidad.TN_IdModalida,
-                TC_Nombre = subModalidad.TC_Nombre,
-                TC_Descripcion = subModalidad.TC_Descripcion,
-                TN_IdSubModalidad = subModalidad.TN_IdSubModalidad
+                IdModalida = subModalidad.TN_IdModalida,
+                Nombre = subModalidad.TC_Nombre,
+                Descripcion = subModalidad.TC_Descripcion,
+                IdSubModalidad = subModalidad.TN_IdSubModalidad
             };
+        }
+
+        public static List<SubModalidadDTO> ToDTO(this List<SubModalidad> subModalidades)
+        {
+            if (subModalidades == null)
+                return null;
+
+            return subModalidades.Select(c => c.ToDTO()).ToList();
         }
     }
 }

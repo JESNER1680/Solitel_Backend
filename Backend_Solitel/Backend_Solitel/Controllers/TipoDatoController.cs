@@ -1,4 +1,5 @@
 ﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
 using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
@@ -18,15 +19,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPost]
-        [Route("insertarTipoDato")]
-        public async Task<ActionResult<TipoDato>> InsertarTipoDato([FromBody] TipoDato tipoDato)
+        public async Task<ActionResult<TipoDatoDTO>> InsertarTipoDato([FromBody] TipoDatoDTO tipoDato)
         {
             try
             {
-                var result = await this.gestionarTipoDatoBW.insertarTipoDato(tipoDato);
+                var result = await this.gestionarTipoDatoBW.insertarTipoDato(TipoDatoMapper.ToModel(tipoDato));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(TipoDatoMapper.ToDTO(result));
                 }
                 else
                 {
@@ -40,15 +40,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerTipoDato")]
-        public async Task<ActionResult<List<TipoDato>>> ObtenerTipoDato()
+        public async Task<ActionResult<List<TipoDatoDTO>>> ObtenerTipoDato()
         {
             try
             {
                 var tiposDato = await this.gestionarTipoDatoBW.obtenerTipoDato();
                 if (tiposDato != null && tiposDato.Count > 0)
                 {
-                    return Ok(tiposDato);
+                    return Ok(TipoDatoMapper.ToDTO(tiposDato));
                 }
                 else
                 {
@@ -62,7 +61,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerTipoDato/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<TipoDatoDTO>> ObtenerTipoDato(int id)
         {
             try
@@ -70,7 +69,7 @@ namespace Backend_Solitel.Controllers
                 var tipoDato = await this.gestionarTipoDatoBW.obtenerTipoDato(id);
                 if (tipoDato != null)
                 {
-                    return Ok(tipoDato);
+                    return Ok(TipoDatoMapper.ToDTO(tipoDato));
                 }
                 else
                 {
@@ -85,13 +84,13 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminarTipoDato/{id}")]
-        public async Task<ActionResult<TipoDato>> EliminarTipoDato(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarTipoDato(int id)
         {
             try
             {
                 var result = await this.gestionarTipoDatoBW.eliminarTipoDato(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result);
                 }

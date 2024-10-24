@@ -11,7 +11,7 @@ namespace BW.Interfaces.DA
     {
         public Task<SubModalidad> insertarSubModalidad(SubModalidad SubModalidad);
 
-        public Task<SubModalidad> eliminarSubModalidad(int id);
+        public Task<bool> eliminarSubModalidad(int id);
 
         public Task<List<SubModalidad>> obtenerSubModalidad();
 

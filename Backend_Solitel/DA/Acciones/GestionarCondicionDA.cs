@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,27 +25,38 @@ namespace DA.Acciones
         {
             try
             {
-                // Definir los parámetros para el procedimiento almacenado
+                // Definir los parámetros de entrada y salida para el procedimiento almacenado
                 var nombreParam = new SqlParameter("@pTC_Nombre", condicion.TC_Nombre);
                 var descripcionParam = new SqlParameter("@pTC_Descripcion", condicion.TC_Descripcion);
 
-                // Ejecutar el procedimiento almacenado para insertar
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarCondicion @pTC_Nombre, @pTC_Descripcion",
-                    nombreParam, descripcionParam);
-
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdCondicion", SqlDbType.Int)
                 {
-                    throw new Exception("Error al insertar la condición.");
+                    Direction = ParameterDirection.Output
+                };
+
+                // Ejecutar el procedimiento almacenado con los parámetros definidos
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarCondicion @pTN_IdCondicion OUTPUT, @pTC_Nombre, @pTC_Descripcion",
+                    idParam, nombreParam, descripcionParam
+                );
+
+                // Verificar si se generó un ID válido
+                var nuevoId = (int)idParam.Value;
+                if (nuevoId <= 0)
+                {
+                    throw new Exception("Error al obtener el ID de la condición recién insertada.");
                 }
 
+                // Asignar el ID generado a la entidad de condición
+                condicion.TN_IdCondicion = nuevoId;
+
+                // Devolver el objeto con el ID asignado
                 return condicion;
             }
             catch (SqlException ex)
             {
-                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar la condición: {ex.Message}", ex);
             }
             catch (Exception ex)
@@ -54,7 +66,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<Condicion>> obtenerCondicion()
+        public async Task<List<Condicion>> obtenerCondicionesTodas()
         {
             try
             {
@@ -85,7 +97,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<Condicion> eliminarCondicion(int id)
+        public async Task<bool> eliminarCondicion(int id)
         {
             try
             {
@@ -104,7 +116,7 @@ namespace DA.Acciones
                 }
 
                 // Retornar un objeto Condicion con el Id de la condición eliminada
-                return new Condicion { TN_IdCondicion = id };
+                return true;
             }
             catch (SqlException ex)
             {
@@ -118,7 +130,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<Condicion> obtenerCondicion(int id)
+        public async Task<Condicion> obtenerCondicionId(int id)
         {
             try
             {
