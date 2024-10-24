@@ -86,5 +86,37 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar el objetivo de analisis: {ex.Message}", ex);
             }
         }
+        public async Task<List<ObjetivoAnalisis>> ObtenerObjetivoAnalisis(int idObjetivoAnalisis)
+        {
+            try
+            {
+                // Definir el parámetro
+                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", idObjetivoAnalisis);
+
+                // Ejecutar el procedimiento almacenado pasando el parámetro
+                var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
+                    .FromSqlRaw("EXEC PA_ObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
+                    .ToListAsync();
+
+                // Mapear el resultado a la lista de ObjetivoAnalisis
+                var objetivos = ObjetivoAnalisisDA.Select(obj => new ObjetivoAnalisis
+                {
+                    TN_IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
+                    TC_Nombre = obj.TC_Nombre,
+                    TC_Descripcion = obj.TC_Descripcion
+                }).ToList();
+
+                return objetivos;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al obtener Objetivos: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al obtener la lista de Objetivos: {ex.Message}", ex);
+            }
+        }
+
     }
 }

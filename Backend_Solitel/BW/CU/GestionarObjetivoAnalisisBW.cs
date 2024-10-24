@@ -29,5 +29,9 @@ namespace BW.CU
             //Reglas de Negocio
             return await this.gestionarObjetivoAnalisisDA.InsertarObjetivoAnalisis(objetivoAnalisis);
         }
+        public async Task<List<ObjetivoAnalisis>> ObtenerObjetivoAnalisis(int idObjetivoAnalisis)
+        {
+            return await this.gestionarObjetivoAnalisisDA.ObtenerObjetivoAnalisis(idObjetivoAnalisis);
+        }
     }
 }

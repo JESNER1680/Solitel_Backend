@@ -72,6 +72,10 @@ builder.Services.AddTransient<IGestionarProveedorDA, GestionarProveedorDA>();
 builder.Services.AddTransient<IGestionarOficinaBW, GestionarOficinaBW>();
 builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
 
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+
 //Conexión a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
 {
