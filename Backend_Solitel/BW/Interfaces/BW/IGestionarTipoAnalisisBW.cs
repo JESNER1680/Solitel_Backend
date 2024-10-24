@@ -9,8 +9,12 @@ namespace BW.Interfaces.BW
 {
     public interface IGestionarTipoAnalisisBW
     {
-        public Task<bool> InsertarTipoAnalisis(TipoAnalisis tipoAnalisis);
+        public Task<TipoAnalisis> InsertarTipoAnalisis(TipoAnalisis tipoAnalisis);
 
         public Task<bool> EliminarTipoAnalisis(int idTipoAnalisis);
+
+        public Task<List<TipoAnalisis>> obtenerTipoAnalisis();
+
+        public Task<TipoAnalisis> obtenerTipoAnalisis(int id);
     }
 }

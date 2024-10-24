@@ -9,12 +9,12 @@ namespace BW.Interfaces.DA
 {
     public interface IGestionarFiscaliaDA
     {
-        public Task<bool> insertarFiscalia(string nombre);
+        public Task<Fiscalia> insertarFiscalia(string nombre);
 
-        public Task<List<Fiscalia>> obtenerFiscalias();
+        public Task<List<Fiscalia>> obtenerFiscaliasTodas();
 
-        public Task<Fiscalia> eliminarFiscalia(int id);
+        public Task<bool> eliminarFiscalia(int id);
 
-        public Task<Fiscalia> obtenerFiscalia(int id);
+        public Task<Fiscalia> obtenerFiscaliaId(int id);
     }
 }

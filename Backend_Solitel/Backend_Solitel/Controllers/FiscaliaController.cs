@@ -1,4 +1,6 @@
-﻿using BC.Modelos;
+﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +20,14 @@ namespace Backend_Solitel.Controllers
 
         // Insertar Fiscalía
         [HttpPost]
-        [Route("insertarFiscalia")]
-        public async Task<ActionResult<bool>> InsertarFiscalia([FromBody] Fiscalia fiscalia)
+        public async Task<ActionResult<FiscaliaDTO>> InsertarFiscalia([FromBody] FiscaliaDTO fiscalia)
         {
             try
             {
-                var result = await gestionarFiscaliaBW.insertarFiscalia(fiscalia.TC_Nombre);
-                if (result)
+                var result = await gestionarFiscaliaBW.insertarFiscalia(fiscalia.Nombre);
+                if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(FiscaliaMapper.ToDTO(result));
                 }
                 else
                 {
@@ -42,15 +43,14 @@ namespace Backend_Solitel.Controllers
 
         // Obtener todas las Fiscalías
         [HttpGet]
-        [Route("obtenerFiscalia")]
-        public async Task<ActionResult<List<Fiscalia>>> ObtenerFiscalias()
+        public async Task<ActionResult<List<FiscaliaDTO>>> ObtenerFiscalias()
         {
             try
             {
-                var fiscalias = await gestionarFiscaliaBW.obtenerFiscalias();
+                var fiscalias = await gestionarFiscaliaBW.obtenerFiscaliasTodas();
                 if (fiscalias != null && fiscalias.Count > 0)
                 {
-                    return Ok(fiscalias);
+                    return Ok(FiscaliaMapper.ToDTO(fiscalias));
                 }
                 else
                 {
@@ -66,15 +66,15 @@ namespace Backend_Solitel.Controllers
 
         // Obtener una Fiscalía por ID
         [HttpGet]
-        [Route("obtenerFiscalia/{id}")]
-        public async Task<ActionResult<Fiscalia>> ObtenerFiscalia(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<FiscaliaDTO>> ObtenerFiscalia(int id)
         {
             try
             {
-                var fiscalia = await gestionarFiscaliaBW.obtenerFiscalia(id);
+                var fiscalia = await gestionarFiscaliaBW.obtenerFiscaliaId(id);
                 if (fiscalia != null)
                 {
-                    return Ok(fiscalia);
+                    return Ok(FiscaliaMapper.ToDTO(fiscalia));
                 }
                 else
                 {
@@ -90,13 +90,13 @@ namespace Backend_Solitel.Controllers
 
         // Eliminar (lógicamente) una Fiscalía
         [HttpDelete]
-        [Route("eliminarFiscalia/{id}")]
-        public async Task<ActionResult<Fiscalia>> EliminarFiscalia(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarFiscalia(int id)
         {
             try
             {
                 var result = await gestionarFiscaliaBW.eliminarFiscalia(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result); // Devuelve la fiscalía eliminada
                 }

@@ -9,8 +9,8 @@ namespace Backend_Solitel.Utility
         {
             return new Proveedor
             {
-                TN_IdProveedor = proveedorDTO.TN_IdProveedor,
-                TC_Nombre = proveedorDTO.TC_Nombre
+                TN_IdProveedor = proveedorDTO.IdProveedor,
+                TC_Nombre = proveedorDTO.Nombre
             };
         }
 
@@ -21,8 +21,8 @@ namespace Backend_Solitel.Utility
 
             return new ProveedorDTO
             {
-                TN_IdProveedor = proveedor.TN_IdProveedor,
-                TC_Nombre = proveedor.TC_Nombre
+                IdProveedor = proveedor.TN_IdProveedor,
+                Nombre = proveedor.TC_Nombre
             };
         }
 

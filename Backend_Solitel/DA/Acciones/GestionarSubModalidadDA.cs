@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,23 +30,32 @@ namespace DA.Acciones
                 var descripcionParam = new SqlParameter("@pTC_Descripcion", subModalidad.TC_Descripcion);
                 var modalidadParam = new SqlParameter("@pTN_IdModalidad", subModalidad.TN_IdModalida);
 
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdSubModalidad", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
+
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSubModalidad @pTC_Nombre, @pTC_Descripcion, @pTN_IdModalidad",
-                    nombreParam, descripcionParam, modalidadParam);
+                    "EXEC PA_InsertarSubModalidad @pTN_IdSubModalidad OUTPUT, @pTC_Nombre, @pTC_Descripcion, @pTN_IdModalidad",
+                    idParam, nombreParam, descripcionParam, modalidadParam);
 
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Capturar el ID generado desde el parámetro de salida
+                var nuevoId = (int)idParam.Value;
+                if (nuevoId <= 0)
                 {
-                    throw new Exception("Error al insertar la submodalidad.");
+                    throw new Exception("Error al obtener el ID de la submodalidad recién insertada.");
                 }
+
+                // Asignar el ID generado a la entidad SubModalidad
+                subModalidad.TN_IdSubModalidad = nuevoId;
 
                 return subModalidad;
             }
             catch (SqlException ex)
             {
-                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar la submodalidad: {ex.Message}", ex);
             }
             catch (Exception ex)
@@ -87,7 +97,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<SubModalidad> eliminarSubModalidad(int id)
+        public async Task<bool> eliminarSubModalidad(int id)
         {
             try
             {
@@ -106,7 +116,7 @@ namespace DA.Acciones
                 }
 
                 // Retornar un objeto SubModalidad con el Id de la submodalidad eliminada
-                return new SubModalidad { TN_IdSubModalidad = id };
+                return true;
             }
             catch (SqlException ex)
             {

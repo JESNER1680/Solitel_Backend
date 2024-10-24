@@ -20,7 +20,6 @@ namespace Backend_Solitel.Controllers
 
         // Método para insertar una nueva categoría de delito
         [HttpPost]
-        [Route("insertarCategoriaDelito")]
         public async Task<ActionResult<CategoriaDelitoDTO>> InsertarCategoriaDelito(CategoriaDelitoDTO categoriaDelito)
         {
             try
@@ -45,12 +44,11 @@ namespace Backend_Solitel.Controllers
 
         // Método para obtener la lista de categorías de delito
         [HttpGet]
-        [Route("obtenerCategoriaDelito")]
         public async Task<ActionResult<List<CategoriaDelitoDTO>>> ObtenerCategoriaDelito()
         {
             try
             {
-                var categorias = await this.gestionarCategoriaDelitoBW.obtenerCategoriaDelito();
+                var categorias = await this.gestionarCategoriaDelitoBW.obtenerCategoriaDelitoTodas();
                 if (categorias != null && categorias.Count > 0)
                 {
                     return Ok(CategoriaDelitoMapper.ToDTO(categorias));
@@ -69,7 +67,7 @@ namespace Backend_Solitel.Controllers
 
         // Método para obtener una única categoría de delito por ID
         [HttpGet]
-        [Route("obtenerCategoriaDelito/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<CategoriaDelitoDTO>> ObtenerCategoriaDelito(int id)
         {
             try
@@ -98,15 +96,15 @@ namespace Backend_Solitel.Controllers
 
         // Método para eliminar (lógicamente) una categoría de delito
         [HttpDelete]
-        [Route("eliminarCategoriaDelito/{id}")]
-        public async Task<ActionResult<CategoriaDelitoDTO>> EliminarCategoriaDelito(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarCategoriaDelito(int id)
         {
             try
             {
-                var result = await this.gestionarCategoriaDelitoBW.eliminarCategoriaDelito(id);
-                if (result != null)
+                var result = await this.gestionarCategoriaDelitoBW.eliminarCategoriaDelitoId(id);
+                if (result)
                 {
-                    return Ok(CategoriaDelitoMapper.ToDTO(result));
+                    return Ok(result);
                 }
                 else
                 {

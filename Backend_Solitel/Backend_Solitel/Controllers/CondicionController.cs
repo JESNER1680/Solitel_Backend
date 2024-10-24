@@ -1,4 +1,5 @@
 ﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
 using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
@@ -20,15 +21,14 @@ namespace Backend_Solitel.Controllers
 
         // Método para insertar una nueva condición
         [HttpPost]
-        [Route("insertarCondicion")]
-        public async Task<ActionResult<Condicion>> InsertarCondicion([FromBody] Condicion condicion)
+        public async Task<ActionResult<CondicionDTO>> InsertarCondicion([FromBody] CondicionDTO condicion)
         {
             try
             {
-                var result = await this.gestionarCondicionBW.insertarCondicion(condicion);
+                var result = await this.gestionarCondicionBW.insertarCondicion(CondicionMapper.ToModel(condicion));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(CondicionMapper.ToDTO(result));
                 }
                 else
                 {
@@ -44,15 +44,14 @@ namespace Backend_Solitel.Controllers
 
         // Método para obtener la lista de condiciones
         [HttpGet]
-        [Route("obtenerCondicion")]
-        public async Task<ActionResult<List<Condicion>>> ObtenerCondicion()
+        public async Task<ActionResult<List<CondicionDTO>>> ObtenerCondicion()
         {
             try
             {
-                var condiciones = await this.gestionarCondicionBW.obtenerCondicion();
+                var condiciones = await this.gestionarCondicionBW.obtenerCondicionesTodas();
                 if (condiciones != null && condiciones.Count > 0)
                 {
-                    return Ok(condiciones);
+                    return Ok(CondicionMapper.ToDTO(condiciones));
                 }
                 else
                 {
@@ -68,18 +67,18 @@ namespace Backend_Solitel.Controllers
 
         // Método para obtener una condición por ID
         [HttpGet]
-        [Route("obtenerCondicion/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<CondicionDTO>> ObtenerCondicion(int id)
         {
             try
             {
                 // Llamada al método del servicio para obtener la condición por ID
-                var condicion = await this.gestionarCondicionBW.obtenerCondicion(id);
+                var condicion = await this.gestionarCondicionBW.obtenerCondicionId(id);
 
                 if (condicion != null)
                 {
                     // Mapear la entidad Condicion al DTO y devolver la respuesta
-                    return Ok(condicion);
+                    return Ok(CondicionMapper.ToDTO(condicion));
                 }
                 else
                 {
@@ -96,13 +95,13 @@ namespace Backend_Solitel.Controllers
 
         // Método para eliminar (lógicamente) una condición
         [HttpDelete]
-        [Route("eliminarCondicion/{id}")]
-        public async Task<ActionResult<Condicion>> EliminarCondicion(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarCondicion(int id)
         {
             try
             {
                 var result = await this.gestionarCondicionBW.eliminarCondicion(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result);
                 }
