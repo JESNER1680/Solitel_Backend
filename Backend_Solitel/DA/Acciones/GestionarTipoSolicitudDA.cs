@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,28 +25,43 @@ namespace DA.Acciones
         {
             try
             {
+                // Definir los parámetros para el procedimiento almacenado
                 var nombreParam = new SqlParameter("@pTC_Nombre", tipoSolicitud.TC_Nombre);
                 var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoSolicitud.TC_Descripcion);
 
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarTipoSolicitud @pTC_Nombre, @pTC_Descripcion",
-                    nombreParam, descripcionParam);
-
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdTipoSolicitud", SqlDbType.Int)
                 {
-                    throw new Exception("Error al insertar el tipo de solicitud.");
+                    Direction = ParameterDirection.Output
+                };
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarTipoSolicitud @pTN_IdTipoSolicitud OUTPUT, @pTC_Nombre, @pTC_Descripcion",
+                    idParam, nombreParam, descripcionParam
+                );
+
+                // Capturar el ID generado desde el parámetro de salida
+                var nuevoId = (int)idParam.Value;
+
+                if (nuevoId <= 0)
+                {
+                    throw new Exception("Error al obtener el ID del tipo de solicitud recién insertado.");
                 }
+
+                // Asignar el ID generado a la entidad TipoSolicitud
+                tipoSolicitud.TN_IdTipoSolicitud = nuevoId;
 
                 return tipoSolicitud;
             }
             catch (SqlException ex)
             {
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar el tipo de solicitud: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
+                // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al insertar el tipo de solicitud: {ex.Message}", ex);
             }
         }
@@ -77,7 +93,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<TipoSolicitud> eliminarTipoSolicitud(int id)
+        public async Task<bool> eliminarTipoSolicitud(int id)
         {
             try
             {
@@ -93,7 +109,7 @@ namespace DA.Acciones
                     throw new Exception("Error al eliminar el tipo de solicitud.");
                 }
 
-                return new TipoSolicitud { TN_IdTipoSolicitud = id };
+                return true;
             }
             catch (SqlException ex)
             {

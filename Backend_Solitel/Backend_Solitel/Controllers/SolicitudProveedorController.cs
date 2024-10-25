@@ -35,7 +35,7 @@ namespace Backend_Solitel.Controllers
             foreach (ProveedorDTO proveedorDTO in solicitudProveedorDTO.Operadoras)
             {
                 int idSolicitudCreada = await this.gestionarSolicitudProveedorBW
-                    .InsertarSolicitudProveedor(SolicitudProveedorMapper.ToModel(solicitudProveedorDTO, proveedorDTO.TN_IdProveedor));
+                    .InsertarSolicitudProveedor(SolicitudProveedorMapper.ToModel(solicitudProveedorDTO, proveedorDTO.IdProveedor));
 
                 if (idSolicitudCreada != 0)
                 {

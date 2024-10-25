@@ -90,7 +90,7 @@ BEGIN
         FROM dbo.TSOLITEL_CategoriaDelito WITH (NOLOCK)
         WHERE (@pTN_IdCategoriaDelito IS NULL OR TN_IdCategoriaDelito = @pTN_IdCategoriaDelito)
           AND TB_Borrado = 0  -- Solo mostrar categorías que no están borradas lógicamente
-        ORDER BY TN_IdCategoriaDelito ASC;
+        ORDER BY TN_IdCategoriaDelito DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -259,7 +259,7 @@ BEGIN
         FROM dbo.TSOLITEL_Condicion WITH (NOLOCK)
         WHERE (@pTN_IdCondicion IS NULL OR TN_IdCondicion = @pTN_IdCondicion)
           AND TB_Borrado = 0  -- Solo mostrar condiciones que no están borradas lógicamente
-        ORDER BY TN_IdCondicion ASC;
+        ORDER BY TN_IdCondicion DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -370,7 +370,7 @@ BEGIN
 		ON Delito.TN_IdCategoriaDelito = CatDelito.TN_IdCategoriaDelito
         WHERE (@pTN_IdDelito IS NULL OR Delito.TN_IdDelito = @pTN_IdDelito) 
 		AND (Delito.TB_Borrado = 0) AND (CatDelito.TB_Borrado = 0) -- Filtro opcional
-        ORDER BY TN_IdDelito ASC;
+        ORDER BY TN_IdDelito DESC;
     END TRY
     BEGIN CATCH
         -- Manejo de errores
@@ -603,7 +603,7 @@ BEGIN
         FROM dbo.TSOLITEL_Fiscalia AS Fiscalia WITH (NOLOCK)
         WHERE (@pTN_IdFiscalia IS NULL OR Fiscalia.TN_IdFiscalia = @pTN_IdFiscalia) 
 		AND (Fiscalia.TB_Borrado = 0)  -- Filtro para registros no eliminados
-        ORDER BY TN_IdFiscalia ASC;
+        ORDER BY TN_IdFiscalia DESC;
     END TRY
     BEGIN CATCH
         -- Manejo de errores
@@ -844,7 +844,7 @@ BEGIN
         FROM dbo.TSOLITEL_Modalidad WITH (NOLOCK)
         WHERE (@pTN_IdModalidad IS NULL OR TN_IdModalidad = @pTN_IdModalidad)
           AND TB_Borrado = 0  -- Solo mostrar modalidades que no están borradas lógicamente
-        ORDER BY TN_IdModalidad ASC;
+        ORDER BY TN_IdModalidad DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -925,6 +925,7 @@ GO
 
 
 -- TSOLITEL_SubModalidad
+
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
@@ -1030,7 +1031,7 @@ BEGIN
 		ON TSubModalidad.TN_IdModalida = TModalidad.TN_IdModalidad
         WHERE (@pTN_IdSubModalidad IS NULL OR TSubModalidad.TN_IdSubModalidad = @pTN_IdSubModalidad)
           AND (TSubModalidad.TB_Borrado = 0) AND (TModalidad.TB_Borrado = 0)  -- Solo mostrar submodalidades que no están borradas lógicamente
-        ORDER BY TN_IdSubModalidad ASC;
+        ORDER BY TN_IdSubModalidad DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -1117,6 +1118,177 @@ BEGIN
         UPDATE dbo.TSOLITEL_SubModalidad
         SET TB_Borrado = 1
         WHERE TN_IdSubModalidad = @pTN_IdSubModalidad;
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+
+
+--TSOLITEL_TipoAnalisis
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:                Ernesto Vega Rodriguez
+-- Fecha de creación:    2024-10-24
+-- Descripción:          Inserta un registro en la tabla TSOLITEL_TipoAnalisis
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoAnalisis
+    @pTN_IdTipoAnalisis INT OUTPUT,  -- Parámetro de salida para obtener el ID generado
+    @pTC_Nombre VARCHAR(50),
+    @pTC_Descripcion VARCHAR(255)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Insertar un nuevo tipo de análisis
+        INSERT INTO dbo.TSOLITEL_TipoAnalisis
+            (TC_Nombre, TC_Descripcion, TB_Borrado)
+        VALUES
+            (@pTC_Nombre, @pTC_Descripcion, 0);  -- TB_Borrado por defecto es 0 (no borrado)
+
+        -- Obtener el último ID insertado
+        SET @pTN_IdTipoAnalisis = SCOPE_IDENTITY();
+
+        -- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            RETURN -1;
+        END
+
+        -- Si todo es exitoso, hacer commit
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:                Ernesto Vega Rodriguez
+-- Fecha de creación:    2024-10-24
+-- Descripción:          Consulta los registros de la tabla TSOLITEL_TipoAnalisis
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoAnalisis
+    @pTN_IdTipoAnalisis INT = NULL  -- Parámetro opcional para filtrar por Id
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        SELECT 
+            TN_IdTipoAnalisis,
+            TC_Nombre,
+            TC_Descripcion,
+            TB_Borrado
+        FROM dbo.TSOLITEL_TipoAnalisis WITH (NOLOCK)
+        WHERE (@pTN_IdTipoAnalisis IS NULL OR TN_IdTipoAnalisis = @pTN_IdTipoAnalisis)
+          AND TB_Borrado = 0  -- Solo mostrar tipos de análisis que no están borrados lógicamente
+        ORDER BY TN_IdTipoAnalisis DESC;
+    END TRY
+    BEGIN CATCH
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Autor:                Ernesto Vega Rodriguez
+-- Fecha de creación:    2024-10-24
+-- Descripción:          Elimina lógicamente un registro de la tabla TSOLITEL_TipoAnalisis
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoAnalisis
+    @pTN_IdTipoAnalisis INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+
+    -- Iniciar la transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Eliminar lógicamente cambiando TB_Borrado a 1
+        UPDATE dbo.TSOLITEL_TipoAnalisis
+        SET TB_Borrado = 1
+        WHERE TN_IdTipoAnalisis = @pTN_IdTipoAnalisis;
 
         -- Verificar si hubo algún error
         SET @Error = @@ERROR;
@@ -1245,7 +1417,7 @@ BEGIN
         FROM dbo.TSOLITEL_TipoSolicitud WITH (NOLOCK)
         WHERE (@pTN_IdTipoSolicitud IS NULL OR TN_IdTipoSolicitud = @pTN_IdTipoSolicitud)
           AND TB_Borrado = 0  -- Solo mostrar tipos de solicitud que no están borrados lógicamente
-        ORDER BY TN_IdTipoSolicitud ASC;
+        ORDER BY TN_IdTipoSolicitud DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -1400,7 +1572,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_TipoDato
 -- =============================================
-CREATE PROCEDURE dbo.PA_ConsultarTipoDato
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoDato
     @pTN_IdTipoDato INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
 BEGIN
@@ -1415,7 +1587,7 @@ BEGIN
         FROM dbo.TSOLITEL_TipoDato WITH (NOLOCK)
         WHERE (@pTN_IdTipoDato IS NULL OR TN_IdTipoDato = @pTN_IdTipoDato)
           AND TB_Borrado = 0  -- Solo mostrar tipos de datos que no están borrados lógicamente
-        ORDER BY TN_IdTipoDato ASC;
+        ORDER BY TN_IdTipoDato DESC;
     END TRY
     BEGIN CATCH
         -- Lanzar el error de SQL Server
@@ -1442,7 +1614,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_TipoDato
 -- =============================================
-CREATE PROCEDURE dbo.PA_EliminarTipoDato
+CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoDato
     @pTN_IdTipoDato INT
 AS
 BEGIN

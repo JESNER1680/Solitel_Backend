@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,28 +25,43 @@ namespace DA.Acciones
         {
             try
             {
+                // Definir los parámetros para el procedimiento almacenado
                 var nombreParam = new SqlParameter("@pTC_Nombre", tipoDato.TC_Nombre);
                 var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoDato.TC_Descripcion);
 
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarTipoDato @pTC_Nombre, @pTC_Descripcion",
-                    nombreParam, descripcionParam);
-
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdTipoDato", SqlDbType.Int)
                 {
-                    throw new Exception("Error al insertar el tipo de dato.");
+                    Direction = ParameterDirection.Output
+                };
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarTipoDato @pTN_IdTipoDato OUTPUT, @pTC_Nombre, @pTC_Descripcion",
+                    idParam, nombreParam, descripcionParam
+                );
+
+                // Capturar el ID generado desde el parámetro de salida
+                var nuevoId = (int)idParam.Value;
+
+                if (nuevoId <= 0)
+                {
+                    throw new Exception("Error al obtener el ID del tipo de dato recién insertado.");
                 }
+
+                // Asignar el ID generado a la entidad TipoDato
+                tipoDato.TN_IdTipoDato = nuevoId;
 
                 return tipoDato;
             }
             catch (SqlException ex)
             {
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar el tipo de dato: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
+                // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al insertar el tipo de dato: {ex.Message}", ex);
             }
         }
@@ -77,7 +93,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<TipoDato> eliminarTipoDato(int id)
+        public async Task<bool> eliminarTipoDato(int id)
         {
             try
             {
@@ -93,7 +109,7 @@ namespace DA.Acciones
                     throw new Exception("Error al eliminar el tipo de dato.");
                 }
 
-                return new TipoDato { TN_IdTipoDato = id };
+                return true;
             }
             catch (SqlException ex)
             {

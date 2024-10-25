@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace DA.Acciones
             _context = context;
         }
 
-        public async Task<Fiscalia> eliminarFiscalia(int id)
+        public async Task<bool> eliminarFiscalia(int id)
         {
             try
             {
@@ -40,7 +41,7 @@ namespace DA.Acciones
                 }
 
                 // Retornar un objeto Fiscalia con el Id de la fiscalía eliminada
-                return new Fiscalia { TN_IdFiscalia = id };
+                return true;
             }
             catch (SqlException ex)
             {
@@ -54,25 +55,40 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<bool> insertarFiscalia(string nombre)
+        public async Task<Fiscalia> insertarFiscalia(string nombre)
         {
             try
             {
-                // Definir el parámetro para el procedimiento almacenado
+                // Definir el parámetro de entrada para el nombre
                 var nombreParam = new SqlParameter("@pTC_Nombre", nombre);
 
-                // Ejecutar el procedimiento almacenado para insertar
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarFiscalia @pTC_Nombre", nombreParam);
-
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdFiscalia", SqlDbType.Int)
                 {
-                    throw new Exception("Error al insertar la fiscalía.");
+                    Direction = ParameterDirection.Output
+                };
+
+                // Ejecutar el procedimiento almacenado con los parámetros
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarFiscalia @pTN_IdFiscalia OUTPUT, @pTC_Nombre",
+                    idParam, nombreParam
+                );
+
+                // Capturar el ID generado desde el parámetro de salida
+                var nuevoId = (int)idParam.Value;
+                if (nuevoId <= 0)
+                {
+                    throw new Exception("Error al obtener el ID de la fiscalía recién insertada.");
                 }
 
-                return true;  // Retornar true si la inserción fue exitosa
+                // Crear una instancia de Fiscalia con el ID y nombre
+                var fiscalia = new Fiscalia
+                {
+                    TN_IdFiscalia = nuevoId,
+                    TC_Nombre = nombre
+                };
+
+                return fiscalia;
             }
             catch (SqlException ex)
             {
@@ -86,7 +102,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<Fiscalia>> obtenerFiscalias()
+        public async Task<List<Fiscalia>> obtenerFiscaliasTodas()
         {
             try
             {
@@ -116,7 +132,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<Fiscalia> obtenerFiscalia(int id)
+        public async Task<Fiscalia> obtenerFiscaliaId(int id)
         {
             try
             {
