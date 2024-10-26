@@ -18,9 +18,10 @@ namespace Backend_Solitel.Controllers
 
         [HttpPost]
         [Route("insertarObjetivoAnalisis")]
-        public async Task<bool> InsertarObjetivoAnalisis(ObjetivoAnalisisDTO objetivoAnalisisDTO)
+        public async Task<ObjetivoAnalisisDTO> InsertarObjetivoAnalisis(ObjetivoAnalisisDTO objetivoAnalisisDTO)
         {
-            return await this.gestionarObjetivoAnalisisBW.InsertarObjetivoAnalisis(ObjetivoAnalisisMapper.ToModel(objetivoAnalisisDTO));
+            var resultado = await this.gestionarObjetivoAnalisisBW.InsertarObjetivoAnalisis(ObjetivoAnalisisMapper.ToModel(objetivoAnalisisDTO));
+            return ObjetivoAnalisisMapper.ToDTO(resultado);
         }
 
         [HttpDelete]
