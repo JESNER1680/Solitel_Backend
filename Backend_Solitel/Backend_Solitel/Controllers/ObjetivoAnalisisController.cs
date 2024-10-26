@@ -18,9 +18,10 @@ namespace Backend_Solitel.Controllers
 
         [HttpPost]
         [Route("insertarObjetivoAnalisis")]
-        public async Task<bool> InsertarObjetivoAnalisis(ObjetivoAnalisisDTO objetivoAnalisisDTO)
+        public async Task<ObjetivoAnalisisDTO> InsertarObjetivoAnalisis(ObjetivoAnalisisDTO objetivoAnalisisDTO)
         {
-            return await this.gestionarObjetivoAnalisisBW.InsertarObjetivoAnalisis(ObjetivoAnalisisMapper.ToModel(objetivoAnalisisDTO));
+            var resultado = await this.gestionarObjetivoAnalisisBW.InsertarObjetivoAnalisis(ObjetivoAnalisisMapper.ToModel(objetivoAnalisisDTO));
+            return ObjetivoAnalisisMapper.ToDTO(resultado);
         }
 
         [HttpDelete]
@@ -28,6 +29,12 @@ namespace Backend_Solitel.Controllers
         public async Task<bool> EliminarObjetivoAnalisis(int idObjetivoAnalisis)
         {
             return await this.gestionarObjetivoAnalisisBW.EliminarObjetivoAnalisis(idObjetivoAnalisis);
+        }
+        [HttpGet]
+        [Route("obtenerObjetivoAnalisis")]
+        public async Task<List<ObjetivoAnalisisDTO>>ObtenerObjetivoAnalisis(int idObtenerObjetivoAnalisis){
+            var ObjetivosObtenidos = await this.gestionarObjetivoAnalisisBW.ObtenerObjetivoAnalisis(idObtenerObjetivoAnalisis);
+            return Utility.ObjetivoAnalisisMapper.ToDTOS(ObjetivosObtenidos);
         }
     }
 }
