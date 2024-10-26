@@ -5,7 +5,7 @@ namespace Backend_Solitel.Utility
 {
     public static class RequerimientoProveedorMapper
     {
-        public static RequerimientoProveedor ToModel(RequerimientoProveedorDTO requerimientoProveedorDTO, int idSolicitudProveedor)
+        public static RequerimientoProveedor ToModel(RequerimientoProveedorDTO requerimientoProveedorDTO)
         {
             return new RequerimientoProveedor
             {
@@ -13,7 +13,7 @@ namespace Backend_Solitel.Utility
                 TF_FechaInicio = requerimientoProveedorDTO.TF_FechaInicio,
                 TF_FechaFinal = requerimientoProveedorDTO.TF_FechaFinal,
                 TC_Requerimiento = requerimientoProveedorDTO.TC_Requerimiento,
-                TN_NumeroSolicitud = idSolicitudProveedor,
+                TN_NumeroSolicitud = 0,
                 tipoSolicitudes = TipoSolicitudMapper.ToModel(requerimientoProveedorDTO.tipoSolicitudes),
                 datosRequeridos = DatoRequeridoMapper.ToModel(requerimientoProveedorDTO.datosRequeridos)
 

@@ -16,21 +16,21 @@ namespace Backend_Solitel.Controllers
 
         private readonly IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW;
 
-        private readonly IGestionarProveedorBW gestionarProveedorBW;
-
         public SolicitudProveedorController(IGestionarSolicitudProveedorBW gestionarSolicitudProveedorBW,
-            IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW,
-            IGestionarProveedorBW gestionarProveedorBW)
+            IGestionarRequerimientoProveedorBW gestionarRequerimientoProveedorBW)
         {
             this.gestionarRequerimientoProveedorBW = gestionarRequerimientoProveedorBW;
             this.gestionarSolicitudProveedorBW = gestionarSolicitudProveedorBW;
-            this.gestionarProveedorBW = gestionarProveedorBW;
         }
 
         [HttpPost]
         [Route("insertarSolicitudProveedor")]
         public async Task<bool> InsertarSolicitudProveedor([FromBody] SolicitudProveedorDTO solicitudProveedorDTO)
         {
+
+            List<int> idListaSolicitudesCreadas = new List<int>();
+
+            List<int> idRequerimientosCreados = new List<int>();
 
             foreach (ProveedorDTO proveedorDTO in solicitudProveedorDTO.Operadoras)
             {
@@ -39,16 +39,33 @@ namespace Backend_Solitel.Controllers
 
                 if (idSolicitudCreada != 0)
                 {
-                    foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
-                    {
-                        bool resultadoRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
-                            .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO, idSolicitudCreada));
-                    }
+                    idListaSolicitudesCreadas.Add(idSolicitudCreada);
+                }
+                else
+                {
+                    return false;
                 }
 
             }
 
-            return true;
+            foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+            {
+                int idRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
+                    .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO));
+
+                if(idRequerimientoInsertado != 0)
+                {
+                    idRequerimientosCreados.Add(idRequerimientoInsertado);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            bool resultadoRelacion = await this.gestionarSolicitudProveedorBW.relacionarRequerimientos(idListaSolicitudesCreadas, idRequerimientosCreados);
+
+            return resultadoRelacion;
         }
 
         [HttpGet]

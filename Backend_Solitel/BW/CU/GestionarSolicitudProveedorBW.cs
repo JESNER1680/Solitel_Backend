@@ -41,5 +41,10 @@ namespace BW.CU
             //Aplicar reglas de negocio
             return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor(pageNumber, pageSize);
         }
+
+        public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
+        {
+            return await this.gestionarSolicitudProveedorDA.relacionarRequerimientos(idSolicitudes, idRequerimientos);
+        }
     }
 }
