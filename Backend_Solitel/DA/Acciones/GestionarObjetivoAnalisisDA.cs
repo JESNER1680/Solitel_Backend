@@ -104,11 +104,11 @@ namespace DA.Acciones
             try
             {
                 // Definir el parámetro
-                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", idObjetivoAnalisis);
+                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", (idObjetivoAnalisis>0 && idObjetivoAnalisis != null)? idObjetivoAnalisis:null);
 
                 // Ejecutar el procedimiento almacenado pasando el parámetro
                 var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
-                    .FromSqlRaw("EXEC PA_ObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
+                    .FromSqlRaw("EXEC PA_ObtenerObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
                     .ToListAsync();
 
                 // Mapear el resultado a la lista de ObjetivoAnalisis
