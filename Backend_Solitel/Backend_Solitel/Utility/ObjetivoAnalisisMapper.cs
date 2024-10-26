@@ -6,7 +6,7 @@ namespace Backend_Solitel.Utility
 {
     public static class ObjetivoAnalisisMapper
     {
-        public static ObjetivoAnalisis ToModel(ObjetivoAnalisisDTO objetivoAnalisisDTO)
+        public static ObjetivoAnalisis ToModel(this ObjetivoAnalisisDTO objetivoAnalisisDTO)
         {
             return new ObjetivoAnalisis
             {
@@ -16,7 +16,7 @@ namespace Backend_Solitel.Utility
             };
         }
 
-        public static List<ObjetivoAnalisisDTO> ToDTOS(List<ObjetivoAnalisis>objetivoAnalisis)
+        public static List<ObjetivoAnalisisDTO> ToDTOS(this List<ObjetivoAnalisis>objetivoAnalisis)
         {
             var objetivosRecuperados = objetivoAnalisis.Select(obj => new ObjetivoAnalisisDTO
             {
@@ -24,6 +24,17 @@ namespace Backend_Solitel.Utility
                 TC_Nombre = obj.TC_Nombre,
                 TC_Descripcion = obj.TC_Descripcion
             }).ToList();
+            return objetivosRecuperados;
+        }
+
+        public static ObjetivoAnalisisDTO ToDTO(this ObjetivoAnalisis objetivoAnalisis)
+        {
+            var objetivosRecuperados =  new ObjetivoAnalisisDTO
+            {
+                TN_IdObjetivoAnalisis = objetivoAnalisis.TN_IdObjetivoAnalisis,
+                TC_Nombre = objetivoAnalisis.TC_Nombre,
+                TC_Descripcion = objetivoAnalisis.TC_Descripcion
+            };
             return objetivosRecuperados;
         }
     }
