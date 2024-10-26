@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,21 +19,24 @@ namespace BW.CU
             this.gestionarProveedorDA = gestionarProveedorDA;
         }
 
+        public async Task<Proveedor> ConsultarProveedor(int idProveedor)
+        {
+            return await this.gestionarProveedorDA.ConsultarProveedor(idProveedor);
+        }
+
         public Task<List<Proveedor>> ConsultarProveedores()
         {
-            //Reglas de Negocio
             return this.gestionarProveedorDA.ConsultarProveedores();
         }
 
         public Task<bool> EliminarProveedor(int idProveedor)
         {
-            //Reglas de Negocio
             return this.gestionarProveedorDA.EliminarProveedor(idProveedor);
         }
 
-        public Task<bool> InsertarProveedor(Proveedor proveedor)
+        public Task<Proveedor> InsertarProveedor(Proveedor proveedor)
         {
-            //Reglas de Negocio
+            ProveedorBR.ValidarProveedor(proveedor);
             return this.gestionarProveedorDA.InsertarProveedor(proveedor);
         }
     }

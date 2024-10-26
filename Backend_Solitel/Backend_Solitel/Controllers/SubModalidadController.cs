@@ -1,4 +1,5 @@
 ﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
 using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
@@ -18,15 +19,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPost]
-        [Route("insertarSubModalidad")]
-        public async Task<ActionResult<SubModalidad>> InsertarSubModalidad([FromBody] SubModalidad subModalidad)
+        public async Task<ActionResult<SubModalidadDTO>> InsertarSubModalidad([FromBody] SubModalidadDTO subModalidad)
         {
             try
             {
-                var result = await this.gestionarSubModalidadBW.insertarSubModalidad(subModalidad);
+                var result = await this.gestionarSubModalidadBW.insertarSubModalidad(SubModalidadMapper.ToModel(subModalidad));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(SubModalidadMapper.ToDTO(result));
                 }
                 else
                 {
@@ -41,15 +41,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerSubModalidad")]
-        public async Task<ActionResult<List<SubModalidad>>> ObtenerSubModalidad()
+        public async Task<ActionResult<List<SubModalidadDTO>>> ObtenerSubModalidad()
         {
             try
             {
                 var subModalidades = await this.gestionarSubModalidadBW.obtenerSubModalidad();
                 if (subModalidades != null && subModalidades.Count > 0)
                 {
-                    return Ok(subModalidades);
+                    return Ok(SubModalidadMapper.ToDTO(subModalidades));
                 }
                 else
                 {
@@ -64,29 +63,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerSubModalidadesPorModalidad/{id}")]
-        public async Task<ActionResult<List<SubModalidadDTO>>> ObtenerSubModalidadesPorModalidad(int id)
-        {
-            try
-            {
-                var subModalidades = await this.gestionarSubModalidadBW.obtenerSubModalidadPorModalidad(id);
-                if (subModalidades != null && subModalidades.Count > 0)
-                {
-                    return Ok(subModalidades);
-                }
-                else
-                {
-                    return NotFound($"No se encontraron submodalidades para la modalidad con ID {id}.");
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener las submodalidades para la modalidad con ID {id}: {ex.Message}");
-            }
-        }
-
-        [HttpGet]
-        [Route("obtenerSubModalidad/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<SubModalidadDTO>> ObtenerSubModalidad(int id)
         {
             try
@@ -94,7 +71,7 @@ namespace Backend_Solitel.Controllers
                 var subModalidad = await this.gestionarSubModalidadBW.obtenerSubModalidad(id);
                 if (subModalidad != null)
                 {
-                    return Ok(subModalidad);
+                    return Ok(SubModalidadMapper.ToDTO(subModalidad));
                 }
                 else
                 {
@@ -108,14 +85,36 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("PorModalidad/{id}")]
+        public async Task<ActionResult<List<SubModalidadDTO>>> ObtenerSubModalidadesPorModalidad(int id)
+        {
+            try
+            {
+                var subModalidades = await this.gestionarSubModalidadBW.obtenerSubModalidadPorModalidad(id);
+                if (subModalidades != null && subModalidades.Count > 0)
+                {
+                    return Ok(SubModalidadMapper.ToDTO(subModalidades));
+                }
+                else
+                {
+                    return NotFound($"No se encontraron submodalidades para la modalidad con ID {id}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error al obtener las submodalidades para la modalidad con ID {id}: {ex.Message}");
+            }
+        }
+
         [HttpDelete]
-        [Route("eliminarSubModalidad/{id}")]
-        public async Task<ActionResult<SubModalidad>> EliminarSubModalidad(int id)
+        [Route("{id}")]
+        public async Task<ActionResult<bool>> EliminarSubModalidad(int id)
         {
             try
             {
                 var result = await this.gestionarSubModalidadBW.eliminarSubModalidad(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result);
                 }

@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,24 +19,25 @@ namespace BW.CU
             this.gestionarDelitoDA = gestionarDelitoDA;
         }
 
-        public async Task<Delito> eliminarDelito(int id)
+        public async Task<bool> eliminarDelito(int id)
         {
             return await this.gestionarDelitoDA.eliminarDelito(id);
         }
 
         public async Task<Delito> insertarDelito(Delito delito)
         {
+            DelitoBR.ValidarDelito(delito);
             return await this.gestionarDelitoDA.insertarDelito(delito);
         }
 
-        public async Task<List<Delito>> obtenerDelitos()
+        public async Task<List<Delito>> obtenerDelitosTodos()
         {
-            return await this.gestionarDelitoDA.obtenerDelitos();
+            return await this.gestionarDelitoDA.obtenerDelitosTodos();
         }
 
-        public async Task<Delito> obtenerDelitos(int id)
+        public async Task<Delito> obtenerDelitoId(int id)
         {
-            return await this.gestionarDelitoDA.obtenerDelitos(id);
+            return await this.gestionarDelitoDA.obtenerDelitoId(id);
         }
 
         public async Task<List<Delito>> obtenerDelitosPorCategoria(int id)

@@ -1,4 +1,5 @@
 ﻿using Backend_Solitel.DTO;
+using Backend_Solitel.Utility;
 using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
@@ -18,15 +19,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPost]
-        [Route("insertarTipoSolicitud")]
-        public async Task<ActionResult<TipoSolicitud>> InsertarTipoSolicitud([FromBody] TipoSolicitud tipoSolicitud)
+        public async Task<ActionResult<TipoSolicitudDTO>> InsertarTipoSolicitud([FromBody] TipoSolicitudDTO tipoSolicitud)
         {
             try
             {
-                var result = await this.gestionarTipoSolicitudBW.insertarTipoSolicitud(tipoSolicitud);
+                var result = await this.gestionarTipoSolicitudBW.insertarTipoSolicitud(TipoSolicitudMapper.ToModel(tipoSolicitud));
                 if (result != null)
                 {
-                    return Ok(result);
+                    return Ok(TipoSolicitudMapper.ToDTO(result));
                 }
                 else
                 {
@@ -40,15 +40,14 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerTipoSolicitud")]
-        public async Task<ActionResult<List<TipoSolicitud>>> ObtenerTipoSolicitud()
+        public async Task<ActionResult<List<TipoSolicitudDTO>>> ObtenerTipoSolicitud()
         {
             try
             {
                 var tiposSolicitud = await this.gestionarTipoSolicitudBW.obtenerTipoSolicitud();
                 if (tiposSolicitud != null && tiposSolicitud.Count > 0)
                 {
-                    return Ok(tiposSolicitud);
+                    return Ok(TipoSolicitudMapper.ToDTO(tiposSolicitud));
                 }
                 else
                 {
@@ -62,7 +61,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("obtenerTipoSolicitud/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<TipoSolicitudDTO>> ObtenerTipoSolicitud(int id)
         {
             try
@@ -70,7 +69,7 @@ namespace Backend_Solitel.Controllers
                 var tipoSolicitud = await this.gestionarTipoSolicitudBW.obtenerTipoSolicitud(id);
                 if (tipoSolicitud != null)
                 {
-                    return Ok(tipoSolicitud);
+                    return Ok(TipoSolicitudMapper.ToDTO(tipoSolicitud));
                 }
                 else
                 {
@@ -85,13 +84,13 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpDelete]
-        [Route("eliminarTipoSolicitud/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult<TipoSolicitud>> EliminarTipoSolicitud(int id)
         {
             try
             {
                 var result = await this.gestionarTipoSolicitudBW.eliminarTipoSolicitud(id);
-                if (result != null)
+                if (result)
                 {
                     return Ok(result);
                 }

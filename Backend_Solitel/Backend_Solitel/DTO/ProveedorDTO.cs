@@ -2,9 +2,9 @@
 {
     public class ProveedorDTO
     {
-        public int TN_IdProveedor { get; set; }
+        public int IdProveedor { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
     }
 
 }

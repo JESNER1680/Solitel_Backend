@@ -18,7 +18,7 @@ namespace BW.CU
             this.gestionarTipoSolicitudDA = gestionarTipoSolicitudDA;
         }
 
-        public async Task<TipoSolicitud> eliminarTipoSolicitud(int id)
+        public async Task<bool> eliminarTipoSolicitud(int id)
         {
             return await this.gestionarTipoSolicitudDA.eliminarTipoSolicitud(id);
         }

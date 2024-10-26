@@ -3,6 +3,7 @@ using BW.Interfaces.DA;
 using DA.Contexto;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DA.Acciones
 {
@@ -14,6 +15,45 @@ namespace DA.Acciones
         {
             this._context = solitelContext;
         }
+
+        public async Task<Proveedor> ConsultarProveedor(int idProveedor)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar el proveedor por ID
+                var proveedorData = await _context.TSOLITEL_ProveedorDA
+                    .FromSqlRaw("EXEC PA_ConsultarProveedorPorId @TN_IdProveedor = {0}", idProveedor)
+                    .ToListAsync();  // Convertir la consulta a una lista
+
+                var proveedor = proveedorData.FirstOrDefault();  // Obtener el primer elemento si existe
+
+                // Verificar si se encontró el proveedor
+                if (proveedor == null)
+                {
+                    throw new Exception($"No se encontró un proveedor con el ID {idProveedor}.");
+                }
+
+                // Mapear los resultados a la entidad Proveedor (si es necesario)
+                var proveedorEntidad = new Proveedor
+                {
+                    TN_IdProveedor = proveedor.TN_IdProveedor,
+                    TC_Nombre = proveedor.TC_Nombre
+                };
+
+                return proveedorEntidad;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener el proveedor con ID {idProveedor}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener el proveedor con ID {idProveedor}: {ex.Message}", ex);
+            }
+        }
+
         public async Task<List<Proveedor>> ConsultarProveedores()
         {
             try
@@ -76,30 +116,40 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<bool> InsertarProveedor(Proveedor proveedor)
+        public async Task<Proveedor> InsertarProveedor(Proveedor proveedor)
         {
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@PC_Nombre", proveedor.TC_Nombre);
+                var nombreParam = new SqlParameter("@pTC_Nombre", proveedor.TC_Nombre);
+
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdProveedor", SqlDbType.Int)
+                {
+                    Direction = ParameterDirection.Output
+                };
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarProveedor @PC_Nombre",
-                nombreParam);
+                    "EXEC PA_InsertarProveedor @pTN_IdProveedor OUTPUT, @pTC_Nombre",
+                    idParam, nombreParam
+                );
 
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Capturar el ID generado desde el parámetro de salida
+                var nuevoId = (int)idParam.Value;
+                if (nuevoId <= 0)
                 {
-                    throw new Exception("Error al insertar el proveedor.");
+                    throw new Exception("Error al obtener el ID del proveedor recién insertado.");
                 }
 
-                return resultado >= 0 ? true : false;
+                // Asignar el ID generado a la entidad Proveedor
+                proveedor.TN_IdProveedor = nuevoId;
+
+                return proveedor;
             }
             catch (SqlException ex)
             {
-                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar el proveedor: {ex.Message}", ex);
             }
             catch (Exception ex)
@@ -108,5 +158,6 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar el proveedor: {ex.Message}", ex);
             }
         }
+
     }
 }

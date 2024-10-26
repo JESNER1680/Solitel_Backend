@@ -11,12 +11,12 @@ namespace BW.Interfaces.BW
     {
         public Task<Delito> insertarDelito(Delito delito);
 
-        public Task<Delito> eliminarDelito(int id);
+        public Task<bool> eliminarDelito(int id);
 
-        public Task<List<Delito>> obtenerDelitos();
+        public Task<List<Delito>> obtenerDelitosTodos();
 
         public Task<List<Delito>> obtenerDelitosPorCategoria(int id);
 
-        public Task<Delito> obtenerDelitos(int id);
+        public Task<Delito> obtenerDelitoId(int id);
     }
 }
