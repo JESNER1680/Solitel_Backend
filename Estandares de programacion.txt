@@ -1,0 +1,4 @@
+Métodos usar camelCase con la primera letra en mayuscula, por ejemplo: IngresarSolicitud
+Variables camelCase, con la primera letra en minuscula: idSolicitud
+
+ 
