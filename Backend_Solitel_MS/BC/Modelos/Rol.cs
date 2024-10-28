@@ -14,5 +14,4 @@ namespace BC.Modelos
 
         public string TC_Descripcion { get; set; }
     }
-
 }

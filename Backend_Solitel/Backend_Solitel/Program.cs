@@ -72,12 +72,18 @@ builder.Services.AddTransient<IGestionarProveedorDA, GestionarProveedorDA>();
 builder.Services.AddTransient<IGestionarOficinaBW, GestionarOficinaBW>();
 builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
 
-//Conexión a BD
+builder.Services.AddTransient<IGestionarArchivoDA,GestionarArchivoDA>();
+builder.Services.AddTransient<IGestionarArchivoBW, GestionarArchivoBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+
+//Conexiï¿½n a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
 {
-    // Usar la cadena de conexión desde la configuración
+    // Usar la cadena de conexiï¿½n desde la configuraciï¿½n
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBSomee.com"));
-    // Otros ajustes del contexto de base de datos pueden ser configurados aquí, si es necesario
+    // Otros ajustes del contexto de base de datos pueden ser configurados aquï¿½, si es necesario
 });
 
 // Habilitar CORS para localhost:4200

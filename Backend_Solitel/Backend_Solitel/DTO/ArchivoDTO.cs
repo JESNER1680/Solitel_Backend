@@ -6,12 +6,9 @@ namespace Backend_Solitel.DTO
     {
         public int TN_IdArchivo { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string TC_HashAchivo { get; set; }
 
         [Required]
-        public int TC_Nombre { get; set; }
+        public string TC_Nombre { get; set; }
 
         [Required]
         public byte[] TV_Contenido { get; set; }
@@ -22,8 +19,6 @@ namespace Backend_Solitel.DTO
 
         [Required]
         public DateTime TF_FechaModificacion { get; set; }
-
-        public int? TN_IdRequerimiento { get; set; }
     }
 
 }

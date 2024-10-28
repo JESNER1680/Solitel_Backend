@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -20,14 +21,17 @@ namespace BW.CU
 
         public async Task<bool> EliminarObjetivoAnalisis(int idObjetivoAnalisis)
         {
-            //Reglas de Negocio
             return await this.gestionarObjetivoAnalisisDA.EliminarObjetivoAnalisis(idObjetivoAnalisis);
         }
 
-        public async Task<bool> InsertarObjetivoAnalisis(ObjetivoAnalisis objetivoAnalisis)
+        public async Task<ObjetivoAnalisis> InsertarObjetivoAnalisis(ObjetivoAnalisis objetivoAnalisis)
         {
-            //Reglas de Negocio
+            ObjetivoAnalisisBR.ValidarObjetivoAnalisis(objetivoAnalisis);
             return await this.gestionarObjetivoAnalisisDA.InsertarObjetivoAnalisis(objetivoAnalisis);
+        }
+        public async Task<List<ObjetivoAnalisis>> ObtenerObjetivoAnalisis(int idObjetivoAnalisis)
+        {
+            return await this.gestionarObjetivoAnalisisDA.ObtenerObjetivoAnalisis(idObjetivoAnalisis);
         }
     }
 }
