@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend_Solitel.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class HistorialController : Controller
     {
         private readonly IGestionarHistorialBW gestionarHistorialBW;
@@ -16,7 +18,6 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("consultarHistoricoDeSolicitudProveedor")]
         public async Task<List<HistorialDTO>> ConsultarHistoricoDeSolicitudProveedor(int idSolicitudProveedor)
         {
             return HistorialMapper.ToDTO(await this.gestionarHistorialBW.ConsultarHistorialDeSolicitudProveedor(idSolicitudProveedor));

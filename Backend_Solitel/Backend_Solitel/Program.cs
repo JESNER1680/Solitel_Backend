@@ -78,6 +78,9 @@ builder.Services.AddTransient<IGestionarArchivoBW, GestionarArchivoBW>();
 builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
 builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
 
+builder.Services.AddTransient<IGestionarHistorialDA, GestionarHistorialDA>();
+builder.Services.AddTransient<IGestionarHistorialBW, GestionarHistorialBW>();
+
 builder.Services.AddTransient<IGestionarEstadoDA, GestionarEstadoDA>();
 builder.Services.AddTransient<IGestionarEstadoBW, GestionarEstadoBW>();
 
