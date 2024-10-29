@@ -103,8 +103,9 @@ namespace DA.Acciones
         {
             try
             {
-                // Definir el parámetro
-                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", (idObjetivoAnalisis>0 && idObjetivoAnalisis != null)? idObjetivoAnalisis:null);
+                // Si idObjetivoAnalisis es -1, asigna DBNull.Value para pasar null a SQL Server
+                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis",
+                    idObjetivoAnalisis == -1 ? (object)DBNull.Value : idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado pasando el parámetro
                 var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
@@ -130,6 +131,7 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de Objetivos: {ex.Message}", ex);
             }
         }
+
 
     }
 }

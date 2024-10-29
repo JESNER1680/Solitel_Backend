@@ -262,3 +262,93 @@ BEGIN
     END CATCH
 END
 GO
+-- =============================================
+-- Autor:                Jesner Melgara Murillo
+-- Fecha de creación:     2024-10-20
+-- Descripción:            Insertar datos en la tabla intermedia SolicitudAnalisis_Archivo
+-- =============================================
+CREATE OR ALTER PROCEDURE PA_InsertarSolicitudAnalisis_Archivo
+    @pIdAnalisis INT,     -- ID de la solicitud de análisis (requerido)
+    @pIdArchivo INT       -- ID del archivo (requerido)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Inserta en la tabla intermedia TSOLITEL_SolicitudAnalisis_Archivo
+        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Archivo (IdAnalisis, IdArchivo)
+        VALUES (@pIdAnalisis, @pIdArchivo);
+
+        -- Confirma la transacción si no hubo errores
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshace la transacción
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Maneja el error mostrando detalles
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        -- Lanza el error para que sea manejado fuera del procedimiento si es necesario
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+
+
+-- =============================================
+-- Autor:                Jesner Melgara Murillo
+-- Fecha de creación:     2024-10-20
+-- Descripción:            Insertar datos en la tabla intermedia TipoAnalisis_SolicitudAnalisis
+-- =============================================
+CREATE OR ALTER PROCEDURE PA_InsertarTipoAnalisis_SolicitudAnalisis
+    @pIdTipoAnalisis INT,    -- ID del tipo de análisis (requerido)
+    @pIdAnalisis INT         -- ID de la solicitud de análisis (requerido)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Inserta en la tabla intermedia TipoAnalisis_SolicitudAnalisis
+        INSERT INTO dbo.TipoAnalisis_SolicitudAnalisis (IdTipoAnalisis, IdAnalisis)
+        VALUES (@pIdTipoAnalisis, @pIdAnalisis);
+
+        -- Confirma la transacción si no hubo errores
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshace la transacción
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Manejo del error mostrando detalles
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        -- Lanza el error para que sea manejado fuera del procedimiento si es necesario
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+

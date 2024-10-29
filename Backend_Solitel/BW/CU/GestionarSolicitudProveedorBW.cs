@@ -20,7 +20,7 @@ namespace BW.CU
             gestionarSolicitudProveedorDA = dA;
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
         }
@@ -31,7 +31,7 @@ namespace BW.CU
             return this.gestionarSolicitudProveedorDA.InsertarSolicitudProveedor(solicitudProveedor);
         }
 
-        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
             return await this.gestionarSolicitudProveedorDA.ListarNumerosUnicosTramitados();
         }

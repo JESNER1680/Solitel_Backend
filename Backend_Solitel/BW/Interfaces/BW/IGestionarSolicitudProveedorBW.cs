@@ -13,9 +13,9 @@ namespace BW.Interfaces.BW
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize);
 
-        public Task<List<int>> ListarNumerosUnicosTramitados();
+        public Task<List<string>> ListarNumerosUnicosTramitados();
 
-        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico);
+        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico);
 
         public Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos);
     }

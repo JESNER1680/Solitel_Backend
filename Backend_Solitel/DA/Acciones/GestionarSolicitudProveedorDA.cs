@@ -21,7 +21,7 @@ namespace DA.Acciones
             _context = context;
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             try
             {
@@ -133,15 +133,15 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
             try
             {
                 // Ejecutar el procedimiento almacenado para consultar
                 var numerosUnicosTramitados = await _context.Database
-                        .SqlQuery<int>($"EXEC PA_ListarNumerosUnicosTramitados")
+                        .SqlQuery<string>($"EXEC PA_ListarNumerosUnicosTramitados")
                         .ToListAsync();
-
+                Console.WriteLine(numerosUnicosTramitados);
 
                 return numerosUnicosTramitados;
             }
