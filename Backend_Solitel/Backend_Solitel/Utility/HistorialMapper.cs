@@ -18,7 +18,7 @@ namespace Backend_Solitel.Utility
                 TN_IdEstado = historialDTO.TN_IdEstado,
                 TN_IdAnalisis = historialDTO.TN_IdAnalisis,
                 TN_IdUsuario = historialDTO.TN_IdUsuario,
-                TN_NumeroSolicitud = historialDTO.TN_NumeroSolicitud
+                TN_IdSolicitudProveedor = historialDTO.TN_IdSolicitudProveedor
             };
         }
 

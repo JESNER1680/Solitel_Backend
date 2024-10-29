@@ -53,7 +53,7 @@ namespace Backend_Solitel.Controllers
                 int idRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
                     .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO));
 
-                if(idRequerimientoInsertado != 0)
+                if (idRequerimientoInsertado != 0)
                 {
                     idRequerimientosCreados.Add(idRequerimientoInsertado);
                 }
@@ -94,17 +94,32 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("listarNumerosUnicosTramitados")]
-        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
             return await this.gestionarSolicitudProveedorBW.ListarNumerosUnicosTramitados();
         }
 
         [HttpGet]
         [Route("consultarSolicitudesProveedorPorNumeroUnico")]
-        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
             return SolicitudProveedorMapper.FiltrarListaSolicitudesProveedor(solicitudes);
+        }
+
+        [HttpPut]
+        [Route("moverEstadoASinEfecto/{idSolicitudProveedor}")]
+        public async Task<IActionResult> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        {
+            var resultado = await this.gestionarSolicitudProveedorBW.MoverEstadoASinEfecto(idSolicitudProveedor);
+            if (resultado)
+            {
+                return Ok(true);  // Enviar código 200 con true
+            }
+            else
+            {
+                return BadRequest(false);  // Enviar código 400 con false
+            }
         }
     }
 }

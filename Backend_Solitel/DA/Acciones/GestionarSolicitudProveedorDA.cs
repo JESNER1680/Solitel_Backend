@@ -21,7 +21,7 @@ namespace DA.Acciones
             _context = context;
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             try
             {
@@ -50,7 +50,6 @@ namespace DA.Acciones
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    Oficina = new Oficina(),
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
                     UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
 
@@ -133,13 +132,13 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
             try
             {
                 // Ejecutar el procedimiento almacenado para consultar
                 var numerosUnicosTramitados = await _context.Database
-                        .SqlQuery<int>($"EXEC PA_ListarNumerosUnicosTramitados")
+                        .SqlQuery<string>($"EXEC PA_ListarNumerosUnicosTramitados")
                         .ToListAsync();
 
 
@@ -154,6 +153,41 @@ namespace DA.Acciones
             {
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener los numeros unicos tramitados: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@PN_IdSolicitudProveedor", idSolicitudProveedor);
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_MoverEstadoSinEfectoSolicitudProveedor @PN_IdSolicitudProveedor",
+                    idSolicitudProveedorParam);
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al cambiar el estado de solicitud de proveedor.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
             }
         }
 

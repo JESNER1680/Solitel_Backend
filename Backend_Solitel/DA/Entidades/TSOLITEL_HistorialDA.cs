@@ -38,7 +38,7 @@ namespace DA.Entidades
         [ForeignKey("TN_IdEstado")]
         public virtual TSOLITEL_EstadoDA Estado { get; set; }
 
-        [ForeignKey("TN_NumeroSolicitud")]
+        [ForeignKey("TN_IdSolicitudProveedor")]
         public virtual TSOLITEL_SolicitudProveedorDA? SolicitudProveedor { get; set; }
     }
 
