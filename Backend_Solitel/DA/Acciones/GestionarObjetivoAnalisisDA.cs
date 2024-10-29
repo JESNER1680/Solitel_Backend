@@ -6,7 +6,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<ObjetivoAnalisis> InsertarObjetivoAnalisis(ObjetivoAnalisis objetivoAnalisis)
+        public async Task<bool> InsertarObjetivoAnalisis(ObjetivoAnalisis objetivoAnalisis)
         {
             try
             {
@@ -62,74 +61,30 @@ namespace DA.Acciones
                 var nombreParam = new SqlParameter("@PC_Nombre", objetivoAnalisis.TC_Nombre);
                 var descripcionParam = new SqlParameter("@PC_Descripcion", objetivoAnalisis.TC_Descripcion);
 
-                // Definir el parámetro de salida para capturar el ID generado
-                var idParam = new SqlParameter("@pTN_IdObjetivoAnalisis", SqlDbType.Int)
-                {
-                    Direction = ParameterDirection.Output
-                };
-
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @PC_Nombre, @PC_Descripcion",
-                    idParam, nombreParam, descripcionParam
-                );
+                    "EXEC PA_InsertarObjetivoAnalisis @PC_Nombre, @PC_Descripcion",
+                    nombreParam, descripcionParam);
 
-                // Capturar el ID generado desde el parámetro de salida
-                var nuevoId = (int)idParam.Value;
+                var resultado = await _context.SaveChangesAsync();
 
-                if (nuevoId <= 0)
+                if (resultado < 0)
                 {
-                    throw new Exception("Error al obtener el ID del objetivo de análisis recién insertado.");
+                    throw new Exception("Error al insertar el objetivo de analisis.");
                 }
 
-                // Asignar el ID generado a la entidad ObjetivoAnalisis
-                objetivoAnalisis.TN_IdObjetivoAnalisis = nuevoId;
-
-                return objetivoAnalisis;
+                return resultado >= 0 ? true : false;
             }
             catch (SqlException ex)
             {
-                // Captura el error específico de SQL Server
-                throw new Exception($"Error en la base de datos al insertar el objetivo de análisis: {ex.Message}", ex);
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al insertar el objetivo de analisis: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
                 // Manejo de cualquier otro tipo de excepción
-                throw new Exception($"Ocurrió un error inesperado al insertar el objetivo de análisis: {ex.Message}", ex);
+                throw new Exception($"Ocurrió un error inesperado al insertar el objetivo de analisis: {ex.Message}", ex);
             }
         }
-
-        public async Task<List<ObjetivoAnalisis>> ObtenerObjetivoAnalisis(int idObjetivoAnalisis)
-        {
-            try
-            {
-                // Definir el parámetro
-                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", (idObjetivoAnalisis>0 && idObjetivoAnalisis != null)? idObjetivoAnalisis:null);
-
-                // Ejecutar el procedimiento almacenado pasando el parámetro
-                var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
-                    .FromSqlRaw("EXEC PA_ObtenerObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
-                    .ToListAsync();
-
-                // Mapear el resultado a la lista de ObjetivoAnalisis
-                var objetivos = ObjetivoAnalisisDA.Select(obj => new ObjetivoAnalisis
-                {
-                    TN_IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
-                    TC_Nombre = obj.TC_Nombre,
-                    TC_Descripcion = obj.TC_Descripcion
-                }).ToList();
-
-                return objetivos;
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception($"Error en la base de datos al obtener Objetivos: {ex.Message}", ex);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Ocurrió un error inesperado al obtener la lista de Objetivos: {ex.Message}", ex);
-            }
-        }
-
     }
 }

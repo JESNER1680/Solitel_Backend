@@ -16,20 +16,25 @@ namespace DA.Entidades
 
         [Required]
         [StringLength(255)]
-        public string TC_HashArchivo { get; set; }
+        public string TC_HashAchivo { get; set; }
 
         [Required]
-        public string TC_Nombre { get; set; }
+        public int TC_Nombre { get; set; }
 
         [Required]
         public byte[] TV_Contenido { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string TC_FormatoArchivo { get; set; }
+        public string TC_FormatoAchivo { get; set; }
 
         [Required]
         public DateTime TF_FechaModificacion { get; set; }
 
+        public int? TN_IdRequerimiento { get; set; }
+
+        // Relación opcional con la entidad RequerimientoProveedor
+        [ForeignKey("TN_IdRequerimiento")]
+        public virtual TSOLITEL_RequerimientoProveedorDA? RequerimientoProveedor { get; set; }
     }
 }

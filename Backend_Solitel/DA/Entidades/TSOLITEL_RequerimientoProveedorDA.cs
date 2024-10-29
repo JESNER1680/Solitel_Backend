@@ -25,6 +25,11 @@ namespace DA.Entidades
         [StringLength(255)]
         public string TC_Requerimiento { get; set; }
 
+        [Required]
+        public int TN_NumeroSolicitud { get; set; }
+
+        [ForeignKey("TN_NumeroSolicitud")]
+        public virtual TSOLITEL_SolicitudProveedorDA SolicitudProveedor { get; set; }
     }
 
 }

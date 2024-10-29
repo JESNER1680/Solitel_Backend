@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DA.Entidades
+namespace BC.Modelos
 {
     public class Permiso
     {
@@ -16,4 +14,5 @@ namespace DA.Entidades
 
         public string TC_Descripcion { get; set; }
     }
+
 }

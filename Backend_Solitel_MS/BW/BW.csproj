@@ -10,8 +10,4 @@
     <ProjectReference Include="..\BC\BC.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="CU\" />
-  </ItemGroup>
-
 </Project>

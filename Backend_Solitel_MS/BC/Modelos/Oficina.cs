@@ -12,4 +12,5 @@ namespace BC.Modelos
 
         public string TC_Nombre { get; set; }
     }
+
 }

@@ -23,7 +23,6 @@ namespace DA.Entidades
         [Required]
         [StringLength(255)]
         public string TC_Descripcion { get; set; }
-
-        public virtual List<TSOLITEL_PermisoDA> Permisos { get; set; }
     }
+
 }
