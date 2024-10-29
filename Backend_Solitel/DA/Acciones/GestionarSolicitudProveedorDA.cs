@@ -44,17 +44,15 @@ namespace DA.Acciones
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
                     FechaCrecion = da.TF_FechaCrecion,
-                    FechaModificacion = da.TF_FechaModificacion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito },
-                    DiasTranscurridos = da.TN_DiasTranscurridos,
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    Oficina = new Oficina { TN_IdOficina = da.TN_IdOficina, TC_Nombre = da.TC_NombreOficina },
+                    Oficina = new Oficina(),
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador, TC_Nombre = da.TC_NombreUsuarioCreador }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
 
                 }).ToList();
 
@@ -82,11 +80,9 @@ namespace DA.Acciones
                 var imputadoParam = new SqlParameter("@PC_Imputado", solicitudProveedor.Imputado);
                 var ofendidoParam = new SqlParameter("@PC_Ofendido", solicitudProveedor.Ofendido);
                 var resenniaParam = new SqlParameter("@PC_Resennia", solicitudProveedor.Resennia);
-                var diasTransacurridosParam = new SqlParameter("@PN_DiasTranscurridos", solicitudProveedor.DiasTranscurridos);
                 var urgenteParam = new SqlParameter("@PB_Urgente", solicitudProveedor.Urgente);
                 var aprobadoParam = new SqlParameter("@PB_Aprobado", solicitudProveedor.Aprobado);
                 var fechaCreacionParam = new SqlParameter("@PF_FechaCreacion", solicitudProveedor.FechaCrecion);
-                var fechaModificacionParam = new SqlParameter("@PF_FechaModificacion", solicitudProveedor.FechaModificacion);
                 var idUsuarioCreadorParam = new SqlParameter("@PN_IdUsuarioCreador", solicitudProveedor.UsuarioCreador.TN_IdUsuario);
                 var idDelitoParam = new SqlParameter("@PN_IdDelito", solicitudProveedor.Delito.TN_IdDelito);
                 var idCategoriaDelitoParam = new SqlParameter("@PN_IdCategoriaDelito", solicitudProveedor.CategoriaDelito.TN_IdCategoriaDelito);
@@ -106,11 +102,11 @@ namespace DA.Acciones
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC PA_InsertarSolicitudProveedor @PN_NumeroUnico, @PN_NumeroCaso, @PC_Imputado, @PC_Ofendido, @PC_Resennia," +
-                    " @PN_DiasTranscurridos, @PB_Urgente, @PB_Aprobado, @PF_FechaCreacion, @PF_FechaModificacion, @PN_IdUsuarioCreador," +
+                    " @PB_Urgente, @PB_Aprobado, @PF_FechaCreacion, @PN_IdUsuarioCreador," +
                     " @PN_IdDelito, @PN_IdCategoriaDelito, @PN_IdModalidad, @PN_IdSubModalidad, @PN_IdEstado, @PN_IdProveedor, @PN_IdFiscalia," +
                     " @PN_IdOficina, @IdSolicitudInsertada OUTPUT",
-                    numeroUnicoParam, numeroCasoParam, imputadoParam, ofendidoParam, resenniaParam, diasTransacurridosParam, urgenteParam,
-                    aprobadoParam, fechaCreacionParam, fechaModificacionParam, idUsuarioCreadorParam, idDelitoParam, idCategoriaDelitoParam,
+                    numeroUnicoParam, numeroCasoParam, imputadoParam, ofendidoParam, resenniaParam, urgenteParam,
+                    aprobadoParam, fechaCreacionParam, idUsuarioCreadorParam, idDelitoParam, idCategoriaDelitoParam,
                     idModalidadParam, idSubModalidadParam, idEstadoParam, idProveedorParam, idFiscaliaParam, idOficinaParam, idSolicitudParam);
 
                 var resultado = await _context.SaveChangesAsync();
@@ -186,17 +182,14 @@ namespace DA.Acciones
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
                     FechaCrecion = da.TF_FechaCrecion,
-                    FechaModificacion = da.TF_FechaModificacion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito , TN_IdCategoriaDelito = da.TN_IdCategoriaDelito},
-                    DiasTranscurridos = da.TN_DiasTranscurridos,
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia},
                     Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    Oficina = new Oficina { TN_IdOficina = da.TN_IdOficina, TC_Nombre = da.TC_NombreOficina},
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador, TC_Nombre = da.TC_NombreUsuarioCreador }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
 
                 }).ToList();
 
@@ -212,6 +205,54 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
+        }
+
+        public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
+        {
+
+            try
+            {
+                for (int i = 0; i < idSolicitudes.Count; i++)
+                {
+                    for (int j = 0; j < idRequerimientos.Count; j++)
+                    {
+                        //Definir los parámetros para el procedimiento almacenado
+                        var idSolicitudParam = new SqlParameter("@PN_IdSolicitudProveedor", idSolicitudes[i]);
+                        var idRequerimientoParam = new SqlParameter("@PN_IdRequerimientoProveedor", idRequerimientos[j]);
+
+                        // Ejecutar el procedimiento almacenado para insertar
+                        await _context.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_RelacionarRequerimientosProveedor @PN_IdSolicitudProveedor, @PN_IdRequerimientoProveedor",
+                            idSolicitudParam, idRequerimientoParam);
+                    }
+                }
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar las relaciones de requerimientos.");
+                }
+
+                return resultado >= 0 ? true : false;
+
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al insertar las relaciones de requerimientos: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al insertar las relaciones de requerimientos: {ex.Message}", ex);
+            }
+
+
+            
+
+
         }
     }
 }
