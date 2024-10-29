@@ -26,7 +26,12 @@ namespace BW.CU
 
         public Task<Archivo> ObtenerArchivoPorIdAsync(int idArchivo)
         {
-            return this.ObtenerArchivoPorIdAsync(idArchivo);
+            return this.gestionarArchivoDA.ObtenerArchivoPorIdAsync(idArchivo);
+        }
+
+        public async Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(List<int> idsSolicitudesProveedor)
+        {
+            return await this.gestionarArchivoDA.ObtenerArchivosDeSolicitudesProveedor(idsSolicitudesProveedor);
         }
     }
 }
