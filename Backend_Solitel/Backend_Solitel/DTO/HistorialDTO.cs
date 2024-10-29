@@ -14,7 +14,7 @@
 
         public int? TN_IdAnalisis { get; set; }
 
-        public int? TN_NumeroSolicitud { get; set; }
+        public int? TN_IdSolicitudProveedor { get; set; }
     }
 
 }
