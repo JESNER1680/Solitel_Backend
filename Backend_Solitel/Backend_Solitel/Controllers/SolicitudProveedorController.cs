@@ -121,5 +121,14 @@ namespace Backend_Solitel.Controllers
                 return BadRequest(false);  // Enviar código 400 con false
             }
         }
+
+        [HttpGet]
+        [Route("obtenerSolicitudesProveedorPorEstado")]
+        public async Task<List<SolicitudProveedorDTO>> ObtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)
+        {
+            return SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado));
+        }
+
+
     }
 }

@@ -47,6 +47,11 @@ namespace BW.CU
             return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor(pageNumber, pageSize);
         }
 
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)
+        {
+            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
+        }
+
         public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
         {
             return await this.gestionarSolicitudProveedorDA.relacionarRequerimientos(idSolicitudes, idRequerimientos);
