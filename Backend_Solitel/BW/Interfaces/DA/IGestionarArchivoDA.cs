@@ -12,5 +12,7 @@ namespace BW.Interfaces.DA
         public Task<bool> InsertarArchivo_RequerimientoProveedor(Archivo archivo, int idRequerimientoProveedor);
 
         public Task<Archivo> ObtenerArchivoPorIdAsync(int idArchivo);
+
+        public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(List<int> idsSolicitudesProveedor);
     }
 }

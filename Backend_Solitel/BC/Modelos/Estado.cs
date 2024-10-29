@@ -13,6 +13,8 @@ namespace BC.Modelos
         public string TC_Nombre { get; set; }
 
         public string TC_Descripcion { get; set; }
+
+        public string TC_Tipo { get; set; }
     }
 
 }

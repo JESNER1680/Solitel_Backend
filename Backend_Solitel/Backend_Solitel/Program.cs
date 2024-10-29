@@ -74,8 +74,12 @@ builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
 
 builder.Services.AddTransient<IGestionarArchivoDA,GestionarArchivoDA>();
 builder.Services.AddTransient<IGestionarArchivoBW, GestionarArchivoBW>();
+
 builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
 builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarEstadoDA, GestionarEstadoDA>();
+builder.Services.AddTransient<IGestionarEstadoBW, GestionarEstadoBW>();
 
 
 //Conexi�n a BD
