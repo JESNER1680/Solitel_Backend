@@ -46,6 +46,8 @@ namespace DA.Contexto
         public DbSet<TSOLITEL_ArchivoDA> TSOLITEL_ArchivoDA { get; set; }
 
         public DbSet<TSOLITEL_HistorialDA> TSOLITEL_HistorialDA { get; set; }
+
+        public DbSet<TSOLITEL_EstadoDA> TSOLITEL_EstadoDA { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TSOLITEL_FiscaliaDA>().ToTable("TSOLITEL_Fiscalia").HasKey(p => p.TN_IdFiscalia);
