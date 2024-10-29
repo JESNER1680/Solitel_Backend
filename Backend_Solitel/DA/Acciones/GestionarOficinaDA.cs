@@ -33,7 +33,8 @@ namespace DA.Acciones
                 var oficinas = oficinasDA.Select(da => new Oficina
                 {
                     TN_IdOficina = da.TN_IdOficina,
-                    TC_Nombre = da.TC_Nombre
+                    TC_Nombre = da.TC_Nombre,
+                    TC_Tipo = da.TC_Tipo
 
                 }).ToList();
 
