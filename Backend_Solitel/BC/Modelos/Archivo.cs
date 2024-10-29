@@ -16,7 +16,7 @@ namespace BC.Modelos
         public string TC_HashAchivo { get; set; }
 
         [Required]
-        public int TC_Nombre { get; set; }
+        public string TC_Nombre { get; set; }
 
         [Required]
         public byte[] TV_Contenido { get; set; } // Para almacenar contenido binario
@@ -28,9 +28,7 @@ namespace BC.Modelos
         [Required]
         public DateTime TF_FechaModificacion { get; set; }
 
-        // Relación opcional con TSOLITEL_RequerimientoProveedor
-        public int? TN_IdRequerimiento { get; set; }
-        public virtual RequerimientoProveedor RequerimientoProveedor { get; set; }
+
     }
 
 }

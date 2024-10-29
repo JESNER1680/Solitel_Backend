@@ -33,7 +33,7 @@ namespace BW.CU
             return this.gestionarRequerimientoProveedorDA.ConsultarTipoSolicitudes(idRequerimientoProveedor);
         }
 
-        public async Task<bool> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
+        public async Task<int> InsertarRequerimientoProveedor(RequerimientoProveedor requerimientoProveedor)
         {
             //Reglas de Negocio
             return await this.gestionarRequerimientoProveedorDA.InsertarRequerimientoProveedor(requerimientoProveedor);
