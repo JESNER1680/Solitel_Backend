@@ -32,7 +32,6 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis, 
             TB_Aprobado, 
             TF_FechaDeCreacion, 
-            TN_Solicitud, 
             TN_IdOficina
         )
         VALUES 
@@ -41,8 +40,7 @@ BEGIN
             @TC_OtrosDetalles, 
             @TC_OtrosObjetivosDeAnalisis, 
             @TB_Aprobado, 
-            @TF_FechaCrecion, 
-            @TN_NumeroSolicitud, 
+            @TF_FechaCrecion,  
             @TN_IdOficina
         );
 
@@ -127,7 +125,7 @@ BEGIN
         (
             TC_Objetivo, 
             TC_UtilizadoPor, 
-            TN_IdTipo, 
+            TN_IdTipoDato, 
             TN_IdAnalisis
         )
         VALUES 
@@ -170,7 +168,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Archivo (IdAnalisis, IdArchivo)
+        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Archivo (TN_IdAnalisis, TN_IdArchivo)
         VALUES (@pIdAnalisis, @pIdArchivo);
 
         COMMIT TRANSACTION;
@@ -206,7 +204,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        INSERT INTO dbo.TipoAnalisis_SolicitudAnalisis (IdTipoAnalisis, IdAnalisis)
+        INSERT INTO dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis(TN_IdTipoAnalisis, TN_IdAnalisis)
         VALUES (@pIdTipoAnalisis, @pIdAnalisis);
 
         COMMIT TRANSACTION;
