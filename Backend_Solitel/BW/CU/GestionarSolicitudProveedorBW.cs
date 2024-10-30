@@ -13,8 +13,6 @@ namespace BW.CU
     {
         private readonly IGestionarSolicitudProveedorDA gestionarSolicitudProveedorDA;
 
-
-
         public GestionarSolicitudProveedorBW(IGestionarSolicitudProveedorDA dA)
         {
             gestionarSolicitudProveedorDA = dA;
@@ -39,6 +37,11 @@ namespace BW.CU
         public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor)
         {
             return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor);
+        }
+
+        public async Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        {
+            return await this.gestionarSolicitudProveedorDA.obtenerSolicitud(idSolicitud);
         }
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)

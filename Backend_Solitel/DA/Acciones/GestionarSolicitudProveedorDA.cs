@@ -97,7 +97,6 @@ namespace DA.Acciones
                     Direction = System.Data.ParameterDirection.Output // Parámetro de salida
                 };
 
-
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC PA_InsertarSolicitudProveedor @PN_NumeroUnico, @PN_NumeroCaso, @PC_Imputado, @PC_Ofendido, @PC_Resennia," +
@@ -188,6 +187,46 @@ namespace DA.Acciones
             {
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        {
+            try
+            {
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", idSolicitud);
+
+                // Ejecutar el procedimiento almacenado
+                var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
+                    .FromSqlRaw("EXEC PA_ConsultarSolicitud @pTN_IdSolicitud", idSolicitudParam)
+                    .ToListAsync();
+
+                // Verificar si se obtuvo algún resultado
+                var da = solicitudesProveedorDA.FirstOrDefault();
+                if (da == null)
+                {
+                    return null; // Retorna null si no hay datos
+                }
+
+                // Mapeo del resultado
+                var solicitudProveedor = new SolicitudProveedor
+                {
+                    IdSolicitudProveedor = da.TN_IdSolicitud,
+                    NumeroUnico = da.TN_NumeroUnico,
+                    NumeroCaso = da.TN_NumeroCaso
+                };
+
+                return solicitudProveedor;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la solicitud del proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la solicitud del proveedor: {ex.Message}", ex);
             }
         }
 
