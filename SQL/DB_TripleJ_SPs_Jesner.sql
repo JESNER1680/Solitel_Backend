@@ -17,7 +17,8 @@ CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis
     @TB_Aprobado BIT,
     @TF_FechaCrecion DATE = NULL,
     @TN_NumeroSolicitud INT,
-    @TN_IdOficina INT
+    @TN_IdOficina INT,
+    @TN_IdSolicitudAnalisis INT OUTPUT -- Agregar parámetro de salida
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -25,6 +26,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
+        -- Inserción principal
         INSERT INTO dbo.TSOLITEL_SolicitudAnalisis 
         (
             TF_FechaDeHecho, 
@@ -32,6 +34,7 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis, 
             TB_Aprobado, 
             TF_FechaDeCreacion, 
+			TN_IdEstado,
             TN_IdOficina
         )
         VALUES 
@@ -40,9 +43,13 @@ BEGIN
             @TC_OtrosDetalles, 
             @TC_OtrosObjetivosDeAnalisis, 
             @TB_Aprobado, 
-            @TF_FechaCrecion,  
+            @TF_FechaCrecion,
+			4,
             @TN_IdOficina
         );
+
+        -- Captura el ID generado
+        SET @TN_IdSolicitudAnalisis = SCOPE_IDENTITY();
 
         COMMIT TRANSACTION;
     END TRY
@@ -66,8 +73,8 @@ GO
 -- Create date:           16-10-2024
 -- Description:           Procedimiento almacenado para insertar en la tabla intermedia de ObjetivoAnalisis_SolicitudAnalisis
 -- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_ObjetivoAnalisis_SolicitudAnalisis
-    @TN_IdObjetivo INT,
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarObjetivoAnalisis_SolicitudAnalisis
+    @TN_IdObjetivo INT OUTPUT,
     @TN_IdAnalisis INT
 AS
 BEGIN
@@ -76,6 +83,7 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
+        -- Insertar en la tabla intermedia y capturar el ID del objetivo
         INSERT INTO dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis 
         (
             TN_IdObjetivoAnalisis, 
@@ -103,6 +111,7 @@ BEGIN
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Author:                Jesner Melgara
@@ -160,7 +169,8 @@ GO
 -- =============================================
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis_Archivo
     @pIdAnalisis INT,
-    @pIdArchivo INT
+    @pIdArchivo INT,
+    @pTipo NVARCHAR(50) -- Agregar el nuevo parámetro
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -168,8 +178,9 @@ BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Archivo (TN_IdAnalisis, TN_IdArchivo)
-        VALUES (@pIdAnalisis, @pIdArchivo);
+        -- Inserción con la columna TC_Tipo
+        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Archivo (TN_IdAnalisis, TN_IdArchivo, TC_Tipo)
+        VALUES (@pIdAnalisis, @pIdArchivo, @pTipo);
 
         COMMIT TRANSACTION;
     END TRY
