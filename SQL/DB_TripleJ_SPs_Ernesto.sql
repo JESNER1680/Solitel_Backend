@@ -1792,6 +1792,7 @@ BEGIN
 END
 GO
 
+EXEC PA_ConsultarSolicitud 2 
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
@@ -1839,7 +1840,8 @@ BEGIN
             Estado.TC_Nombre AS TC_NombreEstado,
             SubModalidad.TN_IdSubModalidad,
             SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
-            T.TN_IdUsuario
+            T.TN_IdUsuario,
+			Usuario.TC_Nombre +' '+ Usuario.TC_Apellido AS TC_NombreUsuarioCreador
 
         FROM dbo.TSOLITEL_SolicitudProveedor AS T
         INNER JOIN dbo.TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
@@ -1849,6 +1851,7 @@ BEGIN
         INNER JOIN dbo.TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
         INNER JOIN dbo.TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
         INNER JOIN dbo.TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+		INNER JOIN dbo.TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
         WHERE T.TN_IdSolicitud = @pTN_IdSolicitud;
 
         -- Confirmar la transacción si no hubo errores

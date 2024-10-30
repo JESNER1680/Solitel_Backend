@@ -130,7 +130,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet("{idSolicitud}")]
-        public async Task<ActionResult<SolicitudProveedor>> ObtenerSolicitud(int idSolicitud)
+        public async Task<ActionResult<SolicitudProveedorDTO>> ObtenerSolicitud(int idSolicitud)
         {
             try
             {
