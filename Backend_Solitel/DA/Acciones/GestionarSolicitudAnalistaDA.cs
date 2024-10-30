@@ -50,21 +50,24 @@ namespace DA.Acciones
                 {
                     foreach (var objetivoAnalisis in solicitudAnalisis.ObjetivosAnalisis)
                     {
-                        var nombreParam = new SqlParameter("@TC_Nombre", objetivoAnalisis.TC_Nombre);
-                        var descripcionParam = new SqlParameter("@TC_Descripcion", objetivoAnalisis.TC_Descripcion);
-                        var borradoParam = new SqlParameter("@TB_Borrado", 0);
+                        var nombreParam = new SqlParameter("@pTC_Nombre", objetivoAnalisis.TC_Nombre);
+                        var descripcionParam = new SqlParameter("@pTC_Descripcion", objetivoAnalisis.TC_Descripcion);
+                        var borradoParam = new SqlParameter("@pTB_Borrado", 0);
+                        var idObjetivoParam = new SqlParameter("@pTN_IdObjetivoAnalisis", System.Data.SqlDbType.Int)
+                        {
+                            Direction = System.Data.ParameterDirection.Output
+                        };
 
                         // Ejecutar el procedimiento almacenado PA_InsertarObjetivoAnalisis
                         await solitelContext.Database.ExecuteSqlRawAsync(
-                            "EXEC PA_InsertarObjetivoAnalisis @TC_Nombre, @TC_Descripcion, @TB_Borrado",
-                            nombreParam, descripcionParam, borradoParam);
+                            "EXEC PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @pTC_Nombre, @pTC_Descripcion, @pTB_Borrado",
+                            idObjetivoParam, nombreParam, descripcionParam, borradoParam);
 
                         // Insertar en la tabla intermedia PA_ObjetivoAnalisis_SolicitudAnalisis
-                        var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", objetivoAnalisis.TN_IdObjetivoAnalisis);
                         var idAnalisisIntermedioParam = new SqlParameter("@TN_IdAnalisis", idAnalisis);
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
-                            "EXEC PA_ObjetivoAnalisis_SolicitudAnalisis @TN_IdObjetivo, @TN_IdAnalisis",
+                            "EXEC PA_ObjetivoAnalisis_SolicitudAnalisis @TN_IdObjetivo = @pTN_IdObjetivoAnalisis, @TN_IdAnalisis",
                             idObjetivoParam, idAnalisisIntermedioParam);
                     }
                 }
@@ -127,6 +130,7 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar la solicitud de análisis: {ex.Message}", ex);
             }
         }
+
 
     }
 }
