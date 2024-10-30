@@ -30,8 +30,7 @@ namespace DA.Acciones
                 var idObjetivoAnalisisParam = new SqlParameter("@PN_IdObjetivoAnalisis", idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado para eliminar (lógicamente)
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_EliminarObjetivoAnalisis @PN_IdObjetivoAnalisis", idObjetivoAnalisisParam);
+                await _context.Database.ExecuteSqlRawAsync("EXEC dbo.PA_EliminarObjetivoAnalisis @PN_IdObjetivoAnalisis", idObjetivoAnalisisParam);
 
                 var resultado = await _context.SaveChangesAsync();
 
@@ -70,7 +69,7 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @PC_Nombre, @PC_Descripcion",
+                    "EXEC dbo.PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @PC_Nombre, @PC_Descripcion",
                     idParam, nombreParam, descripcionParam
                 );
 
@@ -109,7 +108,7 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado pasando el parámetro
                 var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
-                    .FromSqlRaw("EXEC PA_ObtenerObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
+                    .FromSqlRaw("EXEC dbo.PA_ConsultarObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
                     .ToListAsync();
 
                 // Mapear el resultado a la lista de ObjetivoAnalisis

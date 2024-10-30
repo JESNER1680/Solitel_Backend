@@ -102,11 +102,6 @@ namespace DA.Acciones
                         {
                             TN_IdSubModalidad = sp.TN_IdSubModalidad ?? 0,
                             TC_Nombre = sp.TC_NombreSubModalidad
-                        },
-                        UsuarioCreador = new Usuario
-                        {
-                            TN_IdUsuario = sp.TN_IdUsuario,
-                            TC_Nombre = sp.TC_NombreUsuario
                         }
                     }).ToList()
                 }).ToList();
