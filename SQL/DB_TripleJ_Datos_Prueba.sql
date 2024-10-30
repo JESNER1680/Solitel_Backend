@@ -1,5 +1,6 @@
 -- Datos de prueba
-
+USE [Proyecto_Analisis]
+GO
 INSERT INTO [dbo].[TSOLITEL_Estado]
            ([TC_Nombre]
            ,[TC_Descripcion]
@@ -50,3 +51,6 @@ INSERT INTO [dbo].[TSOLITEL_Estado]
 		   ('Analizando'
            ,'Una solicitud esta en proceso de ser respondida por los analistas'
            ,'Analisis')
+
+
+
