@@ -62,7 +62,7 @@ namespace DA.Contexto
             modelBuilder.Entity<TSOLITEL_RequerimentoAnalisisDA>().ToTable("TSOLITEL_RequerimentoAnalisis").HasKey(p => p.TN_IdRequerimientoAnalisis);
             modelBuilder.Entity<TSOLITEL_ProveedorDA>().ToTable("TSOLITEL_Proveedor").HasKey(p => p.TN_IdProveedor);
             modelBuilder.Entity<TSOLITEL_OficinaDA>().ToTable("TSOLITEL_Oficina").HasKey(p => p.TN_IdOficina);
-            modelBuilder.Entity<TSOLITEL_SolicitudProveedorDA>().ToTable("TSOLITEL_SolicitudProveedor").HasKey(p => p.TN_IdSolicitudProveedor);
+            modelBuilder.Entity<TSOLITEL_SolicitudProveedorDA>().ToTable("TSOLITEL_SolicitudProveedor").HasKey(p => p.TN_IdSolicitud);
             modelBuilder.Entity<TSOLITEL_RequerimientoProveedorDA>().ToTable("TSOLITEL_RequerimientoProveedor").HasKey(p => p.TN_IdRequerimientoProveedor);
             modelBuilder.Entity<TSOLITEL_DatoRequeridoDA>().ToTable("TSOLITEL_DatoRequerido").HasKey(p => p.TN_IdDatoRequerido);
             modelBuilder.Entity<TSOLITEL_ObjetivoAnalisisDA>().ToTable("TSOLITEL_ObjetivoAnalisis").HasKey(p => p.TN_IdObjetivoAnalisis);
