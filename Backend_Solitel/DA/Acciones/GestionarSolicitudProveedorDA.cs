@@ -35,7 +35,7 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
-                    IdSolicitudProveedor = da.TN_IdSolicitudProveedor,
+                    IdSolicitudProveedor = da.TN_IdSolicitud,
                     NumeroUnico = da.TN_NumeroUnico,
                     NumeroCaso = da.TN_NumeroCaso,
                     Imputado = da.TC_Imputado,
@@ -43,15 +43,15 @@ namespace DA.Acciones
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaCrecion,
+                    FechaCrecion = da.TF_FechaDeCrecion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito },
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
-                    Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
+                    Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
+                    SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario }
 
                 }).ToList();
 
@@ -207,7 +207,7 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
-                    IdSolicitudProveedor = da.TN_IdSolicitudProveedor,
+                    IdSolicitudProveedor = da.TN_IdSolicitud,
                     NumeroUnico = da.TN_NumeroUnico,
                     NumeroCaso = da.TN_NumeroCaso,
                     Imputado = da.TC_Imputado,
@@ -215,15 +215,15 @@ namespace DA.Acciones
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaCrecion,
+                    FechaCrecion = da.TF_FechaDeCrecion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito , TN_IdCategoriaDelito = da.TN_IdCategoriaDelito},
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia},
-                    Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
+                    Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
+                    SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario }
 
                 }).ToList();
 
@@ -257,23 +257,23 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
-                    IdSolicitudProveedor = da.TN_IdSolicitudProveedor,
+                    IdSolicitudProveedor = da.TN_IdSolicitud,
                     NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroCaso = da.TN_NumeroCaso != null ? da.TN_NumeroCaso: null,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaCrecion,
+                    FechaCrecion = da.TF_FechaDeCrecion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito },
                     Estado = new Estado { TN_IdEstado = da.TN_IdEstado, TC_Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
-                    Modalidad = new Modalidad { TN_IdModalidad = da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { TN_IdSubModalidad = da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
+                    Modalidad = da.TN_IdModalidad != null ? new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad }: null,
+                    SubModalidad = da.TN_IdSubModalidad != null ? new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad }:null,
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario, TC_Nombre = da.TC_NombreUsuario}
 
                 }).ToList();
 
