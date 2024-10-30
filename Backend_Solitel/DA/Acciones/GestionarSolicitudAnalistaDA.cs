@@ -59,7 +59,6 @@ namespace DA.Acciones
                         var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", objetivoAnalisis.TN_IdObjetivoAnalisis);
                         var idAnalisisIntermedioParam = new SqlParameter("@TN_IdAnalisis", idAnalisis);
 
-                        // Insertar en la tabla intermedia usando PA_InsertarObjetivoAnalisis_SolicitudAnalisis
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarObjetivoAnalisis_SolicitudAnalisis @TN_IdObjetivo, @TN_IdAnalisis",
                             idObjetivoParam, idAnalisisIntermedioParam);
@@ -111,6 +110,31 @@ namespace DA.Acciones
                     }
                 }
 
+                // Insertar condiciones asociadas a la solicitud, si existen
+                if (solicitudAnalisis.Condiciones != null && solicitudAnalisis.Condiciones.Count > 0)
+                {
+                    foreach (var condicion in solicitudAnalisis.Condiciones)
+                    {
+                        await solitelContext.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_InsertarSolicitudAnalisis_Condicion @TN_IdAnalisis, @TN_IdCondicion",
+                            new SqlParameter("@TN_IdAnalisis", idAnalisis),
+                            new SqlParameter("@TN_IdCondicion", condicion.TN_IdCondicion));
+                    }
+                }
+
+                // Insertar proveedores asociados a la solicitud, si existen
+                if (solicitudAnalisis.SolicitudesProveedor != null && solicitudAnalisis.SolicitudesProveedor.Count > 0)
+                {
+                    foreach (var solicitudProveedor in solicitudAnalisis.SolicitudesProveedor)
+                    {
+                        await solitelContext.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_InsertarSolicitudAnalisis_SolicitudProveedor @TN_IdAnalisis, @TN_IdSolicitud",
+                            new SqlParameter("@TN_IdAnalisis", idAnalisis),
+                            new SqlParameter("@TN_IdSolicitud", solicitudProveedor.IdSolicitudProveedor)
+                        );
+                    }
+                }
+
                 await solitelContext.SaveChangesAsync();
                 return true;
             }
@@ -123,12 +147,6 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar la solicitud de análisis: {ex.Message}", ex);
             }
         }
-
-
-
-
-
-
 
 
     }

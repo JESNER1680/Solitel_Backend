@@ -235,6 +235,59 @@ BEGIN
     END CATCH
 END
 GO
+-- =============================================
+-- Author:                Jesner Melgara Murillo
+-- Create date:           2024-10-20
+-- Description:           Insertar en la tabla intermedia PA_InsertarSolicitudAnalisis_SolicitudProveedor
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis_SolicitudProveedor
+    @TN_IdAnalisis INT,
+    @TN_IdSolicitud INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Verificar que TN_IdAnalisis existe en TSOLITEL_SolicitudAnalisis
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis = @TN_IdAnalisis)
+        BEGIN
+            RAISERROR ('El TN_IdAnalisis proporcionado no existe en la tabla TSOLITEL_SolicitudAnalisis.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -- Verificar que TN_IdSolicitud existe en TSOLITEL_SolicitudProveedor
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_SolicitudProveedor WHERE TN_IdSolicitud = @TN_IdSolicitud)
+        BEGIN
+            RAISERROR ('El TN_IdSolicitud proporcionado no existe en la tabla TSOLITEL_SolicitudProveedor.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        -- Insertar los valores en TSOLITEL_SolicitudAnalisis_SolicitudProveedor
+        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor (TN_IdAnalisis, TN_IdSolicitud)
+        VALUES (@TN_IdAnalisis, @TN_IdSolicitud);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar error para manejo en el cliente
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
 
 USE [Proyecto_Analisis]
 GO
@@ -398,3 +451,135 @@ BEGIN
     END CATCH
 END
 GO
+
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Obtiene todos los archivos relacionados al ID de la solicitud del proveedor
+-- =============================================
+
+--REVISION ESTE SP, NO ESTA CARGADO
+CREATE OR ALTER PROCEDURE dbo.SP_ConsultarArchivosPorSolicitudProveedor
+    @idSolicitudProveedor INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        a.TN_IdArchivo,
+        a.TC_Nombre,
+        a.TC_FormatoAchivo,
+        a.TV_DireccionFileStream AS TV_Contenido,  -- Renombrado para que coincida con el modelo
+        a.TF_FechaDeModificacion AS TF_FechaModificacion
+    FROM 
+        dbo.TSOLITEL_Archivo a
+    INNER JOIN 
+        dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor sasp 
+    ON 
+        a.TN_IdArchivo = sasp.TN_IdSolicitud  -- Ajusta esta relación según la FK real
+    WHERE 
+        sasp.TN_IdSolicitud = @idSolicitudProveedor;
+END
+GO
+USE [Proyecto_Analisis]
+GO
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Insertar datos en la tabla intermedia PA_InsertarSolicitudAnalisis_Condicion
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis_Condicion
+    @TN_IdAnalisis INT,
+    @TN_IdCondicion INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Verificar si el TN_IdAnalisis existe en TSOLITEL_SolicitudAnalisis
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis = @TN_IdAnalisis)
+        BEGIN
+            RAISERROR ('El ID de Análisis proporcionado no existe en TSOLITEL_SolicitudAnalisis.', 16, 1);
+            RETURN;
+        END
+
+        -- Verificar si el TN_IdCondicion existe en TSOLITEL_Condicion
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_Condicion WHERE TN_IdCondicion = @TN_IdCondicion)
+        BEGIN
+            RAISERROR ('El ID de Condición proporcionado no existe en TSOLITEL_Condicion.', 16, 1);
+            RETURN;
+        END
+
+        -- Insertar en la tabla TSOLITEL_SolicitudAnalisis_Condicion
+        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Condicion (TN_IdAnalisis, TN_IdCondicion)
+        VALUES (@TN_IdAnalisis, @TN_IdCondicion);
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- Manejar el error
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar el error para que sea manejado por la aplicación
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+-- Tabla principal de Solicitudes de Análisis
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis;
+
+-- Archivos asociados a cada solicitud de análisis
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo;
+
+-- Condiciones relacionadas con cada solicitud de análisis
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
+
+-- Objetivos de análisis asociados a cada solicitud de análisis
+SELECT * FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+
+-- Tipos de análisis asociados a cada solicitud de análisis
+SELECT * FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis;
+
+-- Requerimientos de análisis relacionados con cada solicitud de análisis
+SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis;
+
+-- Proveedores asociados a cada solicitud de análisis (si aplica en contexto)
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+
+
+
+
+
+
+--Eliminar Datos
+-- Eliminar proveedores asociados a cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+
+-- Eliminar requerimientos de análisis relacionados con cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_RequerimentoAnalisis;
+
+-- Eliminar tipos de análisis asociados a cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
+
+-- Eliminar objetivos de análisis asociados a cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+
+-- Eliminar condiciones relacionadas con cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
+
+-- Eliminar archivos asociados a cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
+
+-- Eliminar las solicitudes de análisis
+DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;
