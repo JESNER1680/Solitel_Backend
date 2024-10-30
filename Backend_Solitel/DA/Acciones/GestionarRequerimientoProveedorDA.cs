@@ -71,8 +71,8 @@ namespace DA.Acciones
                 var requerimientosProveedor = requerimientosProveedorDA.Select(da => new RequerimientoProveedor
                 {
                     TN_IdRequerimientoProveedor = da.TN_IdRequerimientoProveedor,
-                    TF_FechaFinal = da.TF_FechaFinal,
-                    TF_FechaInicio = da.TF_FechaInicio,
+                    TF_FechaFinal = da.TF_FechaDeFinal,
+                    TF_FechaInicio = da.TF_FechaDeInicio,
                     TC_Requerimiento = da.TC_Requerimiento,
                     TN_NumeroSolicitud = 0,
                     datosRequeridos = new List<DatoRequerido>(),

@@ -43,7 +43,7 @@ namespace DA.Acciones
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaDeCrecion,
+                    FechaCrecion = da.TF_FechaDeCreacion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito },
@@ -51,7 +51,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario }
 
                 }).ToList();
 
@@ -191,17 +191,15 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)
+        public async Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
         {
 
             try
             {
-                var pageNumberParam = new SqlParameter("@PageNumber", pageNumber);
-                var pageSizeParam = new SqlParameter("@PageSize", pageSize);
 
                 // Ejecutar el procedimiento almacenado
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedor @PageNumber, @PageSize", pageNumberParam, pageSizeParam)
+                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedor")
                     .ToListAsync();
 
                 // Mapeo de los resultados
@@ -215,7 +213,7 @@ namespace DA.Acciones
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaDeCrecion,
+                    FechaCrecion = da.TF_FechaDeCreacion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito , TN_IdCategoriaDelito = da.TN_IdCategoriaDelito},
@@ -223,7 +221,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia},
                     Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario, TC_Nombre = da.TC_NombreUsuario }
 
                 }).ToList();
 
@@ -265,7 +263,7 @@ namespace DA.Acciones
                     Resennia = da.TC_Resennia,
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaDeCrecion,
+                    FechaCrecion = da.TF_FechaDeCreacion,
                     Proveedor = new Proveedor { TN_IdProveedor = da.TN_IdProveedor, TC_Nombre = da.TC_NombreProveedor },
                     Delito = new Delito { TN_IdDelito = da.TN_IdDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito, TC_Nombre = da.TC_NombreDelito },
                     CategoriaDelito = new CategoriaDelito { TC_Nombre = da.TC_NombreCategoriaDelito, TN_IdCategoriaDelito = da.TN_IdCategoriaDelito },
@@ -273,7 +271,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = da.TN_IdModalidad != null ? new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad }: null,
                     SubModalidad = da.TN_IdSubModalidad != null ? new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad }:null,
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador, TC_Nombre = da.TC_NombreUsuarioCreador}
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario, TC_Nombre = da.TC_NombreUsuario}
 
                 }).ToList();
 
