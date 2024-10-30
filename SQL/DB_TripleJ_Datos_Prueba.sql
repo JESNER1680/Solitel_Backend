@@ -202,8 +202,7 @@ GO
 -- Paso 14: Insertar en TSOLITEL_SolicitudProveedor
 INSERT INTO [dbo].[TSOLITEL_SolicitudProveedor] ([TN_NumeroUnico], [TN_NumeroCaso], [TC_Imputado], [TC_Ofendido], [TC_Resennia], [TB_Urgente], [TB_Aprobado], [TF_FechaDeCrecion], [TN_IdDelito], [TN_IdCategoriaDelito], [TN_IdModalida], [TN_IdSubModalidad], [TN_IdEstado], [TN_IdProveedor], [TN_IdFiscalia], [TN_IdOficina], [TN_IdUsuario])
 VALUES
-    ('24-000100-1132-pe', NULL, 'PRUEBA', 'PRUEBA', 'PRUEBA', 1, 0, GETDATE(), 1, 1, 1, NULL, 1, 1, 1, 1, 1),
-	('24-000101-1133-pe', NULL, 'PRUEBA', 'PRUEBA', 'PRUEBA', 1, 0, GETDATE(), 1, 1, 1, NULL, 1, 1, 1, 1, 1);
+    ('24-000100-1132-pe', NULL, 'PRUEBA', 'PRUEBA', 'PRUEBA', 1, 0, GETDATE(), 1, 1, 1, NULL, 1, 1, 1, 1, 1);
 GO
 
 -- Paso 15: Insertar en TSOLITEL_RequerimientoProveedor
@@ -247,62 +246,24 @@ VALUES
     (1, 1),
     (1, 2);
 GO
-
-USE Proyecto_Analisis;
-GO
-
--- Insertar en TSOLITEL_Rol
-INSERT INTO [dbo].[TSOLITEL_Rol] (TC_Nombre, TC_Descripcion)
-VALUES 
-    ('Admin', 'Administrador del sistema'),
-    ('Analista', 'Analista de solicitudes'),
-    ('Operador', 'Operador de solicitudes');
-GO
-
--- Insertar en TSOLITEL_Permiso
-INSERT INTO [dbo].[TSOLITEL_Permiso] (TC_Nombre, TC_Descripcion, TB_Borrado)
-VALUES 
-    ('CrearSolicitud', 'Permiso para crear solicitudes', 0),
-    ('VerReporte', 'Permiso para ver reportes', 0),
-    ('ModificarSolicitud', 'Permiso para modificar solicitudes', 0);
-GO
-
--- Insertar en TSOLITEL_Rol_Permiso
-INSERT INTO [dbo].[TSOLITEL_Rol_Permiso] (TN_IdRol, TN_IdPermiso)
-VALUES
-    (1, 1),  -- Admin - CrearSolicitud
-    (1, 2),  -- Admin - VerReporte
-    (1, 3),  -- Admin - ModificarSolicitud
-    (2, 2),  -- Analista - VerReporte
-    (3, 1);  -- Operador - CrearSolicitud
-GO
-
 -- Insertar en TSOLITEL_TipoAnalisis
 INSERT INTO [dbo].[TSOLITEL_TipoAnalisis] (TC_Nombre, TC_Descripcion, TB_Borrado)
 VALUES
-    ('Tipo A', 'Análisis de tipo A', 0),
-    ('Tipo B', 'Análisis de tipo B', 0);
-GO
-
--- Insertar en TSOLITEL_ObjetivoAnalisis
-INSERT INTO [dbo].[TSOLITEL_ObjetivoAnalisis] (TC_Nombre, TC_Descripcion, TB_Borrado)
-VALUES
-    ('Objetivo 1', 'Descripción del objetivo 1', 0),
-    ('Objetivo 2', 'Descripción del objetivo 2', 0);
+    ('Análisis Telefónico', 'Análisis de tipo Telefónico', 0)
 GO
 
 -- Insertar en TSOLITEL_SolicitudAnalisis
 INSERT INTO [dbo].[TSOLITEL_SolicitudAnalisis] (TF_FechaDeHecho, TC_OtrosDetalles, TC_OtrosObjetivosDeAnalisis, TF_FechaDeCreacion, TB_Aprobado, TN_IdEstado, TN_IdOficina)
 VALUES
-    ('2024-07-01 12:00:00', 'Detalles adicionales para análisis 1', 'Objetivos adicionales', GETDATE(), 1, 1, 1),
-    ('2024-08-01 15:30:00', 'Detalles adicionales para análisis 2', 'Objetivos adicionales', GETDATE(), 0, 2, 2);
+    ('2024-07-01 12:00:00', 'Detalles adicionales para análisis 1', 'Objetivos adicionales', GETDATE(), 0, 4, 11),
+    ('2024-08-01 15:30:00', 'Detalles adicionales para análisis 2', 'Objetivos adicionales', GETDATE(), 0, 4,11);
 GO
 
 -- Insertar en TSOLITEL_TipoAnalisis_SolicitudAnalisis
 INSERT INTO [dbo].[TSOLITEL_TipoAnalisis_SolicitudAnalisis] (TN_IdTipoAnalisis, TN_IdAnalisis)
 VALUES
     (1, 1),  -- Tipo A - Análisis 1
-    (2, 2);  -- Tipo B - Análisis 2
+    (1, 2);  -- Tipo B - Análisis 2
 GO
 
 -- Insertar en TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis
@@ -336,8 +297,8 @@ GO
 -- Insertar en TSOLITEL_Historial
 INSERT INTO [dbo].[TSOLITEL_Historial] (TC_Observacion, TF_FechaDeModificacion, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud, TN_IdUsuario)
 VALUES
-    ('Observación para análisis 1', GETDATE(), 1, 1, 2, 1),
-    ('Observación para análisis 2', GETDATE(), 2, 2, 3, 1);
+    ('Observación para análisis 1', GETDATE(), 1, 1, 1, 1),
+    ('Observación para análisis 2', GETDATE(), 2, 2, 2, 1);
 GO
 
 -- Insertar en TSOLITEL_Logger

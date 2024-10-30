@@ -51,7 +51,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
 
                 }).ToList();
 
@@ -223,7 +223,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia},
                     Modalidad = new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario }
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador }
 
                 }).ToList();
 
@@ -273,7 +273,7 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { TN_IdFiscalia = da.TN_IdFiscalia, TC_Nombre = da.TC_NombreFiscalia },
                     Modalidad = da.TN_IdModalidad != null ? new Modalidad { TN_IdModalidad = (int)da.TN_IdModalidad, TC_Nombre = da.TC_NombreModalidad }: null,
                     SubModalidad = da.TN_IdSubModalidad != null ? new SubModalidad { TN_IdSubModalidad = (int)da.TN_IdSubModalidad, TC_Nombre = da.TC_NombreSubModalidad, TN_IdModalida = (int)da.TN_IdModalidad }:null,
-                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuario, TC_Nombre = da.TC_NombreUsuario}
+                    UsuarioCreador = new Usuario { TN_IdUsuario = da.TN_IdUsuarioCreador, TC_Nombre = da.TC_NombreUsuarioCreador}
 
                 }).ToList();
 

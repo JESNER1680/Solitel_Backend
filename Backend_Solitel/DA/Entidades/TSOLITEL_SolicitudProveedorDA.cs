@@ -40,7 +40,7 @@ namespace DA.Entidades
         public DateTime TF_FechaDeCrecion { get; set; }
 
         [Required]
-        public int TN_IdUsuario { get; set; }
+        public int TN_IdUsuarioCreador { get; set; }
 
         [Required]
         public int TN_IdDelito { get; set; }
@@ -78,7 +78,7 @@ namespace DA.Entidades
 
         public string? TC_NombreSubModalidad { get;set; }
 
-        public string TC_NombreUsuario { get;set; }
+        public string TC_NombreUsuarioCreador { get;set; }
 
         [ForeignKey("TN_IdCategoriaDelito")]
         public virtual TSOLITEL_CategoriaDelitoDA CategoriaDelito { get; set; }
