@@ -74,8 +74,15 @@ builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
 
 builder.Services.AddTransient<IGestionarArchivoDA,GestionarArchivoDA>();
 builder.Services.AddTransient<IGestionarArchivoBW, GestionarArchivoBW>();
+
 builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
 builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarHistorialDA, GestionarHistorialDA>();
+builder.Services.AddTransient<IGestionarHistorialBW, GestionarHistorialBW>();
+
+builder.Services.AddTransient<IGestionarEstadoDA, GestionarEstadoDA>();
+builder.Services.AddTransient<IGestionarEstadoBW, GestionarEstadoBW>();
 
 
 //Conexi�n a BD
@@ -85,6 +92,17 @@ builder.Services.AddDbContext<SolitelContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBSomee.com"));
     // Otros ajustes del contexto de base de datos pueden ser configurados aqu�, si es necesario
 });
+
+// Habilitar CORS para localhost:4200
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+});
+
 var app = builder.Build();
 
 //configuracion de cores
@@ -104,6 +122,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

@@ -30,7 +30,7 @@ namespace DA.Entidades
 
         public int? TN_IdAnalisis { get; set; }
 
-        public int? TN_NumeroSolicitud { get; set; }
+        public int? TN_IdSolicitudProveedor { get; set; }
 
         [ForeignKey("TN_IdUsuario")]
         public virtual TSOLITEL_UsuarioDA Usuario { get; set; }
@@ -38,7 +38,7 @@ namespace DA.Entidades
         [ForeignKey("TN_IdEstado")]
         public virtual TSOLITEL_EstadoDA Estado { get; set; }
 
-        [ForeignKey("TN_NumeroSolicitud")]
+        [ForeignKey("TN_IdSolicitudProveedor")]
         public virtual TSOLITEL_SolicitudProveedorDA? SolicitudProveedor { get; set; }
     }
 

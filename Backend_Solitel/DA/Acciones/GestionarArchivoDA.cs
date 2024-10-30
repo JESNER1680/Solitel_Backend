@@ -68,7 +68,7 @@ namespace DA.Acciones
             {
                 // Ejecutar el procedimiento almacenado para consultar por ID
                 var archivoDA = await _context.TSOLITEL_ArchivoDA
-                    .FromSqlRaw("EXEC PA_ConsultarArchivoPorID @@PN_IdArchivo = {0}", idArchivo)
+                    .FromSqlRaw("EXEC PA_ConsultarArchivoPorID @PN_IdArchivo = {0}", idArchivo)
                     .ToListAsync();  // Convertir la consulta a una lista
 
                 var primerArchivo = archivoDA.FirstOrDefault();  // Obtener el primer elemento si existe
@@ -101,6 +101,11 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener el archivo con ID {idArchivo}: {ex.Message}", ex);
             }
+        }
+
+        public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(List<int> idsSolicitudesProveedor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

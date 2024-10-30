@@ -36,10 +36,20 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.ListarNumerosUnicosTramitados();
         }
 
+        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        {
+            return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor);
+        }
+
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)
         {
             //Aplicar reglas de negocio
             return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor(pageNumber, pageSize);
+        }
+
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)
+        {
+            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
         }
 
         public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)

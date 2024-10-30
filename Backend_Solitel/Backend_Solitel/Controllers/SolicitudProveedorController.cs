@@ -53,7 +53,7 @@ namespace Backend_Solitel.Controllers
                 int idRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
                     .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO));
 
-                if(idRequerimientoInsertado != 0)
+                if (idRequerimientoInsertado != 0)
                 {
                     idRequerimientosCreados.Add(idRequerimientoInsertado);
                 }
@@ -106,5 +106,29 @@ namespace Backend_Solitel.Controllers
             List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
             return SolicitudProveedorMapper.FiltrarListaSolicitudesProveedor(solicitudes);
         }
+
+        [HttpPut]
+        [Route("moverEstadoASinEfecto/{idSolicitudProveedor}")]
+        public async Task<IActionResult> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        {
+            var resultado = await this.gestionarSolicitudProveedorBW.MoverEstadoASinEfecto(idSolicitudProveedor);
+            if (resultado)
+            {
+                return Ok(true);  // Enviar código 200 con true
+            }
+            else
+            {
+                return BadRequest(false);  // Enviar código 400 con false
+            }
+        }
+
+        [HttpGet]
+        [Route("obtenerSolicitudesProveedorPorEstado")]
+        public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)
+        {
+            return await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
+        }
+
+
     }
 }
