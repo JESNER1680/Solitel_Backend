@@ -14,7 +14,8 @@ namespace DA.Acciones
     public class GestionarSolicitudAnalistaDA : IGestionarSolicitudAnalistaDA
     {
         private readonly SolitelContext solitelContext;
-        public GestionarSolicitudAnalistaDA(SolitelContext _solitelContext) {
+        public GestionarSolicitudAnalistaDA(SolitelContext _solitelContext)
+        {
             this.solitelContext = _solitelContext;
         }
         public async Task<bool> CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
@@ -30,22 +31,27 @@ namespace DA.Acciones
                 var numeroSolicitudParam = new SqlParameter("@TN_NumeroSolicitud", solicitudAnalisis.TN_NumeroSolicitud);
                 var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.TN_IdOficina);
 
+                // Parámetro de salida para capturar el IdAnalisis generado
+                var idAnalisisParam = new SqlParameter("@TN_IdSolicitudAnalisis", System.Data.SqlDbType.Int)
+                {
+                    Direction = System.Data.ParameterDirection.Output
+                };
+
                 // Ejecutar el procedimiento almacenado PA_InsertarSolicitudAnalisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDelHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina",
-                    fechaDelHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDelHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
+                    fechaDelHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
 
-                // Obtener el ID del análisis recién insertado
-                var idAnalisis = solicitudAnalisis.TN_IdSolicitudAnalisis; // Asumimos que esto lo obtienes luego de insertar
+                // Capturamos el IdAnalisis generado
+                var idAnalisis = (int)idAnalisisParam.Value;
 
-                // Inserta los objetivos de análisis relacionados
-                if (solicitudAnalisis.requerimentos != null && solicitudAnalisis.requerimentos.Count > 0)
+                // Insertar objetivos de análisis relacionados si existen
+                if (solicitudAnalisis.ObjetivosAnalisis != null && solicitudAnalisis.ObjetivosAnalisis.Count > 0)
                 {
-                    foreach (var objetivoAnalisis in solicitudAnalisis.requerimentos)
+                    foreach (var objetivoAnalisis in solicitudAnalisis.ObjetivosAnalisis)
                     {
-                        // Parámetros para el SP PA_InsertarObjetivoAnalisis
-                        var nombreParam = new SqlParameter("@TC_Nombre", objetivoAnalisis.TC_Objetivo);
-                        var descripcionParam = new SqlParameter("@TC_Descripcion", objetivoAnalisis.TC_UtilizadoPor);
+                        var nombreParam = new SqlParameter("@TC_Nombre", objetivoAnalisis.TC_Nombre);
+                        var descripcionParam = new SqlParameter("@TC_Descripcion", objetivoAnalisis.TC_Descripcion);
                         var borradoParam = new SqlParameter("@TB_Borrado", 0);
 
                         // Ejecutar el procedimiento almacenado PA_InsertarObjetivoAnalisis
@@ -53,33 +59,58 @@ namespace DA.Acciones
                             "EXEC PA_InsertarObjetivoAnalisis @TC_Nombre, @TC_Descripcion, @TB_Borrado",
                             nombreParam, descripcionParam, borradoParam);
 
-                        // Ahora insertar en la tabla intermedia PA_ObjetivoAnalisis_SolicitudAnalisis
-                        var idObjetivo = objetivoAnalisis.TN_IdRequerimientoAnalisis; // Aquí obtienes el ID del objetivo recién insertado
+                        // Insertar en la tabla intermedia PA_ObjetivoAnalisis_SolicitudAnalisis
+                        var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", objetivoAnalisis.TN_IdObjetivoAnalisis);
+                        var idAnalisisIntermedioParam = new SqlParameter("@TN_IdAnalisis", idAnalisis);
 
-                        var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", idObjetivo);
-                        var idAnalisisParam = new SqlParameter("@TN_IdAnalisis", idAnalisis);
-
-                        // Ejecutar el procedimiento almacenado PA_ObjetivoAnalisis_SolicitudAnalisis
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_ObjetivoAnalisis_SolicitudAnalisis @TN_IdObjetivo, @TN_IdAnalisis",
-                            idObjetivoParam, idAnalisisParam);
+                            idObjetivoParam, idAnalisisIntermedioParam);
                     }
                 }
 
-                // Requerimientos de análisis asociados (si existen)
-                if (solicitudAnalisis.requerimentos != null && solicitudAnalisis.requerimentos.Count > 0)
+                // Insertar requerimientos de análisis asociados si existen
+                if (solicitudAnalisis.Requerimentos != null && solicitudAnalisis.Requerimentos.Count > 0)
                 {
-                    foreach (var requerimento in solicitudAnalisis.requerimentos)
+                    foreach (var requerimento in solicitudAnalisis.Requerimentos)
                     {
                         var objetivoParam = new SqlParameter("@TC_Objetivo", requerimento.TC_Objetivo);
                         var utilizadoPorParam = new SqlParameter("@TC_UtilizadoPor", requerimento.TC_UtilizadoPor);
                         var idTipoParam = new SqlParameter("@TN_IdTipo", requerimento.TN_IdTipo);
                         var idAnalisisParamReq = new SqlParameter("@TN_IdAnalisis", idAnalisis);
 
-                        // Ejecutar el procedimiento almacenado PA_InsertarRequerimentoAnalisis
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarRequerimentoAnalisis @TC_Objetivo, @TC_UtilizadoPor, @TN_IdTipo, @TN_IdAnalisis",
                             objetivoParam, utilizadoPorParam, idTipoParam, idAnalisisParamReq);
+                    }
+                }
+
+                // Insertar archivos relacionados a la solicitud de análisis si existen
+                if (solicitudAnalisis.Archivos != null && solicitudAnalisis.Archivos.Count > 0)
+                {
+                    foreach (var archivo in solicitudAnalisis.Archivos)
+                    {
+                        var idAnalisisArchivoParam = new SqlParameter("@pIdAnalisis", idAnalisis);
+                        var idArchivoParam = new SqlParameter("@pIdArchivo", archivo.TN_IdArchivo);
+
+                        await solitelContext.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_InsertarSolicitudAnalisis_Archivo @pIdAnalisis, @pIdArchivo",
+                            idAnalisisArchivoParam, idArchivoParam);
+                    }
+                }
+
+                // Insertar tipos de análisis asociados a la solicitud si existen
+                if (solicitudAnalisis.TiposAnalisis != null && solicitudAnalisis.TiposAnalisis.Count > 0)
+                {
+                    foreach (var tipoAnalisis in solicitudAnalisis.TiposAnalisis)
+                    {
+                        var idTipoAnalisisParam = new SqlParameter("@pIdTipoAnalisis", tipoAnalisis.TN_IdTipoAnalisis);
+                        var idAnalisisTipoParam = new SqlParameter("@pIdAnalisis", idAnalisis);
+
+                        // Ejecutar el procedimiento almacenado PA_InsertarTipoAnalisis_SolicitudAnalisis
+                        await solitelContext.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_InsertarTipoAnalisis_SolicitudAnalisis @pIdTipoAnalisis, @pIdAnalisis",
+                            idTipoAnalisisParam, idAnalisisTipoParam);
                     }
                 }
 
@@ -89,14 +120,13 @@ namespace DA.Acciones
             }
             catch (SqlException ex)
             {
-                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar la solicitud de análisis: {ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al insertar la solicitud de análisis: {ex.Message}", ex);
             }
         }
+
     }
 }

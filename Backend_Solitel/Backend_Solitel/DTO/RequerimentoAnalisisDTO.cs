@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BC.Modelos
+﻿namespace Backend_Solitel.DTO
 {
-    public class RequerimentoAnalisis
+    public class RequerimentoAnalisisDTO
     {
         public int TN_IdRequerimientoAnalisis { get; set; }
 

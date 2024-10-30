@@ -20,6 +20,7 @@ namespace Backend_Solitel.Controllers
         [HttpPost]
         public async Task<bool> IngresarSolicitudAnalista(SolicitudAnalisisDTO solicitudAnalisis)
         {
+            Console.WriteLine(solicitudAnalisis);
             return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(Utility.SolicitudAnalisisMapper.ToModel(solicitudAnalisis));
         }
     }

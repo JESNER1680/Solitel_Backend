@@ -5,6 +5,7 @@
         public int TN_IdOficina { get; set; }
 
         public string TC_Nombre { get; set; }
+        public string TC_Tipo { get; set; }
     }
 
 }

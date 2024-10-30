@@ -140,7 +140,7 @@ namespace DA.Acciones
                 var numerosUnicosTramitados = await _context.Database
                         .SqlQuery<string>($"EXEC PA_ListarNumerosUnicosTramitados")
                         .ToListAsync();
-
+                Console.WriteLine(numerosUnicosTramitados);
 
                 return numerosUnicosTramitados;
             }

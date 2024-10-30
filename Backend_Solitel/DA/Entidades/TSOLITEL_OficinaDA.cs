@@ -18,6 +18,11 @@ namespace DA.Entidades
         [Required]
         [StringLength(50)]
         public string TC_Nombre { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string TC_Tipo { get; set; }
+
+
     }
 
 }
