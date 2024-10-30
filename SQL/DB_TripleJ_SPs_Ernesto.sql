@@ -1,19 +1,19 @@
--- TSOLITEL_CategoriaDelito
-
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_CategoriaDelito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarCategoriaDelito
 	@pTN_IdCategoriaDelito INT OUTPUT,-- Parámetro de salida para el ID
-    @pTC_Nombre VARCHAR(50),
+    @pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -75,6 +75,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_CategoriaDelito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarCategoriaDelito
     @pTN_IdCategoriaDelito INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -117,6 +118,7 @@ GO
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_CategoriaDelito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarCategoriaDelito
     @pTN_IdCategoriaDelito INT
 AS
@@ -168,23 +170,22 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_Condicion
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_Condicion
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarCondicion
 	@pTN_IdCondicion INT OUTPUT,
-    @pTC_Nombre VARCHAR(50),
+    @pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -239,11 +240,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Condicion
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarCondicion
     @pTN_IdCondicion INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -281,11 +284,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_Condicion
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarCondicion
     @pTN_IdCondicion INT
 AS
@@ -337,21 +342,19 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_Delito
-
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:			    Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Delito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelito
     @pTN_IdDelito INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -392,11 +395,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:			    Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Delito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarDelitosPorCategoria
     @pTN_IdCategoriaDelito INT = NULL  -- Parámetro opcional para filtrar por Id de Categoría
 AS
@@ -438,14 +443,16 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_Delito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarDelito
 	@pTN_IdDelito INT OUTPUT,
-    @pTC_Nombre VARCHAR(50),
+    @pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255),
     @pTN_IdCategoriaDelito INT
 AS
@@ -516,11 +523,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		        Ernesto Vega Rosriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_Delito
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarDelito
     @pTN_IdDelito INT
 AS
@@ -574,9 +583,6 @@ BEGIN
 END
 GO
 
-
--- TSOLITEL Fiscalia
-
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
@@ -589,6 +595,7 @@ GO
 -- Fecha de creación: 	2024-10-21
 -- Descripción:		    Consulta un registro específico de la tabla TSOLITEL_Fiscalia por su ID
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarFiscalia
     @pTN_IdFiscalia INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -625,21 +632,15 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-
-USE [Proyecto_Analisis]
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Autor:			    Ernesto Vega Rodriguez		        
 -- Fecha de creación: 	2024-10-21
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_Fiscalia
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarFiscalia
     @pTN_IdFiscalia INT OUTPUT,
-	@pTC_Nombre VARCHAR(50)
+	@pTC_Nombre VARCHAR(100)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -700,6 +701,7 @@ GO
 -- Fecha de creación: 	2024-10-21
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_Fiscalia
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarFiscalia
     @pTN_IdFiscalia INT
 AS
@@ -753,23 +755,22 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_Modalidad
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_Modalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarModalidad
     @pTN_IdModalidad INT OUTPUT,
-	@pTC_Nombre VARCHAR(50),
+	@pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -824,11 +825,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_Modalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarModalidad
     @pTN_IdModalidad INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -866,11 +869,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_Modalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarModalidad
     @pTN_IdModalidad INT
 AS
@@ -922,24 +927,22 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_SubModalidad
-
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_SubModalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarSubModalidad
 	@pTN_IdSubModalidad INT OUTPUT, 
-    @pTC_Nombre VARCHAR(50),
+    @pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255),
     @pTN_IdModalidad INT
 AS
@@ -1008,11 +1011,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_SubModalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSubModalidad
     @pTN_IdSubModalidad INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -1053,11 +1058,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_SubModalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSubModalidadPorModalidad
     @pTN_IdModalidad INT = NULL  -- Parámetro opcional para filtrar por Id de Modalidad
 AS
@@ -1098,11 +1105,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_SubModalidad
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarSubModalidad
     @pTN_IdSubModalidad INT
 AS
@@ -1154,23 +1163,22 @@ BEGIN
 END
 GO
 
-
-
---TSOLITEL_TipoAnalisis
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:                Ernesto Vega Rodriguez
 -- Fecha de creación:    2024-10-24
 -- Descripción:          Inserta un registro en la tabla TSOLITEL_TipoAnalisis
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoAnalisis
     @pTN_IdTipoAnalisis INT OUTPUT,  -- Parámetro de salida para obtener el ID generado
-    @pTC_Nombre VARCHAR(50),
+    @pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -1227,53 +1235,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- =============================================
--- Autor:                Ernesto Vega Rodriguez
--- Fecha de creación:    2024-10-24
--- Descripción:          Consulta los registros de la tabla TSOLITEL_TipoAnalisis
--- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoAnalisis
-    @pTN_IdTipoAnalisis INT = NULL  -- Parámetro opcional para filtrar por Id
-AS
-BEGIN
-    SET NOCOUNT ON;
 
-    BEGIN TRY
-        SELECT 
-            TN_IdTipoAnalisis,
-            TC_Nombre,
-            TC_Descripcion,
-            TB_Borrado
-        FROM dbo.TSOLITEL_TipoAnalisis WITH (NOLOCK)
-        WHERE (@pTN_IdTipoAnalisis IS NULL OR TN_IdTipoAnalisis = @pTN_IdTipoAnalisis)
-          AND TB_Borrado = 0  -- Solo mostrar tipos de análisis que no están borrados lógicamente
-        ORDER BY TN_IdTipoAnalisis DESC;
-    END TRY
-    BEGIN CATCH
-        -- Lanzar el error de SQL Server
-        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-        RETURN -1;
-    END CATCH
-END
-GO
-
-USE [Proyecto_Analisis]
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 -- =============================================
 -- Autor:                Ernesto Vega Rodriguez
 -- Fecha de creación:    2024-10-24
 -- Descripción:          Elimina lógicamente un registro de la tabla TSOLITEL_TipoAnalisis
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoAnalisis
     @pTN_IdTipoAnalisis INT
 AS
@@ -1325,23 +1293,22 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_TipoSolicitud
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoSolicitud
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoSolicitud
     @pTN_IdTipoSolicitud INT OUTPUT,
-	@pTC_Nombre VARCHAR(50),
+	@pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -1397,11 +1364,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_TipoSolicitud
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoSolicitud
     @pTN_IdTipoSolicitud INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -1439,11 +1408,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_TipoSolicitud
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoSolicitud
     @pTN_IdTipoSolicitud INT
 AS
@@ -1495,23 +1466,22 @@ BEGIN
 END
 GO
 
-
-
--- TSOLITEL_TipoDato
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_TipoDato
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarTipoDato
     @pTN_IdTipoDato INT OUTPUT,
-	@pTC_Nombre VARCHAR(50),
+	@pTC_Nombre VARCHAR(100),
     @pTC_Descripcion VARCHAR(255)
 AS
 BEGIN
@@ -1567,11 +1537,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Consulta los registros de la tabla TSOLITEL_TipoDato
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarTipoDato
     @pTN_IdTipoDato INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
@@ -1609,11 +1581,13 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
 -- Autor:		       Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Elimina lógicamente un registro de la tabla TSOLITEL_TipoDato
 -- =============================================
+
 CREATE OR ALTER PROCEDURE dbo.PA_EliminarTipoDato
     @pTN_IdTipoDato INT
 AS
@@ -1665,102 +1639,50 @@ BEGIN
 END
 GO
 
-
-
--- Permisos
 USE [Proyecto_Analisis]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
+
 -- =============================================
--- Autor:               Ernesto Vega Rodriguez
--- Fecha de creación:   2024-10-25
--- Descripción:         Inserta un registro en la tabla TSOLITEL_Permiso
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
+-- Descripción:		    Procedimiento almacenado para consultar los registros de la tabla TSOLITEL_Estado
 -- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_InsertarPermiso
-    @pTN_IdPermiso INT OUTPUT,
-    @pTC_Nombre VARCHAR(50),
-    @pTC_Descripcion VARCHAR(255)
-AS
-BEGIN
-    SET NOCOUNT ON;
-    DECLARE @Error INT;
 
-    -- Iniciar la transacción
-    BEGIN TRANSACTION;
-
-    BEGIN TRY
-        -- Insertar un nuevo permiso
-        INSERT INTO dbo.TSOLITEL_Permiso
-            (TC_Nombre, TC_Descripcion, TB_Borrado)
-        VALUES
-            (@pTC_Nombre, @pTC_Descripcion, 0);  -- TB_Borrado por defecto es 0 (no borrado)
-
-        SET @pTN_IdPermiso = SCOPE_IDENTITY();
-
-        -- Verificar si hubo algún error
-        SET @Error = @@ERROR;
-        IF @Error <> 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-            RETURN -1;
-        END
-
-        -- Si todo es exitoso, hacer commit
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- En caso de error, hacer rollback
-        IF @@TRANCOUNT > 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
-
-        -- Lanzar el error de SQL Server
-        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-        RETURN -1;
-    END CATCH
-END
-GO
-
-USE [Proyecto_Analisis]
-GO
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- =============================================
--- Autor:               Ernesto Vega Rodriguez
--- Fecha de creación:   2024-10-25
--- Descripción:         Consulta los registros de la tabla TSOLITEL_Permiso
--- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_ConsultarPermiso
-    @pTN_IdPermiso INT = NULL  -- Parámetro opcional para filtrar por Id
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarEstados
+    @pTN_IdEstado INT = NULL  -- Parámetro opcional para filtrar por Id
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        -- Consulta los registros de la tabla TSOLITEL_Estado
         SELECT 
-            TN_IdPermiso,
+            TN_IdEstado,
             TC_Nombre,
             TC_Descripcion,
-            TB_Borrado
-        FROM dbo.TSOLITEL_Permiso WITH (NOLOCK)
-        WHERE (@pTN_IdPermiso IS NULL OR TN_IdPermiso = @pTN_IdPermiso)
-          AND TB_Borrado = 0  -- Solo mostrar permisos que no están borrados lógicamente
-        ORDER BY TN_IdPermiso DESC;
+            TC_Tipo
+        FROM dbo.TSOLITEL_Estado WITH (NOLOCK)
+        WHERE (@pTN_IdEstado IS NULL OR TN_IdEstado = @pTN_IdEstado)
+        ORDER BY TN_IdEstado ASC;
+
+        -- Si todo es exitoso, confirma la transacción
+        COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
-        -- Lanzar el error de SQL Server
+        -- En caso de error, deshace la transacción
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Manejo de errores
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT 
             @ErrorMessage = ERROR_MESSAGE(),
@@ -1780,57 +1702,92 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Autor:               Ernesto Vega Rodriguez
--- Fecha de creación:   2024-10-25
--- Descripción:         Elimina lógicamente un registro de la tabla TSOLITEL_Permiso
+-- Autor:                Ernesto Vega Rodriguez
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consulta solicitudes de proveedor por estado con filtros adicionales y paginación.
 -- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_EliminarPermiso
-    @pTN_IdPermiso INT
+
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSolicitudesProveedorPorEstado
+    @pPageNumber INT,
+    @pPageSize INT,
+    @pIdEstado INT = NULL,
+    @pNumeroUnico INT = NULL,
+    @pFechaInicio DATETIME2 = NULL,
+    @pFechaFin DATETIME2 = NULL,
+    @pCaracterIngresado VARCHAR(255) = NULL
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @Error INT;
-
-    -- Iniciar la transacción
-    BEGIN TRANSACTION;
 
     BEGIN TRY
-        -- Eliminar lógicamente cambiando TB_Borrado a 1
-        UPDATE dbo.TSOLITEL_Permiso
-        SET TB_Borrado = 1
-        WHERE TN_IdPermiso = @pTN_IdPermiso;
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
 
-        -- Verificar si hubo algún error
-        SET @Error = @@ERROR;
-        IF @Error <> 0 OR @@ROWCOUNT = 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-            IF @@ROWCOUNT = 0
-            BEGIN
-                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
-            END
-            RETURN -1;
-        END
+        DECLARE @Offset INT = (@pPageNumber - 1) * @pPageSize;
 
-        -- Si todo es exitoso, hacer commit
+        -- Realiza la consulta de solicitudes con JOINs, filtros adicionales y paginación
+        SELECT 
+            T.TN_IdSolicitud,
+            T.TN_NumeroUnico,
+            T.TN_NumeroCaso,
+            T.TC_Imputado,
+            T.TC_Ofendido,
+            T.TC_Resennia,
+            T.TB_Urgente,
+            T.TB_Aprobado,
+            T.TF_FechaDeCrecion,
+            Proveedor.TN_IdProveedor,
+            Proveedor.TC_Nombre AS TC_NombreProveedor,
+            Fiscalia.TN_IdFiscalia,
+            Fiscalia.TC_Nombre AS TC_NombreFiscalia,
+            Delito.TN_IdDelito AS TN_IdDelito,
+            Delito.TC_Nombre AS TC_NombreDelito,
+            CategoriaDelito.TN_IdCategoriaDelito,
+            CategoriaDelito.TC_Nombre AS TC_NombreCategoriaDelito,
+            Modalidad.TN_IdModalidad AS TN_IdModalidad,
+            Modalidad.TC_Nombre AS TC_NombreModalidad,
+            Estado.TN_IdEstado,
+            Estado.TC_Nombre AS TC_NombreEstado,
+            SubModalidad.TN_IdSubModalidad,
+            SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
+            T.TN_IdUsuario
+
+        FROM dbo.TSOLITEL_SolicitudProveedor AS T
+        LEFT JOIN dbo.TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
+        LEFT JOIN dbo.TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
+        LEFT JOIN dbo.TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
+        LEFT JOIN dbo.TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
+        LEFT JOIN dbo.TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
+        LEFT JOIN dbo.TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
+        LEFT JOIN dbo.TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+        WHERE (@pIdEstado IS NULL OR T.TN_IdEstado = @pIdEstado)
+          AND (@pNumeroUnico IS NULL OR T.TN_NumeroUnico = @pNumeroUnico)
+          AND (@pFechaInicio IS NULL OR T.TF_FechaDeCrecion >= @pFechaInicio)
+          AND (@pFechaFin IS NULL OR T.TF_FechaDeCrecion <= @pFechaFin)
+          AND (@pCaracterIngresado IS NULL OR 
+               T.TC_Imputado LIKE '%' + @pCaracterIngresado + '%' OR
+               T.TC_Ofendido LIKE '%' + @pCaracterIngresado + '%' OR
+               T.TC_Resennia LIKE '%' + @pCaracterIngresado + '%')
+        ORDER BY T.TN_IdSolicitud DESC
+        OFFSET @Offset ROWS FETCH NEXT @pPageSize ROWS ONLY;
+
+        -- Confirmar la transacción si no hubo errores
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
-        -- En caso de error, hacer rollback
+        -- En caso de error, deshacer la transacción
         IF @@TRANCOUNT > 0
-        BEGIN
             ROLLBACK TRANSACTION;
-        END
 
-        -- Lanzar el error de SQL Server
+        -- Manejo de errores
         DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT 
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
             @ErrorState = ERROR_STATE();
 
+        -- Lanzar el error para ser manejado fuera del procedimiento si es necesario
         RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-        RETURN -1;
     END CATCH
 END
 GO
