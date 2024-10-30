@@ -69,10 +69,10 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("consultarSolicitudesProveedor/{pageNumber}/{pageSize}")]
-        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor(int pageNumber, int pageSize)
+        [Route("consultarSolicitudesProveedor")]
+        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor()
         {
-            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor(pageNumber, pageSize));
+            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
 
             foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
             {

@@ -41,10 +41,10 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor);
         }
 
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
         {
             //Aplicar reglas de negocio
-            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor(pageNumber, pageSize);
+            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor();
         }
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)

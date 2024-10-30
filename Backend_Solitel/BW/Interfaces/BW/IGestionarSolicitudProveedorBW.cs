@@ -11,7 +11,7 @@ namespace BW.Interfaces.BW
     {
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor);
 
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize);
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
 
         public Task<List<string>> ListarNumerosUnicosTramitados();
 
