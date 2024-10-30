@@ -1791,3 +1791,90 @@ BEGIN
     END CATCH
 END
 GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:                Ernesto Vega Rodriguez
+-- Create date:           29-10-2024
+-- Description:           Procedimiento almacenado para consultar solicitudes de análisis con información adicional
+-- =============================================
+CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSolicitudesAnalisis
+    @pPageNumber INT,
+    @pPageSize INT,
+    @pIdEstado INT = NULL,
+    @pNumeroUnico VARCHAR(100) = NULL,
+    @pFechaInicio DATETIME2 = NULL,
+    @pFechaFin DATETIME2 = NULL,
+    @pCaracterIngresado VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        -- Inicia la transacción
+        BEGIN TRANSACTION;
+
+        DECLARE @Offset INT = (@pPageNumber - 1) * @pPageSize;
+
+        -- Realiza la consulta con JOINs, filtros adicionales y paginación
+        SELECT 
+              SP.TN_IdSolicitud,
+    SP.TN_NumeroUnico,
+    CONCAT(U.TC_Nombre, ' ', U.TC_Apellido) AS TC_NombreUsuario,
+    O.TC_Nombre AS TC_NombreOficina,
+    SP.TF_FechaDeCrecion AS TF_FechaDeCreacion, -- From SolicitudProveedor table
+    E.TC_Nombre AS TC_NombreEstado,
+    SA.TF_FechaDeCreacion AS TF_FechaDeCreacion_Analisis, -- Optional alias if needed
+    SA.TF_FechaDeHecho,  -- Ensure this column is selected
+    SP.TB_Urgente,
+    SA.TN_IdAnalisis,
+    SP.TB_Aprobado,
+    SA.TC_OtrosDetalles,
+    SA.TC_OtrosObjetivosDeAnalisis
+
+        FROM dbo.TSOLITEL_SolicitudProveedor AS SP
+        INNER JOIN dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SASP ON SP.TN_IdSolicitud = SASP.TN_IdSolicitud
+        INNER JOIN dbo.TSOLITEL_SolicitudAnalisis AS SA ON SASP.TN_IdAnalisis = SA.TN_IdAnalisis
+        INNER JOIN dbo.TSOLITEL_Usuario AS U ON SP.TN_IdUsuario = U.TN_IdUsuario
+        INNER JOIN dbo.TSOLITEL_Oficina AS O ON SP.TN_IdOficina = O.TN_IdOficina
+        INNER JOIN dbo.TSOLITEL_Estado AS E ON SP.TN_IdEstado = E.TN_IdEstado
+        WHERE (@pIdEstado IS NULL OR SP.TN_IdEstado = @pIdEstado)
+          AND (@pNumeroUnico IS NULL OR SP.TN_NumeroUnico = @pNumeroUnico)
+          AND (@pFechaInicio IS NULL OR SP.TF_FechaDeCrecion >= @pFechaInicio)
+          AND (@pFechaFin IS NULL OR SP.TF_FechaDeCrecion <= @pFechaFin)
+          AND (@pCaracterIngresado IS NULL OR 
+               U.TC_Nombre LIKE '%' + @pCaracterIngresado + '%' OR
+               U.TC_Apellido LIKE '%' + @pCaracterIngresado + '%' OR
+               SP.TC_Imputado LIKE '%' + @pCaracterIngresado + '%' OR
+               SP.TC_Ofendido LIKE '%' + @pCaracterIngresado + '%' OR
+               SP.TC_Resennia LIKE '%' + @pCaracterIngresado + '%')
+        ORDER BY SP.TN_IdSolicitud DESC
+        OFFSET @Offset ROWS FETCH NEXT @pPageSize ROWS ONLY;
+
+        -- Confirmar la transacción si no hubo errores
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        -- Manejo de errores
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        -- Lanzar el error para ser manejado fuera del procedimiento si es necesario
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
