@@ -139,6 +139,38 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(int id)
+        {
+            try
+            {
+                // Definir el parámetro para el procedimiento almacenado
+                var idRequerimientoParam = new SqlParameter("@PN_IdRequerimiento", id);
 
+                // Ejecutar el procedimiento almacenado
+                var archivosDA = await _context.TSOLITEL_ArchivoDA
+                    .FromSqlRaw("EXEC PA_ConsultarArchivosDeRequerimiento @PN_IdRequerimiento", idRequerimientoParam)
+                    .ToListAsync();
+
+                // Mapear los resultados a una lista de objetos Archivo
+                var archivos = archivosDA.Select(da => new Archivo
+                {
+                    IdArchivo = da.TN_IdArchivo,
+                    Nombre = da.TC_Nombre,
+                    Contenido = da.TV_Contenido,
+                    FormatoArchivo = da.TC_FormatoArchivo,
+                    FechaModificacion = da.TF_FechaModificacion
+                }).ToList();
+
+                return archivos;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al obtener archivos de solicitudes de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al obtener los archivos de solicitudes de proveedor: {ex.Message}", ex);
+            }
+        }
     }
 }

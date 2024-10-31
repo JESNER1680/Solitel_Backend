@@ -317,6 +317,57 @@ END;
 
 GO
 
+CREATE OR ALTER PROCEDURE PA_ConsultarArchivosDeRequerimiento
+    @PN_IdRequerimiento INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Consulta los archivos asociados a una solicitud de proveedor
+        SELECT 
+            A.TN_IdArchivo, 
+            A.TC_Nombre, 
+            A.TV_DireccionFileStream AS TV_Contenido,            -- Incluye 'TV_Contenido' si es necesario
+            A.TC_FormatoAchivo AS TC_FormatoArchivo,
+            A.TF_FechaDeModificacion AS TF_FechaModificacion      -- Incluye 'TF_FechaModificacion' si es necesario
+        FROM TSOLITEL_SolicitudProveedor_RequerimientoProveedor SPRP
+        INNER JOIN TSOLITEL_SolicitudProveedor SP
+            ON SP.TN_IdSolicitud = SPRP.TN_IdSolicitud
+		INNER JOIN TSOLITEL_RequerimientoProveedor AS RE
+			ON SPRP.TN_IdRequerimientoProveedor = RE.TN_IdRequerimientoProveedor
+        INNER JOIN TSOLITEL_RequerimientoProveedor_Archivo RPA
+            ON RPA.TN_IdRequerimientoProveedor = SPRP.TN_IdRequerimientoProveedor
+        INNER JOIN TSOLITEL_Archivo A
+            ON A.TN_IdArchivo = RPA.TN_IdArchivo
+        WHERE RE.TN_IdRequerimientoProveedor = @PN_IdRequerimiento;
+
+        -- Confirma la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Captura el error y lo levanta
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END;
+
+GO
+
 
 CREATE OR ALTER PROCEDURE PA_ConsultarDatosRequeridos
     @PN_IdRequerimientoProveedor INT

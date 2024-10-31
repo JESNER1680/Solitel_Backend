@@ -75,7 +75,25 @@ namespace Backend_Solitel.Controllers
             return await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(idSolicitudes);
         }
 
+        [HttpGet("ObtenerArchivosDeSolicitud")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosDeSolicitud(int id)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(id);
 
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
+        }
 
     }
 }

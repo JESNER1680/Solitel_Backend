@@ -14,5 +14,7 @@ namespace BW.Interfaces.DA
         public Task<Archivo> ObtenerArchivoPorIdAsync(int idArchivo);
 
         public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(List<int> idsSolicitudesProveedor);
+
+        public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(int id);
     }
 }
