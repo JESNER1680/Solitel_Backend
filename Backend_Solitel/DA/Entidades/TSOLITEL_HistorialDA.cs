@@ -15,9 +15,7 @@ namespace DA.Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TN_IdHistorial { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string TC_Observacion { get; set; }
+        public string? TC_Observacion { get; set; }
 
         [Required]
         public DateTime TF_FechaDeModificacion { get; set; }
