@@ -259,5 +259,27 @@ namespace Backend_Solitel.Controllers
             return solicitudesProveedor;
         }
 
+        [HttpPut("devolverATramitado")]
+        public async Task<IActionResult> DevolverATramitado([FromQuery] int id, [FromQuery] int idUsuario, [FromQuery] string observacion = null)
+        {
+            try
+            {
+                var result = await this.gestionarSolicitudProveedorBW.DevolverATramitado(id, idUsuario, observacion);
+
+                if (result)
+                {
+                    return Ok(new { message = "La solicitud ha sido devuelta a Tramitado exitosamente." });
+                }
+                else
+                {
+                    return BadRequest(new { message = "No se pudo devolver la solicitud a Tramitado." });
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, new { message = $"Ocurrió un error al intentar devolver la solicitud a Tramitado: {ex.Message}" });
+            }
+        }
     }
 }

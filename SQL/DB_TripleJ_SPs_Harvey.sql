@@ -169,44 +169,6 @@ BEGIN
 END
 GO
 
-CREATE OR ALTER PROCEDURE PA_ActualizarEstadoFinalizadoSolicitudProveedor
-	@pTN_IdSolicitud INT,
-	@PN_IdUsuario INT,
-	@PC_Observacion VARCHAR(255) = NULL
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    BEGIN TRY
-        DECLARE @IdEstado int;
-
-        -- Cambiar el estado de la solicitud a 'Sin Efecto'
-        EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Finalizado', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
-
-		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @PN_IdUsuario, @PC_Observacion, @IdEstado;
-
-    END TRY
-    BEGIN CATCH
-
-        -- En caso de error, hacer rollback
-        IF @@TRANCOUNT > 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
-
-        -- Lanzar el error de SQL Server
-        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-        RETURN -1;
-    END CATCH
-END
-GO
-
 CREATE OR ALTER PROCEDURE PA_AprobarSolicitudProveedor
 	@pTN_IdSolicitud INT,
 	@PN_IdUsuario INT,
