@@ -141,15 +141,46 @@ namespace DA.Acciones
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
                     FechaCrecion = da.TF_FechaDeCreacion,
-                    Proveedor = new Proveedor { IdProveedor = da.TN_IdProveedor, Nombre = da.TC_NombreProveedor },
-                    Delito = new Delito { IdDelito = da.TN_IdDelito, IdCategoriaDelito = da.TN_IdCategoriaDelito, Nombre = da.TC_NombreDelito },
-                    CategoriaDelito = new CategoriaDelito { Nombre = da.TC_NombreCategoriaDelito, IdCategoriaDelito = da.TN_IdCategoriaDelito },
-                    Estado = new Estado { IdEstado = da.TN_IdEstado, Nombre = da.TC_NombreEstado },
-                    Fiscalia = new Fiscalia { IdFiscalia = da.TN_IdFiscalia, Nombre = da.TC_NombreFiscalia },
-                    Modalidad = new Modalidad { IdModalidad = (int)da.TN_IdModalidad, Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { IdSubModalidad = (int)da.TN_IdSubModalidad, Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario }
-
+                    UsuarioCreador = new Usuario
+                    {
+                        IdUsuario = da.TN_IdUsuario,
+                        Nombre = da.TC_NombreUsuario
+                    },
+                    Proveedor = new Proveedor
+                    {
+                        IdProveedor = da.TN_IdProveedor,
+                        Nombre = da.TC_NombreProveedor
+                    },
+                    Delito = new Delito
+                    {
+                        IdDelito = da.TN_IdDelito,
+                        Nombre = da.TC_NombreDelito
+                    },
+                    CategoriaDelito = new CategoriaDelito
+                    {
+                        IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                        Nombre = da.TC_NombreCategoriaDelito
+                    },
+                    Estado = new Estado
+                    {
+                        IdEstado = da.TN_IdEstado,
+                        Nombre = da.TC_NombreEstado
+                    },
+                    Fiscalia = new Fiscalia
+                    {
+                        IdFiscalia = da.TN_IdFiscalia,
+                        Nombre = da.TC_NombreFiscalia
+                    },
+                    Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
+                    {
+                        IdModalidad = da.TN_IdModalidad.Value,
+                        Nombre = da.TC_NombreModalidad
+                    } : null,
+                    SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
+                    {
+                        IdSubModalidad = da.TN_IdSubModalidad.Value,
+                        Nombre = da.TC_NombreSubModalidad
+                    } : null
                 }).ToList();
 
                 return solicitudesProveedor;
@@ -165,6 +196,8 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
+
+
 
         public async Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor)
         {

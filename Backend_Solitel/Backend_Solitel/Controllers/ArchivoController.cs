@@ -1,5 +1,6 @@
 ﻿using Backend_Solitel.DTO;
 using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Mvc;
 
@@ -66,12 +67,15 @@ namespace Backend_Solitel.Controllers
         }
 
 
+        [Route("api/obtenerArchivosDeSolicitudesProveedor")]
         [HttpGet]
-        [Route("obtenerArchivosDeSolicitudesProveedor")]
-        public async Task<IActionResult> obtenerArchivosDeSolicitudesProveedor(List<int> idSolicitudes)
+        public async Task<List<Archivo>> obtenerArchivosDeSolicitudesProveedor([FromQuery] List<int> idSolicitudes)
         {
-            return null;
+            Console.WriteLine("ID RECIBIDA EN EL CONTROLADOR: " + string.Join(", ", idSolicitudes));
+            return await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(idSolicitudes);
         }
+
+
 
     }
 }
