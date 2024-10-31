@@ -18,6 +18,16 @@ namespace BW.CU
             gestionarSolicitudProveedorDA = dA;
         }
 
+        public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
+        {
+            return await this.gestionarSolicitudProveedorDA.ActualizarEstadoFinalizado(id, idUsuario, observacion);
+        }
+
+        public async Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null)
+        {
+            return await this.gestionarSolicitudProveedorDA.ActualizarEstadoLegajo(id, idUsuario, observacion);
+        }
+
         public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);

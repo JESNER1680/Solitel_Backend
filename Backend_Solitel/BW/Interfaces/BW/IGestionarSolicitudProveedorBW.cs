@@ -22,5 +22,9 @@ namespace BW.Interfaces.BW
         public Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor);
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado);
+
+        public Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null);
+
+        public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
     }
 }

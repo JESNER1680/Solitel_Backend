@@ -21,6 +21,66 @@ namespace DA.Acciones
             _context = context;
         }
 
+        public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                // Define los parámetros para el procedimiento almacenado
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion ?? (object)DBNull.Value);
+
+                // Ejecuta el procedimiento almacenado
+                var result = await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoFinalizadoSolicitudProveedor @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudParam, idUsuarioParam, observacionParam
+                );
+
+                // Verifica si el resultado fue exitoso
+                return result < 0;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al actualizar el estado de la solicitud: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al actualizar el estado de la solicitud: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                // Define los parámetros para el procedimiento almacenado
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion ?? (object)DBNull.Value);
+
+                // Ejecuta el procedimiento almacenado
+                var result = await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoLegajoSolicitudProveedor @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudParam, idUsuarioParam, observacionParam
+                );
+
+                // Verifica si el resultado fue exitoso
+                return result < 0;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al actualizar el estado a Legajo de la solicitud: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al actualizar el estado a Legajo de la solicitud: {ex.Message}", ex);
+            }
+        }
+
         public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             try
