@@ -97,7 +97,6 @@ namespace DA.Acciones
                     Direction = System.Data.ParameterDirection.Output // Parámetro de salida
                 };
 
-
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC PA_InsertarSolicitudProveedor @PN_NumeroUnico, @PN_NumeroCaso, @PC_Imputado, @PC_Ofendido, @PC_Resennia," +

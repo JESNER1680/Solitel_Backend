@@ -13,8 +13,6 @@ namespace BW.CU
     {
         private readonly IGestionarSolicitudProveedorDA gestionarSolicitudProveedorDA;
 
-
-
         public GestionarSolicitudProveedorBW(IGestionarSolicitudProveedorDA dA)
         {
             gestionarSolicitudProveedorDA = dA;

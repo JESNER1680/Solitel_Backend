@@ -378,9 +378,9 @@ BEGIN
             TC_Descripcion,
             TB_Borrado
         FROM dbo.TSOLITEL_ObjetivoAnalisis WITH (NOLOCK)
-        WHERE (@pTN_IdObjetivoAnalisis IS NULL OR TN_IdObjetivoAnalisis = @pTN_IdObjetivoAnalisis)
+        WHERE (@pTN_IdObjetivoAnalisis = 0 OR TN_IdObjetivoAnalisis = @pTN_IdObjetivoAnalisis)
           AND TB_Borrado = 0  -- Solo mostrar registros que no están marcados como borrados
-        ORDER BY TN_IdObjetivoAnalisis ASC;
+        ORDER BY TN_IdObjetivoAnalisis DESC;
     END TRY
     BEGIN CATCH
         -- Manejo de errores

@@ -129,6 +129,32 @@ namespace Backend_Solitel.Controllers
             return await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
         }
 
+        [HttpGet("{idSolicitud}")]
+        public async Task<ActionResult<SolicitudProveedorDTO>> ObtenerSolicitud(int idSolicitud)
+        {
+            try
+            {
+                var solicitud = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitud(idSolicitud));
+
+                solicitud.Requerimientos = RequerimientoProveedorMapper
+                    .ToDTO(await this.gestionarRequerimientoProveedorBW
+                    .ConsultarRequerimientosProveedor(solicitud.IdSolicitudProveedor), 
+                    solicitud.IdSolicitudProveedor);
+
+
+                if (solicitud == null)
+                {
+                    return NotFound(new { Message = "Solicitud no encontrada" });
+                }
+
+                return Ok(solicitud);
+            }
+            catch (Exception ex)
+            {
+                // Registro de error si es necesario
+                return StatusCode(500, new { Message = "Ocurrió un error al obtener la solicitud", Details = ex.Message });
+            }
+        }
 
     }
 }

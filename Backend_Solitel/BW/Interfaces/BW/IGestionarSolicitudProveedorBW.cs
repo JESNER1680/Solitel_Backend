@@ -13,6 +13,8 @@ namespace BW.Interfaces.BW
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
 
+        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
+
         public Task<List<string>> ListarNumerosUnicosTramitados();
 
         public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico);
