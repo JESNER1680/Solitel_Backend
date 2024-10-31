@@ -77,6 +77,11 @@ namespace BW.CU
         {
             return await this.gestionarSolicitudProveedorDA.ObtenerSolicitudesProveedorPorId(idSolicitud);
         }
+
+        public async Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            return await this.gestionarSolicitudProveedorDA.ActualizarEstadoTramitado(idSolicitudProveedor, idUsuario, observacion);
+        }
     }
 }
 

@@ -28,5 +28,7 @@ namespace BW.Interfaces.BW
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
         public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud);
+
+        public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);
     }
 }
