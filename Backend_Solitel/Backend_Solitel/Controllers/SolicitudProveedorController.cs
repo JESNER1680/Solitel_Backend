@@ -70,27 +70,24 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("consultarSolicitudesProveedor")]
-        public async Task<List<SolicitudProveedor>> ConsultarSolicitudesProveedor()
+        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor()
         {
-            //var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
+            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
 
-            var solicitudesProveedor = await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor();
+            foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
+            {
 
+                solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
+                    .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
 
-            //foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
-            //{
+                foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+                {
+                    requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
 
-            //    solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
-            //        .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
+                    requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
 
-            //    foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
-            //    {
-            //        requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
-
-            //        requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
-
-            //    }
-            //}
+                }
+            }
 
             return solicitudesProveedor;
         }
