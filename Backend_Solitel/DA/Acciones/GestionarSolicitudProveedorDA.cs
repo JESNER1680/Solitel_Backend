@@ -58,7 +58,6 @@ namespace DA.Acciones
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
             }
         }
-
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             try

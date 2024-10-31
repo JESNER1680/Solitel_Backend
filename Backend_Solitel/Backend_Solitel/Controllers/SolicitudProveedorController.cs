@@ -108,7 +108,7 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPut]
-        [Route("moverEstadoASinEfecto")]
+        [Route("actualizarEstadoSinEfecto")]
         public async Task<IActionResult> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
 
@@ -139,7 +139,7 @@ namespace Backend_Solitel.Controllers
             return await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
         }
 
-        [HttpPut("actualizarEstadoFinalizado/{id}/{idUsuario}")]
+        [HttpPut("actualizarEstadoFinalizado")]
         public async Task<IActionResult> ActualizarEstadoFinalizado(int id, int idUsuario, [FromQuery] string observacion = null)
         {
             try
@@ -162,7 +162,7 @@ namespace Backend_Solitel.Controllers
             }
         }
 
-        [HttpPut("actualizarEstadoLegajo/{id}/{idUsuario}")]
+        [HttpPut("actualizarEstadoLegajo")]
         public async Task<IActionResult> ActualizarEstadoLegajo(int id, int idUsuario, [FromQuery] string observacion = null)
         {
             try

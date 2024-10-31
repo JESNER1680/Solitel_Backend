@@ -22,7 +22,6 @@ namespace BW.CU
         {
             return await this.gestionarSolicitudProveedorDA.AprobarSolicitudProveedor(idSolicitudProveedor, idUsuario, observacion);
         }
-
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             return await this.gestionarSolicitudProveedorDA.ActualizarEstadoFinalizado(id, idUsuario, observacion);
@@ -76,3 +75,4 @@ namespace BW.CU
         }
     }
 }
+
