@@ -19,8 +19,10 @@ namespace BW.Interfaces.BW
 
         public Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos);
 
-        public Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor);
+        public Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion);
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado);
+
+        public Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion);
     }
 }

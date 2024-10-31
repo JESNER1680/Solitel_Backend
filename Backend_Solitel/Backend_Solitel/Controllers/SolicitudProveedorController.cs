@@ -108,17 +108,27 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpPut]
-        [Route("moverEstadoASinEfecto/{idSolicitudProveedor}")]
-        public async Task<IActionResult> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        [Route("moverEstadoASinEfecto")]
+        public async Task<IActionResult> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
-            var resultado = await this.gestionarSolicitudProveedorBW.MoverEstadoASinEfecto(idSolicitudProveedor);
-            if (resultado)
+
+            try
             {
-                return Ok(true);  // Enviar código 200 con true
+                var resultado = await this.gestionarSolicitudProveedorBW.MoverEstadoASinEfecto(idSolicitudProveedor, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Sin Efecto correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return BadRequest(false);  // Enviar código 400 con false
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Sin Efecto: {ex.Message}" });
             }
         }
 
@@ -155,6 +165,30 @@ namespace Backend_Solitel.Controllers
         //        return StatusCode(500, new { Message = "Ocurrió un error al obtener la solicitud", Details = ex.Message });
         //    }
         //}
+
+        [HttpPut]
+        [Route("aprobarSolicitudProveedor")]
+        public async Task<IActionResult> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            try
+            {
+                bool resultado = await this.gestionarSolicitudProveedorBW.AprobarSolicitudProveedor(idSolicitudProveedor, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Aprobado correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Aprobado: {ex.Message}" });
+            }
+        }
 
     }
 }

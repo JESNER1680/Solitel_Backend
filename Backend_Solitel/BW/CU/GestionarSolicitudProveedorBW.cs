@@ -18,6 +18,11 @@ namespace BW.CU
             gestionarSolicitudProveedorDA = dA;
         }
 
+        public async Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            return await this.gestionarSolicitudProveedorDA.AprobarSolicitudProveedor(idSolicitudProveedor, idUsuario, observacion);
+        }
+
         public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
@@ -34,9 +39,9 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.ListarNumerosUnicosTramitados();
         }
 
-        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
-            return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor);
+            return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor, idUsuario, observacion);
         }
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()

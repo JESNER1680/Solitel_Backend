@@ -6,6 +6,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,48 @@ namespace DA.Acciones
         public GestionarSolicitudProveedorDA(SolitelContext context)
         {
             _context = context;
+        }
+
+        public async Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@PN_IdSolicitudProveedor", idSolicitudProveedor);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("PC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
+
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_AprobarSolicitudProveedor @PN_IdSolicitudProveedor, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudProveedorParam, idUsuarioParam, observacionParam);
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al aprobar la solicitud.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperadoal aprobar la solicitud: {ex.Message}", ex);
+            }
         }
 
         public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
@@ -155,17 +198,23 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor)
+        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
             try
             {
                 //Definir los parámetros para el procedimiento almacenado
-                var idSolicitudProveedorParam = new SqlParameter("@PN_IdSolicitudProveedor", idSolicitudProveedor);
+                var idSolicitudProveedorParam = new SqlParameter("@pTN_IdSolicitud", idSolicitudProveedor);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_MoverEstadoSinEfectoSolicitudProveedor @PN_IdSolicitudProveedor",
-                    idSolicitudProveedorParam);
+                    "EXEC PA_ActualizarEstadoSinEfectoSolicitudProveedor @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudProveedorParam, idUsuarioParam, observacionParam);
 
                 var resultado = await _context.SaveChangesAsync();
 

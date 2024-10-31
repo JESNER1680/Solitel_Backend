@@ -90,11 +90,12 @@ namespace DA.Acciones
             {
                 // Definir los parámetros para el procedimiento almacenado
                 var nombreParam = new SqlParameter("@PC_Nombre", oficina.Nombre);
+                var tipoParam = new SqlParameter("@PC_Tipo", oficina.Tipo);
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarOficina @PC_Nombre",
-                    nombreParam);
+                    "EXEC PA_InsertarOficina @PC_Nombre, @PC_Tipo",
+                    nombreParam, tipoParam);
 
                 var resultado = await _context.SaveChangesAsync();
 
