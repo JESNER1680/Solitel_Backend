@@ -53,6 +53,7 @@ namespace Backend_Solitel.Utility
                 Ofendido = solicitudProveedor.Ofendido,
                 Resennia = solicitudProveedor.Resennia,
                 Urgente = solicitudProveedor.Urgente,
+                FechaCreacion = solicitudProveedor.FechaCrecion,
                 UsuarioCreador = UsuarioMapper.ToDTO(solicitudProveedor.UsuarioCreador),
                 Delito = DelitoMapper.ToDTO(solicitudProveedor.Delito),
                 CategoriaDelito = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
