@@ -195,11 +195,14 @@ namespace DA.Acciones
 
             try
             {
+                Console.WriteLine("Entre");
 
                 // Ejecutar el procedimiento almacenado
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedor")
+                    .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesProveedor")
                     .ToListAsync();
+
+                Console.WriteLine("Pase");
 
                 // Mapeo de los resultados
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
@@ -220,7 +223,8 @@ namespace DA.Acciones
                     Fiscalia = new Fiscalia { IdFiscalia = da.TN_IdFiscalia, Nombre = da.TC_NombreFiscalia},
                     Modalidad = new Modalidad { IdModalidad = (int)da.TN_IdModalidad, Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { IdSubModalidad = (int)da.TN_IdSubModalidad, Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario }
+                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario },
+                    
 
                 }).ToList();
 
@@ -234,7 +238,7 @@ namespace DA.Acciones
             catch (Exception ex)
             {
                 // Manejo de cualquier otro tipo de excepción
-                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
+                throw new Exception($"1111Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
 
