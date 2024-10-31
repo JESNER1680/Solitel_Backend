@@ -29,13 +29,13 @@ namespace DA.Acciones
             try
             {
                 // Parámetros para PA_InsertarSolicitudAnalisis
-                var fechaDelHechoParam = new SqlParameter("@TF_FechaDelHecho", solicitudAnalisis.TF_FechaDelHecho);
-                var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.TC_OtrosDetalles);
-                var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.TC_OtrosObjetivosDeAnalisis ?? DBNull.Value);
-                var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.TB_Aprobado);
-                var fechaCreacionParam = new SqlParameter("@TF_FechaCrecion", (object)solicitudAnalisis.TF_FechaCrecion ?? DBNull.Value);
-                var numeroSolicitudParam = new SqlParameter("@TN_NumeroSolicitud", solicitudAnalisis.TN_NumeroSolicitud);
-                var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.TN_IdOficina);
+                var fechaDelHechoParam = new SqlParameter("@TF_FechaDelHecho", solicitudAnalisis.FechaDelHecho);
+                var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.OtrosDetalles);
+                var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
+                var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
+                var fechaCreacionParam = new SqlParameter("@TF_FechaCrecion", (object)solicitudAnalisis.FechaCrecion ?? DBNull.Value);
+                var numeroSolicitudParam = new SqlParameter("@TN_NumeroSolicitud", solicitudAnalisis.NumeroSolicitud);
+                var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.IdOficina);
 
                 // Parámetro de salida para capturar el ID de análisis generado
                 var idAnalisisParam = new SqlParameter("@TN_IdSolicitudAnalisis", SqlDbType.Int)
@@ -56,7 +56,7 @@ namespace DA.Acciones
                 {
                     foreach (var objetivoAnalisis in solicitudAnalisis.ObjetivosAnalisis)
                     {
-                        var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", objetivoAnalisis.TN_IdObjetivoAnalisis);
+                        var idObjetivoParam = new SqlParameter("@TN_IdObjetivo", objetivoAnalisis.IdObjetivoAnalisis);
                         var idAnalisisIntermedioParam = new SqlParameter("@TN_IdAnalisis", idAnalisis);
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
@@ -71,14 +71,14 @@ namespace DA.Acciones
                     foreach (var requerimiento in solicitudAnalisis.Requerimentos)
                     {
                         var tipoExiste = await solitelContext.TSOLITEL_TipoDatoDA
-                            .AnyAsync(t => t.TN_IdTipoDato == requerimiento.TN_IdTipo);
+                            .AnyAsync(t => t.TN_IdTipoDato == requerimiento.IdTipo);
 
-                        var idTipo = tipoExiste ? requerimiento.TN_IdTipo : 6;
+                        var idTipo = tipoExiste ? requerimiento.IdTipo : 6;
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarRequerimentoAnalisis @TC_Objetivo, @TC_UtilizadoPor, @TN_IdTipo, @TN_IdAnalisis",
-                            new SqlParameter("@TC_Objetivo", requerimiento.TC_Objetivo),
-                            new SqlParameter("@TC_UtilizadoPor", requerimiento.TC_UtilizadoPor),
+                            new SqlParameter("@TC_Objetivo", requerimiento.Objetivo),
+                            new SqlParameter("@TC_UtilizadoPor", requerimiento.UtilizadoPor),
                             new SqlParameter("@TN_IdTipo", idTipo),
                             new SqlParameter("@TN_IdAnalisis", idAnalisis));
                     }
@@ -92,8 +92,8 @@ namespace DA.Acciones
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarSolicitudAnalisis_Archivo @pIdAnalisis, @pIdArchivo, @pTipo",
                             new SqlParameter("@pIdAnalisis", idAnalisis),
-                            new SqlParameter("@pIdArchivo", archivo.TN_IdArchivo),
-                            new SqlParameter("@pTipo", archivo.TC_FormatoAchivo ?? "DefaultTipo") // Valor predeterminado si es null
+                            new SqlParameter("@pIdArchivo", archivo.IdArchivo),
+                            new SqlParameter("@pTipo", archivo.FormatoArchivo ?? "DefaultTipo") // Valor predeterminado si es null
                         );
                     }
                 }
@@ -105,7 +105,7 @@ namespace DA.Acciones
                     {
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarTipoAnalisis_SolicitudAnalisis @pIdTipoAnalisis, @pIdAnalisis",
-                            new SqlParameter("@pIdTipoAnalisis", tipoAnalisis.TN_IdTipoAnalisis),
+                            new SqlParameter("@pIdTipoAnalisis", tipoAnalisis.IdTipoAnalisis),
                             new SqlParameter("@pIdAnalisis", idAnalisis));
                     }
                 }
@@ -118,7 +118,7 @@ namespace DA.Acciones
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarSolicitudAnalisis_Condicion @TN_IdAnalisis, @TN_IdCondicion",
                             new SqlParameter("@TN_IdAnalisis", idAnalisis),
-                            new SqlParameter("@TN_IdCondicion", condicion.TN_IdCondicion));
+                            new SqlParameter("@TN_IdCondicion", condicion.IdCondicion));
                     }
                 }
 

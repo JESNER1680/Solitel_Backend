@@ -8,9 +8,9 @@ namespace BC.Modelos
 {
     public class TipoSolicitud
     {
-        public int TN_IdTipoSolicitud { get; set; }
-        public string TC_Nombre { get; set; }
-        public string TC_Descripcion { get; set; }
+        public int IdTipoSolicitud { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
     }
 
 }

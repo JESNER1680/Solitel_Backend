@@ -8,19 +8,19 @@ namespace BC.Modelos
 {
     public class Historial
     {
-        public int TN_IdHistorial { get; set; }
+        public int IdHistorial { get; set; }
 
-        public string TC_Observacion { get; set; }
+        public string Observacion { get; set; }
 
-        public DateTime TF_FechaEstado { get; set; }
+        public DateTime FechaEstado { get; set; }
 
-        public int TN_IdUsuario { get; set; }
+        public int IdUsuario { get; set; }
 
-        public int TN_IdEstado { get; set; }
+        public int IdEstado { get; set; }
 
-        public int? TN_IdAnalisis { get; set; }
+        public int? IdAnalisis { get; set; }
 
-        public int? TN_IdSolicitudProveedor { get; set; }
+        public int? IdSolicitudProveedor { get; set; }
     }
 
 }

@@ -11,9 +11,9 @@ namespace Backend_Solitel.Utility
         {
             var tipoSolicitud = new TipoSolicitud
             {
-                TN_IdTipoSolicitud = tipoSolicitudDTO.IdTipoSolicitud,
-                TC_Nombre = tipoSolicitudDTO.Nombre,
-                TC_Descripcion = tipoSolicitudDTO.Descripcion
+                IdTipoSolicitud = tipoSolicitudDTO.IdTipoSolicitud,
+                Nombre = tipoSolicitudDTO.Nombre,
+                Descripcion = tipoSolicitudDTO.Descripcion
             };
 
             return tipoSolicitud;
@@ -26,9 +26,9 @@ namespace Backend_Solitel.Utility
             {
                 tipoSolicitudes.Add(new TipoSolicitud
                 {
-                    TN_IdTipoSolicitud = tipoSolicitudDTO.IdTipoSolicitud,
-                    TC_Nombre = tipoSolicitudDTO.Nombre,
-                    TC_Descripcion = tipoSolicitudDTO.Descripcion
+                    IdTipoSolicitud = tipoSolicitudDTO.IdTipoSolicitud,
+                    Nombre = tipoSolicitudDTO.Nombre,
+                    Descripcion = tipoSolicitudDTO.Descripcion
                 });
             }
 
@@ -39,9 +39,9 @@ namespace Backend_Solitel.Utility
         {
             var tipoSolicitudDTO = new TipoSolicitudDTO
             {
-                IdTipoSolicitud = tipoSolicitud.TN_IdTipoSolicitud,
-                Nombre = tipoSolicitud.TC_Nombre,
-                Descripcion = tipoSolicitud.TC_Descripcion
+                IdTipoSolicitud = tipoSolicitud.IdTipoSolicitud,
+                Nombre = tipoSolicitud.Nombre,
+                Descripcion = tipoSolicitud.Descripcion
             };
 
             return tipoSolicitudDTO;
@@ -54,9 +54,9 @@ namespace Backend_Solitel.Utility
             {
                 tipoSolicitudes.Add(new TipoSolicitudDTO
                 {
-                    IdTipoSolicitud = tipoSolicitudDTO.TN_IdTipoSolicitud,
-                    Nombre = tipoSolicitudDTO.TC_Nombre,
-                    Descripcion = tipoSolicitudDTO.TC_Descripcion
+                    IdTipoSolicitud = tipoSolicitudDTO.IdTipoSolicitud,
+                    Nombre = tipoSolicitudDTO.Nombre,
+                    Descripcion = tipoSolicitudDTO.Descripcion
                 });
             }
 

@@ -57,9 +57,9 @@ namespace Backend_Solitel.Controllers
             // En lugar de solo devolver el archivo, envolvemos la respuesta en un objeto JSON
             var archivoResultado = new
             {
-                nombreArchivo = archivo.TC_Nombre, // Nombre del archivo
-                contenidoArchivo = Convert.ToBase64String(archivo.TV_Contenido), // Convertir a Base64 para incluir en JSON
-                tipoArchivo = archivo.TC_FormatoAchivo // Tipo de archivo, por ejemplo, "application/pdf"
+                nombreArchivo = archivo.Nombre, // Nombre del archivo
+                contenidoArchivo = Convert.ToBase64String(archivo.Contenido), // Convertir a Base64 para incluir en JSON
+                tipoArchivo = archivo.FormatoArchivo // Tipo de archivo, por ejemplo, "application/pdf"
             };
 
             return Ok(archivoResultado);

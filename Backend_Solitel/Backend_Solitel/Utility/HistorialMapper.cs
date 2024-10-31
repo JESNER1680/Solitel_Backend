@@ -12,13 +12,13 @@ namespace Backend_Solitel.Utility
 
             return new Historial
             {
-                TN_IdHistorial = historialDTO.TN_IdHistorial,
-                TC_Observacion = historialDTO.TC_Observacion,
-                TF_FechaEstado = historialDTO.TF_FechaEstado,
-                TN_IdEstado = historialDTO.TN_IdEstado,
-                TN_IdAnalisis = historialDTO.TN_IdAnalisis,
-                TN_IdUsuario = historialDTO.TN_IdUsuario,
-                TN_IdSolicitudProveedor = historialDTO.TN_IdSolicitudProveedor
+                IdHistorial = historialDTO.TN_IdHistorial,
+                Observacion = historialDTO.TC_Observacion,
+                FechaEstado = historialDTO.TF_FechaEstado,
+                IdEstado = historialDTO.TN_IdEstado,
+                IdAnalisis = historialDTO.TN_IdAnalisis,
+                IdUsuario = historialDTO.TN_IdUsuario,
+                IdSolicitudProveedor = historialDTO.TN_IdSolicitudProveedor
             };
         }
 
@@ -36,13 +36,13 @@ namespace Backend_Solitel.Utility
 
             return new HistorialDTO
             {
-                TN_IdHistorial = historial.TN_IdHistorial,
-                TC_Observacion = historial.TC_Observacion,
-                TF_FechaEstado = historial.TF_FechaEstado,
-                TN_IdEstado = historial.TN_IdEstado,
-                TN_IdAnalisis = historial.TN_IdAnalisis,
-                TN_IdUsuario = historial.TN_IdUsuario,
-                TN_IdSolicitudProveedor = historial.TN_IdSolicitudProveedor
+                TN_IdHistorial = historial.IdHistorial,
+                TC_Observacion = historial.Observacion,
+                TF_FechaEstado = historial.FechaEstado,
+                TN_IdEstado = historial.IdEstado,
+                TN_IdAnalisis = historial.IdAnalisis,
+                TN_IdUsuario = historial.IdUsuario,
+                TN_IdSolicitudProveedor = historial.IdSolicitudProveedor
             };
         }
 

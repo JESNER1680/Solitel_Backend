@@ -59,8 +59,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@PC_Nombre", objetivoAnalisis.TC_Nombre);
-                var descripcionParam = new SqlParameter("@PC_Descripcion", objetivoAnalisis.TC_Descripcion);
+                var nombreParam = new SqlParameter("@PC_Nombre", objetivoAnalisis.Nombre);
+                var descripcionParam = new SqlParameter("@PC_Descripcion", objetivoAnalisis.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdObjetivoAnalisis", SqlDbType.Int)
@@ -83,7 +83,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad ObjetivoAnalisis
-                objetivoAnalisis.TN_IdObjetivoAnalisis = nuevoId;
+                objetivoAnalisis.IdObjetivoAnalisis = nuevoId;
 
                 return objetivoAnalisis;
             }
@@ -115,9 +115,9 @@ namespace DA.Acciones
                 // Mapear el resultado a la lista de ObjetivoAnalisis
                 var objetivos = ObjetivoAnalisisDA.Select(obj => new ObjetivoAnalisis
                 {
-                    TN_IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
-                    TC_Nombre = obj.TC_Nombre,
-                    TC_Descripcion = obj.TC_Descripcion
+                    IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
+                    Nombre = obj.TC_Nombre,
+                    Descripcion = obj.TC_Descripcion
                 }).ToList();
 
                 return objetivos;

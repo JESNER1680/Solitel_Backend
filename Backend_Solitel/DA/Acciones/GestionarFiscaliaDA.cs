@@ -84,8 +84,8 @@ namespace DA.Acciones
                 // Crear una instancia de Fiscalia con el ID y nombre
                 var fiscalia = new Fiscalia
                 {
-                    TN_IdFiscalia = nuevoId,
-                    TC_Nombre = nombre
+                    IdFiscalia = nuevoId,
+                    Nombre = nombre
                 };
 
                 return fiscalia;
@@ -114,8 +114,8 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Fiscalia
                 var fiscalias = fiscaliasDA.Select(da => new Fiscalia
                 {
-                    TN_IdFiscalia = da.TN_IdFiscalia,
-                    TC_Nombre = da.TC_Nombre
+                    IdFiscalia = da.TN_IdFiscalia,
+                    Nombre = da.TC_Nombre
                 }).ToList();
 
                 return fiscalias;
@@ -152,8 +152,8 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Fiscalia
                 var fiscaliaEntidad = new Fiscalia
                 {
-                    TN_IdFiscalia = fiscalia.TN_IdFiscalia,
-                    TC_Nombre = fiscalia.TC_Nombre
+                    IdFiscalia = fiscalia.TN_IdFiscalia,
+                    Nombre = fiscalia.TC_Nombre
                 };
 
                 return fiscaliaEntidad;

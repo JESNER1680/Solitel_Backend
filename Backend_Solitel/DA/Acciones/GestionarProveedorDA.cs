@@ -36,8 +36,8 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Proveedor (si es necesario)
                 var proveedorEntidad = new Proveedor
                 {
-                    TN_IdProveedor = proveedor.TN_IdProveedor,
-                    TC_Nombre = proveedor.TC_Nombre
+                    IdProveedor = proveedor.TN_IdProveedor,
+                    Nombre = proveedor.TC_Nombre
                 };
 
                 return proveedorEntidad;
@@ -66,8 +66,8 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var proveedores = proveedoresDA.Select(da => new Proveedor
                 {
-                    TN_IdProveedor = da.TN_IdProveedor,
-                    TC_Nombre = da.TC_Nombre
+                    IdProveedor = da.TN_IdProveedor,
+                    Nombre = da.TC_Nombre
                 }).ToList();
 
                 return proveedores;
@@ -121,7 +121,7 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", proveedor.TC_Nombre);
+                var nombreParam = new SqlParameter("@pTC_Nombre", proveedor.Nombre);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdProveedor", SqlDbType.Int)
@@ -143,7 +143,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad Proveedor
-                proveedor.TN_IdProveedor = nuevoId;
+                proveedor.IdProveedor = nuevoId;
 
                 return proveedor;
             }

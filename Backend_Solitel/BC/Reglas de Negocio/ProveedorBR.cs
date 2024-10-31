@@ -43,7 +43,7 @@ namespace BC.Reglas_de_Negocio
             }
 
             // Validar el nombre
-            ValidarNombre(proveedor.TC_Nombre);
+            ValidarNombre(proveedor.Nombre);
         }
     }
 }

@@ -59,8 +59,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros de entrada y salida para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", categoriaDelito.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", categoriaDelito.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", categoriaDelito.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", categoriaDelito.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdCategoriaDelito", SqlDbType.Int)
@@ -82,7 +82,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad de categoría de delito
-                categoriaDelito.TN_IdCategoriaDelito = nuevoId;
+                categoriaDelito.IdCategoriaDelito = nuevoId;
 
                 // Devolver el objeto con el ID asignado
                 return categoriaDelito;
@@ -111,9 +111,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad CategoriaDelito
                 var categorias = categoriaDelitosDA.Select(da => new CategoriaDelito
                 {
-                    TN_IdCategoriaDelito = da.TN_IdCategoriaDelito,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return categorias;
@@ -150,9 +150,9 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad CategoriaDelito
                 var categoria = new CategoriaDelito
                 {
-                    TN_IdCategoriaDelito = categoriaDelito.TN_IdCategoriaDelito,
-                    TC_Nombre = categoriaDelito.TC_Nombre,
-                    TC_Descripcion = categoriaDelito.TC_Descripcion
+                    IdCategoriaDelito = categoriaDelito.TN_IdCategoriaDelito,
+                    Nombre = categoriaDelito.TC_Nombre,
+                    Descripcion = categoriaDelito.TC_Descripcion
                 };
 
                 return categoria;

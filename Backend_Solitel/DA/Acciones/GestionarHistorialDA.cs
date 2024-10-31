@@ -34,13 +34,13 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var historiales = historialesDA.Select(da => new Historial
                 {
-                    TN_IdHistorial = da.TN_IdHistorial,
-                    TC_Observacion = da.TC_Observacion,
-                    TF_FechaEstado = da.TF_FechaEstado,
-                    TN_IdAnalisis = da.TN_IdAnalisis,
-                    TN_IdEstado = da.TN_IdEstado,
-                    TN_IdUsuario = da.TN_IdUsuario,
-                    TN_IdSolicitudProveedor = da.TN_IdSolicitudProveedor
+                    IdHistorial = da.TN_IdHistorial,
+                    Observacion = da.TC_Observacion,
+                    FechaEstado = da.TF_FechaDeModificacion,
+                    IdAnalisis = da.TN_IdAnalisis,
+                    IdEstado = da.TN_IdEstado,
+                    IdUsuario = da.TN_IdUsuario,
+                    IdSolicitudProveedor = da.TN_IdSolicitud
 
                 }).ToList();
 

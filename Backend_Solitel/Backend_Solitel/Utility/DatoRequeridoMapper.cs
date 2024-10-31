@@ -12,10 +12,10 @@ namespace Backend_Solitel.Utility
             {
                 datosRequeridos.Add(new DatoRequerido
                 {
-                    TN_IdDatoRequerido = datoRequeridoDTO.TN_IdDatoRequerido,
-                    TC_DatoRequerido = datoRequeridoDTO.TC_DatoRequerido,
-                    TC_Motivacion = datoRequeridoDTO.TC_Motivacion,
-                    TN_IdTipoDato = datoRequeridoDTO.TN_IdTipoDato
+                    IdDatoRequerido = datoRequeridoDTO.TN_IdDatoRequerido,
+                    DatoRequeridoContenido = datoRequeridoDTO.TC_DatoRequerido,
+                    Motivacion = datoRequeridoDTO.TC_Motivacion,
+                    IdTipoDato = datoRequeridoDTO.TN_IdTipoDato
                 });
             }
 
@@ -29,10 +29,10 @@ namespace Backend_Solitel.Utility
             {
                 datosRequeridosDTO.Add(new DatoRequeridoDTO
                 {
-                    TN_IdDatoRequerido = datoRequerido.TN_IdDatoRequerido,
-                    TC_DatoRequerido = datoRequerido.TC_DatoRequerido,
-                    TC_Motivacion = datoRequerido.TC_Motivacion,
-                    TN_IdTipoDato = datoRequerido.TN_IdTipoDato
+                    TN_IdDatoRequerido = datoRequerido.IdDatoRequerido,
+                    TC_DatoRequerido = datoRequerido.DatoRequeridoContenido,
+                    TC_Motivacion = datoRequerido.Motivacion,
+                    TN_IdTipoDato = datoRequerido.IdTipoDato
                 });
             }
 

@@ -8,11 +8,11 @@ namespace BC.Modelos
 {
     public class Condicion
     {
-        public int TN_IdCondicion { get; set; }
+        public int IdCondicion { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public string TC_Descripcion { get; set; }
+        public string Descripcion { get; set; }
     }
 
 }

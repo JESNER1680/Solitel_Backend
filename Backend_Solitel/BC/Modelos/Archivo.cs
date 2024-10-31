@@ -9,24 +9,20 @@ namespace BC.Modelos
 {
     public class Archivo
     {
-        public int TN_IdArchivo { get; set; }
+        public int IdArchivo { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string TC_HashAchivo { get; set; }
+        public string Nombre { get; set; }
 
         [Required]
-        public string TC_Nombre { get; set; }
-
-        [Required]
-        public byte[] TV_Contenido { get; set; } // Para almacenar contenido binario
+        public byte[] Contenido { get; set; } // Para almacenar contenido binario
 
         [Required]
         [StringLength(50)]
-        public string TC_FormatoAchivo { get; set; }
+        public string FormatoArchivo { get; set; }
 
         [Required]
-        public DateTime TF_FechaModificacion { get; set; }
+        public DateTime FechaModificacion { get; set; }
 
 
     }

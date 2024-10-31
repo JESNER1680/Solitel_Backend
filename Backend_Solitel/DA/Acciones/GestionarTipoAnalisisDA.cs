@@ -58,8 +58,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", tipoAnalisis.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoAnalisis.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", tipoAnalisis.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoAnalisis.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdTipoAnalisis", SqlDbType.Int)
@@ -81,7 +81,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad TipoAnalisis
-                tipoAnalisis.TN_IdTipoAnalisis = nuevoId;
+                tipoAnalisis.IdTipoAnalisis = nuevoId;
 
                 return tipoAnalisis;
             }
@@ -109,9 +109,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad TipoAnalisis
                 var tipoAnalisisList = tipoAnalisisDA.Select(ta => new TipoAnalisis
                 {
-                    TN_IdTipoAnalisis = ta.TN_IdTipoAnalisis,
-                    TC_Nombre = ta.TC_Nombre,
-                    TC_Descripcion = ta.TC_Descripcion
+                    IdTipoAnalisis = ta.TN_IdTipoAnalisis,
+                    Nombre = ta.TC_Nombre,
+                    Descripcion = ta.TC_Descripcion
                 }).ToList();
 
                 return tipoAnalisisList;
@@ -148,9 +148,9 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad TipoAnalisis
                 var tipoAnalisisEntidad = new TipoAnalisis
                 {
-                    TN_IdTipoAnalisis = tipoAnalisis.TN_IdTipoAnalisis,
-                    TC_Nombre = tipoAnalisis.TC_Nombre,
-                    TC_Descripcion = tipoAnalisis.TC_Descripcion
+                    IdTipoAnalisis = tipoAnalisis.TN_IdTipoAnalisis,
+                    Nombre = tipoAnalisis.TC_Nombre,
+                    Descripcion = tipoAnalisis.TC_Descripcion
                 };
 
                 return tipoAnalisisEntidad;

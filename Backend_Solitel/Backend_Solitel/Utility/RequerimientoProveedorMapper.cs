@@ -9,11 +9,11 @@ namespace Backend_Solitel.Utility
         {
             return new RequerimientoProveedor
             {
-                TN_IdRequerimientoProveedor = 0,
-                TF_FechaInicio = requerimientoProveedorDTO.TF_FechaInicio,
-                TF_FechaFinal = requerimientoProveedorDTO.TF_FechaFinal,
-                TC_Requerimiento = requerimientoProveedorDTO.TC_Requerimiento,
-                TN_NumeroSolicitud = 0,
+                IdRequerimientoProveedor = 0,
+                FechaInicio = requerimientoProveedorDTO.TF_FechaInicio,
+                FechaFinal = requerimientoProveedorDTO.TF_FechaFinal,
+                Requerimiento = requerimientoProveedorDTO.TC_Requerimiento,
+                NumeroSolicitud = 0,
                 tipoSolicitudes = TipoSolicitudMapper.ToModel(requerimientoProveedorDTO.tipoSolicitudes),
                 datosRequeridos = DatoRequeridoMapper.ToModel(requerimientoProveedorDTO.datosRequeridos)
 
@@ -24,10 +24,10 @@ namespace Backend_Solitel.Utility
         {
             return new RequerimientoProveedorDTO
             {
-                TN_IdRequerimientoProveedor = requerimientoProveedor.TN_IdRequerimientoProveedor,
-                TF_FechaInicio = requerimientoProveedor.TF_FechaInicio,
-                TF_FechaFinal = requerimientoProveedor.TF_FechaFinal,
-                TC_Requerimiento = requerimientoProveedor.TC_Requerimiento,
+                TN_IdRequerimientoProveedor = requerimientoProveedor.IdRequerimientoProveedor,
+                TF_FechaInicio = requerimientoProveedor.FechaInicio,
+                TF_FechaFinal = requerimientoProveedor.FechaFinal,
+                TC_Requerimiento = requerimientoProveedor.Requerimiento,
                 tipoSolicitudes = TipoSolicitudMapper.ToDTO(requerimientoProveedor.tipoSolicitudes),
                 datosRequeridos = DatoRequeridoMapper.ToDTO(requerimientoProveedor.datosRequeridos)
 

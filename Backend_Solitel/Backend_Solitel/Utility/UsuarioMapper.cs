@@ -9,12 +9,12 @@ namespace Backend_Solitel.Utility
         {
             return new Usuario
             {
-                TN_IdUsuario = usuarioDTO.TN_IdUsuario,
-                TC_Nombre = usuarioDTO.TC_Nombre,
-                TC_Apellido = usuarioDTO.TC_Apellido,
-                TC_Usuario = usuarioDTO.TC_Usuario,
-                TC_Contrasenna = "",
-                TC_CorreoElectronico = usuarioDTO.TC_CorreoElectronico
+                IdUsuario = usuarioDTO.TN_IdUsuario,
+                Nombre = usuarioDTO.TC_Nombre,
+                Apellido = usuarioDTO.TC_Apellido,
+                UsuarioLogin = usuarioDTO.TC_Usuario,
+                Contrasenna = "",
+                CorreoElectronico = usuarioDTO.TC_CorreoElectronico
             };
         }
 
@@ -22,11 +22,11 @@ namespace Backend_Solitel.Utility
         {
             return new UsuarioDTO
             {
-                TN_IdUsuario = usuario.TN_IdUsuario,
-                TC_Nombre = usuario.TC_Nombre,
-                TC_Apellido = usuario.TC_Apellido,
-                TC_Usuario = usuario.TC_Usuario,
-                TC_CorreoElectronico = usuario.TC_CorreoElectronico
+                TN_IdUsuario = usuario.IdUsuario,
+                TC_Nombre = usuario.Nombre,
+                TC_Apellido = usuario.Apellido,
+                TC_Usuario = usuario.UsuarioLogin,
+                TC_CorreoElectronico = usuario.CorreoElectronico
             };
         }
     }

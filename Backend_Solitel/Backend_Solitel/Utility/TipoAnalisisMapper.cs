@@ -9,9 +9,9 @@ namespace Backend_Solitel.Utility
         {
             return new TipoAnalisis
             {
-                TN_IdTipoAnalisis = tipoAnalisisDTO.IdTipoAnalisis,
-                TC_Nombre = tipoAnalisisDTO.Nombre,
-                TC_Descripcion = tipoAnalisisDTO.Descripcion
+                IdTipoAnalisis = tipoAnalisisDTO.IdTipoAnalisis,
+                Nombre = tipoAnalisisDTO.Nombre,
+                Descripcion = tipoAnalisisDTO.Descripcion
             };
         }
 
@@ -19,9 +19,9 @@ namespace Backend_Solitel.Utility
         {
             return new TipoAnalisisDTO
             {
-                IdTipoAnalisis = tipoAnalisis.TN_IdTipoAnalisis,
-                Nombre = tipoAnalisis.TC_Nombre,
-                Descripcion = tipoAnalisis.TC_Descripcion
+                IdTipoAnalisis = tipoAnalisis.IdTipoAnalisis,
+                Nombre = tipoAnalisis.Nombre,
+                Descripcion = tipoAnalisis.Descripcion
             };
         }
 

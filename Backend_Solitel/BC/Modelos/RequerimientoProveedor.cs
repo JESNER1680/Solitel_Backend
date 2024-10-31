@@ -2,15 +2,15 @@
 {
     public class RequerimientoProveedor
     {
-        public int TN_IdRequerimientoProveedor { get; set; }
+        public int IdRequerimientoProveedor { get; set; }
 
-        public DateTime TF_FechaInicio { get; set; }
+        public DateTime FechaInicio { get; set; }
 
-        public DateTime TF_FechaFinal { get; set; }
+        public DateTime FechaFinal { get; set; }
 
-        public string TC_Requerimiento { get; set; }
+        public string Requerimiento { get; set; }
 
-        public int TN_NumeroSolicitud { get; set; }
+        public int NumeroSolicitud { get; set; }
 
         public List<TipoSolicitud> tipoSolicitudes { get; set; }
 

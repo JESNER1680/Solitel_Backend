@@ -9,8 +9,8 @@ namespace Backend_Solitel.Utility
         {
             return new Fiscalia
             {
-                TN_IdFiscalia = fiscaliaDTO.IdFiscalia,
-                TC_Nombre = fiscaliaDTO.Nombre
+                IdFiscalia = fiscaliaDTO.IdFiscalia,
+                Nombre = fiscaliaDTO.Nombre
             };
         }
 
@@ -18,8 +18,8 @@ namespace Backend_Solitel.Utility
         {
             return new FiscaliaDTO
             {
-                IdFiscalia = fiscalia.TN_IdFiscalia,
-                Nombre = fiscalia.TC_Nombre
+                IdFiscalia = fiscalia.IdFiscalia,
+                Nombre = fiscalia.Nombre
             };
         }
         public static List<FiscaliaDTO> ToDTO(this List<Fiscalia> fiscalias)

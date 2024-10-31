@@ -26,8 +26,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", tipoDato.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoDato.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", tipoDato.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoDato.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdTipoDato", SqlDbType.Int)
@@ -50,7 +50,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad TipoDato
-                tipoDato.TN_IdTipoDato = nuevoId;
+                tipoDato.IdTipoDato = nuevoId;
 
                 return tipoDato;
             }
@@ -76,9 +76,9 @@ namespace DA.Acciones
 
                 var tiposDato = tiposDatoDA.Select(da => new TipoDato
                 {
-                    TN_IdTipoDato = da.TN_IdTipoDato,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdTipoDato = da.TN_IdTipoDato,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return tiposDato;
@@ -141,9 +141,9 @@ namespace DA.Acciones
                 // Mapear el resultado a la entidad TipoDato
                 var tipoDatoResult = new TipoDato
                 {
-                    TN_IdTipoDato = tipoDato.TN_IdTipoDato,
-                    TC_Nombre = tipoDato.TC_Nombre,
-                    TC_Descripcion = tipoDato.TC_Descripcion
+                    IdTipoDato = tipoDato.TN_IdTipoDato,
+                    Nombre = tipoDato.TC_Nombre,
+                    Descripcion = tipoDato.TC_Descripcion
                 };
 
                 return tipoDatoResult;

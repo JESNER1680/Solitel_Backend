@@ -26,8 +26,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros de entrada y salida para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", condicion.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", condicion.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", condicion.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", condicion.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdCondicion", SqlDbType.Int)
@@ -49,7 +49,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad de condición
-                condicion.TN_IdCondicion = nuevoId;
+                condicion.IdCondicion = nuevoId;
 
                 // Devolver el objeto con el ID asignado
                 return condicion;
@@ -78,9 +78,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad Condicion
                 var condiciones = condicionesDA.Select(da => new Condicion
                 {
-                    TN_IdCondicion = da.TN_IdCondicion,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdCondicion = da.TN_IdCondicion,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return condiciones;
@@ -150,9 +150,9 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Condicion
                 var condicionResult = new Condicion
                 {
-                    TN_IdCondicion = condicion.TN_IdCondicion,
-                    TC_Nombre = condicion.TC_Nombre,
-                    TC_Descripcion = condicion.TC_Descripcion
+                    IdCondicion = condicion.TN_IdCondicion,
+                    Nombre = condicion.TC_Nombre,
+                    Descripcion = condicion.TC_Descripcion
                 };
 
                 return condicionResult;

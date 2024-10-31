@@ -9,10 +9,10 @@ namespace Backend_Solitel.Utility
         {
             return new Estado
             {
-                TN_IdEstado = estadoDTO.TN_IdEstado,
-                TC_Nombre = estadoDTO.TC_Nombre,
-                TC_Descripcion = estadoDTO.TC_Descripcion,
-                TC_Tipo = estadoDTO.TC_Tipo,
+                IdEstado = estadoDTO.TN_IdEstado,
+                Nombre = estadoDTO.TC_Nombre,
+                Descripcion = estadoDTO.TC_Descripcion,
+                Tipo = estadoDTO.TC_Tipo,
             };
         }
 
@@ -20,10 +20,10 @@ namespace Backend_Solitel.Utility
         {
             return new EstadoDTO
             {
-                TN_IdEstado = estado.TN_IdEstado,
-                TC_Nombre = estado.TC_Nombre,
-                TC_Descripcion = estado.TC_Descripcion,
-                TC_Tipo = estado.TC_Tipo
+                TN_IdEstado = estado.IdEstado,
+                TC_Nombre = estado.Nombre,
+                TC_Descripcion = estado.Descripcion,
+                TC_Tipo = estado.Tipo
             };
         }
 

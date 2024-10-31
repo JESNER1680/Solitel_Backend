@@ -32,10 +32,10 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var estados = estadosDA.Select(da => new Estado
                 {
-                    TN_IdEstado = da.TN_IdEstado,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
-                    TC_Tipo = da.TC_Tipo
+                    IdEstado = da.TN_IdEstado,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
+                    Tipo = da.TC_Tipo
 
                 }).ToList();
 

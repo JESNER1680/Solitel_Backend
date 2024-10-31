@@ -20,26 +20,20 @@ namespace DA.Entidades
         public string TC_Observacion { get; set; }
 
         [Required]
-        public DateTime TF_FechaEstado { get; set; }
+        public DateTime TF_FechaDeModificacion { get; set; }
 
         [Required]
         public int TN_IdUsuario { get; set; }
 
+
         [Required]
         public int TN_IdEstado { get; set; }
 
+
         public int? TN_IdAnalisis { get; set; }
 
-        public int? TN_IdSolicitudProveedor { get; set; }
+        public int? TN_IdSolicitud { get; set; }
 
-        [ForeignKey("TN_IdUsuario")]
-        public virtual TSOLITEL_UsuarioDA Usuario { get; set; }
-
-        [ForeignKey("TN_IdEstado")]
-        public virtual TSOLITEL_EstadoDA Estado { get; set; }
-
-        [ForeignKey("TN_IdSolicitudProveedor")]
-        public virtual TSOLITEL_SolicitudProveedorDA? SolicitudProveedor { get; set; }
     }
 
 }
