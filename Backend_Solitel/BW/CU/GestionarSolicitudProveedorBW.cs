@@ -78,6 +78,11 @@ namespace BW.CU
         {
             return await this.gestionarSolicitudProveedorDA.DevolverATramitado(id, idUsuario, observacion);
         }
+        
+        public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
+        {
+            return await this.gestionarSolicitudProveedorDA.ObtenerSolicitudesProveedorPorId(idSolicitud);
+        }
     }
 }
 

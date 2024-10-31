@@ -235,6 +235,29 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Aprobado: {ex.Message}" });
             }
         }
+        [HttpGet]
+        [Route("obtenerSolicitudesProveedorPorId")]
+        public async Task<List<SolicitudProveedorDTO>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
+        {
+            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.ObtenerSolicitudesProveedorPorId(idSolicitud));
+
+            foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
+            {
+
+                solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
+                    .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
+
+                foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+                {
+                    requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+                    requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+                }
+            }
+
+            return solicitudesProveedor;
+        }
 
         [HttpPut("devolverATramitado")]
         public async Task<IActionResult> DevolverATramitado([FromQuery] int id, [FromQuery] int idUsuario, [FromQuery] string observacion = null)
