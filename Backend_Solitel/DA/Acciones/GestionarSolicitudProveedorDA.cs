@@ -58,6 +58,7 @@ namespace DA.Acciones
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
             }
         }
+
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             try
@@ -402,7 +403,6 @@ namespace DA.Acciones
 
         public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
         {
-
             try
             {
                 for (int i = 0; i < idSolicitudes.Count; i++)
@@ -441,11 +441,43 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al insertar las relaciones de requerimientos: {ex.Message}", ex);
             }
+        }
+
+        public async Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@pTC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
 
 
-            
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_DevolverATramitado @pTN_IdSolicitud, @pTN_IdUsuario, @pTC_Observacion",
+                    idSolicitudProveedorParam, idUsuarioParam, observacionParam);
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al aprobar la solicitud.");
+                }
 
 
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
         }
     }
 }

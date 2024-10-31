@@ -29,5 +29,6 @@ namespace BW.Interfaces.DA
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
 
+        public Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null);
     }
 }

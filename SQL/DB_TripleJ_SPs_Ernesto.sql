@@ -7,6 +7,57 @@ GO
 
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
+-- Descripción:		    Devulve una solicitud en estado finalizado a tramitado
+-- =============================================
+
+CREATE OR ALTER PROCEDURE PA_DevolverATramitado
+	@pTN_IdSolicitud INT,
+	@pTN_IdUsuario INT,
+	@pTC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        -- Cambiar el estado de la solicitud a 'Sin Efecto'
+        EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Tramitado', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @pTN_IdUsuario, @pTC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-13
 -- Descripción:		    Inserta un registro en la tabla TSOLITEL_CategoriaDelito
 -- =============================================
