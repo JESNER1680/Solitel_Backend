@@ -8,9 +8,9 @@
 
         public DateTime TF_FechaEstado { get; set; }
 
-        public int TN_IdUsuario { get; set; }
+        public UsuarioDTO usuarioDTO { get; set; }
 
-        public int TN_IdEstado { get; set; }
+        public EstadoDTO estadoDTO { get; set; }
 
         public int? TN_IdAnalisis { get; set; }
 

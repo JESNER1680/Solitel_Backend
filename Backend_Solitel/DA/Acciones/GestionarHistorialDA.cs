@@ -38,8 +38,8 @@ namespace DA.Acciones
                     Observacion = da.TC_Observacion,
                     FechaEstado = da.TF_FechaDeModificacion,
                     IdAnalisis = da.TN_IdAnalisis,
-                    IdEstado = da.TN_IdEstado,
-                    IdUsuario = da.TN_IdUsuario,
+                    estado = new Estado { IdEstado = da.TN_IdEstado, Nombre = da.TC_NombreEstado },
+                    usuario =  new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario },
                     IdSolicitudProveedor = da.TN_IdSolicitud
 
                 }).ToList();

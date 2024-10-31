@@ -25,10 +25,12 @@ namespace DA.Entidades
         [Required]
         public int TN_IdUsuario { get; set; }
 
+        public string TC_NombreUsuario { get; set; }
 
         [Required]
         public int TN_IdEstado { get; set; }
 
+        public string TC_NombreEstado { get; set; }
 
         public int? TN_IdAnalisis { get; set; }
 

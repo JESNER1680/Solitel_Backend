@@ -14,9 +14,9 @@ namespace BC.Modelos
 
         public DateTime FechaEstado { get; set; }
 
-        public int IdUsuario { get; set; }
+        public Usuario usuario { get; set; }
 
-        public int IdEstado { get; set; }
+        public Estado estado { get; set; }
 
         public int? IdAnalisis { get; set; }
 
