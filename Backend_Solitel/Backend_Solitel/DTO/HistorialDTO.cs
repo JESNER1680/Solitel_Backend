@@ -2,19 +2,19 @@
 {
     public class HistorialDTO
     {
-        public int TN_IdHistorial { get; set; }
+        public int IdHistorial { get; set; }
 
-        public string TC_Observacion { get; set; }
+        public string Observacion { get; set; }
 
-        public DateTime TF_FechaEstado { get; set; }
+        public DateTime FechaEstado { get; set; }
 
         public UsuarioDTO usuarioDTO { get; set; }
 
         public EstadoDTO estadoDTO { get; set; }
 
-        public int? TN_IdAnalisis { get; set; }
+        public int? IdAnalisis { get; set; }
 
-        public int? TN_IdSolicitudProveedor { get; set; }
+        public int? IdSolicitudProveedor { get; set; }
     }
 
 }

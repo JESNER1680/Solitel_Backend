@@ -9,11 +9,11 @@ namespace Backend_Solitel.Utility
         {
             return new Archivo
             {
-                IdArchivo = archivoDTO.TN_IdArchivo,
-                Nombre = archivoDTO.TC_Nombre,
-                FormatoArchivo = archivoDTO.TC_FormatoAchivo,
-                Contenido = archivoDTO.TV_Contenido,
-                FechaModificacion = archivoDTO.TF_FechaModificacion
+                IdArchivo = archivoDTO.IdArchivo,
+                Nombre = archivoDTO.Nombre,
+                FormatoArchivo = archivoDTO.FormatoAchivo,
+                Contenido = archivoDTO.Contenido,
+                FechaModificacion = archivoDTO.FechaModificacion
             };
         }
     }

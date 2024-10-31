@@ -2,10 +2,10 @@
 {
     public class OficinaDTO
     {
-        public int TN_IdOficina { get; set; }
+        public int IdOficina { get; set; }
 
-        public string TC_Nombre { get; set; }
-        public string TC_Tipo { get; set; }
+        public string Nombre { get; set; }
+        public string Tipo { get; set; }
     }
 
 }

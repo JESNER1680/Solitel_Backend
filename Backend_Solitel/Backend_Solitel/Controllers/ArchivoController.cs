@@ -25,17 +25,17 @@ namespace Backend_Solitel.Controllers
                 return false;
             }
 
-            Console.WriteLine(archivoDTO.TC_Nombre);
-            Console.WriteLine(archivoDTO.TC_FormatoAchivo);
-            Console.WriteLine(archivoDTO.TF_FechaModificacion);
+            Console.WriteLine(archivoDTO.Nombre);
+            Console.WriteLine(archivoDTO.FormatoAchivo);
+            Console.WriteLine(archivoDTO.FechaModificacion);
 
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
                 var contenido = memoryStream.ToArray(); // Aquí tienes el contenido como byte[]
 
-                archivoDTO.TV_Contenido = contenido;
-                Console.WriteLine(archivoDTO.TV_Contenido);  
+                archivoDTO.Contenido = contenido;
+                Console.WriteLine(archivoDTO.Contenido);  
             }
 
             return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), 15);

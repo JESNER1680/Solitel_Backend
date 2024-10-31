@@ -2,14 +2,14 @@
 {
     public class SolicitudAnalisisDTO
     {
-        public int TN_IdSolicitudAnalisis { get; set; }
-        public DateTime TF_FechaDelHecho { get; set; }
-        public string TC_OtrosDetalles { get; set; }
-        public string? TC_OtrosObjetivosDeAnalisis { get; set; }
-        public bool TB_Aprobado { get; set; }
-        public DateTime? TF_FechaCrecion { get; set; }
-        public int TN_NumeroSolicitud { get; set; }
-        public int TN_IdOficina { get; set; }
+        public int IdSolicitudAnalisis { get; set; }
+        public DateTime FechaDelHecho { get; set; }
+        public string OtrosDetalles { get; set; }
+        public string? OtrosObjetivosDeAnalisis { get; set; }
+        public bool Aprobado { get; set; }
+        public DateTime? FechaCrecion { get; set; }
+        public int NumeroSolicitud { get; set; }
+        public int IdOficina { get; set; }
 
         // Lista de requerimientos
         public List<RequerimentoAnalisisDTO> Requerimentos { get; set; }

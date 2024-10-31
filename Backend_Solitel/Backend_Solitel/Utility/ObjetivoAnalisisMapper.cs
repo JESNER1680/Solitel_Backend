@@ -10,9 +10,9 @@ namespace Backend_Solitel.Utility
         {
             return new ObjetivoAnalisis
             {
-                IdObjetivoAnalisis = objetivoAnalisisDTO.TN_IdObjetivoAnalisis,
-                Nombre = objetivoAnalisisDTO.TC_Nombre,
-                Descripcion = objetivoAnalisisDTO.TC_Descripcion
+                IdObjetivoAnalisis = objetivoAnalisisDTO.IdObjetivoAnalisis,
+                Nombre = objetivoAnalisisDTO.Nombre,
+                Descripcion = objetivoAnalisisDTO.Descripcion
             };
         }
 
@@ -20,9 +20,9 @@ namespace Backend_Solitel.Utility
         {
             var objetivosRecuperados = objetivoAnalisis.Select(obj => new ObjetivoAnalisisDTO
             {
-                TN_IdObjetivoAnalisis = obj.IdObjetivoAnalisis,
-                TC_Nombre = obj.Nombre,
-                TC_Descripcion = obj.Descripcion
+                IdObjetivoAnalisis = obj.IdObjetivoAnalisis,
+                Nombre = obj.Nombre,
+                Descripcion = obj.Descripcion
             }).ToList();
             return objetivosRecuperados;
         }
@@ -31,9 +31,9 @@ namespace Backend_Solitel.Utility
         {
             var objetivosRecuperados =  new ObjetivoAnalisisDTO
             {
-                TN_IdObjetivoAnalisis = objetivoAnalisis.IdObjetivoAnalisis,
-                TC_Nombre = objetivoAnalisis.Nombre,
-                TC_Descripcion = objetivoAnalisis.Descripcion
+                IdObjetivoAnalisis = objetivoAnalisis.IdObjetivoAnalisis,
+                Nombre = objetivoAnalisis.Nombre,
+                Descripcion = objetivoAnalisis.Descripcion
             };
             return objetivosRecuperados;
         }

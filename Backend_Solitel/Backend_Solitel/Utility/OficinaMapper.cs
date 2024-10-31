@@ -9,9 +9,9 @@ namespace Backend_Solitel.Utility
         {
             return new Oficina
             {
-                IdOficina = oficinaDTO.TN_IdOficina,
-                Nombre = oficinaDTO.TC_Nombre,
-                Tipo = oficinaDTO.TC_Tipo
+                IdOficina = oficinaDTO.IdOficina,
+                Nombre = oficinaDTO.Nombre,
+                Tipo = oficinaDTO.Tipo
             };
         }
 
@@ -22,9 +22,9 @@ namespace Backend_Solitel.Utility
 
             return new OficinaDTO
             {
-                TN_IdOficina = oficina.IdOficina,
-                TC_Nombre = oficina.Nombre,
-                TC_Tipo = oficina.Tipo
+                IdOficina = oficina.IdOficina,
+                Nombre = oficina.Nombre,
+                Tipo = oficina.Tipo
             };
         }
 

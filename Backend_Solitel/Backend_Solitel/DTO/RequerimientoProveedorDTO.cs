@@ -2,13 +2,13 @@
 {
     public class RequerimientoProveedorDTO
     {
-        public int TN_IdRequerimientoProveedor { get; set; }
+        public int IdRequerimientoProveedor { get; set; }
 
-        public DateTime TF_FechaInicio { get; set; }
+        public DateTime FechaInicio { get; set; }
 
-        public DateTime TF_FechaFinal { get; set; }
+        public DateTime FechaFinal { get; set; }
 
-        public string TC_Requerimiento { get; set; }
+        public string Requerimiento { get; set; }
 
         public List<TipoSolicitudDTO> tipoSolicitudes { get; set; }
 

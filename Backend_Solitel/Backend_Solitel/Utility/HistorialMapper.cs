@@ -12,13 +12,13 @@ namespace Backend_Solitel.Utility
 
             return new Historial
             {
-                IdHistorial = historialDTO.TN_IdHistorial,
-                Observacion = historialDTO.TC_Observacion,
-                FechaEstado = historialDTO.TF_FechaEstado,
+                IdHistorial = historialDTO.IdHistorial,
+                Observacion = historialDTO.Observacion,
+                FechaEstado = historialDTO.FechaEstado,
                 estado = EstadoMapper.ToModel(historialDTO.estadoDTO),
-                IdAnalisis = historialDTO.TN_IdAnalisis,
+                IdAnalisis = historialDTO.IdAnalisis,
                 usuario = UsuarioMapper.ToModel(historialDTO.usuarioDTO),
-                IdSolicitudProveedor = historialDTO.TN_IdSolicitudProveedor
+                IdSolicitudProveedor = historialDTO.IdSolicitudProveedor
             };
         }
 
@@ -36,13 +36,13 @@ namespace Backend_Solitel.Utility
 
             return new HistorialDTO
             {
-                TN_IdHistorial = historial.IdHistorial,
-                TC_Observacion = historial.Observacion,
-                TF_FechaEstado = historial.FechaEstado,
+                IdHistorial = historial.IdHistorial,
+                Observacion = historial.Observacion,
+                FechaEstado = historial.FechaEstado,
                 usuarioDTO = UsuarioMapper.ToDTO(historial.usuario),
-                TN_IdAnalisis = historial.IdAnalisis,
+                IdAnalisis = historial.IdAnalisis,
                 estadoDTO = EstadoMapper.ToDTO(historial.estado),
-                TN_IdSolicitudProveedor = historial.IdSolicitudProveedor
+                IdSolicitudProveedor = historial.IdSolicitudProveedor
             };
         }
 
