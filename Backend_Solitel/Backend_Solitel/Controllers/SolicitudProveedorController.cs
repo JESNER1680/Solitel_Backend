@@ -70,24 +70,27 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("consultarSolicitudesProveedor")]
-        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor()
+        public async Task<List<SolicitudProveedor>> ConsultarSolicitudesProveedor()
         {
-            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
+            //var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
 
-            foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
-            {
+            var solicitudesProveedor = await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor();
 
-                solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
-                    .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
 
-                foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
-                {
-                    requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
+            //foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
+            //{
 
-                    requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
+            //    solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
+            //        .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
 
-                }
-            }
+            //    foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+            //    {
+            //        requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+            //        requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+            //    }
+            //}
 
             return solicitudesProveedor;
         }
@@ -129,32 +132,32 @@ namespace Backend_Solitel.Controllers
             return await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
         }
 
-        [HttpGet("{idSolicitud}")]
-        public async Task<ActionResult<SolicitudProveedorDTO>> ObtenerSolicitud(int idSolicitud)
-        {
-            try
-            {
-                var solicitud = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitud(idSolicitud));
+        //[HttpGet("{idSolicitud}")]
+        //public async Task<ActionResult<SolicitudProveedorDTO>> ObtenerSolicitud(int idSolicitud)
+        //{
+        //    try
+        //    {
+        //        var solicitud = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitud(idSolicitud));
 
-                solicitud.Requerimientos = RequerimientoProveedorMapper
-                    .ToDTO(await this.gestionarRequerimientoProveedorBW
-                    .ConsultarRequerimientosProveedor(solicitud.IdSolicitudProveedor), 
-                    solicitud.IdSolicitudProveedor);
+        //        solicitud.Requerimientos = RequerimientoProveedorMapper
+        //            .ToDTO(await this.gestionarRequerimientoProveedorBW
+        //            .ConsultarRequerimientosProveedor(solicitud.IdSolicitudProveedor),
+        //            solicitud.IdSolicitudProveedor);
 
 
-                if (solicitud == null)
-                {
-                    return NotFound(new { Message = "Solicitud no encontrada" });
-                }
+        //        if (solicitud == null)
+        //        {
+        //            return NotFound(new { Message = "Solicitud no encontrada" });
+        //        }
 
-                return Ok(solicitud);
-            }
-            catch (Exception ex)
-            {
-                // Registro de error si es necesario
-                return StatusCode(500, new { Message = "Ocurrió un error al obtener la solicitud", Details = ex.Message });
-            }
-        }
+        //        return Ok(solicitud);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Registro de error si es necesario
+        //        return StatusCode(500, new { Message = "Ocurrió un error al obtener la solicitud", Details = ex.Message });
+        //    }
+        //}
 
     }
 }

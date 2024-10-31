@@ -11,8 +11,6 @@ namespace BW.Interfaces.DA
     {
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
 
-        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
-
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor);
 
         public Task<List<string>> ListarNumerosUnicosTramitados();

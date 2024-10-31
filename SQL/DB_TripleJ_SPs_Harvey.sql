@@ -442,7 +442,7 @@ BEGIN
 			Usuario.TN_IdUsuario,
 			CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
 			Estado.TN_IdEstado, 
-			Estado.TC_Nombre,
+			Estado.TC_Nombre AS TC_NombreEstado,
 			H.TN_IdAnalisis, 
 			H.TN_IdSolicitud
 
