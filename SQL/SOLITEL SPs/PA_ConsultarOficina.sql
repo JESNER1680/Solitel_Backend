@@ -7,7 +7,8 @@ BEGIN
         -- Consulta las oficinas que no están marcadas como borradas
         SELECT TN_IdOficina, TC_Nombre, TC_Tipo 
         FROM TSOLITEL_Oficina
-        WHERE TB_Borrado = 0;
+        WHERE TB_Borrado = 0
+		ORDER BY TN_IdOficina DESC
 
         -- Confirma la transacción
         COMMIT TRANSACTION;
