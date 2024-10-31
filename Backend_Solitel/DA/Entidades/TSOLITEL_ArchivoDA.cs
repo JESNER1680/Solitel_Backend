@@ -15,10 +15,6 @@ namespace DA.Entidades
         public int TN_IdArchivo { get; set; }
 
         [Required]
-        [StringLength(255)]
-        public string TC_HashArchivo { get; set; }
-
-        [Required]
         public string TC_Nombre { get; set; }
 
         [Required]
