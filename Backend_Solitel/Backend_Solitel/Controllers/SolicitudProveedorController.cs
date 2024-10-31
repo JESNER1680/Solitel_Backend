@@ -235,6 +235,7 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Aprobado: {ex.Message}" });
             }
         }
+
         [HttpGet]
         [Route("obtenerSolicitudesProveedorPorId")]
         public async Task<List<SolicitudProveedorDTO>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
@@ -281,5 +282,31 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, new { message = $"Ocurrió un error al intentar devolver la solicitud a Tramitado: {ex.Message}" });
             }
         }
+        
+        [HttpPut]
+        [Route("actualizarEstadoTramitado")]
+        public async Task<IActionResult> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            try
+            {
+
+                bool resultado = await this.gestionarSolicitudProveedorBW.ActualizarEstadoTramitado(idSolicitudProveedor, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Tramitado correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Tramitado: {ex.Message}" });
+            }
+        }
+
     }
 }

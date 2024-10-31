@@ -17,29 +17,40 @@ namespace Backend_Solitel.Controllers
 
         [HttpPost]
         [Route("insertarArchivo_RequerimientoProveedor")]
-        public async Task<bool> InsertarArchivo_RequerimientoProveedor([FromForm] ArchivoDTO archivoDTO, [FromForm] IFormFile file)
+        public async Task<bool> InsertarArchivo_RequerimientoProveedor(
+                                                                        [FromForm] ArchivoDTO archivoDTO,
+                                                                        [FromForm] IFormFile file,
+                                                                        [FromForm] int idRequerimiento)
         {
-
+            // Verificar si archivoDTO es nulo
             if (archivoDTO == null)
             {
-                Console.WriteLine("El archivo es nulo");
                 return false;
             }
 
-            Console.WriteLine(archivoDTO.Nombre);
-            Console.WriteLine(archivoDTO.FormatoAchivo);
-            Console.WriteLine(archivoDTO.FechaModificacion);
+            // Verificar si el archivo es nulo
+            if (file == null)
+            {
+                return false;
+            }
+
+            // Verificar si idRequerimiento es nulo o no válido
+            if (idRequerimiento <= 0)
+            {
+                return false;
+            }
 
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
                 var contenido = memoryStream.ToArray(); // Aquí tienes el contenido como byte[]
 
-                archivoDTO.Contenido = contenido;
-                Console.WriteLine(archivoDTO.Contenido);  
+                archivoDTO.Contenido = contenido; // Asignar el contenido del archivo
+                archivoDTO.FechaModificacion = DateTime.Now; // Asignar la fecha de modificación actual
             }
 
-            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), 15);
+            // Llamada al método de negocio para guardar el archivo y el idRequerimiento
+            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), idRequerimiento);
         }
 
 

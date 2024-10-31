@@ -31,5 +31,8 @@ namespace BW.Interfaces.DA
         public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud);
 
         public Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null);
+        public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);
+
+
     }
 }

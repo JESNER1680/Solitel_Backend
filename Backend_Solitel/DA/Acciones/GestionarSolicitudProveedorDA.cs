@@ -588,5 +588,46 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
+
+        public async Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@pIdSolicitudProveedor", idSolicitudProveedor);
+                var idUsuarioParam = new SqlParameter("@pIdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@pObservacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarTramitadoSolicitudProveedor @pIdSolicitudProveedor, @pObservacion, @pIdUsuario",
+                    idSolicitudProveedorParam, observacionParam, idUsuarioParam);
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al cambiar el estado de solicitud de proveedor.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+        }
     }
 }
