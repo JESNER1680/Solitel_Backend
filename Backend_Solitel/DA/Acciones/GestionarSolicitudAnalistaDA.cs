@@ -50,12 +50,12 @@ namespace DA.Acciones
                 // Mapear los resultados a la clase `SolicitudAnalisis`
                 var solicitudesAnalisis = solicitudesAnalisisDA.Select(da => new SolicitudAnalisis
                 {
-                    TN_IdSolicitudAnalisis = da.TN_IdAnalisis,
-                    TF_FechaDelHecho = da.TF_FechaDeHecho,
-                    TC_OtrosDetalles = da.TC_OtrosDetalles,
-                    TC_OtrosObjetivosDeAnalisis = da.TC_OtrosObjetivosDeAnalisis,
-                    TB_Aprobado = da.TB_Aprobado,
-                    TF_FechaCrecion = da.TF_FechaDeCreacion,
+                    IdSolicitudAnalisis = da.TN_IdAnalisis,
+                    FechaDelHecho = da.TF_FechaDeHecho,
+                    OtrosDetalles = da.TC_OtrosDetalles,
+                    OtrosObjetivosDeAnalisis = da.TC_OtrosObjetivosDeAnalisis,
+                    Aprobado = da.TB_Aprobado,
+                    FechaCrecion = da.TF_FechaDeCreacion,
                     SolicitudesProveedor = da.SolicitudProveedor.Select(sp => new SolicitudProveedor
                     {
                         IdSolicitudProveedor = sp.TN_IdSolicitud,
@@ -66,42 +66,42 @@ namespace DA.Acciones
                         Resennia = sp.TC_Resennia,
                         Urgente = sp.TB_Urgente,
                         Aprobado = sp.TB_Aprobado,
-                        FechaCrecion = sp.TF_FechaDeCrecion,
+                        FechaCrecion = sp.TF_FechaDeCreacion,
                         Proveedor = new Proveedor
                         {
-                            TN_IdProveedor = sp.TN_IdProveedor,
-                            TC_Nombre = sp.TC_NombreProveedor
+                            IdProveedor = sp.TN_IdProveedor,
+                            Nombre = sp.TC_NombreProveedor
                         },
                         Delito = new Delito
                         {
-                            TN_IdDelito = sp.TN_IdDelito,
-                            TN_IdCategoriaDelito = sp.TN_IdCategoriaDelito,
-                            TC_Nombre = sp.TC_NombreDelito
+                            IdDelito = sp.TN_IdDelito,
+                            IdCategoriaDelito = sp.TN_IdCategoriaDelito,
+                            Nombre = sp.TC_NombreDelito
                         },
                         CategoriaDelito = new CategoriaDelito
                         {
-                            TN_IdCategoriaDelito = sp.TN_IdCategoriaDelito,
-                            TC_Nombre = sp.TC_NombreCategoriaDelito
+                            IdCategoriaDelito = sp.TN_IdCategoriaDelito,
+                            Nombre = sp.TC_NombreCategoriaDelito
                         },
                         Estado = new Estado
                         {
-                            TN_IdEstado = sp.TN_IdEstado,
-                            TC_Nombre = sp.TC_NombreEstado
+                            IdEstado = sp.TN_IdEstado,
+                            Nombre = sp.TC_NombreEstado
                         },
                         Fiscalia = new Fiscalia
                         {
-                            TN_IdFiscalia = sp.TN_IdFiscalia,
-                            TC_Nombre = sp.TC_NombreFiscalia
+                            IdFiscalia = sp.TN_IdFiscalia,
+                            Nombre = sp.TC_NombreFiscalia
                         },
                         Modalidad = new Modalidad
                         {
-                            TN_IdModalidad = sp.TN_IdModalidad ?? 0,
-                            TC_Nombre = sp.TC_NombreModalidad
+                            IdModalidad = sp.TN_IdModalidad ?? 0,
+                            Nombre = sp.TC_NombreModalidad
                         },
                         SubModalidad = new SubModalidad
                         {
-                            TN_IdSubModalidad = sp.TN_IdSubModalidad ?? 0,
-                            TC_Nombre = sp.TC_NombreSubModalidad
+                            IdSubModalidad = sp.TN_IdSubModalidad ?? 0,
+                            Nombre = sp.TC_NombreSubModalidad
                         }
                     }).ToList()
                 }).ToList();

@@ -190,6 +190,11 @@ namespace DA.Acciones
             }
         }
 
+        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
         {
 

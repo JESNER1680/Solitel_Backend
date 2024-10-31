@@ -39,6 +39,11 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor);
         }
 
+        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
         {
             //Aplicar reglas de negocio
