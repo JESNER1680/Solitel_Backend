@@ -703,7 +703,8 @@ BEGIN
             Estado.TN_IdEstado,
             Estado.TC_Nombre AS TC_NombreEstado,
             SubModalidad.TN_IdSubModalidad,
-            SubModalidad.TC_Nombre AS TC_NombreSubModalidad
+            SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
+			TN_IdSolicitud AS TN_NumeroSolicitud
             
         FROM TSOLITEL_SolicitudProveedor AS T
         INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
