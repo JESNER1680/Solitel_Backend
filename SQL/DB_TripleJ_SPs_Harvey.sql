@@ -1,4 +1,43 @@
-CREATE OR ALTER PROCEDURE [dbo].[PA_CambiarEstadoSolicitudProveedor]
+CREATE OR ALTER PROCEDURE PA_InsertarHistoricoSolicitud
+    @PN_IdSolicitudProveedor INT = NULL,
+    @PN_IdSolicitudAnalisis INT = NULL,
+    @PN_IdUsuario INT,
+    @PC_Observacion VARCHAR(255) = NULL,
+    @PN_IdEstado INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        INSERT INTO TSOLITEL_Historial (TC_Observacion, TF_FechaDeModificacion, TN_IdUsuario, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud)
+            VALUES (@PC_Observacion, GETDATE(), @PN_IdUsuario, @PN_IdEstado, @PN_IdSolicitudAnalisis, @PN_IdSolicitudProveedor);
+
+        -- Confirma la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Revierte la transacción si hay un error
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Captura y lanza el error
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ActualizarEstadoSolicitudProveedor]
     @TN_IdSolicitudProveedor INT,      -- ID de la solicitud que queremos actualizar
     @TC_NombreEstado VARCHAR(50),      -- Nombre del estado que buscamos en la tabla TSOLITEL_Estado
     @TC_TipoEstado VARCHAR(50),        -- Tipo de estado que buscamos en la tabla TSOLITEL_Estado
@@ -54,8 +93,177 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE PA_ActualizarEstadoSinEfectoSolicitudProveedor
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
 
+    BEGIN TRY
+        DECLARE @IdEstado int;
 
+        -- Cambiar el estado de la solicitud a 'Sin Efecto'
+        EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Sin Efecto', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE PA_ActualizarEstadoLegajoSolicitudProveedor
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        -- Cambiar el estado de la solicitud a 'Sin Efecto'
+        EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Legajo', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE PA_ActualizarEstadoFinalizadoSolicitudProveedor
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        -- Cambiar el estado de la solicitud a 'Sin Efecto'
+        EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Finalizado', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE PA_AprobarSolicitudProveedor
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+	DECLARE @Error INT;
+
+	BEGIN TRANSACTION;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+		UPDATE [dbo].[TSOLITEL_SolicitudProveedor]
+            SET TB_Aprobado = 1
+            WHERE TN_IdSolicitud = @pTN_IdSolicitud;
+
+		-- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+		COMMIT TRANSACTION;
+
+		EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Pendiente', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
 
 CREATE OR ALTER PROCEDURE PA_ConsultarArchivoPorID
     @PN_IdArchivo INT
@@ -97,7 +305,6 @@ BEGIN
     END CATCH
 END
 GO
-
 
 CREATE OR ALTER PROCEDURE PA_ConsultarArchivosDeSolicitudProveedor
     @PN_IdSolicitudProveedor INT
@@ -228,9 +435,22 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Consulta el historial de la solicitud de proveedor
-        SELECT TN_IdHistorial, TC_Observacion, TF_FechaDeModificacion, TN_IdUsuario, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud
-        FROM TSOLITEL_Historial
-        WHERE TN_IdSolicitud = @PN_IdSolicitudProveedor;
+        SELECT 
+			H.TN_IdHistorial, 
+			H.TC_Observacion, 
+			H.TF_FechaDeModificacion, 
+			Usuario.TN_IdUsuario,
+			CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+			Estado.TN_IdEstado, 
+			Estado.TC_Nombre,
+			H.TN_IdAnalisis, 
+			H.TN_IdSolicitud
+
+        FROM TSOLITEL_Historial AS H
+		INNER JOIN TSOLITEL_Estado AS Estado ON H.TN_IdEstado = Estado.TN_IdEstado
+		INNER JOIN TSOLITEL_Usuario AS Usuario ON H.TN_IdUsuario = Usuario.TN_IdUsuario
+        WHERE TN_IdSolicitud = @PN_IdSolicitudProveedor
+		ORDER BY H.TN_IdHistorial DESC;
 
         -- Confirma la transacción
         COMMIT TRANSACTION;
@@ -450,18 +670,14 @@ BEGIN
 END
 GO
 
-
+-- Revisado
 CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSolicitudesProveedor]
-    @PageNumber INT,
-    @PageSize INT
+    @pTN_IdSolicitud INT = NULL
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
-        DECLARE @Offset INT = (@PageNumber - 1) * @PageSize;
-
-        -- Consulta con paginación
         SELECT 
             TN_IdSolicitud,
             TN_NumeroUnico,
@@ -471,8 +687,10 @@ BEGIN
             TC_Resennia,
             TB_Urgente,
             TB_Aprobado,
-            TF_FechaDeCrecion,
-            Proveedor.TN_IdProveedor,
+            TF_FechaDeCrecion AS TF_FechaDeCreacion,
+            Usuario.TN_IdUsuario,
+			CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+			Proveedor.TN_IdProveedor,
             Proveedor.TC_Nombre AS TC_NombreProveedor,
             Fiscalia.TN_IdFiscalia,
             Fiscalia.TC_Nombre AS TC_NombreFiscalia,
@@ -485,19 +703,19 @@ BEGIN
             Estado.TN_IdEstado,
             Estado.TC_Nombre AS TC_NombreEstado,
             SubModalidad.TN_IdSubModalidad,
-            SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
-            TN_IdUsuario
+            SubModalidad.TC_Nombre AS TC_NombreSubModalidad
+            
         FROM TSOLITEL_SolicitudProveedor AS T
-        LEFT JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
-        LEFT JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
-        LEFT JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
-        LEFT JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
-        LEFT JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
-        LEFT JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
-        LEFT JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
-        ORDER BY TN_IdSolicitud
-        OFFSET @Offset ROWS
-        FETCH NEXT @PageSize ROWS ONLY;
+        INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
+        INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
+        INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
+        INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
+        INNER JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
+        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
+        INNER JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+		INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
+        WHERE (@pTN_IdSolicitud IS NULL OR @pTN_IdSolicitud = TN_IdSolicitud)
+		ORDER BY TN_IdSolicitud DESC;
 
         -- Si todo está correcto, se confirma la transacción
         COMMIT TRANSACTION;
@@ -523,8 +741,7 @@ BEGIN
     END CATCH
 END
 GO
-
-
+-- Revisado
 
 CREATE OR ALTER PROCEDURE dbo.PA_ConsultarSolicitudesProveedorPorEstado
     @pPageNumber INT,
@@ -874,55 +1091,6 @@ BEGIN
 END
 GO
 
-
-CREATE OR ALTER PROCEDURE PA_InsertarHistoricoSolicitud
-    @PN_IdSolicitudProveedor INT,
-    @PN_IdSolicitudAnalisis INT,
-    @PN_IdUsuario INT,
-    @PC_Observacion VARCHAR(255),
-    @PN_IdEstado INT
-AS
-BEGIN
-    BEGIN TRY
-        BEGIN TRANSACTION;
-
-        IF @PN_IdSolicitudProveedor <> 0
-        BEGIN
-            INSERT INTO TSOLITEL_Historial (TC_Observacion, TF_FechaDeModificacion, TN_IdUsuario, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud)
-            VALUES (@PC_Observacion, GETDATE(), @PN_IdUsuario, @PN_IdEstado, 0, @PN_IdSolicitudProveedor);
-        END
-        ELSE IF @PN_IdSolicitudProveedor = 0 AND @PN_IdSolicitudAnalisis <> 0
-        BEGIN
-            INSERT INTO TSOLITEL_Historial (TC_Observacion, TF_FechaDeModificacion, TN_IdUsuario, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud)
-            VALUES (@PC_Observacion, GETDATE(), @PN_IdUsuario, @PN_IdEstado, @PN_IdSolicitudAnalisis, 0);
-        END
-
-        -- Confirma la transacción
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- Revierte la transacción si hay un error
-        IF @@TRANCOUNT > 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
-
-        -- Captura y lanza el error
-        DECLARE @ErrorMessage NVARCHAR(4000);
-        DECLARE @ErrorSeverity INT;
-        DECLARE @ErrorState INT;
-
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
-    END CATCH
-END
-GO
-
-
 CREATE OR ALTER PROCEDURE PA_InsertarOficina
 @PC_Nombre varchar(50)
 AS
@@ -1192,42 +1360,6 @@ END
 GO
 
 
-CREATE OR ALTER PROCEDURE PA_MoverEstadoSinEfectoSolicitudProveedor
-@PN_IdSolicitudProveedor int
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Iniciar la transacción
-    BEGIN TRANSACTION;
-    BEGIN TRY
-        DECLARE @IdEstado int;
-
-        -- Cambiar el estado de la solicitud a 'Sin Efecto'
-        EXEC PA_CambiarEstadoSolicitudProveedor @PN_IdSolicitudProveedor, 'Sin Efecto', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
-
-        -- Confirmar la transacción
-        COMMIT TRANSACTION;
-    END TRY
-    BEGIN CATCH
-        -- En caso de error, hacer rollback
-        IF @@TRANCOUNT > 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
-
-        -- Lanzar el error de SQL Server
-        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
-        SELECT 
-            @ErrorMessage = ERROR_MESSAGE(),
-            @ErrorSeverity = ERROR_SEVERITY(),
-            @ErrorState = ERROR_STATE();
-
-        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
-        RETURN -1;
-    END CATCH
-END
-GO
 
 
 CREATE OR ALTER PROCEDURE PA_RelacionarRequerimientosProveedor
