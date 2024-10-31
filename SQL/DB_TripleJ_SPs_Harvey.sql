@@ -316,7 +316,7 @@ BEGIN
 END;
 
 GO
-
+EXEC PA_ConsultarArchivosDeRequerimiento 9
 CREATE OR ALTER PROCEDURE PA_ConsultarArchivosDeRequerimiento
     @PN_IdRequerimiento INT
 AS
@@ -331,13 +331,9 @@ BEGIN
             A.TV_DireccionFileStream AS TV_Contenido,            -- Incluye 'TV_Contenido' si es necesario
             A.TC_FormatoAchivo AS TC_FormatoArchivo,
             A.TF_FechaDeModificacion AS TF_FechaModificacion      -- Incluye 'TF_FechaModificacion' si es necesario
-        FROM TSOLITEL_SolicitudProveedor_RequerimientoProveedor SPRP
-        INNER JOIN TSOLITEL_SolicitudProveedor SP
-            ON SP.TN_IdSolicitud = SPRP.TN_IdSolicitud
-		INNER JOIN TSOLITEL_RequerimientoProveedor AS RE
-			ON SPRP.TN_IdRequerimientoProveedor = RE.TN_IdRequerimientoProveedor
+        FROM TSOLITEL_RequerimientoProveedor AS RE
         INNER JOIN TSOLITEL_RequerimientoProveedor_Archivo RPA
-            ON RPA.TN_IdRequerimientoProveedor = SPRP.TN_IdRequerimientoProveedor
+            ON RPA.TN_IdRequerimientoProveedor = RE.TN_IdRequerimientoProveedor
         INNER JOIN TSOLITEL_Archivo A
             ON A.TN_IdArchivo = RPA.TN_IdArchivo
         WHERE RE.TN_IdRequerimientoProveedor = @PN_IdRequerimiento;
