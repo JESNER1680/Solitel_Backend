@@ -11,12 +11,21 @@ namespace BW.Interfaces.BW
     {
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor);
 
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize);
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
 
-        public Task<List<int>> ListarNumerosUnicosTramitados();
+        public Task<List<string>> ListarNumerosUnicosTramitados();
 
-        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico);
+        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico);
 
         public Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos);
+
+        public Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion);
+
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado);
+
+        public Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion);
+        public Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null);
+
+        public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
     }
 }

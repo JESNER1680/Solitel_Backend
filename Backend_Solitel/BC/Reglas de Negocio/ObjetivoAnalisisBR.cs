@@ -59,10 +59,10 @@ namespace BC.Reglas_de_Negocio
             }
 
             // Validar el nombre
-            ValidarNombre(objetivoAnalisis.TC_Nombre);
+            ValidarNombre(objetivoAnalisis.Nombre);
 
             // Validar la descripción
-            ValidarDescripcion(objetivoAnalisis.TC_Descripcion);
+            ValidarDescripcion(objetivoAnalisis.Descripcion);
         }
     }
 }

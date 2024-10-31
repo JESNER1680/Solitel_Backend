@@ -2,11 +2,11 @@
 {
     public class UsuarioDTO
     {
-        public int TN_IdUsuario { get; set; }
-        public string TC_Nombre { get; set; }
-        public string TC_Apellido { get; set; }
-        public string TC_Usuario { get; set; }
-        public string TC_CorreoElectronico { get; set; }
+        public int IdUsuario { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public string Usuario { get; set; }
+        public string CorreoElectronico { get; set; }
     }
 
 }

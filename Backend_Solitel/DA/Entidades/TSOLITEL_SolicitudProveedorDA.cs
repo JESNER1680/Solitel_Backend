@@ -14,10 +14,10 @@ namespace DA.Entidades
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int TN_IdSolicitudProveedor { get; set; }
+        public int TN_IdSolicitud { get; set; }
 
-        public string TN_NumeroUnico { get; set; }
-        public string TN_NumeroCaso { get; set; }
+        public string? TN_NumeroUnico { get; set; }
+        public string? TN_NumeroCaso { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -37,10 +37,10 @@ namespace DA.Entidades
         public bool TB_Aprobado { get; set; }
 
         [Required]
-        public DateTime TF_FechaCrecion { get; set; }
+        public DateTime TF_FechaDeCreacion { get; set; }
 
         [Required]
-        public int TN_IdUsuarioCreador { get; set; }
+        public int TN_IdUsuario { get; set; }
 
         [Required]
         public int TN_IdDelito { get; set; }
@@ -53,10 +53,10 @@ namespace DA.Entidades
 
         public string TC_NombreCategoriaDelito { get; set; }
 
-        [Required]
-        public int TN_IdModalidad { get; set; }
+       
+        public int? TN_IdModalidad { get; set; }
 
-        public string TC_NombreModalidad { get; set; }
+        public string? TC_NombreModalidad { get; set; }
 
         [Required]
         public int TN_IdEstado { get; set; }
@@ -73,32 +73,12 @@ namespace DA.Entidades
 
         public string TC_NombreFiscalia { get; set; }
 
-        [Required]
-        public int TN_IdSubModalidad { get; set; }
+        
+        public int? TN_IdSubModalidad { get; set; }
 
-        public string TC_NombreSubModalidad { get;set; }
+        public string? TC_NombreSubModalidad { get;set; }
 
-
-        [ForeignKey("TN_IdCategoriaDelito")]
-        public virtual TSOLITEL_CategoriaDelitoDA CategoriaDelito { get; set; }
-
-        [ForeignKey("TN_IdDelito")]
-        public virtual TSOLITEL_DelitoDA Delito { get; set; }
-
-        [ForeignKey("TN_IdEstado")]
-        public virtual TSOLITEL_EstadoDA Estado { get; set; }
-
-        [ForeignKey("TN_IdFiscalia")]
-        public virtual TSOLITEL_FiscaliaDA Fiscalia { get; set; }
-
-        [ForeignKey("TN_IdModalidad")]
-        public virtual TSOLITEL_ModalidadDA Modalidad { get; set; }
-
-        [ForeignKey("TN_IdProveedor")]
-        public virtual TSOLITEL_ProveedorDA Proveedor { get; set; }
-
-        [ForeignKey("TN_IdSubModalidad")]
-        public virtual TSOLITEL_SubModalidadDA SubModalidad { get; set; }
+        public string TC_NombreUsuario { get;set; }
 
     }
 

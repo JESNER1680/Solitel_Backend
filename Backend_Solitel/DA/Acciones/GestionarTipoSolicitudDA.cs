@@ -26,8 +26,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", tipoSolicitud.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoSolicitud.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", tipoSolicitud.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", tipoSolicitud.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdTipoSolicitud", SqlDbType.Int)
@@ -50,7 +50,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad TipoSolicitud
-                tipoSolicitud.TN_IdTipoSolicitud = nuevoId;
+                tipoSolicitud.IdTipoSolicitud = nuevoId;
 
                 return tipoSolicitud;
             }
@@ -76,9 +76,9 @@ namespace DA.Acciones
 
                 var tiposSolicitud = tiposSolicitudDA.Select(da => new TipoSolicitud
                 {
-                    TN_IdTipoSolicitud = da.TN_IdTipoSolicitud,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdTipoSolicitud = da.TN_IdTipoSolicitud,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return tiposSolicitud;
@@ -141,9 +141,9 @@ namespace DA.Acciones
                 // Mapear el resultado a la entidad TipoSolicitud
                 var tipoSolicitudResult = new TipoSolicitud
                 {
-                    TN_IdTipoSolicitud = tipoSolicitud.TN_IdTipoSolicitud,
-                    TC_Nombre = tipoSolicitud.TC_Nombre,
-                    TC_Descripcion = tipoSolicitud.TC_Descripcion
+                    IdTipoSolicitud = tipoSolicitud.TN_IdTipoSolicitud,
+                    Nombre = tipoSolicitud.TC_Nombre,
+                    Descripcion = tipoSolicitud.TC_Descripcion
                 };
 
                 return tipoSolicitudResult;

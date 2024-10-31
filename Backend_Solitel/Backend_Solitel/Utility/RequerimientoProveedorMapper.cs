@@ -9,11 +9,11 @@ namespace Backend_Solitel.Utility
         {
             return new RequerimientoProveedor
             {
-                TN_IdRequerimientoProveedor = 0,
-                TF_FechaInicio = requerimientoProveedorDTO.TF_FechaInicio,
-                TF_FechaFinal = requerimientoProveedorDTO.TF_FechaFinal,
-                TC_Requerimiento = requerimientoProveedorDTO.TC_Requerimiento,
-                TN_NumeroSolicitud = 0,
+                IdRequerimientoProveedor = 0,
+                FechaInicio = requerimientoProveedorDTO.FechaInicio,
+                FechaFinal = requerimientoProveedorDTO.FechaFinal,
+                Requerimiento = requerimientoProveedorDTO.Requerimiento,
+                NumeroSolicitud = 0,
                 tipoSolicitudes = TipoSolicitudMapper.ToModel(requerimientoProveedorDTO.tipoSolicitudes),
                 datosRequeridos = DatoRequeridoMapper.ToModel(requerimientoProveedorDTO.datosRequeridos)
 
@@ -24,10 +24,10 @@ namespace Backend_Solitel.Utility
         {
             return new RequerimientoProveedorDTO
             {
-                TN_IdRequerimientoProveedor = requerimientoProveedor.TN_IdRequerimientoProveedor,
-                TF_FechaInicio = requerimientoProveedor.TF_FechaInicio,
-                TF_FechaFinal = requerimientoProveedor.TF_FechaFinal,
-                TC_Requerimiento = requerimientoProveedor.TC_Requerimiento,
+                IdRequerimientoProveedor = requerimientoProveedor.IdRequerimientoProveedor,
+                FechaInicio = requerimientoProveedor.FechaInicio,
+                FechaFinal = requerimientoProveedor.FechaFinal,
+                Requerimiento = requerimientoProveedor.Requerimiento,
                 tipoSolicitudes = TipoSolicitudMapper.ToDTO(requerimientoProveedor.tipoSolicitudes),
                 datosRequeridos = DatoRequeridoMapper.ToDTO(requerimientoProveedor.datosRequeridos)
 

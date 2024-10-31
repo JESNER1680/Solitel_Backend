@@ -26,8 +26,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", modalidad.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", modalidad.TC_Descripcion);
+                var nombreParam = new SqlParameter("@pTC_Nombre", modalidad.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", modalidad.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdModalidad", SqlDbType.Int)
@@ -49,7 +49,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad Modalidad
-                modalidad.TN_IdModalidad = nuevoId;
+                modalidad.IdModalidad = nuevoId;
 
                 return modalidad;
             }
@@ -77,9 +77,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad Modalidad
                 var modalidades = modalidadesDA.Select(da => new Modalidad
                 {
-                    TN_IdModalidad = da.TN_IdModalidad,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdModalidad = da.TN_IdModalidad,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return modalidades;
@@ -149,9 +149,9 @@ namespace DA.Acciones
                 // Mapear el resultado a la entidad Modalidad
                 var modalidadResult = new Modalidad
                 {
-                    TN_IdModalidad = modalidad.TN_IdModalidad,
-                    TC_Nombre = modalidad.TC_Nombre,
-                    TC_Descripcion = modalidad.TC_Descripcion
+                    IdModalidad = modalidad.TN_IdModalidad,
+                    Nombre = modalidad.TC_Nombre,
+                    Descripcion = modalidad.TC_Descripcion
                 };
 
                 return modalidadResult;

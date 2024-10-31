@@ -8,22 +8,32 @@ namespace BC.Modelos
 {
     public class SolicitudAnalisis
     {
-        public int TN_IdSolicitudAnalisis { get; set; }
+        public int IdSolicitudAnalisis { get; set; }
+        public DateTime FechaDelHecho { get; set; }
+        public string OtrosDetalles { get; set; }
+        public string? OtrosObjetivosDeAnalisis { get; set; }
+        public bool Aprobado { get; set; }
+        public DateTime? FechaCrecion { get; set; }
+        public int NumeroSolicitud { get; set; }
+        public int IdOficina { get; set; }
 
-        public DateTime TF_FechaDelHecho { get; set; }
+        // Lista de requerimientos
+        public List<RequerimentoAnalisis> Requerimentos { get; set; }
 
-        public string TC_OtrosDetalles { get; set; }
+        // Lista de objetivos de análisis
+        public List<ObjetivoAnalisis> ObjetivosAnalisis { get; set; }
 
-        public string? TC_OtrosObjetivosDeAnalisis { get; set; }
+        // Lista de solicitudes de proveedor
+        public List<SolicitudProveedor> SolicitudesProveedor { get; set; }
 
-        public bool TB_Aprobado { get; set; }
+        // Lista de tipos de análisis
+        public List<TipoAnalisis> TiposAnalisis { get; set; }
 
-        public DateTime? TF_FechaCrecion { get; set; }
+        // Lista de condiciones
+        public List<Condicion> Condiciones { get; set; }
 
-        public int TN_NumeroSolicitud { get; set; }
-
-        public int TN_IdOficina { get; set; }
-        public List<RequerimentoAnalisis>requerimentos{ get; set; }
+        // Lista de archivos seleccionados para el análisis
+        public List<Archivo> Archivos { get; set; }
     }
 
 }

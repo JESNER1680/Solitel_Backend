@@ -16,6 +16,12 @@ namespace BW.CU
         {
             this.solicitudAnalistaDA = _solicitudAnalistaDA;
         }
+
+        public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, string caracterIngresado = null)
+        {
+            return await this.solicitudAnalistaDA.ConsultarSolicitudesAnalisisAsync(pageNumber, pageSize, idEstado, numeroUnico, fechaInicio, fechaFin, caracterIngresado);         
+        }
+
         public async Task<bool> CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
         {
             return await this.solicitudAnalistaDA.CrearSolicitudAnalista(solicitudAnalisis);

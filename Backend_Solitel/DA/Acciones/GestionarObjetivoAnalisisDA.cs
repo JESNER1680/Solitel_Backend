@@ -30,8 +30,7 @@ namespace DA.Acciones
                 var idObjetivoAnalisisParam = new SqlParameter("@PN_IdObjetivoAnalisis", idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado para eliminar (lógicamente)
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_EliminarObjetivoAnalisis @PN_IdObjetivoAnalisis", idObjetivoAnalisisParam);
+                await _context.Database.ExecuteSqlRawAsync("EXEC dbo.PA_EliminarObjetivoAnalisis @PN_IdObjetivoAnalisis", idObjetivoAnalisisParam);
 
                 var resultado = await _context.SaveChangesAsync();
 
@@ -59,8 +58,8 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@PC_Nombre", objetivoAnalisis.TC_Nombre);
-                var descripcionParam = new SqlParameter("@PC_Descripcion", objetivoAnalisis.TC_Descripcion);
+                var nombreParam = new SqlParameter("@PC_Nombre", objetivoAnalisis.Nombre);
+                var descripcionParam = new SqlParameter("@PC_Descripcion", objetivoAnalisis.Descripcion);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdObjetivoAnalisis", SqlDbType.Int)
@@ -70,7 +69,7 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @PC_Nombre, @PC_Descripcion",
+                    "EXEC dbo.PA_InsertarObjetivoAnalisis @pTN_IdObjetivoAnalisis OUTPUT, @PC_Nombre, @PC_Descripcion",
                     idParam, nombreParam, descripcionParam
                 );
 
@@ -83,7 +82,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad ObjetivoAnalisis
-                objetivoAnalisis.TN_IdObjetivoAnalisis = nuevoId;
+                objetivoAnalisis.IdObjetivoAnalisis = nuevoId;
 
                 return objetivoAnalisis;
             }
@@ -103,20 +102,21 @@ namespace DA.Acciones
         {
             try
             {
-                // Definir el parámetro
-                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis", (idObjetivoAnalisis>0 && idObjetivoAnalisis != null)? idObjetivoAnalisis:null);
+                // Si idObjetivoAnalisis es -1, asigna DBNull.Value para pasar null a SQL Server
+                var TN_IdObjetivoAnalisis = new SqlParameter("@pTN_IdObjetivoAnalisis",
+                    idObjetivoAnalisis == -1 ? (object)DBNull.Value : idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado pasando el parámetro
                 var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
-                    .FromSqlRaw("EXEC PA_ObtenerObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
+                    .FromSqlRaw("EXEC dbo.PA_ConsultarObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
                     .ToListAsync();
 
                 // Mapear el resultado a la lista de ObjetivoAnalisis
                 var objetivos = ObjetivoAnalisisDA.Select(obj => new ObjetivoAnalisis
                 {
-                    TN_IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
-                    TC_Nombre = obj.TC_Nombre,
-                    TC_Descripcion = obj.TC_Descripcion
+                    IdObjetivoAnalisis = obj.TN_IdObjetivoAnalisis,
+                    Nombre = obj.TC_Nombre,
+                    Descripcion = obj.TC_Descripcion
                 }).ToList();
 
                 return objetivos;
@@ -130,6 +130,7 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de Objetivos: {ex.Message}", ex);
             }
         }
+
 
     }
 }

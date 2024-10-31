@@ -16,10 +16,10 @@ namespace DA.Entidades
         public int TN_IdRequerimientoProveedor { get; set; }
 
         [Required]
-        public DateTime TF_FechaInicio { get; set; }
+        public DateTime TF_FechaDeInicio { get; set; }
 
         [Required]
-        public DateTime TF_FechaFinal { get; set; }
+        public DateTime TF_FechaDeFinal { get; set; }
 
         [Required]
         [StringLength(255)]

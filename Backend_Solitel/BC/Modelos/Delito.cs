@@ -8,13 +8,13 @@ namespace BC.Modelos
 {
     public class Delito
     {
-        public int TN_IdDelito { get; set; }
+        public int IdDelito { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public string TC_Descripcion { get; set; }
+        public string Descripcion { get; set; }
 
-        public int TN_IdCategoriaDelito { get; set; }
+        public int IdCategoriaDelito { get; set; }
     }
 
 }

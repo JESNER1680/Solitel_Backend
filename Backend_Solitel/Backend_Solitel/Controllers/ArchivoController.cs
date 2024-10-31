@@ -25,43 +25,53 @@ namespace Backend_Solitel.Controllers
                 return false;
             }
 
-            Console.WriteLine(archivoDTO.TC_Nombre);
-            Console.WriteLine(archivoDTO.TC_FormatoAchivo);
-            Console.WriteLine(archivoDTO.TF_FechaModificacion);
+            Console.WriteLine(archivoDTO.Nombre);
+            Console.WriteLine(archivoDTO.FormatoAchivo);
+            Console.WriteLine(archivoDTO.FechaModificacion);
 
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
                 var contenido = memoryStream.ToArray(); // Aquí tienes el contenido como byte[]
 
-                archivoDTO.TV_Contenido = contenido;
-                Console.WriteLine(archivoDTO.TV_Contenido);  
+                archivoDTO.Contenido = contenido;
+                Console.WriteLine(archivoDTO.Contenido);  
             }
 
-            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), 2);
+            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), 15);
         }
+
 
         [HttpGet]
         [Route("obtenerArchivoPorId")]
-        public async Task<ArchivoDTO> DescargarArchivo(int id)
+        public async Task<IActionResult> DescargarArchivo(int id)
         {
             // Lógica para obtener el archivo de la base de datos usando el id
             var archivo = await this.gestionarArchivoBW.ObtenerArchivoPorIdAsync(id);
 
             if (archivo == null)
             {
-                return null;
+                return NotFound();
             }
 
-            // Devolver el archivo
-            return new ArchivoDTO
+            // En lugar de solo devolver el archivo, envolvemos la respuesta en un objeto JSON
+            var archivoResultado = new
             {
-                TN_IdArchivo = archivo.TN_IdArchivo,
-                TC_Nombre = archivo.TC_Nombre,
-                TC_FormatoAchivo = archivo.TC_FormatoAchivo,
-                TV_Contenido = archivo.TV_Contenido,
-                TF_FechaModificacion = archivo.TF_FechaModificacion
+                nombreArchivo = archivo.Nombre, // Nombre del archivo
+                contenidoArchivo = Convert.ToBase64String(archivo.Contenido), // Convertir a Base64 para incluir en JSON
+                tipoArchivo = archivo.FormatoArchivo // Tipo de archivo, por ejemplo, "application/pdf"
             };
+
+            return Ok(archivoResultado);
         }
+
+
+        [HttpGet]
+        [Route("obtenerArchivosDeSolicitudesProveedor")]
+        public async Task<IActionResult> obtenerArchivosDeSolicitudesProveedor(List<int> idSolicitudes)
+        {
+            return null;
+        }
+
     }
 }

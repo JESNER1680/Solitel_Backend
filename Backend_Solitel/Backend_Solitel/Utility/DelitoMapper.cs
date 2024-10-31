@@ -9,10 +9,10 @@ namespace Backend_Solitel.Utility
         {
             return new Delito
             {
-                TN_IdDelito = delitoDTO.IdDelito,
-                TC_Nombre = delitoDTO.Nombre,
-                TC_Descripcion = delitoDTO.Descripcion,
-                TN_IdCategoriaDelito = delitoDTO.IdCategoriaDelito,
+                IdDelito = delitoDTO.IdDelito,
+                Nombre = delitoDTO.Nombre,
+                Descripcion = delitoDTO.Descripcion,
+                IdCategoriaDelito = delitoDTO.IdCategoriaDelito,
             };
         }
 
@@ -20,10 +20,10 @@ namespace Backend_Solitel.Utility
         {
             return new DelitoDTO
             {
-                IdDelito = delito.TN_IdDelito,
-                Nombre = delito.TC_Nombre,
-                Descripcion = delito.TC_Descripcion,
-                IdCategoriaDelito = delito.TN_IdCategoriaDelito
+                IdDelito = delito.IdDelito,
+                Nombre = delito.Nombre,
+                Descripcion = delito.Descripcion,
+                IdCategoriaDelito = delito.IdCategoriaDelito
             };
         }
 

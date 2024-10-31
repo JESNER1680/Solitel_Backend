@@ -9,9 +9,9 @@ namespace Backend_Solitel.Utility
         {
             return new TipoDato
             {
-                TN_IdTipoDato = tipoDatoDTO.IdTipoDato,
-                TC_Nombre = tipoDatoDTO.Nombre,
-                TC_Descripcion = tipoDatoDTO .Descripcion,
+                IdTipoDato = tipoDatoDTO.IdTipoDato,
+                Nombre = tipoDatoDTO.Nombre,
+                Descripcion = tipoDatoDTO .Descripcion,
             };
         }
 
@@ -22,9 +22,9 @@ namespace Backend_Solitel.Utility
 
             return new TipoDatoDTO
             {
-                IdTipoDato = tipoDato.TN_IdTipoDato,
-                Nombre = tipoDato.TC_Nombre,
-                Descripcion = tipoDato.TC_Descripcion
+                IdTipoDato = tipoDato.IdTipoDato,
+                Nombre = tipoDato.Nombre,
+                Descripcion = tipoDato.Descripcion
             };
         }
 

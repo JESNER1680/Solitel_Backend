@@ -9,9 +9,9 @@ namespace Backend_Solitel.Utility
         {
             return new Modalidad
             {
-                TN_IdModalidad = modalidadDTO.IdModalidad,
-                TC_Nombre = modalidadDTO.Nombre,
-                TC_Descripcion = modalidadDTO.Descripcion
+                IdModalidad = modalidadDTO.IdModalidad,
+                Nombre = modalidadDTO.Nombre,
+                Descripcion = modalidadDTO.Descripcion
             };
         }
 
@@ -19,9 +19,9 @@ namespace Backend_Solitel.Utility
         {
             return new ModalidadDTO
             {
-                IdModalidad = modalidad.TN_IdModalidad,
-                Nombre = modalidad.TC_Nombre,
-                Descripcion = modalidad.TC_Descripcion
+                IdModalidad = modalidad.IdModalidad,
+                Nombre = modalidad.Nombre,
+                Descripcion = modalidad.Descripcion
             };
         }
 

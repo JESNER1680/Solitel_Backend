@@ -59,9 +59,9 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros de entrada para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", delito.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", delito.TC_Descripcion);
-                var categoriaDelitoParam = new SqlParameter("@pTN_IdCategoriaDelito", delito.TN_IdCategoriaDelito);
+                var nombreParam = new SqlParameter("@pTC_Nombre", delito.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", delito.Descripcion);
+                var categoriaDelitoParam = new SqlParameter("@pTN_IdCategoriaDelito", delito.IdCategoriaDelito);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdDelito", SqlDbType.Int)
@@ -83,7 +83,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad de delito
-                delito.TN_IdDelito = nuevoId;
+                delito.IdDelito = nuevoId;
 
                 // Devolver el objeto con el ID asignado
                 return delito;
@@ -112,10 +112,10 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad Delito
                 var delitos = delitosDA.Select(da => new Delito
                 {
-                    TN_IdDelito = da.TN_IdDelito,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
-                    TN_IdCategoriaDelito = da.TN_IdCategoriaDelito
+                    IdDelito = da.TN_IdDelito,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
+                    IdCategoriaDelito = da.TN_IdCategoriaDelito
                 }).ToList();
 
                 return delitos;
@@ -152,10 +152,10 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Delito
                 var delitoEntidad = new Delito
                 {
-                    TN_IdDelito = delito.TN_IdDelito,
-                    TC_Nombre = delito.TC_Nombre,
-                    TC_Descripcion = delito.TC_Descripcion,
-                    TN_IdCategoriaDelito = delito.TN_IdCategoriaDelito
+                    IdDelito = delito.TN_IdDelito,
+                    Nombre = delito.TC_Nombre,
+                    Descripcion = delito.TC_Descripcion,
+                    IdCategoriaDelito = delito.TN_IdCategoriaDelito
                 };
 
                 return delitoEntidad;
@@ -184,10 +184,10 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Delito
                 var delitos = delitosDA.Select(da => new Delito
                 {
-                    TN_IdDelito = da.TN_IdDelito,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
-                    TN_IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                    IdDelito = da.TN_IdDelito,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
+                    IdCategoriaDelito = da.TN_IdCategoriaDelito,
                 }).ToList();
 
                 return delitos;

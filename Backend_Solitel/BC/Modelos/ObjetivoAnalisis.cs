@@ -8,11 +8,11 @@ namespace BC.Modelos
 {
     public class ObjetivoAnalisis
     {
-        public int TN_IdObjetivoAnalisis { get; set; }
+        public int IdObjetivoAnalisis { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public string TC_Descripcion { get; set; }
+        public string Descripcion { get; set; }
     }
 
 }

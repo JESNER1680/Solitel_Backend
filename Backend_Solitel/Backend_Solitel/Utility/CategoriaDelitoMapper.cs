@@ -13,9 +13,9 @@ namespace Backend_Solitel.Utility
 
             return new CategoriaDelitoDTO
             {
-                IdCategoriaDelito = categoriaDelito.TN_IdCategoriaDelito,
-                Nombre = categoriaDelito.TC_Nombre,
-                Descripcion = categoriaDelito.TC_Descripcion
+                IdCategoriaDelito = categoriaDelito.IdCategoriaDelito,
+                Nombre = categoriaDelito.Nombre,
+                Descripcion = categoriaDelito.Descripcion
             };
         }
 
@@ -36,9 +36,9 @@ namespace Backend_Solitel.Utility
 
             return new CategoriaDelito
             {
-                TN_IdCategoriaDelito = categoriaDelitoDTO.IdCategoriaDelito,
-                TC_Nombre = categoriaDelitoDTO.Nombre,
-                TC_Descripcion = categoriaDelitoDTO.Descripcion
+                IdCategoriaDelito = categoriaDelitoDTO.IdCategoriaDelito,
+                Nombre = categoriaDelitoDTO.Nombre,
+                Descripcion = categoriaDelitoDTO.Descripcion
             };
         }
 

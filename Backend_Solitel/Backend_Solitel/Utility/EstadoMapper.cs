@@ -9,20 +9,30 @@ namespace Backend_Solitel.Utility
         {
             return new Estado
             {
-                TN_IdEstado = estadoDTO.TN_IdEstado,
-                TC_Nombre = estadoDTO.TC_Nombre,
-                TC_Descripcion = estadoDTO.TC_Descripcion
+                IdEstado = estadoDTO.IdEstado,
+                Nombre = estadoDTO.Nombre,
+                Descripcion = estadoDTO.Descripcion,
+                Tipo = estadoDTO.Tipo,
             };
         }
 
-        public static EstadoDTO ToDTO(Estado estado)
+        public static EstadoDTO ToDTO(this Estado estado)  // Método de extensión para Estado
         {
             return new EstadoDTO
             {
-                TN_IdEstado = estado.TN_IdEstado,
-                TC_Nombre = estado.TC_Nombre,
-                TC_Descripcion = estado.TC_Descripcion
+                IdEstado = estado.IdEstado,
+                Nombre = estado.Nombre,
+                Descripcion = estado.Descripcion,
+                Tipo = estado.Tipo
             };
+        }
+
+        public static List<EstadoDTO> ToDTO(this List<Estado> estados)
+        {
+            if (estados == null)
+                return null;
+
+            return estados.Select(c => c.ToDTO()).ToList();
         }
     }
 }

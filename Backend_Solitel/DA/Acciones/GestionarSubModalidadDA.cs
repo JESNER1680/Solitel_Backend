@@ -26,9 +26,9 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", subModalidad.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", subModalidad.TC_Descripcion);
-                var modalidadParam = new SqlParameter("@pTN_IdModalidad", subModalidad.TN_IdModalida);
+                var nombreParam = new SqlParameter("@pTC_Nombre", subModalidad.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", subModalidad.Descripcion);
+                var modalidadParam = new SqlParameter("@pTN_IdModalidad", subModalidad.IdModalidad);
 
                 // Definir el parámetro de salida para capturar el ID generado
                 var idParam = new SqlParameter("@pTN_IdSubModalidad", SqlDbType.Int)
@@ -49,7 +49,7 @@ namespace DA.Acciones
                 }
 
                 // Asignar el ID generado a la entidad SubModalidad
-                subModalidad.TN_IdSubModalidad = nuevoId;
+                subModalidad.IdSubModalidad = nuevoId;
 
                 return subModalidad;
             }
@@ -77,10 +77,10 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad SubModalidad
                 var subModalidades = subModalidadesDA.Select(da => new SubModalidad
                 {
-                    TN_IdSubModalidad = da.TN_IdSubModalidad,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
-                    TN_IdModalida = da.TN_IdModalida,
+                    IdSubModalidad = da.TN_IdSubModalidad,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
+                    IdModalidad = da.TN_IdModalida,
                 }).ToList();
 
                 return subModalidades;
@@ -148,10 +148,10 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad SubModalidad
                 var subModalidades = subModalidadesDA.Select(subModalidad => new SubModalidad
                 {
-                    TN_IdSubModalidad = subModalidad.TN_IdSubModalidad,
-                    TC_Nombre = subModalidad.TC_Nombre,
-                    TC_Descripcion = subModalidad.TC_Descripcion,
-                    TN_IdModalida = subModalidad.TN_IdModalida
+                    IdSubModalidad = subModalidad.TN_IdSubModalidad,
+                    Nombre = subModalidad.TC_Nombre,
+                    Descripcion = subModalidad.TC_Descripcion,
+                    IdModalidad = subModalidad.TN_IdModalida
                 }).ToList();
 
                 return subModalidades;
@@ -186,10 +186,10 @@ namespace DA.Acciones
                 // Mapear el resultado a la entidad SubModalidad
                 var subModalidadResult = new SubModalidad
                 {
-                    TN_IdSubModalidad = subModalidad.TN_IdSubModalidad,
-                    TC_Nombre = subModalidad.TC_Nombre,
-                    TC_Descripcion = subModalidad.TC_Descripcion,
-                    TN_IdModalida = subModalidad.TN_IdModalida
+                    IdSubModalidad = subModalidad.TN_IdSubModalidad,
+                    Nombre = subModalidad.TC_Nombre,
+                    Descripcion = subModalidad.TC_Descripcion,
+                    IdModalidad = subModalidad.TN_IdModalida
                 };
 
                 return subModalidadResult;

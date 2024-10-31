@@ -14,15 +14,59 @@ namespace Backend_Solitel.Utility
 
             return new SolicitudAnalisis
             {
-                TN_IdSolicitudAnalisis = solicitudAnalisisDTO.TN_IdSolicitudAnalisis,
-                TF_FechaDelHecho = solicitudAnalisisDTO.TF_FechaDelHecho,
-                TC_OtrosDetalles = solicitudAnalisisDTO.TC_OtrosDetalles,
-                TC_OtrosObjetivosDeAnalisis = solicitudAnalisisDTO.TC_OtrosObjetivosDeAnalisis,
-                TB_Aprobado = solicitudAnalisisDTO.TB_Aprobado,
-                TF_FechaCrecion = solicitudAnalisisDTO.TF_FechaCrecion ?? fechaActual,
-                TN_NumeroSolicitud = solicitudAnalisisDTO.TN_NumeroSolicitud,
-                TN_IdOficina = solicitudAnalisisDTO.TN_IdOficina,
-                requerimentos = new List<RequerimentoAnalisis>() // Aquí puedes mapear la lista si es necesario
+                IdSolicitudAnalisis = solicitudAnalisisDTO.IdSolicitudAnalisis,
+                FechaDelHecho = solicitudAnalisisDTO.FechaDelHecho,
+                OtrosDetalles = solicitudAnalisisDTO.OtrosDetalles,
+                OtrosObjetivosDeAnalisis = solicitudAnalisisDTO.OtrosObjetivosDeAnalisis,
+                Aprobado = solicitudAnalisisDTO.Aprobado,
+                FechaCrecion = solicitudAnalisisDTO.FechaCrecion ?? fechaActual,
+                NumeroSolicitud = solicitudAnalisisDTO.NumeroSolicitud,
+                IdOficina = solicitudAnalisisDTO.IdOficina,
+
+                // Mapear Requerimientos
+                Requerimentos = solicitudAnalisisDTO.Requerimentos?.Select(r => new RequerimentoAnalisis
+                {
+                    IdRequerimientoAnalisis = r.IdRequerimientoAnalisis,
+                    Objetivo = r.Objetivo,
+                    UtilizadoPor = r.UtilizadoPor,
+                    IdTipo = r.IdTipo
+                }).ToList() ?? new List<RequerimentoAnalisis>(),
+
+                // Mapear Objetivos de Análisis
+                ObjetivosAnalisis = solicitudAnalisisDTO.ObjetivosAnalisis?.Select(o => new ObjetivoAnalisis
+                {
+                    IdObjetivoAnalisis = o.IdObjetivoAnalisis,
+                    Nombre = o.Nombre,
+                    Descripcion = o.Descripcion
+                }).ToList() ?? new List<ObjetivoAnalisis>(),
+
+                // Mapear Solicitudes de Proveedor
+                SolicitudesProveedor = solicitudAnalisisDTO.SolicitudesProveedor?.Select(s => new SolicitudProveedor
+                {
+                    IdSolicitudProveedor = s.IdSolicitudProveedor
+                }).ToList() ?? new List<SolicitudProveedor>(),
+
+                // Mapear TipoAnalisis
+                TiposAnalisis = solicitudAnalisisDTO.tipoAnalisis?.Select(t => new TipoAnalisis
+                {
+                    IdTipoAnalisis = t.IdTipoAnalisis,
+                    Nombre = t.Nombre
+                }).ToList() ?? new List<TipoAnalisis>(),
+
+                // Mapear Condiciones
+                Condiciones = solicitudAnalisisDTO.Condiciones?.Select(c => new Condicion
+                {
+                    IdCondicion = c.IdCondicion,
+                    Nombre = c.Nombre,
+                    Descripcion = c.Descripcion,
+                }).ToList() ?? new List<Condicion>(),
+
+                // Mapear Archivos
+                Archivos = solicitudAnalisisDTO.Archivos?.Select(a => new Archivo
+                {
+                    IdArchivo = a.IdArchivo,
+                    Nombre = a.Nombre
+                }).ToList() ?? new List<Archivo>()
             };
         }
 
@@ -34,14 +78,59 @@ namespace Backend_Solitel.Utility
 
             return new SolicitudAnalisisDTO
             {
-                TN_IdSolicitudAnalisis = solicitudAnalisis.TN_IdSolicitudAnalisis,
-                TF_FechaDelHecho = solicitudAnalisis.TF_FechaDelHecho,
-                TC_OtrosDetalles = solicitudAnalisis.TC_OtrosDetalles,
-                TC_OtrosObjetivosDeAnalisis = solicitudAnalisis.TC_OtrosObjetivosDeAnalisis,
-                TB_Aprobado = solicitudAnalisis.TB_Aprobado,
-                TF_FechaCrecion = solicitudAnalisis.TF_FechaCrecion,
-                TN_NumeroSolicitud = solicitudAnalisis.TN_NumeroSolicitud,
-                TN_IdOficina = solicitudAnalisis.TN_IdOficina
+                IdSolicitudAnalisis = solicitudAnalisis.IdSolicitudAnalisis,
+                FechaDelHecho = solicitudAnalisis.FechaDelHecho,
+                OtrosDetalles = solicitudAnalisis.OtrosDetalles,
+                OtrosObjetivosDeAnalisis = solicitudAnalisis.OtrosObjetivosDeAnalisis,
+                Aprobado = solicitudAnalisis.Aprobado,
+                FechaCrecion = solicitudAnalisis.FechaCrecion,
+                NumeroSolicitud = solicitudAnalisis.NumeroSolicitud,
+                IdOficina = solicitudAnalisis.IdOficina,
+
+                // Mapear Requerimientos
+                Requerimentos = solicitudAnalisis.Requerimentos?.Select(r => new RequerimentoAnalisisDTO
+                {
+                    IdRequerimientoAnalisis = r.IdRequerimientoAnalisis,
+                    Objetivo = r.Objetivo,
+                    UtilizadoPor = r.UtilizadoPor,
+                    IdTipo = r.IdTipo
+                }).ToList() ?? new List<RequerimentoAnalisisDTO>(),
+
+                // Mapear Objetivos de Análisis
+                ObjetivosAnalisis = solicitudAnalisis.ObjetivosAnalisis?.Select(o => new ObjetivoAnalisisDTO
+                {
+                    IdObjetivoAnalisis = o.IdObjetivoAnalisis,
+                    Nombre = o.Nombre,
+                    Descripcion = o.Descripcion
+                }).ToList() ?? new List<ObjetivoAnalisisDTO>(),
+
+                // Mapear Solicitudes de Proveedor
+                SolicitudesProveedor = solicitudAnalisis.SolicitudesProveedor?.Select(s => new SolicitudProveedorDTO
+                {
+                    IdSolicitudProveedor = s.IdSolicitudProveedor
+                }).ToList() ?? new List<SolicitudProveedorDTO>(),
+
+                // Mapear TipoAnalisis
+                tipoAnalisis = solicitudAnalisis.TiposAnalisis?.Select(t => new TipoAnalisisDTO
+                {
+                    IdTipoAnalisis = t.IdTipoAnalisis,
+                    Nombre = t.Nombre
+                }).ToList() ?? new List<TipoAnalisisDTO>(),
+
+                // Mapear Condiciones
+                Condiciones = solicitudAnalisis.Condiciones?.Select(c => new CondicionDTO
+                {
+                    IdCondicion = c.IdCondicion,
+                    Nombre = c.Nombre,
+                    Descripcion = c.Descripcion
+                }).ToList() ?? new List<CondicionDTO>(),
+
+                // Mapear Archivos
+                Archivos = solicitudAnalisis.Archivos?.Select(a => new ArchivoDTO
+                {
+                    IdArchivo = a.IdArchivo,
+                    Nombre = a.Nombre
+                }).ToList() ?? new List<ArchivoDTO>()
             };
         }
 

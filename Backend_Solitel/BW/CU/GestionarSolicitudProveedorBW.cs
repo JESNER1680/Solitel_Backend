@@ -13,14 +13,26 @@ namespace BW.CU
     {
         private readonly IGestionarSolicitudProveedorDA gestionarSolicitudProveedorDA;
 
-
-
         public GestionarSolicitudProveedorBW(IGestionarSolicitudProveedorDA dA)
         {
             gestionarSolicitudProveedorDA = dA;
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(int numeroUnico)
+        public async Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            return await this.gestionarSolicitudProveedorDA.AprobarSolicitudProveedor(idSolicitudProveedor, idUsuario, observacion);
+        }
+        public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
+        {
+            return await this.gestionarSolicitudProveedorDA.ActualizarEstadoFinalizado(id, idUsuario, observacion);
+        }
+
+        public async Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null)
+        {
+            return await this.gestionarSolicitudProveedorDA.ActualizarEstadoLegajo(id, idUsuario, observacion);
+        }
+
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
         {
             return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
         }
@@ -31,15 +43,30 @@ namespace BW.CU
             return this.gestionarSolicitudProveedorDA.InsertarSolicitudProveedor(solicitudProveedor);
         }
 
-        public async Task<List<int>> ListarNumerosUnicosTramitados()
+        public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
             return await this.gestionarSolicitudProveedorDA.ListarNumerosUnicosTramitados();
         }
 
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int pageNumber, int pageSize)
+        public async Task<bool> MoverEstadoASinEfecto(int idSolicitudProveedor, int idUsuario, string? observacion)
+        {
+            return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor, idUsuario, observacion);
+        }
+
+        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
         {
             //Aplicar reglas de negocio
-            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor(pageNumber, pageSize);
+            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedor();
+        }
+
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado)
+        {
+            return this.gestionarSolicitudProveedorDA.obtenerSolicitudesProveedorPorEstado(pageNumber, pageSize, idEstado);
         }
 
         public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
@@ -48,3 +75,4 @@ namespace BW.CU
         }
     }
 }
+

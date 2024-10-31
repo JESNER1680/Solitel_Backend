@@ -2,36 +2,49 @@ USE Solitel_Database;
 
 -- DROPs
 BEGIN
-	-- Comando para borrar todas las tablas
-	DROP TABLE TSOLITEL_RequerimientoProveedor_DatoRequerido;
-	DROP TABLE TSOLITEL_DatoRequerido;
-	DROP TABLE TSOLITEL_TipoDato;
-	DROP TABLE TSOLITEL_TipoSolicitud_RequerimientoProveedor;
-	DROP TABLE TSOLITEL_TipoSolicitud;
-	DROP TABLE TSOLITEL_RequerimientoProveedor;
-	DROP TABLE TSOLITEL_SolicitudAnalisis_Condicion;
-	DROP TABLE TSOLITEL_Condicion;
-	DROP TABLE TSOLITEL_TipoAnalisis_SolicitudAnalisis;
-	DROP TABLE TSOLITEL_TipoAnalisis;
-	DROP TABLE TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
-	DROP TABLE TSOLITEL_ObjetivoAnalisis;
+
+	-- Tablas intermedias y tablas dependientes
+	DROP TABLE IF EXISTS TSOLITEL_TipoAnalisis_SolicitudAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis_Condicion;
+	DROP TABLE IF EXISTS TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis_Archivo;
+	DROP TABLE IF EXISTS TSOLITEL_RequerimientoProveedor_Archivo;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudProveedor_RequerimientoProveedor;
+	DROP TABLE IF EXISTS TSOLITEL_TipoSolicitud_RequerimientoProveedor;
+	DROP TABLE IF EXISTS TSOLITEL_RequerimientoProveedor_DatoRequerido;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+
+	-- Tablas principales
+	DROP TABLE IF EXISTS TSOLITEL_RequerimientoProveedor;
+	DROP TABLE IF EXISTS TSOLITEL_RequerimentoAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudProveedor;
+	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_Asignacion;
+	DROP TABLE IF EXISTS TSOLITEL_Archivo;
+	DROP TABLE IF EXISTS TSOLITEL_Condicion;
+	DROP TABLE IF EXISTS TSOLITEL_DatoRequerido;
+	DROP TABLE IF EXISTS TSOLITEL_Delito;
+	DROP TABLE IF EXISTS TSOLITEL_CategoriaDelito;
+	DROP TABLE IF EXISTS TSOLITEL_Estado;
+	DROP TABLE IF EXISTS TSOLITEL_Fiscalia;
+	DROP TABLE IF EXISTS TSOLITEL_Historial;
+	DROP TABLE IF EXISTS TSOLITEL_Logger;
+	DROP TABLE IF EXISTS TSOLITEL_Modalidad;
+	DROP TABLE IF EXISTS TSOLITEL_ObjetivoAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_Proveedor;
+	DROP TABLE IF EXISTS TSOLITEL_SubModalidad;
+	DROP TABLE IF EXISTS TSOLITEL_TipoAnalisis;
+	DROP TABLE IF EXISTS TSOLITEL_TipoDato;
+	DROP TABLE IF EXISTS TSOLITEL_TipoSolicitud;
+
+	-- Tablas seguridad
 	DROP TABLE TSOLITEL_Rol_Permiso;
 	DROP TABLE TSOLITEL_Usuario_Oficina;
-	DROP TABLE TSOLITEL_SolicitudProveedor;
-	DROP TABLE TSOLITEL_SolicitudAnalisis;
-	DROP TABLE TSOLITEL_Delito;
-	DROP TABLE TSOLITEL_CategoriaDelito;
-	DROP TABLE TSOLITEL_Estado;
-	DROP TABLE TSOLITEL_Fiscalia;
-	DROP TABLE TSOLITEL_Historial;
-	DROP TABLE TSOLITEL_Logger;
-	DROP TABLE TSOLITEL_Modalidad;
-	DROP TABLE TSOLITEL_SubModalidad;
 	DROP TABLE TSOLITEL_Oficina;	
 	DROP TABLE TSOLITEL_Permiso;
-	DROP TABLE TSOLITEL_Proveedor;
 	DROP TABLE TSOLITEL_Rol;
 	DROP TABLE TSOLITEL_Usuario;
+
 END
 GO
 
@@ -185,12 +198,12 @@ BEGIN
 		TC_Resennia VARCHAR(255) NOT NULL,
 		TB_Urgente BIT NOT NULL,
 		TB_Aprobado BIT NOT NULL,
-		TF_FechaDeCrecion DATETIME2 NOT NULL,
+		TF_FechaDeCreacion DATETIME2 NOT NULL,
 		TN_IdDelito INT NOT NULL,
 		TN_IdCategoriaDelito INT NOT NULL,
 		TN_IdModalida INT NULL,
 		TN_IdSubModalidad INT NULL,
-		TN_IdEstado INT NOT NULL,
+		TN_IdEstado INT NULL,
 		TN_IdProveedor INT NOT NULL,
 		TN_IdFiscalia INT NOT NULL,
 		TN_IdOficina INT NOT NULL,
@@ -200,7 +213,7 @@ BEGIN
 		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_CategoriaDelito FOREIGN KEY (TN_IdCategoriaDelito) REFERENCES TSOLITEL_CategoriaDelito (TN_IdCategoriaDelito),
 		FOREIGN KEY (TN_IdModalida) REFERENCES TSOLITEL_Modalidad (TN_IdModalidad),
 		FOREIGN KEY (TN_IdSubModalidad) REFERENCES TSOLITEL_SubModalidad (TN_IdSubModalidad),
-		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Estado FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado),
+		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado),
 		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Proveedor FOREIGN KEY (TN_IdProveedor) REFERENCES TSOLITEL_Proveedor (TN_IdProveedor),
 		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Fiscalia FOREIGN KEY (TN_IdFiscalia) REFERENCES TSOLITEL_Fiscalia (TN_IdFiscalia)
 	);
@@ -230,6 +243,16 @@ BEGIN
 		TF_FechaDeFinal DATETIME2 NOT NULL,
 		TC_Requerimiento VARCHAR(255) NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_RequerimientoProveedor] PRIMARY KEY NONCLUSTERED (TN_IdRequerimientoProveedor ASC)
+	);
+
+	-- Tabla TSOLITEL_TipoSolicitud_RequerimientoProveedor
+	CREATE TABLE TSOLITEL_TipoSolicitud_RequerimientoProveedor (
+		TN_IdTipoSolicitud INT NOT NULL,
+		TN_IdRequerimientoProveedor INT NOT NULL,
+		CONSTRAINT [PK_TSOLITEL_TipoSolicitud_RequerimientoProveedor] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud, TN_IdRequerimientoProveedor ASC),
+		CONSTRAINT FK_TSOLITEL_TipoSolicitud_RequerimientoProveedor_TSOLITEL_TipoSolicitud FOREIGN KEY (TN_IdTipoSolicitud) REFERENCES TSOLITEL_TipoSolicitud (TN_IdTipoSolicitud),
+		CONSTRAINT FK_TSOLITEL_TipoSolicitud_TipoSolicitud_TSOLITEL_RequerimientoProveedor FOREIGN KEY (TN_IdRequerimientoProveedor) REFERENCES TSOLITEL_RequerimientoProveedor (TN_IdRequerimientoProveedor)
+
 	);
 
 	-- Tabla Intermedia TSOLITEL_SolicitudRequerimientoProveedor
@@ -287,10 +310,10 @@ BEGIN
 		TC_OtrosObjetivosDeAnalisis VARCHAR(255) NULL,
 		TF_FechaDeCreacion DATETIME2 NULL,
 		TB_Aprobado BIT NOT NULL,
-		TN_IdEstado INT NOT NULL,
+		TN_IdEstado INT NULL,
 		TN_IdOficina INT NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdAnalisis ASC),
-		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Estado FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado)
+		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado)
 	);
 
 	-- Tabla Intermedia SolicitudAnalisis_SolicitudProveedor
@@ -400,7 +423,7 @@ BEGIN
 	-- Tabla TSOLITEL_Historial
 	CREATE TABLE TSOLITEL_Historial (
 		TN_IdHistorial INT IDENTITY NOT NULL,
-		TC_Observacion VARCHAR(255) NOT NULL,
+		TC_Observacion VARCHAR(255) NULL,
 		TF_FechaDeModificacion DATETIME2 NOT NULL,
 		TN_IdEstado INT NOT NULL,
 		TN_IdAnalisis INT NULL,

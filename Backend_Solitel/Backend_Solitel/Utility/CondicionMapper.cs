@@ -13,9 +13,9 @@ namespace Backend_Solitel.Utility
 
             return new CondicionDTO
             {
-                IdCondicion = condicion.TN_IdCondicion,
-                Nombre = condicion.TC_Nombre,
-                Descripcion = condicion.TC_Descripcion
+                IdCondicion = condicion.IdCondicion,
+                Nombre = condicion.Nombre,
+                Descripcion = condicion.Descripcion
             };
         }
 
@@ -36,9 +36,9 @@ namespace Backend_Solitel.Utility
 
             return new Condicion
             {
-                TN_IdCondicion = condicionDTO.IdCondicion,
-                TC_Nombre = condicionDTO.Nombre,
-                TC_Descripcion = condicionDTO.Descripcion
+                IdCondicion = condicionDTO.IdCondicion,
+                Nombre = condicionDTO.Nombre,
+                Descripcion = condicionDTO.Descripcion
             };
         }
 

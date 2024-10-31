@@ -31,7 +31,7 @@ namespace Backend_Solitel.Utility
                 CategoriaDelito = CategoriaDelitoMapper.ToModel(solicitudProveedorDTO.CategoriaDelito),
                 Modalidad = ModalidadMapper.ToModel(solicitudProveedorDTO.Modalidad),
                 Estado = EstadoMapper.ToModel(solicitudProveedorDTO.Estado),
-                Proveedor = new Proveedor { TN_IdProveedor = idProveedor, TC_Nombre = "" },
+                Proveedor = new Proveedor { IdProveedor = idProveedor, Nombre = "" },
                 Fiscalia = FiscaliaMapper.ToModel(solicitudProveedorDTO.Fiscalia),
                 Oficina = OficinaMapper.ToModel(solicitudProveedorDTO.Oficina),
                 SubModalidad = SubModalidadMapper.ToModel(solicitudProveedorDTO.SubModalidad)
@@ -53,6 +53,7 @@ namespace Backend_Solitel.Utility
                 Ofendido = solicitudProveedor.Ofendido,
                 Resennia = solicitudProveedor.Resennia,
                 Urgente = solicitudProveedor.Urgente,
+                FechaCreacion = solicitudProveedor.FechaCrecion,
                 UsuarioCreador = UsuarioMapper.ToDTO(solicitudProveedor.UsuarioCreador),
                 Delito = DelitoMapper.ToDTO(solicitudProveedor.Delito),
                 CategoriaDelito = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
@@ -87,7 +88,7 @@ namespace Backend_Solitel.Utility
                 listaFiltrada.Add(new SolicitudFiltradaProveedorDTO
                 {
                     IdSolicitudProveedor = solicitudProveedor.IdSolicitudProveedor,
-                    NombreProveedor = solicitudProveedor.Proveedor.TC_Nombre,
+                    NombreProveedor = solicitudProveedor.Proveedor.Nombre,
                     NumeroUnico = solicitudProveedor.NumeroUnico
                 });
             }

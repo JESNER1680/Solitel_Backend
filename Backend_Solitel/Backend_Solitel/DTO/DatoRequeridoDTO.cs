@@ -2,15 +2,14 @@
 {
     public class DatoRequeridoDTO
     {
-        public int TN_IdDatoRequerido { get; set; }
+        public int IdDatoRequerido { get; set; }
 
-        public string TC_DatoRequerido { get; set; }
+        public string DatoRequeridoContenido { get; set; }
 
-        public string TC_Motivacion { get; set; }
+        public string Motivacion { get; set; }
 
-        public int TN_IdTipoDato { get; set; }
+        public int IdTipoDato { get; set; }
 
-        //public int TN_IdTipoDato { get; set; }
     }
 
 }

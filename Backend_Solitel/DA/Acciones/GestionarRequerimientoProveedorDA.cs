@@ -35,10 +35,10 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var datosRequeridos = datosRequeridosDA.Select(da => new DatoRequerido
                 {
-                    TN_IdDatoRequerido = da.TN_IdDatoRequerido,
-                    TC_DatoRequerido = da.TC_DatoRequerido,
-                    TC_Motivacion = da.TC_Motivacion,
-                    TN_IdTipoDato = da.TN_IdTipoDato
+                    IdDatoRequerido = da.TN_IdDatoRequerido,
+                    DatoRequeridoContenido = da.TC_DatoRequerido,
+                    Motivacion = da.TC_Motivacion,
+                    IdTipoDato = da.TN_IdTipoDato
 
                 }).ToList();
 
@@ -70,11 +70,11 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var requerimientosProveedor = requerimientosProveedorDA.Select(da => new RequerimientoProveedor
                 {
-                    TN_IdRequerimientoProveedor = da.TN_IdRequerimientoProveedor,
-                    TF_FechaFinal = da.TF_FechaFinal,
-                    TF_FechaInicio = da.TF_FechaInicio,
-                    TC_Requerimiento = da.TC_Requerimiento,
-                    TN_NumeroSolicitud = 0,
+                    IdRequerimientoProveedor = da.TN_IdRequerimientoProveedor,
+                    FechaFinal = da.TF_FechaDeFinal,
+                    FechaInicio = da.TF_FechaDeInicio,
+                    Requerimiento = da.TC_Requerimiento,
+                    NumeroSolicitud = 0,
                     datosRequeridos = new List<DatoRequerido>(),
                     tipoSolicitudes = new List<TipoSolicitud>()
 
@@ -108,9 +108,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados
                 var tipoSolicitudes = tipoSolicitudesDA.Select(da => new TipoSolicitud
                 {
-                    TN_IdTipoSolicitud = da.TN_IdTipoSolicitud,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion
+                    IdTipoSolicitud = da.TN_IdTipoSolicitud,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion
 
                 }).ToList();
 
@@ -133,9 +133,9 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var fechaInicioParam = new SqlParameter("@PF_FechaInicio", requerimientoProveedor.TF_FechaInicio);
-                var fechaFinalParam = new SqlParameter("@PF_FechaFinal", requerimientoProveedor.TF_FechaFinal);
-                var requerimientoParam = new SqlParameter("@PC_Requerimiento", requerimientoProveedor.TC_Requerimiento);
+                var fechaInicioParam = new SqlParameter("@PF_FechaInicio", requerimientoProveedor.FechaInicio);
+                var fechaFinalParam = new SqlParameter("@PF_FechaFinal", requerimientoProveedor.FechaFinal);
+                var requerimientoParam = new SqlParameter("@PC_Requerimiento", requerimientoProveedor.Requerimiento);
 
                 var idRequerimientoInsertadoParam = new SqlParameter("@IdRequerimientoInsertado", System.Data.SqlDbType.Int)
                 {
@@ -154,7 +154,7 @@ namespace DA.Acciones
                 //Insertar los tipos de solicitud para el requerimiento
                 foreach (TipoSolicitud tipoSolicitud in requerimientoProveedor.tipoSolicitudes)
                 {
-                    var idTipoSolicitudParam = new SqlParameter("@PN_IdTipoSolicitud", tipoSolicitud.TN_IdTipoSolicitud);
+                    var idTipoSolicitudParam = new SqlParameter("@PN_IdTipoSolicitud", tipoSolicitud.IdTipoSolicitud);
                     var idRequerimientoParam = new SqlParameter("@PN_IdRequerimientoProveedor", idRequerimientoInsertado);
 
                     await _context.Database.ExecuteSqlRawAsync(
@@ -165,9 +165,9 @@ namespace DA.Acciones
                 //Insertar los datos requeridos para el requerimiento
                 foreach (DatoRequerido datoRequerido in requerimientoProveedor.datosRequeridos)
                 {
-                    var datoRequeridoParam = new SqlParameter("@PC_DatoRequerido", datoRequerido.TC_DatoRequerido);
-                    var motivacionParam = new SqlParameter("@PC_Motivacion", datoRequerido.TC_Motivacion);
-                    var tipoDatoParam = new SqlParameter("@PN_TipoDato", datoRequerido.TN_IdTipoDato);
+                    var datoRequeridoParam = new SqlParameter("@PC_DatoRequerido", datoRequerido.DatoRequeridoContenido);
+                    var motivacionParam = new SqlParameter("@PC_Motivacion", datoRequerido.Motivacion);
+                    var tipoDatoParam = new SqlParameter("@PN_TipoDato", datoRequerido.IdTipoDato);
                     var idRequerimientoParam = new SqlParameter("@PN_IdRequerimiento", idRequerimientoInsertado);
 
                     await _context.Database.ExecuteSqlRawAsync(

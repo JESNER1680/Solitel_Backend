@@ -27,18 +27,17 @@ namespace DA.Acciones
             try
             {
                 // Definir los parámetros para el procedimiento almacenado
-                var nombreArchivoParam = new SqlParameter("@PC_NombreArchivo", archivo.TC_Nombre);
-                var hashArchivoParam = new SqlParameter("@PC_HashArchivo", archivo.TC_HashAchivo);
-                var contenidoParam = new SqlParameter("@PV_Contenido", archivo.TV_Contenido);
-                var formatoArchivoParam = new SqlParameter("@PC_FormatoArchivo", archivo.TC_FormatoAchivo);
-                var fechaModificacionParam = new SqlParameter("@PF_FechaModificacion", archivo.TF_FechaModificacion);
+                var nombreArchivoParam = new SqlParameter("@PC_NombreArchivo", archivo.Nombre);
+                var contenidoParam = new SqlParameter("@PV_Contenido", archivo.Contenido);
+                var formatoArchivoParam = new SqlParameter("@PC_FormatoArchivo", archivo.FormatoArchivo);
+                var fechaModificacionParam = new SqlParameter("@PF_FechaModificacion", archivo.FechaModificacion);
                 var idRequerimientoProveedorParam = new SqlParameter("@PN_IdRequerimientoProveedor", idRequerimientoProveedor);
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarArchivo_RequerimientoProveedor @PC_NombreArchivo, @PC_HashArchivo, @PV_Contenido, " +
+                    "EXEC PA_InsertarArchivo_RequerimientoProveedor @PC_NombreArchivo, @PV_Contenido, " +
                     "@PC_FormatoArchivo, @PF_FechaModificacion, @PN_IdRequerimientoProveedor",
-                    nombreArchivoParam, hashArchivoParam, contenidoParam, formatoArchivoParam, fechaModificacionParam, idRequerimientoProveedorParam
+                    nombreArchivoParam, contenidoParam, formatoArchivoParam, fechaModificacionParam, idRequerimientoProveedorParam
                 );
 
                 var resultado = await _context.SaveChangesAsync();
@@ -68,7 +67,7 @@ namespace DA.Acciones
             {
                 // Ejecutar el procedimiento almacenado para consultar por ID
                 var archivoDA = await _context.TSOLITEL_ArchivoDA
-                    .FromSqlRaw("EXEC PA_ConsultarArchivoPorID @@PN_IdArchivo = {0}", idArchivo)
+                    .FromSqlRaw("EXEC PA_ConsultarArchivoPorID @PN_IdArchivo = {0}", idArchivo)
                     .ToListAsync();  // Convertir la consulta a una lista
 
                 var primerArchivo = archivoDA.FirstOrDefault();  // Obtener el primer elemento si existe
@@ -81,12 +80,11 @@ namespace DA.Acciones
                 // Mapear los resultados a la entidad Proveedor (si es necesario)
                 var archivo = new Archivo
                 {
-                    TN_IdArchivo = primerArchivo.TN_IdArchivo,
-                    TC_Nombre = primerArchivo.TC_Nombre,
-                    TC_HashAchivo = primerArchivo.TC_HashArchivo,
-                    TC_FormatoAchivo = primerArchivo.TC_FormatoArchivo,
-                    TV_Contenido = primerArchivo.TV_Contenido,
-                    TF_FechaModificacion = primerArchivo.TF_FechaModificacion
+                    IdArchivo = primerArchivo.TN_IdArchivo,
+                    Nombre = primerArchivo.TC_Nombre,
+                    FormatoArchivo = primerArchivo.TC_FormatoArchivo,
+                    Contenido = primerArchivo.TV_Contenido,
+                    FechaModificacion = primerArchivo.TF_FechaModificacion
                 };
 
                 return archivo;
@@ -101,6 +99,11 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener el archivo con ID {idArchivo}: {ex.Message}", ex);
             }
+        }
+
+        public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(List<int> idsSolicitudesProveedor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

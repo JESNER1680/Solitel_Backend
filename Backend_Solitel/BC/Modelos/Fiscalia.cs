@@ -8,8 +8,8 @@ namespace BC.Modelos
 {
     public class Fiscalia
     {
-        public int TN_IdFiscalia { get; set; }
+        public int IdFiscalia { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
     }
 }

@@ -8,11 +8,13 @@ namespace BC.Modelos
 {
     public class Estado
     {
-        public int TN_IdEstado { get; set; }
+        public int IdEstado { get; set; }
 
-        public string TC_Nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public string TC_Descripcion { get; set; }
+        public string Descripcion { get; set; }
+
+        public string Tipo { get; set; }
     }
 
 }

@@ -9,6 +9,7 @@
         public string Ofendido { get; set; }
         public string? Resennia { get; set; }
         public bool Urgente { get; set; }
+        public DateTime FechaCreacion { get; set; }
         public List<RequerimientoProveedorDTO> Requerimientos { get; set; }
         public List<ProveedorDTO> Operadoras { get; set; }
         public UsuarioDTO UsuarioCreador { get; set; }
