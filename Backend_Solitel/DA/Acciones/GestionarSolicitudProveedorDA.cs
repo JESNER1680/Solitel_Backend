@@ -56,6 +56,9 @@ namespace DA.Acciones
             {
                 // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
+        }
+
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             try

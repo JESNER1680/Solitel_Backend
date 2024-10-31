@@ -21,6 +21,8 @@ namespace BW.CU
         public async Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
             return await this.gestionarSolicitudProveedorDA.AprobarSolicitudProveedor(idSolicitudProveedor, idUsuario, observacion);
+        }
+
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             return await this.gestionarSolicitudProveedorDA.ActualizarEstadoFinalizado(id, idUsuario, observacion);
