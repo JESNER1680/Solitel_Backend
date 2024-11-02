@@ -130,7 +130,7 @@ namespace DA.Acciones
             try
             {
                 // Parámetros para PA_InsertarSolicitudAnalisis
-                var fechaDelHechoParam = new SqlParameter("@TF_FechaDelHecho", solicitudAnalisis.FechaDelHecho);
+                var fechaDeHechoParam = new SqlParameter("@TF_FechaDeHecho", solicitudAnalisis.FechaDelHecho);
                 var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.OtrosDetalles);
                 var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
                 var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
@@ -146,8 +146,8 @@ namespace DA.Acciones
 
                 // Ejecutar PA_InsertarSolicitudAnalisis para crear la solicitud de análisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaDeCreacion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdAnalisis OUTPUT",
-                    fechaDelHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
+                    fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
 
                 // Obtener el ID generado para el análisis
                 var idAnalisis = (int)idAnalisisParam.Value;
@@ -248,6 +248,7 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar la solicitud de análisis: {ex.Message}", ex);
             }
         }
+
 
 
     }

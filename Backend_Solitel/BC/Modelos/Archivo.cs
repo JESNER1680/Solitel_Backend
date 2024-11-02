@@ -11,19 +11,13 @@ namespace BC.Modelos
     {
         public int IdArchivo { get; set; }
 
-        [Required]
         public string Nombre { get; set; }
 
-        [Required]
-        public byte[] Contenido { get; set; } // Para almacenar contenido binario
+        public byte[] Contenido { get; set; }
 
-        [Required]
-        [StringLength(50)]
         public string FormatoArchivo { get; set; }
 
-        [Required]
         public DateTime FechaModificacion { get; set; }
-
 
     }
 

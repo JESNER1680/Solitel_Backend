@@ -1,5 +1,6 @@
 ﻿using Backend_Solitel.DTO;
 using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,29 +17,40 @@ namespace Backend_Solitel.Controllers
 
         [HttpPost]
         [Route("insertarArchivo_RequerimientoProveedor")]
-        public async Task<bool> InsertarArchivo_RequerimientoProveedor([FromForm] ArchivoDTO archivoDTO, [FromForm] IFormFile file)
+        public async Task<bool> InsertarArchivo_RequerimientoProveedor(
+                                                                        [FromForm] ArchivoDTO archivoDTO,
+                                                                        [FromForm] IFormFile file,
+                                                                        [FromForm] int idRequerimiento)
         {
-
+            // Verificar si archivoDTO es nulo
             if (archivoDTO == null)
             {
-                Console.WriteLine("El archivo es nulo");
                 return false;
             }
 
-            Console.WriteLine(archivoDTO.Nombre);
-            Console.WriteLine(archivoDTO.FormatoAchivo);
-            Console.WriteLine(archivoDTO.FechaModificacion);
+            // Verificar si el archivo es nulo
+            if (file == null)
+            {
+                return false;
+            }
+
+            // Verificar si idRequerimiento es nulo o no válido
+            if (idRequerimiento <= 0)
+            {
+                return false;
+            }
 
             using (var memoryStream = new MemoryStream())
             {
                 await file.CopyToAsync(memoryStream);
                 var contenido = memoryStream.ToArray(); // Aquí tienes el contenido como byte[]
 
-                archivoDTO.Contenido = contenido;
-                Console.WriteLine(archivoDTO.Contenido);  
+                archivoDTO.Contenido = contenido; // Asignar el contenido del archivo
+                archivoDTO.FechaModificacion = DateTime.Now; // Asignar la fecha de modificación actual
             }
 
-            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), 15);
+            // Llamada al método de negocio para guardar el archivo y el idRequerimiento
+            return await this.gestionarArchivoBW.InsertarArchivo_RequerimientoProveedor(ArchivoMapper.ToModel(archivoDTO), idRequerimiento);
         }
 
 
@@ -66,11 +78,32 @@ namespace Backend_Solitel.Controllers
         }
 
 
+        [Route("api/obtenerArchivosDeSolicitudesProveedor")]
         [HttpGet]
-        [Route("obtenerArchivosDeSolicitudesProveedor")]
-        public async Task<IActionResult> obtenerArchivosDeSolicitudesProveedor(List<int> idSolicitudes)
+        public async Task<List<Archivo>> obtenerArchivosDeSolicitudesProveedor([FromQuery] List<int> idSolicitudes)
         {
-            return null;
+            Console.WriteLine("ID RECIBIDA EN EL CONTROLADOR: " + string.Join(", ", idSolicitudes));
+            return await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(idSolicitudes);
+        }
+
+        [HttpGet("ObtenerArchivosDeSolicitud")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosDeSolicitud(int id)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(id);
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
         }
 
     }
