@@ -1,5 +1,6 @@
 ﻿using Backend_Solitel.DTO;
 using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,11 +78,32 @@ namespace Backend_Solitel.Controllers
         }
 
 
+        [Route("api/obtenerArchivosDeSolicitudesProveedor")]
         [HttpGet]
-        [Route("obtenerArchivosDeSolicitudesProveedor")]
-        public async Task<IActionResult> obtenerArchivosDeSolicitudesProveedor(List<int> idSolicitudes)
+        public async Task<List<Archivo>> obtenerArchivosDeSolicitudesProveedor([FromQuery] List<int> idSolicitudes)
         {
-            return null;
+            Console.WriteLine("ID RECIBIDA EN EL CONTROLADOR: " + string.Join(", ", idSolicitudes));
+            return await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(idSolicitudes);
+        }
+
+        [HttpGet("ObtenerArchivosDeSolicitud")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosDeSolicitud(int id)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(id);
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
         }
 
     }

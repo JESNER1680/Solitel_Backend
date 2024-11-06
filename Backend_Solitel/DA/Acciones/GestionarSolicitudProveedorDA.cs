@@ -58,6 +58,7 @@ namespace DA.Acciones
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
             }
         }
+
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             try
@@ -141,15 +142,46 @@ namespace DA.Acciones
                     Urgente = da.TB_Urgente,
                     Aprobado = da.TB_Aprobado,
                     FechaCrecion = da.TF_FechaDeCreacion,
-                    Proveedor = new Proveedor { IdProveedor = da.TN_IdProveedor, Nombre = da.TC_NombreProveedor },
-                    Delito = new Delito { IdDelito = da.TN_IdDelito, IdCategoriaDelito = da.TN_IdCategoriaDelito, Nombre = da.TC_NombreDelito },
-                    CategoriaDelito = new CategoriaDelito { Nombre = da.TC_NombreCategoriaDelito, IdCategoriaDelito = da.TN_IdCategoriaDelito },
-                    Estado = new Estado { IdEstado = da.TN_IdEstado, Nombre = da.TC_NombreEstado },
-                    Fiscalia = new Fiscalia { IdFiscalia = da.TN_IdFiscalia, Nombre = da.TC_NombreFiscalia },
-                    Modalidad = new Modalidad { IdModalidad = (int)da.TN_IdModalidad, Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { IdSubModalidad = (int)da.TN_IdSubModalidad, Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario }
-
+                    UsuarioCreador = new Usuario
+                    {
+                        IdUsuario = da.TN_IdUsuario,
+                        Nombre = da.TC_NombreUsuario
+                    },
+                    Proveedor = new Proveedor
+                    {
+                        IdProveedor = da.TN_IdProveedor,
+                        Nombre = da.TC_NombreProveedor
+                    },
+                    Delito = new Delito
+                    {
+                        IdDelito = da.TN_IdDelito,
+                        Nombre = da.TC_NombreDelito
+                    },
+                    CategoriaDelito = new CategoriaDelito
+                    {
+                        IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                        Nombre = da.TC_NombreCategoriaDelito
+                    },
+                    Estado = new Estado
+                    {
+                        IdEstado = da.TN_IdEstado,
+                        Nombre = da.TC_NombreEstado
+                    },
+                    Fiscalia = new Fiscalia
+                    {
+                        IdFiscalia = da.TN_IdFiscalia,
+                        Nombre = da.TC_NombreFiscalia
+                    },
+                    Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
+                    {
+                        IdModalidad = da.TN_IdModalidad.Value,
+                        Nombre = da.TC_NombreModalidad
+                    } : null,
+                    SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
+                    {
+                        IdSubModalidad = da.TN_IdSubModalidad.Value,
+                        Nombre = da.TC_NombreSubModalidad
+                    } : null
                 }).ToList();
 
                 return solicitudesProveedor;
@@ -165,6 +197,8 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
+
+
 
         public async Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor)
         {
@@ -402,7 +436,6 @@ namespace DA.Acciones
 
         public async Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos)
         {
-
             try
             {
                 for (int i = 0; i < idSolicitudes.Count; i++)
@@ -441,11 +474,43 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al insertar las relaciones de requerimientos: {ex.Message}", ex);
             }
+        }
+
+        public async Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@pTC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
 
 
-            
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_DevolverATramitado @pTN_IdSolicitud, @pTN_IdUsuario, @pTC_Observacion",
+                    idSolicitudProveedorParam, idUsuarioParam, observacionParam);
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al aprobar la solicitud.");
+                }
 
 
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
         }
         public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
         {

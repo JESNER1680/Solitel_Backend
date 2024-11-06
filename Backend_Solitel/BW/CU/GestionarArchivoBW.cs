@@ -33,5 +33,10 @@ namespace BW.CU
         {
             return await this.gestionarArchivoDA.ObtenerArchivosDeSolicitudesProveedor(idsSolicitudesProveedor);
         }
+
+        public async Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(int id)
+        {
+           return await this.gestionarArchivoDA.ObtenerArchivosDeSolicitudesProveedor(id);
+        }
     }
 }

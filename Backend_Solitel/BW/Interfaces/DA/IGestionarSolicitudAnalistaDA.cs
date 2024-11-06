@@ -14,5 +14,6 @@ namespace BW.Interfaces.DA
         public Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, 
             int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, 
             DateTime? fechaFin = null, string caracterIngresado = null);
+        public Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis();
     }
 }

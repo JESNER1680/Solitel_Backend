@@ -24,9 +24,13 @@ namespace BW.Interfaces.BW
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedorPorEstado(int pageNumber, int pageSize, int idEstado);
 
         public Task<bool> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion);
+
         public Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null);
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
+
+        public Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null);
+        
         public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud);
 
         public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);

@@ -130,7 +130,7 @@ namespace DA.Acciones
             try
             {
                 // Parámetros para PA_InsertarSolicitudAnalisis
-                var fechaDelHechoParam = new SqlParameter("@TF_FechaDelHecho", solicitudAnalisis.FechaDelHecho);
+                var fechaDeHechoParam = new SqlParameter("@TF_FechaDeHecho", solicitudAnalisis.FechaDelHecho);
                 var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.OtrosDetalles);
                 var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
                 var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
@@ -146,8 +146,8 @@ namespace DA.Acciones
 
                 // Ejecutar PA_InsertarSolicitudAnalisis para crear la solicitud de análisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaDeCreacion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdAnalisis OUTPUT",
-                    fechaDelHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
+                    fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
 
                 // Obtener el ID generado para el análisis
                 var idAnalisis = (int)idAnalisisParam.Value;
@@ -248,6 +248,158 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al insertar la solicitud de análisis: {ex.Message}", ex);
             }
         }
+
+
+
+        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis()
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado y obtener los resultados
+                var solicitudesAnalisisDA = await this.solitelContext.TSOLITEL_SolicitudAnalisisDA
+                    .FromSqlRaw("EXEC dbo.PA_ObtenerSolicitudesAnalisis")
+                    .ToListAsync();
+
+                var solicitudesAnalisis = new List<SolicitudAnalisis>();
+
+                foreach (var solicitud in solicitudesAnalisisDA)
+                {
+                    var solicitudAnalisis = new SolicitudAnalisis
+                    {
+                        IdSolicitudAnalisis = solicitud.TN_IdAnalisis,
+                        FechaDelHecho = solicitud.TF_FechaDeHecho,
+                        OtrosDetalles = solicitud.TC_OtrosDetalles,
+                        OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
+                        Aprobado = solicitud.TB_Aprobado,
+                        IdEstado = solicitud.TN_IdEstado,
+                        FechaCrecion = solicitud.TF_FechaDeCreacion,
+                        NumeroSolicitud = solicitud.TN_NumeroSolicitud,
+                        IdOficina = solicitud.TN_IdOficina,
+                        SolicitudesProveedor = new List<SolicitudProveedor>()
+                    };
+
+                    var requerimentos = await this.solitelContext.TSOLITEL_RequerimentoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerRequerimientosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.Requerimentos = requerimentos.Select(ra => new RequerimentoAnalisis
+                    {
+                        IdRequerimientoAnalisis = ra.TN_IdRequerimientoAnalisis,
+                        Objetivo = ra.TC_Objetivo,
+                        UtilizadoPor = ra.TC_UtilizadoPor,
+                        IdTipo = ra.TN_IdTipo,
+                        IdAnalisis = ra.TN_IdAnalisis
+                    }).ToList();
+
+                    var objetivosAnalisis = await this.solitelContext.tSOLITEL_ObjetivoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerObjetivosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.ObjetivosAnalisis = objetivosAnalisis.Select(oa => new ObjetivoAnalisis
+                    {
+                        IdObjetivoAnalisis = oa.TN_IdObjetivoAnalisis,
+                        Nombre = oa.TC_Nombre,
+                        Descripcion = oa.TC_Descripcion
+                    }).ToList();
+
+                    var tiposAnalisis = await this.solitelContext.TSOLITEL_TipoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerTiposAnalisisPorSolicitud @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.TiposAnalisis = tiposAnalisis.Select(ta => new TipoAnalisis
+                    {
+                        IdTipoAnalisis = ta.TN_IdTipoAnalisis,
+                        Nombre = ta.TC_Nombre,
+                        Descripcion = ta.TC_Descripcion
+                    }).ToList();
+
+                    var condiciones = await this.solitelContext.TSOLITEL_CondicionDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerCondicionesPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.Condiciones = condiciones.Select(c => new Condicion
+                    {
+                        IdCondicion = c.TN_IdCondicion,
+                        Nombre = c.TC_Nombre,
+                        Descripcion = c.TC_Descripcion
+                    }).ToList();
+
+                    var solicitudesProveedorDA = await this.solitelContext.TSOLITEL_SolicitudProveedorDA
+                        .FromSqlRaw("EXEC dbo.PA_ConsultarSoliciProveSoliciAnalisis @pTN_IdSolicitud = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.SolicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
+                    {
+                        IdSolicitudProveedor = da.TN_IdSolicitud,
+                        NumeroUnico = da.TN_NumeroUnico,
+                        NumeroCaso = da.TN_NumeroCaso,
+                        Imputado = da.TC_Imputado,
+                        Ofendido = da.TC_Ofendido,
+                        Resennia = da.TC_Resennia,
+                        Urgente = da.TB_Urgente,
+                        Aprobado = da.TB_Aprobado,
+                        FechaCrecion = da.TF_FechaDeCreacion,
+                        UsuarioCreador = new Usuario
+                        {
+                            IdUsuario = da.TN_IdUsuario,
+                            Nombre = da.TC_NombreUsuario
+                        },
+                        Proveedor = new Proveedor
+                        {
+                            IdProveedor = da.TN_IdProveedor,
+                            Nombre = da.TC_NombreProveedor
+                        },
+                        Delito = new Delito
+                        {
+                            IdDelito = da.TN_IdDelito,
+                            Nombre = da.TC_NombreDelito
+                        },
+                        CategoriaDelito = new CategoriaDelito
+                        {
+                            IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                            Nombre = da.TC_NombreCategoriaDelito
+                        },
+                        Estado = new Estado
+                        {
+                            IdEstado = da.TN_IdEstado,
+                            Nombre = da.TC_NombreEstado
+                        },
+                        Fiscalia = new Fiscalia
+                        {
+                            IdFiscalia = da.TN_IdFiscalia,
+                            Nombre = da.TC_NombreFiscalia
+                        },
+                        Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
+                        {
+                            IdModalidad = da.TN_IdModalidad.Value,
+                            Nombre = da.TC_NombreModalidad
+                        } : null,
+                        SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
+                        {
+                            IdSubModalidad = da.TN_IdSubModalidad.Value,
+                            Nombre = da.TC_NombreSubModalidad
+                        } : null
+                    }).ToList();
+
+                    solicitudesAnalisis.Add(solicitudAnalisis);
+                }
+
+                return solicitudesAnalisis;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al consultar solicitudes de análisis: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al consultar solicitudes de análisis: {ex.Message}", ex);
+            }
+        }
+
+
+
+
+
 
 
     }
