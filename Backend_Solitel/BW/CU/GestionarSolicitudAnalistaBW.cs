@@ -26,5 +26,9 @@ namespace BW.CU
         {
             return await this.solicitudAnalistaDA.CrearSolicitudAnalista(solicitudAnalisis);
         }
+        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis()
+        {
+            return await this.solicitudAnalistaDA.ObtenerSolicitudesAnalisis();
+        }
     }
 }
