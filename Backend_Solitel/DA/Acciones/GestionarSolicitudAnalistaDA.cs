@@ -271,6 +271,7 @@ namespace DA.Acciones
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
                         Aprobado = solicitud.TB_Aprobado,
+                        IdEstado = solicitud.TN_IdEstado,
                         FechaCrecion = solicitud.TF_FechaDeCreacion,
                         NumeroSolicitud = solicitud.TN_NumeroSolicitud,
                         IdOficina = solicitud.TN_IdOficina,

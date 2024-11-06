@@ -13,6 +13,7 @@ namespace BC.Modelos
         public string OtrosDetalles { get; set; }
         public string? OtrosObjetivosDeAnalisis { get; set; }
         public bool Aprobado { get; set; }
+        public int IdEstado {  get; set; } 
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }
