@@ -56,5 +56,13 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, $"Ocurrió un error al consultar las solicitudes de análisis: {ex.Message}");
             }
         }
+
+        [HttpGet("consultar")]
+        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisisController()
+        {
+            return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis();
+        }
+
+        
     }
 }
