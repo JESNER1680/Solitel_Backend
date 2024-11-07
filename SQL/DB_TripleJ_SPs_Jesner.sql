@@ -555,10 +555,12 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis,
             TF_FechaDeCreacion,
             TB_Aprobado,
-            TN_IdEstado,
+            ES.TN_IdEstado,
+			ES.TC_Nombre,
             TN_IdOficina
         FROM 
-            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis]
+            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
+			JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
         ORDER BY 
             TN_IdAnalisis DESC;
 
