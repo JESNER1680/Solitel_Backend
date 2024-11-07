@@ -1,4 +1,6 @@
-﻿namespace Backend_Solitel.DTO
+﻿using BC.Modelos;
+
+namespace Backend_Solitel.DTO
 {
     public class SolicitudAnalisisDTO
     {
@@ -7,7 +9,7 @@
         public string OtrosDetalles { get; set; }
         public string? OtrosObjetivosDeAnalisis { get; set; }
         public bool Aprobado { get; set; }
-        public int IdEstado { get; set; }
+        public Estado Estado { get; set; }
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }

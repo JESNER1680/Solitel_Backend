@@ -19,8 +19,8 @@ namespace Backend_Solitel.Utility
                 OtrosDetalles = solicitudAnalisisDTO.OtrosDetalles,
                 OtrosObjetivosDeAnalisis = solicitudAnalisisDTO.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisisDTO.Aprobado,
-                IdEstado = solicitudAnalisisDTO.IdEstado,
-                FechaCrecion = solicitudAnalisisDTO.FechaCrecion ?? fechaActual,
+                Estado = solicitudAnalisisDTO.Estado,
+                FechaCrecion = solicitudAnalisisDTO.FechaCrecion?? fechaActual,
                 NumeroSolicitud = solicitudAnalisisDTO.NumeroSolicitud,
                 IdOficina = solicitudAnalisisDTO.IdOficina,
 
@@ -59,7 +59,7 @@ namespace Backend_Solitel.Utility
                 {
                     IdCondicion = c.IdCondicion,
                     Nombre = c.Nombre,
-                    Descripcion = c.Descripcion,
+                    Descripcion = c.Descripcion
                 }).ToList() ?? new List<Condicion>(),
 
                 // Mapear Archivos
@@ -84,7 +84,7 @@ namespace Backend_Solitel.Utility
                 OtrosDetalles = solicitudAnalisis.OtrosDetalles,
                 OtrosObjetivosDeAnalisis = solicitudAnalisis.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisis.Aprobado,
-                IdEstado = solicitudAnalisis.IdEstado,
+                Estado = solicitudAnalisis.Estado,
                 FechaCrecion = solicitudAnalisis.FechaCrecion,
                 NumeroSolicitud = solicitudAnalisis.NumeroSolicitud,
                 IdOficina = solicitudAnalisis.IdOficina,
