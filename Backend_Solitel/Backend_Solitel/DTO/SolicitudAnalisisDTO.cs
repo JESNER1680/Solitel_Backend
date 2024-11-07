@@ -23,10 +23,6 @@ namespace Backend_Solitel.DTO
         // Lista de solicitudes de proveedor
         public List<SolicitudProveedorDTO> SolicitudesProveedor { get; set; }
         public List<TipoAnalisisDTO> tipoAnalisis { get; set; }
-
-        // Lista de condiciones
-        public List<CondicionDTO> Condiciones { get; set; }
-
         // Lista de archivos seleccionados para el análisis
         public List<ArchivoDTO> Archivos { get; set; }
     }

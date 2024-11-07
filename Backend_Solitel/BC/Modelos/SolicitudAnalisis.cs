@@ -30,9 +30,6 @@ namespace BC.Modelos
         // Lista de tipos de análisis
         public List<TipoAnalisis> TiposAnalisis { get; set; }
 
-        // Lista de condiciones
-        public List<Condicion> Condiciones { get; set; }
-
         // Lista de archivos seleccionados para el análisis
         public List<Archivo> Archivos { get; set; }
     }
