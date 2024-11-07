@@ -20,6 +20,47 @@ namespace DA.Acciones
             this.solitelContext = _solitelContext;
         }
 
+        public async Task<bool> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudAnalisisParam = new SqlParameter("@PN_IdSolicitudAnalisis", idSolicitudAnalisis);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoAnalizadoSolicitudAnalisis @PN_IdSolicitudAnalisis, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudAnalisisParam, idUsuarioParam, observacionParam);
+
+                var resultado = await solitelContext.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al cambiar el estado de solicitud de analisis.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+        }
+
         public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(
         int pageNumber,
         int pageSize,
