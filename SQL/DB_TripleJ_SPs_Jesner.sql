@@ -950,9 +950,9 @@ SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis ORDER BY TN_IdAnalisis;
 -- Proveedores asociados a cada solicitud de análisis (si aplica en contexto)
 SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
 
+UPDATE TSOLITEL_SolicitudAnalisis SET TN_idEstado = 12 WHERE TN_IdAnalisis = 47 
 
-
-
+SELECT * FROM TSOLITEL_Estado
 
 
 --Eliminar Datos
