@@ -174,16 +174,17 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis)
+        public async Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis, string tipo)
         {
             try
             {
                 // Definir el parámetro para el procedimiento almacenado
-                var idSolicitudAnalisisParam = new SqlParameter("@TN_IdAnalisis", idSolicitudAnalisis);
+                var idSolicitudAnalisisParam = new SqlParameter("@PN_IdAnalisis", idSolicitudAnalisis);
+                var tipoParam = new SqlParameter("@PC_Tipo", tipo);
 
                 // Ejecutar el procedimiento almacenado
                 var archivosDA = await _context.TSOLITEL_ArchivoDA
-                    .FromSqlRaw("EXEC PA_ObtenerArchivosPorSolicitudAnalisis @TN_IdAnalisis", idSolicitudAnalisisParam)
+                    .FromSqlRaw("EXEC PA_ObtenerArchivosPorSolicitudAnalisis @PN_IdAnalisis, @PC_Tipo", idSolicitudAnalisisParam, tipoParam)
                     .ToListAsync();
 
                 // Mapear los resultados a una lista de objetos Archivo
@@ -208,7 +209,7 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis)
+        public async Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis, string tipo)
         {
             try
             {
@@ -218,12 +219,13 @@ namespace DA.Acciones
                 var formatoArchivoParam = new SqlParameter("@PC_FormatoArchivo", archivo.FormatoArchivo);
                 var fechaModificacionParam = new SqlParameter("@PF_FechaModificacion", archivo.FechaModificacion);
                 var idSolicitudAnalisisParam = new SqlParameter("@PN_IdSolicitudAnalisis", idSolicitudAnalisis);
+                var tipoParam = new SqlParameter("@PC_Tipo", tipo);
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
                     "EXEC PA_InsertarArchivoRespuestaSolicitudAnalisis @PC_NombreArchivo, @PV_Contenido, " +
-                    "@PC_FormatoArchivo, @PF_FechaModificacion, @PN_IdSolicitudAnalisis",
-                    nombreArchivoParam, contenidoParam, formatoArchivoParam, fechaModificacionParam, idSolicitudAnalisisParam
+                    "@PC_FormatoArchivo, @PF_FechaModificacion, @PN_IdSolicitudAnalisis, @PC_Tipo",
+                    nombreArchivoParam, contenidoParam, formatoArchivoParam, fechaModificacionParam, idSolicitudAnalisisParam, tipoParam
                 );
 
                 var resultado = await _context.SaveChangesAsync();
