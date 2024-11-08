@@ -12,7 +12,7 @@ namespace Backend_Solitel.Controllers
     public class SolicitudAnalisisController : ControllerBase
     {
         private readonly IGestionarSolicitudAnalistaBW gestionarSolicitudAnalistaBW;
-        
+
         public SolicitudAnalisisController(IGestionarSolicitudAnalistaBW gestionarSolicitudAnalistaBW)
         {
             this.gestionarSolicitudAnalistaBW = gestionarSolicitudAnalistaBW;
@@ -63,6 +63,32 @@ namespace Backend_Solitel.Controllers
             return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis();
         }
 
-        
+        [HttpPut]
+        [Route("ActualizarEstadoAnalizadoSolicitudAnalisis")]
+        public async Task<IActionResult> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            try
+            {
+
+                bool resultado = await this.gestionarSolicitudAnalistaBW.ActualizarEstadoAnalizadoSolicitudAnalisis(idSolicitudAnalisis, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Analizado correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Analizado: {ex.Message}" });
+            }
+        }
+
+
+
     }
 }

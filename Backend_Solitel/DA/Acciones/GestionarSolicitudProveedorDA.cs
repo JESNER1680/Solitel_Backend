@@ -629,5 +629,52 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
             }
         }
+
+        public async Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        {
+            try
+            {
+                var numeroUnicoParam = new SqlParameter("@PN_NumeroUnico", numeroUnico);
+
+                // Ejecutar el procedimiento almacenado
+                var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
+                    .FromSqlRaw("EXEC PA_ConsultarSolicitudProveedorPorNumeroUnico @PN_NumeroUnico", numeroUnicoParam)
+                    .ToListAsync();
+
+                var solicitudProveedor = solicitudesProveedorDA.FirstOrDefault();
+
+                if(solicitudProveedor == null)
+                {
+                    return null;
+                }
+
+                
+
+                var solicitudProveedorRespuesta = new SolicitudProveedor
+                {
+                    CategoriaDelito = new CategoriaDelito { IdCategoriaDelito = solicitudProveedor.TN_IdCategoriaDelito, Nombre = solicitudProveedor.TC_NombreCategoriaDelito},
+                    Delito = new Delito { IdDelito = solicitudProveedor.TN_IdDelito, Nombre = solicitudProveedor.TC_NombreDelito },
+                    Fiscalia = new Fiscalia { IdFiscalia = solicitudProveedor.TN_IdFiscalia, Nombre = solicitudProveedor.TC_NombreFiscalia },
+                    Imputado = solicitudProveedor.TC_Imputado,
+                    Ofendido = solicitudProveedor.TC_Ofendido,
+                    Resennia = solicitudProveedor.TC_Resennia
+                    
+                };
+
+
+                return solicitudProveedorRespuesta;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+        }
     }
 }

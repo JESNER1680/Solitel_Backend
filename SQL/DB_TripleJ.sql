@@ -5,7 +5,7 @@ BEGIN
 
 	-- Tablas intermedias y tablas dependientes
 	DROP TABLE IF EXISTS TSOLITEL_TipoAnalisis_SolicitudAnalisis;
-	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis_Condicion;
+	DROP TABLE IF EXISTS TSOLITEL_RequerimientoAnalisis_Condicion;
 	DROP TABLE IF EXISTS TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
 	DROP TABLE IF EXISTS TSOLITEL_SolicitudAnalisis_Archivo;
 	DROP TABLE IF EXISTS TSOLITEL_RequerimientoProveedor_Archivo;
@@ -385,11 +385,11 @@ BEGIN
 	);
 
 	-- Tabla TSOLITEL_SolicitudAnalisis_Condicion
-	CREATE TABLE TSOLITEL_SolicitudAnalisis_Condicion (
-		TN_IdAnalisis INT NOT NULL,
+	CREATE TABLE TSOLITEL_RequerimientoAnalisis_Condicion (
+		TN_IdRequerimientoAnalisis INT NOT NULL,
 		TN_IdCondicion INT NOT NULL,
-		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis_Condicion] PRIMARY KEY NONCLUSTERED (TN_IdAnalisis, TN_IdCondicion ASC),
-		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Condicion_TSOLITEL_SolicitudAnalisis FOREIGN KEY (TN_IdAnalisis) REFERENCES TSOLITEL_SolicitudAnalisis (TN_IdAnalisis),
+		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis_Condicion] PRIMARY KEY NONCLUSTERED (TN_IdRequerimientoAnalisis, TN_IdCondicion ASC),
+		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Condicion_TSOLITEL_RequerimentoAnalisis FOREIGN KEY (TN_IdRequerimientoAnalisis) REFERENCES TSOLITEL_RequerimentoAnalisis (TN_IdRequerimientoAnalisis),
 		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Condicion_TSOLITEL_Condicion FOREIGN KEY (TN_IdCondicion) REFERENCES TSOLITEL_Condicion (TN_IdCondicion)
 	);
 

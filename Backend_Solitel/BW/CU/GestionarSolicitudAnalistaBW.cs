@@ -17,6 +17,11 @@ namespace BW.CU
             this.solicitudAnalistaDA = _solicitudAnalistaDA;
         }
 
+        public async Task<bool> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            return await this.solicitudAnalistaDA.ActualizarEstadoAnalizadoSolicitudAnalisis(idSolicitudAnalisis, idUsuario, observacion);
+        }
+
         public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, string caracterIngresado = null)
         {
             return await this.solicitudAnalistaDA.ConsultarSolicitudesAnalisisAsync(pageNumber, pageSize, idEstado, numeroUnico, fechaInicio, fechaFin, caracterIngresado);         
@@ -30,5 +35,7 @@ namespace BW.CU
         {
             return await this.solicitudAnalistaDA.ObtenerSolicitudesAnalisis();
         }
+
+
     }
 }
