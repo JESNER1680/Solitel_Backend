@@ -1,4 +1,4 @@
-CREATE   PROCEDURE [dbo].[PA_CambiarEstadoSolicitudAnalisis]
+CREATE OR ALTER   PROCEDURE [dbo].[PA_CambiarEstadoSolicitudAnalisis]
     @TN_IdSolicitudAnalisis INT,      -- ID de la solicitud que queremos actualizar
     @TC_NombreEstado VARCHAR(50),      -- Nombre del estado que buscamos en la tabla TSOLITEL_Estado
     @TC_TipoEstado VARCHAR(50),        -- Tipo de estado que buscamos en la tabla TSOLITEL_Estado
