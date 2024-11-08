@@ -25,6 +25,13 @@ namespace DA.Entidades
 
         [Required]
         public int TN_IdTipo { get; set; }
+        [Required]
+        public int TN_IdCondicion { get; set; }
+        [Required]
+        [StringLength(255)]
+        public string TC_Nombre { get; set; }
+        [StringLength(255)]
+        public string TC_NombreTipoDato { get; set; }
 
         [Required]
         public int TN_IdAnalisis { get; set; }

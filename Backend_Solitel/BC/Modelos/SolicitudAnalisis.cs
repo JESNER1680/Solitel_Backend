@@ -13,6 +13,7 @@ namespace BC.Modelos
         public string OtrosDetalles { get; set; }
         public string? OtrosObjetivosDeAnalisis { get; set; }
         public bool Aprobado { get; set; }
+        public Estado Estado { get; set; }
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }
@@ -28,9 +29,6 @@ namespace BC.Modelos
 
         // Lista de tipos de análisis
         public List<TipoAnalisis> TiposAnalisis { get; set; }
-
-        // Lista de condiciones
-        public List<Condicion> Condiciones { get; set; }
 
         // Lista de archivos seleccionados para el análisis
         public List<Archivo> Archivos { get; set; }

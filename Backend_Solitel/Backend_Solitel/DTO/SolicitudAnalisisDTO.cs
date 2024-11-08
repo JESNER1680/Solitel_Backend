@@ -1,4 +1,6 @@
-﻿namespace Backend_Solitel.DTO
+﻿using BC.Modelos;
+
+namespace Backend_Solitel.DTO
 {
     public class SolicitudAnalisisDTO
     {
@@ -7,6 +9,7 @@
         public string OtrosDetalles { get; set; }
         public string? OtrosObjetivosDeAnalisis { get; set; }
         public bool Aprobado { get; set; }
+        public Estado Estado { get; set; }
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }
@@ -20,10 +23,6 @@
         // Lista de solicitudes de proveedor
         public List<SolicitudProveedorDTO> SolicitudesProveedor { get; set; }
         public List<TipoAnalisisDTO> tipoAnalisis { get; set; }
-
-        // Lista de condiciones
-        public List<CondicionDTO> Condiciones { get; set; }
-
         // Lista de archivos seleccionados para el análisis
         public List<ArchivoDTO> Archivos { get; set; }
     }

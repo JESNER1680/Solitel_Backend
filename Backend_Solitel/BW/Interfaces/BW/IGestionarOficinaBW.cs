@@ -13,6 +13,8 @@ namespace BW.Interfaces.BW
 
         public Task<List<Oficina>> ConsultarOficinas();
 
+        public Task<Oficina> ConsultarOficina(int idOficina);
+
         public Task<bool> EliminarOficina(int idOficina);
     }
 }

@@ -22,6 +22,10 @@ namespace DA.Entidades
 
         [Required]
         public bool TB_Aprobado { get; set; }
+        [Required]
+        public int TN_IdEstado { get; set; }
+        [Required]
+        public string TC_Nombre { get; set; }
 
         public DateTime? TF_FechaDeCreacion { get; set; }
 

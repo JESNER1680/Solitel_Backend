@@ -308,5 +308,23 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("consultarInformacionNumeroUnico")]
+        public async Task<ActionResult<SolicitudProveedorInfoComunDTO>> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        {
+            var infoComun = await this.gestionarSolicitudProveedorBW.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
+
+            if(infoComun == null)
+            {
+                return NotFound("No se encontro ninguna solicitud con ese numero unico");
+            }
+            else
+            {
+                return Ok(SolicitudProveedorMapper.FiltrarInformacionEnComun(infoComun));
+            }
+
+            
+        }
     }
 }

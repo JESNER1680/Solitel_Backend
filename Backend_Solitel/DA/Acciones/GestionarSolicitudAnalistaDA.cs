@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.DA;
 using DA.Contexto;
 using Microsoft.Data.SqlClient;
@@ -18,6 +19,47 @@ namespace DA.Acciones
         public GestionarSolicitudAnalistaDA(SolitelContext _solitelContext)
         {
             this.solitelContext = _solitelContext;
+        }
+
+        public async Task<bool> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudAnalisisParam = new SqlParameter("@PN_IdSolicitudAnalisis", idSolicitudAnalisis);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoAnalizadoSolicitudAnalisis @PN_IdSolicitudAnalisis, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudAnalisisParam, idUsuarioParam, observacionParam);
+
+                var resultado = await solitelContext.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al cambiar el estado de solicitud de analisis.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al cambiar el estado de solicitud de proveedor: {ex.Message}", ex);
+            }
         }
 
         public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(
@@ -124,7 +166,6 @@ namespace DA.Acciones
         {
             Console.WriteLine(solicitudAnalisis.Archivos.Count);
             Console.WriteLine(solicitudAnalisis.ObjetivosAnalisis.Count);
-            Console.WriteLine(solicitudAnalisis.Condiciones.Count);
             Console.WriteLine(solicitudAnalisis.Requerimentos.Count);
 
             try
@@ -134,6 +175,7 @@ namespace DA.Acciones
                 var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.OtrosDetalles);
                 var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
                 var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
+                var IdEstadoParam = new SqlParameter("@TN_IdEstado", solicitudAnalisis.Estado.IdEstado);
                 var fechaCreacionParam = new SqlParameter("@TF_FechaCrecion", (object)solicitudAnalisis.FechaCrecion ?? DBNull.Value);
                 var numeroSolicitudParam = new SqlParameter("@TN_NumeroSolicitud", solicitudAnalisis.NumeroSolicitud);
                 var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.IdOficina);
@@ -143,15 +185,16 @@ namespace DA.Acciones
                 {
                     Direction = ParameterDirection.Output
                 };
+                Console.WriteLine("NO ME HE CAIDO");
 
                 // Ejecutar PA_InsertarSolicitudAnalisis para crear la solicitud de análisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
-                    fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdEstado, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
+                    fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, IdEstadoParam, idOficinaParam, idAnalisisParam);
 
                 // Obtener el ID generado para el análisis
                 var idAnalisis = (int)idAnalisisParam.Value;
-
+                Console.WriteLine("NO ME HE CAIDO 2");
                 // Insertar objetivos de análisis asociados, si existen
                 if (solicitudAnalisis.ObjetivosAnalisis != null && solicitudAnalisis.ObjetivosAnalisis.Count > 0)
                 {
@@ -165,26 +208,44 @@ namespace DA.Acciones
                             idObjetivoParam, idAnalisisIntermedioParam);
                     }
                 }
-
+                Console.WriteLine("NO ME HE CAIDO 3");
                 // Insertar requerimientos asociados, si existen
                 if (solicitudAnalisis.Requerimentos != null && solicitudAnalisis.Requerimentos.Count > 0)
                 {
                     foreach (var requerimiento in solicitudAnalisis.Requerimentos)
                     {
                         var tipoExiste = await solitelContext.TSOLITEL_TipoDatoDA
-                            .AnyAsync(t => t.TN_IdTipoDato == requerimiento.IdTipo);
+                            .AnyAsync(t => t.TN_IdTipoDato == requerimiento.tipoDato.IdTipoDato);
 
-                        var idTipo = tipoExiste ? requerimiento.IdTipo : 6;
+                        var idTipo = tipoExiste ? requerimiento.tipoDato.IdTipoDato : 6;
+
+                        var idRequerimientoParam = new SqlParameter("@TN_IdRequerimiento", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
-                            "EXEC PA_InsertarRequerimentoAnalisis @TC_Objetivo, @TC_UtilizadoPor, @TN_IdTipo, @TN_IdAnalisis",
+                            "EXEC PA_InsertarRequerimentoAnalisis @TC_Objetivo, @TC_UtilizadoPor, @TN_IdTipo, @TN_IdAnalisis, @TN_IdRequerimiento OUTPUT",
                             new SqlParameter("@TC_Objetivo", requerimiento.Objetivo),
                             new SqlParameter("@TC_UtilizadoPor", requerimiento.UtilizadoPor),
                             new SqlParameter("@TN_IdTipo", idTipo),
-                            new SqlParameter("@TN_IdAnalisis", idAnalisis));
+                            new SqlParameter("@TN_IdAnalisis", idAnalisis),
+                            idRequerimientoParam
+                        );
+
+                        int idRequerimiento = (int)idRequerimientoParam.Value;
+                        Console.WriteLine("REQUERIMIENTO ANALISIS INSERTADO CON ID: " + idRequerimiento);
+
+                        await solitelContext.Database.ExecuteSqlRawAsync(
+                            "EXEC PA_InsertarRequerimientoAnalisis_Condicion @TN_IdRequerimiento, @TN_IdCondicion",
+                            new SqlParameter("@TN_IdRequerimiento", idRequerimiento),
+                            new SqlParameter("@TN_IdCondicion", requerimiento.condicion.IdCondicion)
+                        );
+
+
                     }
                 }
-
+                Console.WriteLine("NO ME HE CAIDO 4");
                 // Insertar archivos asociados, si existen
                 if (solicitudAnalisis.Archivos != null && solicitudAnalisis.Archivos.Count > 0)
                 {
@@ -194,11 +255,11 @@ namespace DA.Acciones
                             "EXEC PA_InsertarSolicitudAnalisis_Archivo @pIdAnalisis, @pIdArchivo, @pTipo",
                             new SqlParameter("@pIdAnalisis", idAnalisis),
                             new SqlParameter("@pIdArchivo", archivo.IdArchivo),
-                            new SqlParameter("@pTipo", archivo.FormatoArchivo ?? "DefaultTipo") // Valor predeterminado si es null
+                            new SqlParameter("@pTipo", archivo.FormatoArchivo ?? "DefaultTipo")
                         );
                     }
                 }
-
+                Console.WriteLine("NO ME HE CAIDO 5");
                 // Insertar tipos de análisis asociados, si existen
                 if (solicitudAnalisis.TiposAnalisis != null && solicitudAnalisis.TiposAnalisis.Count > 0)
                 {
@@ -210,19 +271,7 @@ namespace DA.Acciones
                             new SqlParameter("@pIdAnalisis", idAnalisis));
                     }
                 }
-
-                // Insertar condiciones asociadas a la solicitud, si existen
-                if (solicitudAnalisis.Condiciones != null && solicitudAnalisis.Condiciones.Count > 0)
-                {
-                    foreach (var condicion in solicitudAnalisis.Condiciones)
-                    {
-                        await solitelContext.Database.ExecuteSqlRawAsync(
-                            "EXEC PA_InsertarSolicitudAnalisis_Condicion @TN_IdAnalisis, @TN_IdCondicion",
-                            new SqlParameter("@TN_IdAnalisis", idAnalisis),
-                            new SqlParameter("@TN_IdCondicion", condicion.IdCondicion));
-                    }
-                }
-
+                Console.WriteLine("NO ME HE CAIDO 6");
                 // Insertar proveedores asociados a la solicitud, si existen
                 if (solicitudAnalisis.SolicitudesProveedor != null && solicitudAnalisis.SolicitudesProveedor.Count > 0)
                 {
@@ -271,6 +320,11 @@ namespace DA.Acciones
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
                         Aprobado = solicitud.TB_Aprobado,
+                        Estado = new Estado
+                        {
+                            IdEstado = solicitud.TN_IdEstado,
+                            Nombre = solicitud.TC_Nombre
+                        },
                         FechaCrecion = solicitud.TF_FechaDeCreacion,
                         NumeroSolicitud = solicitud.TN_NumeroSolicitud,
                         IdOficina = solicitud.TN_IdOficina,
@@ -286,8 +340,17 @@ namespace DA.Acciones
                         IdRequerimientoAnalisis = ra.TN_IdRequerimientoAnalisis,
                         Objetivo = ra.TC_Objetivo,
                         UtilizadoPor = ra.TC_UtilizadoPor,
-                        IdTipo = ra.TN_IdTipo,
-                        IdAnalisis = ra.TN_IdAnalisis
+                        tipoDato = new TipoDato
+                        {
+                            IdTipoDato = ra.TN_IdTipo,
+                            Nombre = ra.TC_NombreTipoDato
+                        },
+                        IdAnalisis = ra.TN_IdAnalisis,
+                        condicion = new Condicion
+                        {
+                            IdCondicion = ra.TN_IdCondicion,
+                            Nombre = ra.TC_Nombre,
+                        }
                     }).ToList();
 
                     var objetivosAnalisis = await this.solitelContext.tSOLITEL_ObjetivoAnalisisDA
@@ -310,17 +373,6 @@ namespace DA.Acciones
                         IdTipoAnalisis = ta.TN_IdTipoAnalisis,
                         Nombre = ta.TC_Nombre,
                         Descripcion = ta.TC_Descripcion
-                    }).ToList();
-
-                    var condiciones = await this.solitelContext.TSOLITEL_CondicionDA
-                        .FromSqlRaw("EXEC dbo.PA_ObtenerCondicionesPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
-                        .ToListAsync();
-
-                    solicitudAnalisis.Condiciones = condiciones.Select(c => new Condicion
-                    {
-                        IdCondicion = c.TN_IdCondicion,
-                        Nombre = c.TC_Nombre,
-                        Descripcion = c.TC_Descripcion
                     }).ToList();
 
                     var solicitudesProveedorDA = await this.solitelContext.TSOLITEL_SolicitudProveedorDA
@@ -394,6 +446,8 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al consultar solicitudes de análisis: {ex.Message}", ex);
             }
         }
+
+
 
 
 

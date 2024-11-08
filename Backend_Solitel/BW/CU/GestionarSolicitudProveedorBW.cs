@@ -88,6 +88,11 @@ namespace BW.CU
         {
             return await this.gestionarSolicitudProveedorDA.ActualizarEstadoTramitado(idSolicitudProveedor, idUsuario, observacion);
         }
+
+        public async Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        {
+            return await this.gestionarSolicitudProveedorDA.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
+        }
     }
 }
 

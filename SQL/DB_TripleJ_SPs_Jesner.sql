@@ -17,6 +17,7 @@ CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis
     @TB_Aprobado BIT,
     @TF_FechaCrecion DATE = NULL,
     @TN_NumeroSolicitud INT,
+	@TN_IdEstado INT,
     @TN_IdOficina INT,
     @TN_IdSolicitudAnalisis INT OUTPUT -- Agregar parámetro de salida
 AS
@@ -44,7 +45,7 @@ BEGIN
             @TC_OtrosObjetivosDeAnalisis, 
             @TB_Aprobado, 
             @TF_FechaCrecion,
-			4,
+			@TN_IdEstado,
             @TN_IdOficina
         );
 
@@ -122,7 +123,8 @@ CREATE OR ALTER PROCEDURE dbo.PA_InsertarRequerimentoAnalisis
     @TC_Objetivo VARCHAR(255),
     @TC_UtilizadoPor VARCHAR(255),
     @TN_IdTipo INT,
-    @TN_IdAnalisis INT
+    @TN_IdAnalisis INT,
+    @TN_IdRequerimiento INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -145,6 +147,8 @@ BEGIN
             @TN_IdAnalisis
         );
 
+        SET @TN_IdRequerimiento = SCOPE_IDENTITY();
+
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -161,6 +165,7 @@ BEGIN
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Author:                Jesner Melgara Murillo
@@ -488,8 +493,8 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Insertar datos en la tabla intermedia PA_InsertarSolicitudAnalisis_Condicion
 -- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis_Condicion
-    @TN_IdAnalisis INT,
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarRequerimientoAnalisis_Condicion
+    @TN_IdRequerimiento INT,
     @TN_IdCondicion INT
 AS
 BEGIN
@@ -499,7 +504,7 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Verificar si el TN_IdAnalisis existe en TSOLITEL_SolicitudAnalisis
-        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis = @TN_IdAnalisis)
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_RequerimentoAnalisis WHERE TN_IdRequerimientoAnalisis = @TN_IdRequerimiento)
         BEGIN
             RAISERROR ('El ID de Análisis proporcionado no existe en TSOLITEL_SolicitudAnalisis.', 16, 1);
             RETURN;
@@ -513,8 +518,8 @@ BEGIN
         END
 
         -- Insertar en la tabla TSOLITEL_SolicitudAnalisis_Condicion
-        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Condicion (TN_IdAnalisis, TN_IdCondicion)
-        VALUES (@TN_IdAnalisis, @TN_IdCondicion);
+        INSERT INTO dbo.[TSOLITEL_RequerimientoAnalisis_Condicion] (TN_IdRequerimientoAnalisis, TN_IdCondicion)
+        VALUES (@TN_IdRequerimiento, @TN_IdCondicion);
 
         COMMIT TRANSACTION;
     END TRY
@@ -555,10 +560,12 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis,
             TF_FechaDeCreacion,
             TB_Aprobado,
-            TN_IdEstado,
+            ES.TN_IdEstado,
+			ES.TC_Nombre,
             TN_IdOficina
         FROM 
-            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis]
+            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
+			JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
         ORDER BY 
             TN_IdAnalisis DESC;
 
@@ -589,47 +596,61 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Consultar todos los querimientos de analisis por Id
 -- =============================================
+
+USE PROYECTO_ANALISIS
+GO
 CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerRequerimientosPorSolicitudAnalisis]
     @TN_IdAnalisis INT
 AS
 BEGIN
+    SET NOCOUNT ON;
+
     BEGIN TRY
         BEGIN TRANSACTION;
 
         SELECT 
-            TN_IdRequerimientoAnalisis,
-            TC_Objetivo,
-            TC_UtilizadoPor,
-            TN_IdAnalisis,
-            TN_IdTipoDato AS TN_IdTipo
+            REQ.TN_IdRequerimientoAnalisis,
+            REQ.TC_Objetivo,
+            REQ.TC_UtilizadoPor,
+            REQ.TN_IdAnalisis,
+            REQ.TN_IdTipoDato AS TN_IdTipo,
+            CON.TC_Nombre,
+            CON.TN_IdCondicion,
+			TIP.TC_Nombre AS TC_NombreTipoDato
         FROM 
-            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimentoAnalisis]
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimentoAnalisis] AS REQ
+		JOIN 
+		TSOLITEL_TipoDato AS TIP ON TIP.TN_IdTipoDato = REQ.TN_IdTipoDato
+        JOIN  
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimientoAnalisis_Condicion] AS SAC
+        ON 
+            REQ.TN_IdRequerimientoAnalisis = SAC.TN_IdRequerimientoAnalisis
+        JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_Condicion] AS CON 
+        ON 
+            CON.TN_IdCondicion = SAC.TN_IdCondicion
         WHERE 
-            TN_IdAnalisis = @TN_IdAnalisis
+            REQ.TN_IdAnalisis = @TN_IdAnalisis
         ORDER BY 
-            TN_IdRequerimientoAnalisis ASC;
+            REQ.TN_IdRequerimientoAnalisis ASC;
 
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
         IF @@TRANCOUNT > 0
-        BEGIN
             ROLLBACK TRANSACTION;
-        END
 
-        DECLARE @ErrorMessage NVARCHAR(4000);
-        DECLARE @ErrorSeverity INT;
-        DECLARE @ErrorState INT;
-
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
         SELECT 
             @ErrorMessage = ERROR_MESSAGE(),
             @ErrorSeverity = ERROR_SEVERITY(),
             @ErrorState = ERROR_STATE();
 
-        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Autor:                Jesner Melgara
@@ -734,8 +755,8 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Consultar todos las Condiciones de analisis por Id
 -- =============================================
-CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerCondicionesPorSolicitudAnalisis]
-    @TN_IdAnalisis INT
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerCondicionesPorRequerimientoAnalisis]
+    @TN_IdRequerimientoAnalisis INT
 AS
 BEGIN
     BEGIN TRY
@@ -748,11 +769,11 @@ BEGIN
         FROM 
             [Proyecto_Analisis].[dbo].[TSOLITEL_Condicion] C
         INNER JOIN 
-            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis_Condicion] SAC
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimientoAnalisis_Condicion] SAC
         ON 
             C.TN_IdCondicion = SAC.TN_IdCondicion
         WHERE 
-            SAC.TN_IdAnalisis = @TN_IdAnalisis
+            SAC.TN_IdRequerimientoAnalisis = @TN_IdRequerimientoAnalisis
         ORDER BY 
             C.TN_IdCondicion ASC;
 
@@ -909,22 +930,22 @@ GO
 
 
 -- Tabla principal de Solicitudes de Análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis ORDER BY TN_IdAnalisis ASC;
 
 -- Archivos asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo;
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo ORDER BY TN_IdAnalisis ASC ;
 
 -- Condiciones relacionadas con cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
+SELECT * FROM [TSOLITEL_RequerimientoAnalisis_Condicion];
 
 -- Objetivos de análisis asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis ORDER BY TN_IdAnalisis;
 
 -- Tipos de análisis asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis ORDER BY TN_IdAnalisis;
 
 -- Requerimientos de análisis relacionados con cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis;
+SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis ORDER BY TN_IdAnalisis;
 
 -- Proveedores asociados a cada solicitud de análisis (si aplica en contexto)
 SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
@@ -948,7 +969,7 @@ DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
 DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
 
 -- Eliminar condiciones relacionadas con cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
+DELETE FROM dbo.[TSOLITEL_RequerimientoAnalisis_Condicion];
 
 -- Eliminar archivos asociados a cada solicitud de análisis
 DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;

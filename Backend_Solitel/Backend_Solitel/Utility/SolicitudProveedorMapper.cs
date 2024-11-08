@@ -95,5 +95,19 @@ namespace Backend_Solitel.Utility
             return listaFiltrada;
         }
 
+        public static SolicitudProveedorInfoComunDTO FiltrarInformacionEnComun(SolicitudProveedor solicitudProveedor)
+        {
+            return new SolicitudProveedorInfoComunDTO
+            {
+                FiscaliaDTO = FiscaliaMapper.ToDTO(solicitudProveedor.Fiscalia),
+                DelitoDTO = DelitoMapper.ToDTO(solicitudProveedor.Delito),
+                CategoriaDelitoDTO = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
+                imputado = solicitudProveedor.Imputado,
+                ofendido = solicitudProveedor.Ofendido,
+                resennia = solicitudProveedor.Resennia
+
+            };
+        }
+
     }
 }
