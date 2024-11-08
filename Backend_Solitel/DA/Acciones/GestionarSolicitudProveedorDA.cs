@@ -638,10 +638,17 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedorPorNumeroUnico @PN_NumeroUnico", numeroUnicoParam)
+                    .FromSqlRaw("EXEC PA_ConsultarSolicitudProveedorPorNumeroUnico @PN_NumeroUnico", numeroUnicoParam)
                     .ToListAsync();
 
                 var solicitudProveedor = solicitudesProveedorDA.FirstOrDefault();
+
+                if(solicitudProveedor == null)
+                {
+                    return null;
+                }
+
+                
 
                 var solicitudProveedorRespuesta = new SolicitudProveedor
                 {

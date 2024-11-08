@@ -311,11 +311,20 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("consultarInformacionNumeroUnico")]
-        public async Task<SolicitudProveedorInfoComunDTO> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<ActionResult<SolicitudProveedorInfoComunDTO>> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
         {
             var infoComun = await this.gestionarSolicitudProveedorBW.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
 
-            return SolicitudProveedorMapper.FiltrarInformacionEnComun(infoComun);
+            if(infoComun == null)
+            {
+                return NotFound("No se encontro ninguna solicitud con ese numero unico");
+            }
+            else
+            {
+                return Ok(SolicitudProveedorMapper.FiltrarInformacionEnComun(infoComun));
+            }
+
+            
         }
     }
 }
