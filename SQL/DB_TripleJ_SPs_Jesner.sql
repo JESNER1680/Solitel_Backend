@@ -11,21 +11,24 @@ GO
 -- Description:           Procedimiento almacenado para insertar una solicitud de análisis
 -- =============================================
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis
+    @PN_IdUsuarioCreador INT,
     @TF_FechaDelHecho DATE,
     @TC_OtrosDetalles VARCHAR(255),
     @TC_OtrosObjetivosDeAnalisis VARCHAR(255) = NULL,
     @TB_Aprobado BIT,
     @TF_FechaCrecion DATE = NULL,
     @TN_NumeroSolicitud INT,
-	@TN_IdEstado INT,
     @TN_IdOficina INT,
-    @TN_IdSolicitudAnalisis INT OUTPUT -- Agregar parámetro de salida
+    @TN_IdSolicitudAnalisis INT OUTPUT -- Parámetro de salida
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+        -- Iniciar la transacción
         BEGIN TRANSACTION;
+
+        DECLARE @ResultadoIdEstado INT;
 
         -- Inserción principal
         INSERT INTO dbo.TSOLITEL_SolicitudAnalisis 
@@ -35,7 +38,6 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis, 
             TB_Aprobado, 
             TF_FechaDeCreacion, 
-			TN_IdEstado,
             TN_IdOficina
         )
         VALUES 
@@ -45,16 +47,24 @@ BEGIN
             @TC_OtrosObjetivosDeAnalisis, 
             @TB_Aprobado, 
             @TF_FechaCrecion,
-			@TN_IdEstado,
             @TN_IdOficina
         );
 
-        -- Captura el ID generado
+        -- Capturar el ID generado
         SET @TN_IdSolicitudAnalisis = SCOPE_IDENTITY();
 
+        -- Confirmar la transacción
         COMMIT TRANSACTION;
+
+        -- Cambiar el estado de la solicitud
+        EXEC PA_CambiarEstadoSolicitudAnalisis @TN_IdSolicitudAnalisis, 'Aprobar Análisis', 'Analisis', @TN_IdEstado = @ResultadoIdEstado OUTPUT;
+
+        -- Insertar en el historial de la solicitud
+        EXEC PA_InsertarHistoricoSolicitud NULL, @TN_IdSolicitudAnalisis, @PN_IdUsuarioCreador, '', @ResultadoIdEstado;
+
     END TRY
     BEGIN CATCH
+        -- Si ocurre un error, revertir la transacción
         IF @@TRANCOUNT > 0
             ROLLBACK TRANSACTION;
 
@@ -68,6 +78,7 @@ BEGIN
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Author:                Jesner Melgara
@@ -825,7 +836,7 @@ BEGIN
         ON 
             A.TN_IdArchivo = SAA.TN_IdArchivo
         WHERE 
-            SAA.TN_IdAnalisis = @TN_IdAnalisis
+            SAA.TN_IdAnalisis = @TN_IdAnalisis AND SAA.TC_TIPO = 'Respuesta'
         ORDER BY 
             A.TN_IdArchivo ASC;
 
@@ -926,7 +937,63 @@ BEGIN
 END
 GO
 
+CREATE OR ALTER PROCEDURE PA_AprobarSolicitudAnalisis
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+	DECLARE @Error INT;
 
+	BEGIN TRANSACTION;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+		UPDATE [dbo].[TSOLITEL_SolicitudAnalisis]
+            SET TB_Aprobado = 1
+            WHERE TN_IdAnalisis = @pTN_IdSolicitud;
+
+		-- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+		COMMIT TRANSACTION;
+
+		EXEC PA_CambiarEstadoSolicitudAnalisis @pTN_IdSolicitud, 'En Análisis', 'Analisis', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] NULL, @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
 
 
 -- Tabla principal de Solicitudes de Análisis
@@ -950,29 +1017,32 @@ SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis ORDER BY TN_IdAnalisis;
 -- Proveedores asociados a cada solicitud de análisis (si aplica en contexto)
 SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
 
+SELECT * FROM TSOLITEL_Estado
+
 UPDATE TSOLITEL_SolicitudAnalisis SET TN_idEstado = 12 WHERE TN_IdAnalisis = 47 
+UPDATE TSOLITEL_SolicitudAnalisis SET TB_Aprobado = 0 WHERE TN_IdAnalisis = 46 
 
 SELECT * FROM TSOLITEL_Estado
 
 
---Eliminar Datos
--- Eliminar proveedores asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+----Eliminar Datos
+---- Eliminar proveedores asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
 
--- Eliminar requerimientos de análisis relacionados con cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_RequerimentoAnalisis;
+---- Eliminar requerimientos de análisis relacionados con cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_RequerimentoAnalisis;
 
--- Eliminar tipos de análisis asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
+---- Eliminar tipos de análisis asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
 
--- Eliminar objetivos de análisis asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+---- Eliminar objetivos de análisis asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
 
--- Eliminar condiciones relacionadas con cada solicitud de análisis
-DELETE FROM dbo.[TSOLITEL_RequerimientoAnalisis_Condicion];
+---- Eliminar condiciones relacionadas con cada solicitud de análisis
+--DELETE FROM dbo.[TSOLITEL_RequerimientoAnalisis_Condicion];
 
--- Eliminar archivos asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
+---- Eliminar archivos asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
 
--- Eliminar las solicitudes de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;
+---- Eliminar las solicitudes de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;
