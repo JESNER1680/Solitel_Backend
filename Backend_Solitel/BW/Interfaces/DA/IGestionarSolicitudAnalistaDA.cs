@@ -25,6 +25,6 @@ namespace BW.Interfaces.DA
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
 
-        public Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin);
+        public Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico);
     }
 }

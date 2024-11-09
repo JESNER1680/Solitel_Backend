@@ -10,33 +10,36 @@ GO
 -- Fecha de creación: 	2024-10-29
 -- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
 -- =============================================
-EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 13, @pTF_FechaInicio = '2024-11-07 00:00:00.0000000', @pTF_FechaFin = NULL;
+EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 12, @pTF_FechaInicio = NULL, @pTF_FechaFin = NULL, @pTC_NumeroUnico = NULL;
 
 CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
     @pTN_Estado INT,
     @pTF_FechaInicio DATETIME2 = NULL,
-    @pTF_FechaFin DATETIME2 = NULL
+    @pTF_FechaFin DATETIME2 = NULL,
+    @pTC_NumeroUnico VARCHAR(100) = NULL
 AS
 BEGIN
     BEGIN TRY
-
         SELECT 
-            TN_IdAnalisis,
-            TN_IdAnalisis AS TN_NumeroSolicitud,
-            TF_FechaDeHecho,
-            TC_OtrosDetalles,
-            TC_OtrosObjetivosDeAnalisis,
-            TF_FechaDeCreacion,
-            TB_Aprobado,
+            SOLI.TN_IdAnalisis,
+            SOLI.TN_IdAnalisis AS TN_NumeroSolicitud,
+            SOLI.TF_FechaDeHecho,
+            SOLI.TC_OtrosDetalles,
+            SOLI.TC_OtrosObjetivosDeAnalisis,
+            SOLI.TF_FechaDeCreacion,
+            SOLI.TB_Aprobado,
             ES.TN_IdEstado,
             ES.TC_Nombre,
-            TN_IdOficina
+            SOLI.TN_IdOficina
         FROM [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
         INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
-        WHERE ES.TN_IdEstado = @pTN_Estado AND
-			(@pTF_FechaInicio IS NULL OR TF_FechaDeCreacion >= @pTF_FechaInicio) AND
-			(@pTF_FechaFin IS NULL OR TF_FechaDeCreacion <= @pTF_FechaFin)
-		ORDER BY TN_IdAnalisis DESC;
+        INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP ON SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
+        INNER JOIN TSOLITEL_SolicitudProveedor AS SP ON SP.TN_IdSolicitud = SA_SP.TN_IdSolicitud
+        WHERE ES.TN_IdEstado = @pTN_Estado
+          AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)
+          AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)
+          AND (@pTC_NumeroUnico IS NULL OR SP.TN_NumeroUnico = @pTC_NumeroUnico)
+        ORDER BY SOLI.TN_IdAnalisis DESC;
 
     END TRY
     BEGIN CATCH

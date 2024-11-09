@@ -543,16 +543,17 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico)
         {
             try
             {
                 // Ejecutar el procedimiento almacenado y obtener los resultados
                 var solicitudesAnalisisDA = await this.solitelContext.TSOLITEL_SolicitudAnalisisDA
-                .FromSqlRaw("EXEC dbo.PA_ObtenerBandejaAnalisis @pTN_Estado, @pTF_FechaInicio, @pTF_FechaFin", 
+                .FromSqlRaw("EXEC dbo.PA_ObtenerBandejaAnalisis @pTN_Estado, @pTF_FechaInicio, @pTF_FechaFin, @pTC_NumeroUnico", 
                     new SqlParameter("@pTN_Estado", estado),
                     new SqlParameter("@pTF_FechaInicio", (object)fechaInicio ?? DBNull.Value),
-                    new SqlParameter("@pTF_FechaFin", (object)fechaFin ?? DBNull.Value)).ToListAsync();
+                    new SqlParameter("@pTF_FechaFin", (object)fechaFin ?? DBNull.Value),
+                    new SqlParameter("@pTC_NumeroUnico", (object)numeroUnico ?? DBNull.Value)).ToListAsync();
 
                 var solicitudesAnalisis = new List<SolicitudAnalisis>();
 

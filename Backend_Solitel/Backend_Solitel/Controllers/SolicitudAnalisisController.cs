@@ -64,11 +64,11 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet("obtenerBandejaAnalista")]
-        public async Task<ActionResult<List<SolicitudAnalisis>>> ObtenerSolicitudesAnalisisController(int estado, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<ActionResult<List<SolicitudAnalisis>>> ObtenerSolicitudesAnalisisController(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico)
         {
             try
             {
-                var result = await gestionarSolicitudAnalistaBW.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin);
+                var result = await gestionarSolicitudAnalistaBW.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin, numeroUnico);
 
                 if (result == null || !result.Any())
                 {

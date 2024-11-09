@@ -52,9 +52,9 @@ namespace BW.CU
             return await this.solicitudAnalistaDA.ActualizarEstadoLegajo(id, idUsuario, observacion);
         }
 
-        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin)
+        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico)
         {
-            return await this.solicitudAnalistaDA.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin);
+            return await this.solicitudAnalistaDA.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin, numeroUnico);
         }
     }
 }
