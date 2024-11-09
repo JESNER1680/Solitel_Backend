@@ -8,6 +8,62 @@ GO
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-29
+-- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
+-- =============================================
+EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 13, @pTF_FechaInicio = '2024-11-07 00:00:00.0000000', @pTF_FechaFin = NULL;
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
+    @pTN_Estado INT,
+    @pTF_FechaInicio DATETIME2 = NULL,
+    @pTF_FechaFin DATETIME2 = NULL
+AS
+BEGIN
+    BEGIN TRY
+
+        SELECT 
+            TN_IdAnalisis,
+            TN_IdAnalisis AS TN_NumeroSolicitud,
+            TF_FechaDeHecho,
+            TC_OtrosDetalles,
+            TC_OtrosObjetivosDeAnalisis,
+            TF_FechaDeCreacion,
+            TB_Aprobado,
+            ES.TN_IdEstado,
+            ES.TC_Nombre,
+            TN_IdOficina
+        FROM [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
+        INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
+        WHERE ES.TN_IdEstado = @pTN_Estado AND
+			(@pTF_FechaInicio IS NULL OR TF_FechaDeCreacion >= @pTF_FechaInicio) AND
+			(@pTF_FechaFin IS NULL OR TF_FechaDeCreacion <= @pTF_FechaFin)
+		ORDER BY TN_IdAnalisis DESC;
+
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
 -- Descripción:		    Historial de solicitud de analisis
 -- =============================================
 

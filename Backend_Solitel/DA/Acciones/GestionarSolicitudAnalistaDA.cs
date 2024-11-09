@@ -4,6 +4,7 @@ using BW.Interfaces.DA;
 using DA.Contexto;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -512,7 +513,6 @@ namespace DA.Acciones
             }
         }
 
-
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
             try
@@ -543,10 +543,153 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado y obtener los resultados
+                var solicitudesAnalisisDA = await this.solitelContext.TSOLITEL_SolicitudAnalisisDA
+                .FromSqlRaw("EXEC dbo.PA_ObtenerBandejaAnalisis @pTN_Estado, @pTF_FechaInicio, @pTF_FechaFin", 
+                    new SqlParameter("@pTN_Estado", estado),
+                    new SqlParameter("@pTF_FechaInicio", (object)fechaInicio ?? DBNull.Value),
+                    new SqlParameter("@pTF_FechaFin", (object)fechaFin ?? DBNull.Value)).ToListAsync();
 
+                var solicitudesAnalisis = new List<SolicitudAnalisis>();
 
+                foreach (var solicitud in solicitudesAnalisisDA)
+                {
+                    var solicitudAnalisis = new SolicitudAnalisis
+                    {
+                        IdSolicitudAnalisis = solicitud.TN_IdAnalisis,
+                        FechaDelHecho = solicitud.TF_FechaDeHecho,
+                        OtrosDetalles = solicitud.TC_OtrosDetalles,
+                        OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
+                        Aprobado = solicitud.TB_Aprobado,
+                        Estado = new Estado
+                        {
+                            IdEstado = solicitud.TN_IdEstado,
+                            Nombre = solicitud.TC_Nombre
+                        },
+                        FechaCrecion = solicitud.TF_FechaDeCreacion,
+                        NumeroSolicitud = solicitud.TN_NumeroSolicitud,
+                        IdOficina = solicitud.TN_IdOficina,
+                        SolicitudesProveedor = new List<SolicitudProveedor>()
+                    };
 
+                    var requerimentos = await this.solitelContext.TSOLITEL_RequerimentoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerRequerimientosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
 
+                    solicitudAnalisis.Requerimentos = requerimentos.Select(ra => new RequerimentoAnalisis
+                    {
+                        IdRequerimientoAnalisis = ra.TN_IdRequerimientoAnalisis,
+                        Objetivo = ra.TC_Objetivo,
+                        UtilizadoPor = ra.TC_UtilizadoPor,
+                        tipoDato = new TipoDato
+                        {
+                            IdTipoDato = ra.TN_IdTipo,
+                            Nombre = ra.TC_NombreTipoDato
+                        },
+                        IdAnalisis = ra.TN_IdAnalisis,
+                        condicion = new Condicion
+                        {
+                            IdCondicion = ra.TN_IdCondicion,
+                            Nombre = ra.TC_Nombre,
+                        }
+                    }).ToList();
 
+                    var objetivosAnalisis = await this.solitelContext.tSOLITEL_ObjetivoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerObjetivosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.ObjetivosAnalisis = objetivosAnalisis.Select(oa => new ObjetivoAnalisis
+                    {
+                        IdObjetivoAnalisis = oa.TN_IdObjetivoAnalisis,
+                        Nombre = oa.TC_Nombre,
+                        Descripcion = oa.TC_Descripcion
+                    }).ToList();
+
+                    var tiposAnalisis = await this.solitelContext.TSOLITEL_TipoAnalisisDA
+                        .FromSqlRaw("EXEC dbo.PA_ObtenerTiposAnalisisPorSolicitud @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.TiposAnalisis = tiposAnalisis.Select(ta => new TipoAnalisis
+                    {
+                        IdTipoAnalisis = ta.TN_IdTipoAnalisis,
+                        Nombre = ta.TC_Nombre,
+                        Descripcion = ta.TC_Descripcion
+                    }).ToList();
+
+                    var solicitudesProveedorDA = await this.solitelContext.TSOLITEL_SolicitudProveedorDA
+                        .FromSqlRaw("EXEC dbo.PA_ConsultarSoliciProveSoliciAnalisis @pTN_IdSolicitud = {0}", solicitud.TN_IdAnalisis)
+                        .ToListAsync();
+
+                    solicitudAnalisis.SolicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
+                    {
+                        IdSolicitudProveedor = da.TN_IdSolicitud,
+                        NumeroUnico = da.TN_NumeroUnico,
+                        NumeroCaso = da.TN_NumeroCaso,
+                        Imputado = da.TC_Imputado,
+                        Ofendido = da.TC_Ofendido,
+                        Resennia = da.TC_Resennia,
+                        Urgente = da.TB_Urgente,
+                        Aprobado = da.TB_Aprobado,
+                        FechaCrecion = da.TF_FechaDeCreacion,
+                        UsuarioCreador = new Usuario
+                        {
+                            IdUsuario = da.TN_IdUsuario,
+                            Nombre = da.TC_NombreUsuario
+                        },
+                        Proveedor = new Proveedor
+                        {
+                            IdProveedor = da.TN_IdProveedor,
+                            Nombre = da.TC_NombreProveedor
+                        },
+                        Delito = new Delito
+                        {
+                            IdDelito = da.TN_IdDelito,
+                            Nombre = da.TC_NombreDelito
+                        },
+                        CategoriaDelito = new CategoriaDelito
+                        {
+                            IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                            Nombre = da.TC_NombreCategoriaDelito
+                        },
+                        Estado = new Estado
+                        {
+                            IdEstado = da.TN_IdEstado,
+                            Nombre = da.TC_NombreEstado
+                        },
+                        Fiscalia = new Fiscalia
+                        {
+                            IdFiscalia = da.TN_IdFiscalia,
+                            Nombre = da.TC_NombreFiscalia
+                        },
+                        Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
+                        {
+                            IdModalidad = da.TN_IdModalidad.Value,
+                            Nombre = da.TC_NombreModalidad
+                        } : null,
+                        SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
+                        {
+                            IdSubModalidad = da.TN_IdSubModalidad.Value,
+                            Nombre = da.TC_NombreSubModalidad
+                        } : null
+                    }).ToList();
+
+                    solicitudesAnalisis.Add(solicitudAnalisis);
+                }
+
+                return solicitudesAnalisis;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al consultar solicitudes de análisis: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al consultar solicitudes de análisis: {ex.Message}", ex);
+            }
+        }
     }
 }

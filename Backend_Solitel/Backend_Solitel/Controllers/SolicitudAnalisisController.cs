@@ -63,6 +63,32 @@ namespace Backend_Solitel.Controllers
             return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis();
         }
 
+        [HttpGet("obtenerBandejaAnalista")]
+        public async Task<ActionResult<List<SolicitudAnalisis>>> ObtenerSolicitudesAnalisisController(int estado, DateTime? fechaInicio, DateTime? fechaFin)
+        {
+            try
+            {
+                var result = await gestionarSolicitudAnalistaBW.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin);
+
+                if (result == null || !result.Any())
+                {
+                    return NotFound("No se encontraron solicitudes de análisis para los criterios proporcionados.");
+                }
+
+                return Ok(result);
+            }
+            catch (ArgumentException ex)
+            {
+                // Manejo de errores de validación de argumentos
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores generales
+                return StatusCode(500, new { message = "Ocurrió un error al obtener las solicitudes de análisis.", details = ex.Message });
+            }
+        }
+
         [HttpPut]
         [Route("ActualizarEstadoAnalizadoSolicitudAnalisis")]
         public async Task<IActionResult> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
