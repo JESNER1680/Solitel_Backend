@@ -53,9 +53,9 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.MoverEstadoASinEfecto(idSolicitudProveedor, idUsuario, observacion);
         }
 
-        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
+        public async Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud)
         {
-            throw new NotImplementedException();
+            return await this.gestionarSolicitudProveedorDA.obtenerSolicitud(idSolicitud);
         }
 
         public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
@@ -87,6 +87,11 @@ namespace BW.CU
         public async Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
         {
             return await this.gestionarSolicitudProveedorDA.ActualizarEstadoTramitado(idSolicitudProveedor, idUsuario, observacion);
+        }
+
+        public async Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        {
+            return await this.gestionarSolicitudProveedorDA.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
         }
     }
 }

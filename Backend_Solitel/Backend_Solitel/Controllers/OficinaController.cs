@@ -24,6 +24,14 @@ namespace Backend_Solitel.Controllers
             return OficinaMapper.ToDTO(oficinasDTOs);
         }
 
+        [HttpGet]
+        [Route("consultarOficina/{idOficina}")]
+        public async Task<OficinaDTO> ConsultarOficina(int idOficina)
+        {
+            var oficinaDTOs = await this.gestionarOficinaBW.ConsultarOficina(idOficina);
+            return OficinaMapper.ToDTO(oficinaDTOs);
+        }
+
         [HttpPost]
         [Route("insertarOficina")]
         public async Task<bool> InsertarOficina(OficinaDTO oficinaDTO)

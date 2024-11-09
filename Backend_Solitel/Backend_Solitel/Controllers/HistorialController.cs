@@ -22,5 +22,11 @@ namespace Backend_Solitel.Controllers
         {
             return HistorialMapper.ToDTO(await this.gestionarHistorialBW.ConsultarHistorialDeSolicitudProveedor(idSolicitudProveedor));
         }
+
+        [HttpGet("Analisis")]
+        public async Task<List<HistorialDTO>> ConsultarHistorialDeSolicitudAnalisis(int idSolicitudProveedor)
+        {
+            return HistorialMapper.ToDTO(await this.gestionarHistorialBW.ConsultarHistorialDeSolicitudAnalisis(idSolicitudProveedor));
+        }
     }
 }

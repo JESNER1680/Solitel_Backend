@@ -11,6 +11,7 @@ GO
 -- Description:           Procedimiento almacenado para insertar una solicitud de análisis
 -- =============================================
 CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis
+    @PN_IdUsuarioCreador INT,
     @TF_FechaDelHecho DATE,
     @TC_OtrosDetalles VARCHAR(255),
     @TC_OtrosObjetivosDeAnalisis VARCHAR(255) = NULL,
@@ -18,13 +19,16 @@ CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis
     @TF_FechaCrecion DATE = NULL,
     @TN_NumeroSolicitud INT,
     @TN_IdOficina INT,
-    @TN_IdSolicitudAnalisis INT OUTPUT -- Agregar parámetro de salida
+    @TN_IdSolicitudAnalisis INT OUTPUT -- Parámetro de salida
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
+        -- Iniciar la transacción
         BEGIN TRANSACTION;
+
+        DECLARE @ResultadoIdEstado INT;
 
         -- Inserción principal
         INSERT INTO dbo.TSOLITEL_SolicitudAnalisis 
@@ -34,7 +38,6 @@ BEGIN
             TC_OtrosObjetivosDeAnalisis, 
             TB_Aprobado, 
             TF_FechaDeCreacion, 
-			TN_IdEstado,
             TN_IdOficina
         )
         VALUES 
@@ -44,16 +47,24 @@ BEGIN
             @TC_OtrosObjetivosDeAnalisis, 
             @TB_Aprobado, 
             @TF_FechaCrecion,
-			4,
             @TN_IdOficina
         );
 
-        -- Captura el ID generado
+        -- Capturar el ID generado
         SET @TN_IdSolicitudAnalisis = SCOPE_IDENTITY();
 
+        -- Confirmar la transacción
         COMMIT TRANSACTION;
+
+        -- Cambiar el estado de la solicitud
+        EXEC PA_CambiarEstadoSolicitudAnalisis @TN_IdSolicitudAnalisis, 'Aprobar Análisis', 'Analisis', @TN_IdEstado = @ResultadoIdEstado OUTPUT;
+
+        -- Insertar en el historial de la solicitud
+        EXEC PA_InsertarHistoricoSolicitud NULL, @TN_IdSolicitudAnalisis, @PN_IdUsuarioCreador, '', @ResultadoIdEstado;
+
     END TRY
     BEGIN CATCH
+        -- Si ocurre un error, revertir la transacción
         IF @@TRANCOUNT > 0
             ROLLBACK TRANSACTION;
 
@@ -67,6 +78,7 @@ BEGIN
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Author:                Jesner Melgara
@@ -122,7 +134,8 @@ CREATE OR ALTER PROCEDURE dbo.PA_InsertarRequerimentoAnalisis
     @TC_Objetivo VARCHAR(255),
     @TC_UtilizadoPor VARCHAR(255),
     @TN_IdTipo INT,
-    @TN_IdAnalisis INT
+    @TN_IdAnalisis INT,
+    @TN_IdRequerimiento INT OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -145,6 +158,8 @@ BEGIN
             @TN_IdAnalisis
         );
 
+        SET @TN_IdRequerimiento = SCOPE_IDENTITY();
+
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
@@ -161,6 +176,7 @@ BEGIN
     END CATCH
 END
 GO
+
 
 -- =============================================
 -- Author:                Jesner Melgara Murillo
@@ -488,8 +504,8 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Insertar datos en la tabla intermedia PA_InsertarSolicitudAnalisis_Condicion
 -- =============================================
-CREATE OR ALTER PROCEDURE dbo.PA_InsertarSolicitudAnalisis_Condicion
-    @TN_IdAnalisis INT,
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarRequerimientoAnalisis_Condicion
+    @TN_IdRequerimiento INT,
     @TN_IdCondicion INT
 AS
 BEGIN
@@ -499,7 +515,7 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Verificar si el TN_IdAnalisis existe en TSOLITEL_SolicitudAnalisis
-        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis = @TN_IdAnalisis)
+        IF NOT EXISTS (SELECT 1 FROM dbo.TSOLITEL_RequerimentoAnalisis WHERE TN_IdRequerimientoAnalisis = @TN_IdRequerimiento)
         BEGIN
             RAISERROR ('El ID de Análisis proporcionado no existe en TSOLITEL_SolicitudAnalisis.', 16, 1);
             RETURN;
@@ -513,8 +529,8 @@ BEGIN
         END
 
         -- Insertar en la tabla TSOLITEL_SolicitudAnalisis_Condicion
-        INSERT INTO dbo.TSOLITEL_SolicitudAnalisis_Condicion (TN_IdAnalisis, TN_IdCondicion)
-        VALUES (@TN_IdAnalisis, @TN_IdCondicion);
+        INSERT INTO dbo.[TSOLITEL_RequerimientoAnalisis_Condicion] (TN_IdRequerimientoAnalisis, TN_IdCondicion)
+        VALUES (@TN_IdRequerimiento, @TN_IdCondicion);
 
         COMMIT TRANSACTION;
     END TRY
@@ -536,50 +552,500 @@ BEGIN
 END
 GO
 
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todas solicitudes de analisis
+-- =============================================
+CREATE OR ALTER PROCEDURE [dbo].PA_ObtenerSolicitudesAnalisis
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            TN_IdAnalisis,
+			TN_IdAnalisis AS TN_NumeroSolicitud,
+            TF_FechaDeHecho,
+            TC_OtrosDetalles,
+            TC_OtrosObjetivosDeAnalisis,
+            TF_FechaDeCreacion,
+            TB_Aprobado,
+            ES.TN_IdEstado,
+			ES.TC_Nombre,
+            TN_IdOficina
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
+			JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
+        ORDER BY 
+            TN_IdAnalisis DESC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todos los querimientos de analisis por Id
+-- =============================================
+
+USE PROYECTO_ANALISIS
+GO
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerRequerimientosPorSolicitudAnalisis]
+    @TN_IdAnalisis INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            REQ.TN_IdRequerimientoAnalisis,
+            REQ.TC_Objetivo,
+            REQ.TC_UtilizadoPor,
+            REQ.TN_IdAnalisis,
+            REQ.TN_IdTipoDato AS TN_IdTipo,
+            CON.TC_Nombre,
+            CON.TN_IdCondicion,
+			TIP.TC_Nombre AS TC_NombreTipoDato
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimentoAnalisis] AS REQ
+		JOIN 
+		TSOLITEL_TipoDato AS TIP ON TIP.TN_IdTipoDato = REQ.TN_IdTipoDato
+        JOIN  
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimientoAnalisis_Condicion] AS SAC
+        ON 
+            REQ.TN_IdRequerimientoAnalisis = SAC.TN_IdRequerimientoAnalisis
+        JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_Condicion] AS CON 
+        ON 
+            CON.TN_IdCondicion = SAC.TN_IdCondicion
+        WHERE 
+            REQ.TN_IdAnalisis = @TN_IdAnalisis
+        ORDER BY 
+            REQ.TN_IdRequerimientoAnalisis ASC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todos los Objetivos de analisis por Id
+-- =============================================
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerObjetivosPorSolicitudAnalisis]
+    @TN_IdAnalisis INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            OA.TN_IdObjetivoAnalisis,
+            OA.TC_Nombre,
+            OA.TC_Descripcion
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_ObjetivoAnalisis] OA
+        INNER JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis] OASA
+        ON 
+            OA.TN_IdObjetivoAnalisis = OASA.TN_IdObjetivoAnalisis
+        WHERE 
+            OASA.TN_IdAnalisis = @TN_IdAnalisis
+        ORDER BY 
+            OA.TN_IdObjetivoAnalisis ASC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todos los Tipos de analisis por Id
+-- =============================================
+CREATE PROCEDURE [dbo].[PA_ObtenerTiposAnalisisPorSolicitud]
+    @TN_IdAnalisis INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            TA.TN_IdTipoAnalisis,
+            TA.TC_Nombre,
+            TA.TC_Descripcion
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_TipoAnalisis] TA
+        INNER JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_TipoAnalisis_SolicitudAnalisis] TASA
+        ON 
+            TA.TN_IdTipoAnalisis = TASA.TN_IdTipoAnalisis
+        WHERE 
+            TASA.TN_IdAnalisis = @TN_IdAnalisis
+        ORDER BY 
+            TA.TN_IdTipoAnalisis ASC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todos las Condiciones de analisis por Id
+-- =============================================
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerCondicionesPorRequerimientoAnalisis]
+    @TN_IdRequerimientoAnalisis INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            C.TN_IdCondicion,
+            C.TC_Nombre,
+            C.TC_Descripcion
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_Condicion] C
+        INNER JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_RequerimientoAnalisis_Condicion] SAC
+        ON 
+            C.TN_IdCondicion = SAC.TN_IdCondicion
+        WHERE 
+            SAC.TN_IdRequerimientoAnalisis = @TN_IdRequerimientoAnalisis
+        ORDER BY 
+            C.TN_IdCondicion ASC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+-- =============================================
+-- Autor:                Jesner Melgara
+-- Fecha de creación:    2024-10-16
+-- Descripción:          Consultar todos las Archivos de analisis por Id
+-- =============================================
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerArchivosPorSolicitudAnalisis]
+    @TN_IdAnalisis INT
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        SELECT 
+            A.TN_IdArchivo,
+            A.TC_Nombre,
+            A.TC_FormatoAchivo AS TC_FormatoArchivo,
+            A.TV_DireccionFileStream AS TV_Contenido,
+            A.TF_FechaDeModificacion AS TF_FechaModificacion
+        FROM 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_Archivo] A
+        INNER JOIN 
+            [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis_Archivo] SAA
+        ON 
+            A.TN_IdArchivo = SAA.TN_IdArchivo
+        WHERE 
+            SAA.TN_IdAnalisis = @TN_IdAnalisis AND SAA.TC_TIPO = 'Respuesta'
+        ORDER BY 
+            A.TN_IdArchivo ASC;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSoliciProveSoliciAnalisis]
+    @pTN_IdSolicitud INT = NULL
+AS
+BEGIN
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Consulta las solicitudes del proveedor basadas en el ID de la solicitud de análisis
+        SELECT 
+            T.TN_IdSolicitud,
+            T.TN_NumeroUnico,
+            T.TN_NumeroCaso,
+            T.TC_Imputado,
+            T.TC_Ofendido,
+            T.TC_Resennia,
+            T.TB_Urgente,
+            T.TB_Aprobado,
+            T.TF_FechaDeCrecion AS TF_FechaDeCreacion,
+            Usuario.TN_IdUsuario,
+            CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+            Proveedor.TN_IdProveedor,
+            Proveedor.TC_Nombre AS TC_NombreProveedor,
+            Fiscalia.TN_IdFiscalia,
+            Fiscalia.TC_Nombre AS TC_NombreFiscalia,
+            Delito.TN_IdDelito AS TN_IdDelito,
+            Delito.TC_Nombre AS TC_NombreDelito,
+            CategoriaDelito.TN_IdCategoriaDelito,
+            CategoriaDelito.TC_Nombre AS TC_NombreCategoriaDelito,
+            Modalidad.TN_IdModalidad AS TN_IdModalidad,
+            Modalidad.TC_Nombre AS TC_NombreModalidad,
+            Estado.TN_IdEstado,
+            Estado.TC_Nombre AS TC_NombreEstado,
+            SubModalidad.TN_IdSubModalidad,
+            SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
+            T.TN_IdSolicitud AS TN_NumeroSolicitud
+            
+        FROM TSOLITEL_SolicitudProveedor AS T
+        INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
+        INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
+        INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
+        INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
+        INNER JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
+        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
+        INNER JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+        INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
+        INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA ON T.TN_IdSolicitud = SA.TN_IdSolicitud
+        WHERE (@pTN_IdSolicitud IS NULL OR SA.TN_IdAnalisis = @pTN_IdSolicitud)
+        ORDER BY T.TN_IdSolicitud DESC;
+
+        -- Confirma la transacción si no hay errores
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- Manejo de errores
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Captura y lanza el error
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE PA_AprobarSolicitudAnalisis
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+	DECLARE @Error INT;
+
+	BEGIN TRANSACTION;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+		UPDATE [dbo].[TSOLITEL_SolicitudAnalisis]
+            SET TB_Aprobado = 1
+            WHERE TN_IdAnalisis = @pTN_IdSolicitud;
+
+		-- Verificar si hubo algún error
+        SET @Error = @@ERROR;
+        IF @Error <> 0 OR @@ROWCOUNT = 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('No se encontró ningún registro con el Id especificado.', 16, 1);
+            END
+            RETURN -1;
+        END
+
+		COMMIT TRANSACTION;
+
+		EXEC PA_CambiarEstadoSolicitudAnalisis @pTN_IdSolicitud, 'En Análisis', 'Analisis', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] NULL, @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+
 -- Tabla principal de Solicitudes de Análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis ORDER BY TN_IdAnalisis ASC;
 
 -- Archivos asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo;
+SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo ORDER BY TN_IdAnalisis ASC ;
 
+
+
+SELECT * FROM TSOLITEL_RequerimentoAnalisis WHERE TN_IdAnalisis = 59
 -- Condiciones relacionadas con cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
+SELECT * FROM [TSOLITEL_RequerimientoAnalisis_Condicion];
 
 -- Objetivos de análisis asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis ORDER BY TN_IdAnalisis;
 
 -- Tipos de análisis asociados a cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis;
+SELECT * FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis ORDER BY TN_IdAnalisis;
 
 -- Requerimientos de análisis relacionados con cada solicitud de análisis
-SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis;
+SELECT * FROM dbo.TSOLITEL_RequerimentoAnalisis ORDER BY TN_IdAnalisis;
 
 -- Proveedores asociados a cada solicitud de análisis (si aplica en contexto)
 SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
 
+SELECT * FROM TSOLITEL_Estado
+
+UPDATE TSOLITEL_SolicitudAnalisis SET TN_idEstado = 12 WHERE TN_IdAnalisis = 47 
+UPDATE TSOLITEL_SolicitudAnalisis SET TB_Aprobado = 0 WHERE TN_IdAnalisis = 46 
+
+SELECT * FROM TSOLITEL_Estado
 
 
+----Eliminar Datos
+---- Eliminar proveedores asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
 
+---- Eliminar requerimientos de análisis relacionados con cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_RequerimentoAnalisis;
 
+---- Eliminar tipos de análisis asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
 
---Eliminar Datos
--- Eliminar proveedores asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+---- Eliminar objetivos de análisis asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
 
--- Eliminar requerimientos de análisis relacionados con cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_RequerimentoAnalisis;
+---- Eliminar condiciones relacionadas con cada solicitud de análisis
+--DELETE FROM dbo.[TSOLITEL_RequerimientoAnalisis_Condicion];
 
--- Eliminar tipos de análisis asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_TipoAnalisis_SolicitudAnalisis WHERE TN_IdAnalisis > 2;
+---- Eliminar archivos asociados a cada solicitud de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
 
--- Eliminar objetivos de análisis asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
-
--- Eliminar condiciones relacionadas con cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Condicion;
-
--- Eliminar archivos asociados a cada solicitud de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
-
--- Eliminar las solicitudes de análisis
-DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;
+---- Eliminar las solicitudes de análisis
+--DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;

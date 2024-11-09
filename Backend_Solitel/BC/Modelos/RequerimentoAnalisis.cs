@@ -14,9 +14,10 @@ namespace BC.Modelos
 
         public string UtilizadoPor { get; set; }
 
-        public int IdTipo { get; set; }
+        public TipoDato tipoDato  { get; set; }
 
         public int IdAnalisis { get; set; }
+        public Condicion condicion { get; set; }
     }
 
 }

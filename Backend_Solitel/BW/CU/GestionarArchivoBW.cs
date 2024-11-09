@@ -38,5 +38,15 @@ namespace BW.CU
         {
            return await this.gestionarArchivoDA.ObtenerArchivosDeSolicitudesProveedor(id);
         }
+
+        public async Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis, string tipo)
+        {
+            return await this.gestionarArchivoDA.ObtenerArchivosPorSolicitudAnalisis(idSolicitudAnalisis, tipo);
+        }
+
+        public async Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis, string tipo)
+        {
+            return await this.gestionarArchivoDA.InsertarArchivoRespuestaSolicitudAnalisis(archivo, idSolicitudAnalisis, tipo);
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace DA.Acciones
         {
             this._context = solitelContext;
         }
+
         public async Task<bool> InsertarArchivo_RequerimientoProveedor(Archivo archivo, int idRequerimientoProveedor)
         {
             try
@@ -170,6 +171,81 @@ namespace DA.Acciones
             catch (Exception ex)
             {
                 throw new Exception($"Ocurrió un error inesperado al obtener los archivos de solicitudes de proveedor: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis, string tipo)
+        {
+            try
+            {
+                // Definir el parámetro para el procedimiento almacenado
+                var idSolicitudAnalisisParam = new SqlParameter("@PN_IdAnalisis", idSolicitudAnalisis);
+                var tipoParam = new SqlParameter("@PC_Tipo", tipo);
+
+                // Ejecutar el procedimiento almacenado
+                var archivosDA = await _context.TSOLITEL_ArchivoDA
+                    .FromSqlRaw("EXEC PA_ObtenerArchivosPorSolicitudAnalisis @PN_IdAnalisis, @PC_Tipo", idSolicitudAnalisisParam, tipoParam)
+                    .ToListAsync();
+
+                // Mapear los resultados a una lista de objetos Archivo
+                var archivos = archivosDA.Select(da => new Archivo
+                {
+                    IdArchivo = da.TN_IdArchivo,
+                    Nombre = da.TC_Nombre,
+                    Contenido = da.TV_Contenido,
+                    FormatoArchivo = da.TC_FormatoArchivo,
+                    FechaModificacion = da.TF_FechaModificacion
+                }).ToList();
+
+                return archivos;
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception($"Error en la base de datos al obtener archivos de solicitudes de proveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrió un error inesperado al obtener los archivos de solicitudes de proveedor: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis, string tipo)
+        {
+            try
+            {
+                // Definir los parámetros para el procedimiento almacenado
+                var nombreArchivoParam = new SqlParameter("@PC_NombreArchivo", archivo.Nombre);
+                var contenidoParam = new SqlParameter("@PV_Contenido", archivo.Contenido);
+                var formatoArchivoParam = new SqlParameter("@PC_FormatoArchivo", archivo.FormatoArchivo);
+                var fechaModificacionParam = new SqlParameter("@PF_FechaModificacion", archivo.FechaModificacion);
+                var idSolicitudAnalisisParam = new SqlParameter("@PN_IdSolicitudAnalisis", idSolicitudAnalisis);
+                var tipoParam = new SqlParameter("@PC_Tipo", tipo);
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarArchivoRespuestaSolicitudAnalisis @PC_NombreArchivo, @PV_Contenido, " +
+                    "@PC_FormatoArchivo, @PF_FechaModificacion, @PN_IdSolicitudAnalisis, @PC_Tipo",
+                    nombreArchivoParam, contenidoParam, formatoArchivoParam, fechaModificacionParam, idSolicitudAnalisisParam, tipoParam
+                );
+
+                var resultado = await _context.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar el archivo de requerimientoProveedor.");
+                }
+
+                return resultado >= 0 ? true : false;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al insertar el archivo de requerimientoProveedor: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al insertar el archivo de requerimientoProveedor: {ex.Message}", ex);
             }
         }
     }

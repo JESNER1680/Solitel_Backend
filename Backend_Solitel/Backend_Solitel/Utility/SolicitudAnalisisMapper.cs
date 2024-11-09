@@ -19,9 +19,11 @@ namespace Backend_Solitel.Utility
                 OtrosDetalles = solicitudAnalisisDTO.OtrosDetalles,
                 OtrosObjetivosDeAnalisis = solicitudAnalisisDTO.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisisDTO.Aprobado,
-                FechaCrecion = solicitudAnalisisDTO.FechaCrecion ?? fechaActual,
+                Estado = solicitudAnalisisDTO.Estado,
+                FechaCrecion = solicitudAnalisisDTO.FechaCrecion?? fechaActual,
                 NumeroSolicitud = solicitudAnalisisDTO.NumeroSolicitud,
                 IdOficina = solicitudAnalisisDTO.IdOficina,
+                IdUsuario = solicitudAnalisisDTO.IdUsuario,
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisisDTO.Requerimentos?.Select(r => new RequerimentoAnalisis
@@ -29,7 +31,17 @@ namespace Backend_Solitel.Utility
                     IdRequerimientoAnalisis = r.IdRequerimientoAnalisis,
                     Objetivo = r.Objetivo,
                     UtilizadoPor = r.UtilizadoPor,
-                    IdTipo = r.IdTipo
+                    tipoDato = new TipoDato
+                    {
+                        IdTipoDato = r.tipoDatoDTO.IdTipoDato
+                    },
+                    IdAnalisis = r.IdAnalisis, // Asegúrate de incluir esta propiedad si es necesaria
+                    condicion = new Condicion
+                    {
+                        IdCondicion = r.condicion.IdCondicion,
+                        Nombre = r.condicion.Nombre,
+                        Descripcion = r.condicion.Descripcion
+                    }
                 }).ToList() ?? new List<RequerimentoAnalisis>(),
 
                 // Mapear Objetivos de Análisis
@@ -52,15 +64,6 @@ namespace Backend_Solitel.Utility
                     IdTipoAnalisis = t.IdTipoAnalisis,
                     Nombre = t.Nombre
                 }).ToList() ?? new List<TipoAnalisis>(),
-
-                // Mapear Condiciones
-                Condiciones = solicitudAnalisisDTO.Condiciones?.Select(c => new Condicion
-                {
-                    IdCondicion = c.IdCondicion,
-                    Nombre = c.Nombre,
-                    Descripcion = c.Descripcion,
-                }).ToList() ?? new List<Condicion>(),
-
                 // Mapear Archivos
                 Archivos = solicitudAnalisisDTO.Archivos?.Select(a => new Archivo
                 {
@@ -83,9 +86,11 @@ namespace Backend_Solitel.Utility
                 OtrosDetalles = solicitudAnalisis.OtrosDetalles,
                 OtrosObjetivosDeAnalisis = solicitudAnalisis.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisis.Aprobado,
+                Estado = solicitudAnalisis.Estado,
                 FechaCrecion = solicitudAnalisis.FechaCrecion,
                 NumeroSolicitud = solicitudAnalisis.NumeroSolicitud,
                 IdOficina = solicitudAnalisis.IdOficina,
+                IdUsuario = solicitudAnalisis.IdUsuario,
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisis.Requerimentos?.Select(r => new RequerimentoAnalisisDTO
@@ -93,8 +98,19 @@ namespace Backend_Solitel.Utility
                     IdRequerimientoAnalisis = r.IdRequerimientoAnalisis,
                     Objetivo = r.Objetivo,
                     UtilizadoPor = r.UtilizadoPor,
-                    IdTipo = r.IdTipo
+                    tipoDatoDTO = new TipoDatoDTO
+                    {
+                        IdTipoDato = r.tipoDato.IdTipoDato,
+                        Nombre = r.tipoDato.Nombre
+                    },
+                    condicion = new CondicionDTO
+                    {
+                        IdCondicion = r.condicion.IdCondicion, // Cambiado de 'c' a 'r.condicion'
+                        Nombre = r.condicion.Nombre,
+                        Descripcion = r.condicion.Descripcion
+                    }
                 }).ToList() ?? new List<RequerimentoAnalisisDTO>(),
+
 
                 // Mapear Objetivos de Análisis
                 ObjetivosAnalisis = solicitudAnalisis.ObjetivosAnalisis?.Select(o => new ObjetivoAnalisisDTO
@@ -116,14 +132,6 @@ namespace Backend_Solitel.Utility
                     IdTipoAnalisis = t.IdTipoAnalisis,
                     Nombre = t.Nombre
                 }).ToList() ?? new List<TipoAnalisisDTO>(),
-
-                // Mapear Condiciones
-                Condiciones = solicitudAnalisis.Condiciones?.Select(c => new CondicionDTO
-                {
-                    IdCondicion = c.IdCondicion,
-                    Nombre = c.Nombre,
-                    Descripcion = c.Descripcion
-                }).ToList() ?? new List<CondicionDTO>(),
 
                 // Mapear Archivos
                 Archivos = solicitudAnalisis.Archivos?.Select(a => new ArchivoDTO

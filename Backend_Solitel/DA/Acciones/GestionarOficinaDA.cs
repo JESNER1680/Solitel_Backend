@@ -52,6 +52,40 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<Oficina> ConsultarOficina(int idOficina)
+        {
+            try
+            {
+                var idOficinaParam = new SqlParameter("@PN_IdOficina", idOficina);
+                // Ejecutar el procedimiento almacenado
+                var oficinasDA = await _context.TSOLITEL_OficinaDA
+                    .FromSqlRaw("EXEC PA_ConsultarOficina @PN_IdOficina", idOficinaParam)
+                    .ToListAsync();
+
+                // Mapeo de los resultados
+                var oficina = oficinasDA.FirstOrDefault();
+
+                var oficinaResult = new Oficina
+                {
+                    IdOficina = oficina.TN_IdOficina,
+                    Nombre = oficina.TC_Nombre,
+                    Tipo = oficina.TC_Tipo
+                };
+
+                return oficinaResult;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener oficinas: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la lista de oficinas: {ex.Message}", ex);
+            }
+        }
+
         public async Task<bool> EliminarOficina(int idOficina)
         {
             try

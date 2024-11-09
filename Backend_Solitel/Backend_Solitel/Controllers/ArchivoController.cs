@@ -106,5 +106,141 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        [HttpGet("ObtenerArchivosPorSolicitudAnalisis")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosPorSolicitudAnalisis(idSolicitudAnalisis, "DefaultTipo");
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        [Route("InsertarArchivoRespuestaSolicitudAnalisis")]
+        public async Task<bool> InsertarArchivoRespuestaSolicitudAnalisis([FromForm] ArchivoDTO archivoDTO,
+                                                                        [FromForm] IFormFile file,
+                                                                        [FromForm] int idSolicitudAnalisis)
+        {
+            // Verificar si archivoDTO es nulo
+            if (archivoDTO == null)
+            {
+                return false;
+            }
+
+            // Verificar si el archivo es nulo
+            if (file == null)
+            {
+                return false;
+            }
+
+            // Verificar si idSolicitudAnalisis es nulo
+            if (idSolicitudAnalisis <= 0)
+            {
+                return false;
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                var contenido = memoryStream.ToArray(); // Contenido como byte[]
+
+                archivoDTO.Contenido = contenido;
+                archivoDTO.FechaModificacion = DateTime.Now;
+            }
+
+            return await this.gestionarArchivoBW.InsertarArchivoRespuestaSolicitudAnalisis(ArchivoMapper.ToModel(archivoDTO), idSolicitudAnalisis, "Respuesta");
+        }
+
+        [HttpPost]
+        [Route("InsertarArchivoInformeFinalSolicitudAnalisis")]
+        public async Task<bool> InsertarArchivoInformeFinalSolicitudAnalisis([FromForm] ArchivoDTO archivoDTO,
+                                                                        [FromForm] IFormFile file,
+                                                                        [FromForm] int idSolicitudAnalisis)
+        {
+            // Verificar si archivoDTO es nulo
+            if (archivoDTO == null)
+            {
+                return false;
+            }
+
+            // Verificar si el archivo es nulo
+            if (file == null)
+            {
+                return false;
+            }
+
+            // Verificar si idSolicitudAnalisis es nulo
+            if (idSolicitudAnalisis <= 0)
+            {
+                return false;
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                var contenido = memoryStream.ToArray(); // Contenido como byte[]
+
+                archivoDTO.Contenido = contenido;
+                archivoDTO.FechaModificacion = DateTime.Now;
+            }
+
+            return await this.gestionarArchivoBW.InsertarArchivoRespuestaSolicitudAnalisis(ArchivoMapper.ToModel(archivoDTO), idSolicitudAnalisis, "Informe");
+        }
+
+        [HttpGet]
+        [Route("ObtenerArchivosRespuestaSolicitudAnalisis")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosRespuestaSolicitudAnalisis(int idSolicitudAnalisis)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosPorSolicitudAnalisis(idSolicitudAnalisis, "Respuesta");
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
+        }
+
+        [HttpGet]
+        [Route("ObtenerArchivosInformeFinalSolicitudAnalisis")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosInformeFinalSolicitudAnalisis(int idSolicitudAnalisis)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosPorSolicitudAnalisis(idSolicitudAnalisis, "Informe");
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

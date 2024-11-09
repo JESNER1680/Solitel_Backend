@@ -10,5 +10,7 @@ namespace BW.Interfaces.DA
     public interface IGestionarHistorialDA
     {
         public Task<List<Historial>> ConsultarHistorialDeSolicitudProveedor(int idSolicitudProveedor);
+
+        public Task<List<Historial>> ConsultarHistorialDeSolicitudAnalisis(int idSolicitudProveedor);
     }
 }

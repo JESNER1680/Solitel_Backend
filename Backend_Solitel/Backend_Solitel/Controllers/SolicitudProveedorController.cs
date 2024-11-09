@@ -93,6 +93,28 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
+        [Route("consultarSolicitudProveedor")]
+        public async Task<SolicitudProveedorDTO> ConsultarSolicitudProveedor(int idSolicitud)
+        {
+            var solicitudProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitud(idSolicitud));
+
+
+            solicitudProveedor.Requerimientos = RequerimientoProveedorMapper
+                .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(idSolicitud), idSolicitud);
+
+            foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedor.Requerimientos)
+            {
+                requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+                requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+            }
+
+
+            return solicitudProveedor;
+        }
+
+        [HttpGet]
         [Route("listarNumerosUnicosTramitados")]
         public async Task<List<string>> ListarNumerosUnicosTramitados()
         {
@@ -308,5 +330,23 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+
+        [HttpGet]
+        [Route("consultarInformacionNumeroUnico")]
+        public async Task<ActionResult<SolicitudProveedorInfoComunDTO>> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        {
+            var infoComun = await this.gestionarSolicitudProveedorBW.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
+
+            if(infoComun == null)
+            {
+                return NotFound("No se encontro ninguna solicitud con ese numero unico");
+            }
+            else
+            {
+                return Ok(SolicitudProveedorMapper.FiltrarInformacionEnComun(infoComun));
+            }
+
+            
+        }
     }
 }

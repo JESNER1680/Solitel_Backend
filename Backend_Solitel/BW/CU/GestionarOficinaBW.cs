@@ -17,6 +17,12 @@ namespace BW.CU
         {
             this.gestionarOficinaDA = gestionarOficinaDA;
         }
+
+        public async Task<Oficina> ConsultarOficina(int idOficina)
+        {
+            return await this.gestionarOficinaDA.ConsultarOficina(idOficina);
+        }
+
         public async Task<List<Oficina>> ConsultarOficinas()
         {
             //Reglas de Negocio

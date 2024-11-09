@@ -13,6 +13,11 @@ namespace BW.CU
             this.gestionarHistorialDA = gestionarHistorialDA;
         }
 
+        public async Task<List<Historial>> ConsultarHistorialDeSolicitudAnalisis(int idSolicitudProveedor)
+        {
+            return await this.gestionarHistorialDA.ConsultarHistorialDeSolicitudAnalisis(idSolicitudProveedor);
+        }
+
         public async Task<List<Historial>> ConsultarHistorialDeSolicitudProveedor(int idSolicitudProveedor)
         {
             return await this.gestionarHistorialDA.ConsultarHistorialDeSolicitudProveedor(idSolicitudProveedor);
