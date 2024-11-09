@@ -23,6 +23,7 @@ namespace Backend_Solitel.Utility
                 FechaCrecion = solicitudAnalisisDTO.FechaCrecion?? fechaActual,
                 NumeroSolicitud = solicitudAnalisisDTO.NumeroSolicitud,
                 IdOficina = solicitudAnalisisDTO.IdOficina,
+                IdUsuario = solicitudAnalisisDTO.IdUsuario,
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisisDTO.Requerimentos?.Select(r => new RequerimentoAnalisis
@@ -89,6 +90,7 @@ namespace Backend_Solitel.Utility
                 FechaCrecion = solicitudAnalisis.FechaCrecion,
                 NumeroSolicitud = solicitudAnalisis.NumeroSolicitud,
                 IdOficina = solicitudAnalisis.IdOficina,
+                IdUsuario = solicitudAnalisis.IdUsuario,
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisis.Requerimentos?.Select(r => new RequerimentoAnalisisDTO

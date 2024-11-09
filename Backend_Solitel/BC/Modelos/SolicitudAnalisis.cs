@@ -17,6 +17,7 @@ namespace BC.Modelos
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }
+        public int IdUsuario { get; set; }
 
         // Lista de requerimientos
         public List<RequerimentoAnalisis> Requerimentos { get; set; }

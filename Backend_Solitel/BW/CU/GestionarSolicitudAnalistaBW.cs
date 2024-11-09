@@ -26,6 +26,11 @@ namespace BW.CU
         {
             return await this.solicitudAnalistaDA.ActualizarEstadoFinalizado(id, idUsuario, observacion);
         }
+        
+        public async Task<bool> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            return await this.solicitudAnalistaDA.AprobarSolicitudAnalisis(idSolicitudAnalisis,idUsuario, observacion);
+        }
 
         public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, string caracterIngresado = null)
         {

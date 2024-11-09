@@ -218,5 +218,29 @@ namespace Backend_Solitel.Controllers
                 return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
             }
         }
+
+        [HttpGet]
+        [Route("ObtenerArchivosInformeFinalSolicitudAnalisis")]
+        public async Task<ActionResult<List<Archivo>>> ObtenerArchivosInformeFinalSolicitudAnalisis(int idSolicitudAnalisis)
+        {
+            try
+            {
+                var archivos = await this.gestionarArchivoBW.ObtenerArchivosPorSolicitudAnalisis(idSolicitudAnalisis, "Informe");
+
+                if (archivos == null || archivos.Count == 0)
+                {
+                    return NotFound("No se encontraron archivos para la solicitud especificada.");
+                }
+
+                return Ok(archivos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno al obtener archivos de la solicitud: {ex.Message}");
+            }
+        }
+
+
+
     }
 }

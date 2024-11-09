@@ -36,5 +36,7 @@ namespace BW.Interfaces.BW
         public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);
 
         public Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico);
+
+        public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
     }
 }
