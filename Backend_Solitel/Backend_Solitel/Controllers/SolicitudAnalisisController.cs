@@ -1,5 +1,6 @@
 ﻿using Backend_Solitel.DTO;
 using BC.Modelos;
+using BW.CU;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,14 +64,12 @@ namespace Backend_Solitel.Controllers
             return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis();
         }
 
-        [HttpPut]
-        [Route("ActualizarEstadoAnalizadoSolicitudAnalisis")]
+        [HttpPut("ActualizarEstadoAnalizadoSolicitudAnalisis")]
         public async Task<IActionResult> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
         {
             try
             {
-
-                bool resultado = await this.gestionarSolicitudAnalistaBW.ActualizarEstadoAnalizadoSolicitudAnalisis(idSolicitudAnalisis, idUsuario, observacion);
+                bool resultado = await gestionarSolicitudAnalistaBW.ActualizarEstadoAnalizadoSolicitudAnalisis(idSolicitudAnalisis, idUsuario, observacion);
 
                 if (resultado)
                 {
@@ -83,7 +82,6 @@ namespace Backend_Solitel.Controllers
             }
             catch (Exception ex)
             {
-                // Manejo de excepciones
                 return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Analizado: {ex.Message}" });
             }
         }
@@ -108,6 +106,31 @@ namespace Backend_Solitel.Controllers
             {
                 // Manejo de errores
                 return StatusCode(500, new { message = $"Ocurrió un error al intentar devolver la solicitud a Tramitado: {ex.Message}" });
+            }
+        }
+        
+        [HttpPut("AprobarSolicitudAnalisis")]
+        public async Task<IActionResult> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            try
+            {
+                Console.WriteLine("CAPA CONTROLLER");
+                Console.WriteLine(idSolicitudAnalisis + " " + idUsuario + " " + observacion);
+                bool resultado = await gestionarSolicitudAnalistaBW.AprobarSolicitudAnalisis(idSolicitudAnalisis,idUsuario, observacion);
+                Console.WriteLine("BOOLEAN CONFIRMACION");
+                Console.WriteLine(idSolicitudAnalisis + " " + idUsuario + " " + observacion);
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Analizado correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Analizado: {ex.Message}" });
             }
         }
 

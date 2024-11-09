@@ -13,6 +13,7 @@ namespace Backend_Solitel.DTO
         public DateTime? FechaCrecion { get; set; }
         public int NumeroSolicitud { get; set; }
         public int IdOficina { get; set; }
+        public int IdUsuario { get; set; }
 
         // Lista de requerimientos
         public List<RequerimentoAnalisisDTO> Requerimentos { get; set; }

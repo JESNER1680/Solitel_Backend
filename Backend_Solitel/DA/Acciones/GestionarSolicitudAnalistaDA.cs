@@ -205,23 +205,23 @@ namespace DA.Acciones
                 var otrosDetallesParam = new SqlParameter("@TC_OtrosDetalles", solicitudAnalisis.OtrosDetalles);
                 var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
                 var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
-                var IdEstadoParam = new SqlParameter("@TN_IdEstado", solicitudAnalisis.Estado.IdEstado);
                 var fechaCreacionParam = new SqlParameter("@TF_FechaCrecion", (object)solicitudAnalisis.FechaCrecion ?? DBNull.Value);
                 var numeroSolicitudParam = new SqlParameter("@TN_NumeroSolicitud", solicitudAnalisis.NumeroSolicitud);
                 var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.IdOficina);
+                var idUsuarioCreadorParam = new SqlParameter("@PN_IdUsuarioCreador", solicitudAnalisis.IdUsuario); // Asegúrate de que este es el nombre correcto
 
                 // Parámetro de salida para capturar el ID de análisis generado
                 var idAnalisisParam = new SqlParameter("@TN_IdSolicitudAnalisis", SqlDbType.Int)
                 {
                     Direction = ParameterDirection.Output
                 };
-                Console.WriteLine("NO ME HE CAIDO");
 
                 // Ejecutar PA_InsertarSolicitudAnalisis para crear la solicitud de análisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdEstado, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
-                    fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, IdEstadoParam, idOficinaParam, idAnalisisParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @PN_IdUsuarioCreador, @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_NumeroSolicitud, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
+                    idUsuarioCreadorParam, fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, numeroSolicitudParam, idOficinaParam, idAnalisisParam);
 
+                Console.WriteLine("NO ME HE CAIDO");
                 // Obtener el ID generado para el análisis
                 var idAnalisis = (int)idAnalisisParam.Value;
                 Console.WriteLine("NO ME HE CAIDO 2");
@@ -512,6 +512,45 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<bool> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
+        {
+            Console.WriteLine("CAPA DATOS");
+            Console.WriteLine(idSolicitudAnalisis + " " + idUsuario + " " + observacion);
+            try
+            {
+                Console.WriteLine("CAPA DATOS");
+                Console.WriteLine(idSolicitudAnalisis+" "+idUsuario+" "+observacion);
+                // Definir los parámetros para el procedimiento almacenado
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", idSolicitudAnalisis);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
+
+
+                // Ejecutar el procedimiento almacenado
+                await solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_AprobarSolicitudAnalisis @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudParam, idUsuarioParam, observacionParam);
+
+                // Guardar los cambios
+                var resultado = await solitelContext.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al aprobar la solicitud.");
+                }
+
+                return resultado >= 0;
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
+        }
 
         public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
         {
@@ -542,9 +581,6 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al actualizar el estado de la solicitud: {ex.Message}", ex);
             }
         }
-
-
-
 
 
 
