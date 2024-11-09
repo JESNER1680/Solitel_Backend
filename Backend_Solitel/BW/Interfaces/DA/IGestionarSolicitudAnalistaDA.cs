@@ -17,5 +17,6 @@ namespace BW.Interfaces.DA
         public Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis();
 
         public Task<bool> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion);
+        public Task<bool> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion);
     }
 }
