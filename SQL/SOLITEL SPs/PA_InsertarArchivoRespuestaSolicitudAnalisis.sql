@@ -3,7 +3,8 @@ CREATE OR ALTER PROCEDURE PA_InsertarArchivoRespuestaSolicitudAnalisis
     @PV_Contenido VARBINARY(MAX),
     @PC_FormatoArchivo VARCHAR(20),
     @PF_FechaModificacion DATE,
-    @PN_IdSolicitudAnalisis INT
+    @PN_IdSolicitudAnalisis INT,
+	@PC_Tipo VARCHAR(50)
 AS
 BEGIN
 	BEGIN TRY
@@ -20,7 +21,7 @@ BEGIN
 
         -- Inserta la relación entre solicitudAnalisis y archivo
         INSERT INTO TSOLITEL_SolicitudAnalisis_Archivo (TN_IdAnalisis, TN_IdArchivo, TC_Tipo)
-        VALUES (@PN_IdSolicitudAnalisis, @IdArchivoInsertado, 'Respuesta');
+        VALUES (@PN_IdSolicitudAnalisis, @IdArchivoInsertado, @PC_Tipo);
 
         -- Confirma la transacción
         COMMIT TRANSACTION;

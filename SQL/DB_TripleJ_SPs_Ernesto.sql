@@ -8,6 +8,160 @@ GO
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-29
+-- Descripción:		    Historial de solicitud de analisis
+-- =============================================
+
+CREATE OR ALTER PROCEDURE PA_ConsultarHistoricoSolicitudAnalisis
+    @PN_IdSolicitudAnalisis INT
+AS
+BEGIN
+    BEGIN TRY
+
+         SELECT 
+			H.TN_IdHistorial, 
+			H.TC_Observacion, 
+			H.TF_FechaDeModificacion, 
+			Usuario.TN_IdUsuario,
+			CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+			Estado.TN_IdEstado, 
+			Estado.TC_Nombre AS TC_NombreEstado,
+			H.TN_IdAnalisis, 
+			H.TN_IdSolicitud
+
+        FROM TSOLITEL_Historial AS H
+		INNER JOIN TSOLITEL_Estado AS Estado ON H.TN_IdEstado = Estado.TN_IdEstado
+		INNER JOIN TSOLITEL_Usuario AS Usuario ON H.TN_IdUsuario = Usuario.TN_IdUsuario
+        WHERE TN_IdAnalisis = @PN_IdSolicitudAnalisis
+		ORDER BY H.TN_IdHistorial DESC;
+
+    END TRY
+    BEGIN CATCH
+       
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
+-- Descripción:		    Mover solicitud de analisis a finalizado
+-- =============================================
+
+CREATE OR ALTER PROCEDURE PA_ActualizarEstadoFinalizadoSolicitudAnalisis
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        EXEC PA_CambiarEstadoSolicitudAnalisis @pTN_IdSolicitud, 'Finalizado', 'Analisis', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] NULL, @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
+-- Descripción:		    Mover solicitud de analisis a legajo
+-- =============================================
+
+CREATE OR ALTER PROCEDURE PA_ActualizarEstadoLegajoSolicitudAnalisis
+	@pTN_IdSolicitud INT,
+	@PN_IdUsuario INT,
+	@PC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        EXEC PA_CambiarEstadoSolicitudAnalisis @pTN_IdSolicitud, 'Legajo', 'Analisis', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] NULL, @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
 -- Descripción:		    Devulve una solicitud en estado finalizado a tramitado
 -- =============================================
 
@@ -26,6 +180,56 @@ BEGIN
         EXEC PA_CambiarEstadoSolicitudProveedor @pTN_IdSolicitud, 'Tramitado', 'Proveedor', @TN_IdEstado = @IdEstado OUTPUT;
 
 		EXEC [PA_InsertarHistoricoSolicitud] @pTN_IdSolicitud, NULL, @pTN_IdUsuario, @pTC_Observacion, @IdEstado;
+
+    END TRY
+    BEGIN CATCH
+
+        -- En caso de error, hacer rollback
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        -- Lanzar el error de SQL Server
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-29
+-- Descripción:		    Devulve una solicitud en estado finalizado o en legajo a analizado 
+-- =============================================
+
+CREATE OR ALTER PROCEDURE PA_DevolverATramitadoAnalisis
+	@pTN_IdSolicitud INT,
+	@pTN_IdUsuario INT,
+	@pTC_Observacion VARCHAR(255) = NULL
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        DECLARE @IdEstado int;
+
+        EXEC PA_CambiarEstadoSolicitudAnalisis @pTN_IdSolicitud, 'Analizado', 'Analisis', @TN_IdEstado = @IdEstado OUTPUT;
+
+		EXEC [PA_InsertarHistoricoSolicitud] NULL, @pTN_IdSolicitud, @pTN_IdUsuario, @pTC_Observacion, @IdEstado;
 
     END TRY
     BEGIN CATCH

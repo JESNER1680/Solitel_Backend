@@ -62,6 +62,36 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                // Define los parámetros para el procedimiento almacenado
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion ?? (object)DBNull.Value);
+
+                // Ejecuta el procedimiento almacenado
+                var result = await this.solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoLegajoSolicitudAnalisis @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudParam, idUsuarioParam, observacionParam
+                );
+
+                // Verifica si el resultado fue exitoso
+                return result < 0;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al actualizar el estado a Legajo de la solicitud: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al actualizar el estado a Legajo de la solicitud: {ex.Message}", ex);
+            }
+        }
+
         public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(
         int pageNumber,
         int pageSize,
@@ -298,7 +328,42 @@ namespace DA.Acciones
             }
         }
 
+        public async Task<bool> DevolverAnalizado(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                //Definir los parámetros para el procedimiento almacenado
+                var idSolicitudProveedorParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@pTC_Observacion", observacion)
+                {
+                    Size = 255,
+                    Value = (object)observacion ?? DBNull.Value // Manejar nulos
+                };
 
+
+                // Ejecutar el procedimiento almacenado para insertar
+                await this.solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_DevolverATramitadoAnalisis @pTN_IdSolicitud, @pTN_IdUsuario, @pTC_Observacion",
+                    idSolicitudProveedorParam, idUsuarioParam, observacionParam);
+
+                var resultado = await this.solitelContext.SaveChangesAsync();
+
+                if (resultado < 0)
+                {
+                    throw new Exception("Error al insertar al aprobar la solicitud.");
+                }
+
+
+                return resultado >= 0 ? true : false;
+
+            }
+            catch (SqlException ex)
+            {
+                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
+        }
 
         public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis()
         {
@@ -464,6 +529,7 @@ namespace DA.Acciones
                     Value = (object)observacion ?? DBNull.Value // Manejar nulos
                 };
 
+
                 // Ejecutar el procedimiento almacenado
                 await solitelContext.Database.ExecuteSqlRawAsync(
                     "EXEC PA_AprobarSolicitudAnalisis @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
@@ -483,6 +549,36 @@ namespace DA.Acciones
             {
                 // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null)
+        {
+            try
+            {
+                // Define los parámetros para el procedimiento almacenado
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", id);
+                var idUsuarioParam = new SqlParameter("@PN_IdUsuario", idUsuario);
+                var observacionParam = new SqlParameter("@PC_Observacion", observacion ?? (object)DBNull.Value);
+
+                // Ejecuta el procedimiento almacenado
+                var result = await this.solitelContext.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_ActualizarEstadoFinalizadoSolicitudAnalisis @pTN_IdSolicitud, @PN_IdUsuario, @PC_Observacion",
+                    idSolicitudParam, idUsuarioParam, observacionParam
+                );
+
+                // Verifica si el resultado fue exitoso
+                return result < 0;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al actualizar el estado de la solicitud: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al actualizar el estado de la solicitud: {ex.Message}", ex);
             }
         }
 

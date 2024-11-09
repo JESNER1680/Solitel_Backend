@@ -86,6 +86,29 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        [HttpPut("devolverAnalizado")]
+        public async Task<IActionResult> DevolverAnalizado([FromQuery] int id, [FromQuery] int idUsuario, [FromQuery] string observacion = null)
+        {
+            try
+            {
+                var result = await this.gestionarSolicitudAnalistaBW.DevolverAnalizado(id, idUsuario, observacion);
+
+                if (result)
+                {
+                    return Ok(new { message = "La solicitud ha sido devuelta a Analizado exitosamente." });
+                }
+                else
+                {
+                    return BadRequest(new { message = "No se pudo devolver la solicitud a Analizado." });
+                }
+            }
+            catch (System.Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, new { message = $"Ocurrió un error al intentar devolver la solicitud a Tramitado: {ex.Message}" });
+            }
+        }
+        
         [HttpPut("AprobarSolicitudAnalisis")]
         public async Task<IActionResult> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion)
         {
@@ -111,5 +134,50 @@ namespace Backend_Solitel.Controllers
             }
         }
 
+        [HttpPut("actualizarEstadoLegajo")]
+        public async Task<IActionResult> ActualizarEstadoLegajo(int id, int idUsuario, [FromQuery] string observacion = null)
+        {
+            try
+            {
+                bool resultado = await this.gestionarSolicitudAnalistaBW.ActualizarEstadoLegajo(id, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Legajo correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Legajo: {ex.Message}" });
+            }
+        }
+
+        [HttpPut("actualizarEstadoFinalizado")]
+        public async Task<IActionResult> ActualizarEstadoFinalizado(int id, int idUsuario, [FromQuery] string observacion = null)
+        {
+            try
+            {
+                bool resultado = await this.gestionarSolicitudAnalistaBW.ActualizarEstadoFinalizado(id, idUsuario, observacion);
+
+                if (resultado)
+                {
+                    return Ok(new { mensaje = "Estado actualizado a Finalizado correctamente." });
+                }
+                else
+                {
+                    return BadRequest(new { mensaje = "No se pudo actualizar el estado de la solicitud." });
+                }
+            }
+            catch (Exception ex)
+            {
+                // Manejo de excepciones
+                return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Finalizado: {ex.Message}" });
+            }
+        }
     }
 }

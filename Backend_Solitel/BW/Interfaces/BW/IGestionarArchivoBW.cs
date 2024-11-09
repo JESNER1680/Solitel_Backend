@@ -17,8 +17,8 @@ namespace BW.Interfaces.BW
 
         public Task<List<Archivo>> ObtenerArchivosDeSolicitudesProveedor(int id);
 
-        public Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis);
+        public Task<List<Archivo>> ObtenerArchivosPorSolicitudAnalisis(int idSolicitudAnalisis, string tipo);
 
-        public Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis);
+        public Task<bool> InsertarArchivoRespuestaSolicitudAnalisis(Archivo archivo, int idSolicitudAnalisis, string tipo);
     }
 }
