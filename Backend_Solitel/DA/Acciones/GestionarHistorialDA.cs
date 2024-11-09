@@ -58,6 +58,7 @@ namespace DA.Acciones
             }
         }
 
+
         public async Task<List<Historial>> ConsultarHistorialDeSolicitudProveedor(int idSolicitudProveedor)
         {
             try
