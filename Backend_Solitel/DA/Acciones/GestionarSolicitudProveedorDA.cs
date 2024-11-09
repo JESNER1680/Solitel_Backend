@@ -388,7 +388,6 @@ namespace DA.Acciones
 
             try
             {
-
                 // Ejecutar el procedimiento almacenado
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
                     .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesProveedor")
