@@ -75,7 +75,6 @@ BEGIN
 		TN_IdPermiso INT IDENTITY NOT NULL,
 		TC_Nombre VARCHAR(100) NOT NULL,
 		TC_Descripcion VARCHAR(255) NOT NULL,
-		TB_Borrado BIT DEFAULT 0,
 		CONSTRAINT [PK_TSOLITEL_Permiso] PRIMARY KEY NONCLUSTERED (TN_IdPermiso ASC)
 	);
 
@@ -191,8 +190,8 @@ BEGIN
 	-- Tabla SolicitudProveedor
 	CREATE TABLE TSOLITEL_SolicitudProveedor (
 		TN_IdSolicitud INT IDENTITY NOT NULL,
-		TN_NumeroUnico VARCHAR(100) NULL,
-		TN_NumeroCaso VARCHAR(100) NULL,
+		TC_NumeroUnico VARCHAR(100) NULL,
+		TC_NumeroCaso VARCHAR(100) NULL,
 		TC_Imputado VARCHAR(150) NOT NULL,
 		TC_Ofendido VARCHAR(150) NOT NULL,
 		TC_Resennia VARCHAR(255) NOT NULL,
@@ -286,7 +285,7 @@ BEGIN
 	-- Tabla TSOLITEL_Archivo
 	CREATE TABLE TSOLITEL_Archivo (
 		TN_IdArchivo INT IDENTITY NOT NULL,
-		TC_Nombre VARCHAR(100) NOT NULL,
+		TC_Nombre VARCHAR(255) NOT NULL,
 		TC_FormatoAchivo VARCHAR(50) NOT NULL,
 		TV_DireccionFileStream VARBINARY(MAX) NOT NULL,
 		TF_FechaDeModificacion DATETIME2 NOT NULL,
@@ -312,6 +311,7 @@ BEGIN
 		TB_Aprobado BIT NOT NULL,
 		TN_IdEstado INT NULL,
 		TN_IdOficina INT NOT NULL,
+		TN_IdUsuario INT NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdAnalisis ASC),
 		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado)
 	);
