@@ -214,7 +214,9 @@ BEGIN
 		FOREIGN KEY (TN_IdSubModalidad) REFERENCES TSOLITEL_SubModalidad (TN_IdSubModalidad),
 		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado),
 		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Proveedor FOREIGN KEY (TN_IdProveedor) REFERENCES TSOLITEL_Proveedor (TN_IdProveedor),
-		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Fiscalia FOREIGN KEY (TN_IdFiscalia) REFERENCES TSOLITEL_Fiscalia (TN_IdFiscalia)
+		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Fiscalia FOREIGN KEY (TN_IdFiscalia) REFERENCES TSOLITEL_Fiscalia (TN_IdFiscalia),
+		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Oficina FOREIGN KEY (TN_IdOficina) REFERENCES TSOLITEL_Oficina (TN_IdOficina),
+		CONSTRAINT FK_TSOLITEL_SolicitudProveedor_TSOLITEL_Usuario FOREIGN KEY (TN_IdUsuario) REFERENCES TSOLITEL_Usuario (TN_IdUsuario)
 	);
 
 	-- Tabla TSOLITEL_TipoSolicitud
@@ -224,15 +226,6 @@ BEGIN
 		TC_Descripcion VARCHAR(255) NOT NULL,
 		TB_Borrado BIT DEFAULT 0,
 		CONSTRAINT [PK_TSOLITEL_TipoSolicitud] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud ASC)
-	);
-
-	-- Tabla TSOLITEL_TipoSolicitud_RequerimientoProveedor
-	CREATE TABLE TSOLITEL_TipoSolicitud_RequerimientoProveedor (
-		TN_IdTipoSolicitud INT NOT NULL,
-		TN_IdRequerimientoProveedor INT NOT NULL,
-		CONSTRAINT [PK_TSOLITEL_TipoSolicitud_RequerimientoProveedor] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud, TN_IdRequerimientoProveedor ASC),
-		CONSTRAINT FK_TSOLITEL_TipoSolicitud_RequerimientoProveedor_TSOLITEL_TipoSolicitud FOREIGN KEY (TN_IdTipoSolicitud) REFERENCES TSOLITEL_TipoSolicitud (TN_IdTipoSolicitud),
-		CONSTRAINT FK_TSOLITEL_TipoSolicitud_TipoSolicitud_TSOLITEL_RequerimientoProveedor FOREIGN KEY (TN_IdRequerimientoProveedor) REFERENCES TSOLITEL_RequerimientoProveedor (TN_IdRequerimientoProveedor)
 	);
 
 	-- Tabla TSOLITEL_RequerimientoProveedor
@@ -251,7 +244,6 @@ BEGIN
 		CONSTRAINT [PK_TSOLITEL_TipoSolicitud_RequerimientoProveedor] PRIMARY KEY NONCLUSTERED (TN_IdTipoSolicitud, TN_IdRequerimientoProveedor ASC),
 		CONSTRAINT FK_TSOLITEL_TipoSolicitud_RequerimientoProveedor_TSOLITEL_TipoSolicitud FOREIGN KEY (TN_IdTipoSolicitud) REFERENCES TSOLITEL_TipoSolicitud (TN_IdTipoSolicitud),
 		CONSTRAINT FK_TSOLITEL_TipoSolicitud_TipoSolicitud_TSOLITEL_RequerimientoProveedor FOREIGN KEY (TN_IdRequerimientoProveedor) REFERENCES TSOLITEL_RequerimientoProveedor (TN_IdRequerimientoProveedor)
-
 	);
 
 	-- Tabla Intermedia TSOLITEL_SolicitudRequerimientoProveedor
@@ -285,7 +277,7 @@ BEGIN
 	-- Tabla TSOLITEL_Archivo
 	CREATE TABLE TSOLITEL_Archivo (
 		TN_IdArchivo INT IDENTITY NOT NULL,
-		TC_Nombre VARCHAR(255) NOT NULL,
+		TC_Nombre VARCHAR(MAX) NOT NULL,
 		TC_FormatoAchivo VARCHAR(50) NOT NULL,
 		TV_DireccionFileStream VARBINARY(MAX) NOT NULL,
 		TF_FechaDeModificacion DATETIME2 NOT NULL,
@@ -310,10 +302,14 @@ BEGIN
 		TF_FechaDeCreacion DATETIME2 NULL,
 		TB_Aprobado BIT NOT NULL,
 		TN_IdEstado INT NULL,
-		TN_IdOficina INT NOT NULL,
+		TN_IdOficinaCreacion INT NOT NULL,
+		TN_IdOficinaSolicitante INT NOT NULL,
 		TN_IdUsuario INT NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis] PRIMARY KEY NONCLUSTERED (TN_IdAnalisis ASC),
-		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado)
+		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado),
+		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_TSOLITEL_Oficina_Creacion FOREIGN KEY (TN_IdOficinaCreacion) REFERENCES TSOLITEL_Oficina (TN_IdOficina),
+		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_TSOLITEL_Oficina_Solicitante FOREIGN KEY (TN_IdOficinaSolicitante) REFERENCES TSOLITEL_Oficina (TN_IdOficina),
+		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_TSOLITEL_Usuario FOREIGN KEY (TN_IdUsuario) REFERENCES TSOLITEL_Usuario (TN_IdUsuario)
 	);
 
 	-- Tabla Intermedia SolicitudAnalisis_SolicitudProveedor
@@ -354,7 +350,8 @@ BEGIN
 		TN_IdAnalisis INT NULL,
 		TN_IdUsuario INT NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_Asignacion] PRIMARY KEY NONCLUSTERED (TN_Asignacion ASC),
-		CONSTRAINT FK_TSOLITEL_Asignacion_TSOLITEL_SolicitudAnalisis FOREIGN KEY (TN_IdAnalisis) REFERENCES TSOLITEL_SolicitudAnalisis (TN_IdAnalisis)
+		CONSTRAINT FK_TSOLITEL_Asignacion_TSOLITEL_SolicitudAnalisis FOREIGN KEY (TN_IdAnalisis) REFERENCES TSOLITEL_SolicitudAnalisis (TN_IdAnalisis),
+		CONSTRAINT FK_TSOLITEL_Asignacion_TSOLITEL_Usuario FOREIGN KEY (TN_IdUsuario) REFERENCES TSOLITEL_Usuario (TN_IdUsuario)
 	);
 
 	-- Tabla TSOLITEL_ObjetivoAnalisis
@@ -388,9 +385,9 @@ BEGIN
 	CREATE TABLE TSOLITEL_RequerimientoAnalisis_Condicion (
 		TN_IdRequerimientoAnalisis INT NOT NULL,
 		TN_IdCondicion INT NOT NULL,
-		CONSTRAINT [PK_TSOLITEL_SolicitudAnalisis_Condicion] PRIMARY KEY NONCLUSTERED (TN_IdRequerimientoAnalisis, TN_IdCondicion ASC),
-		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Condicion_TSOLITEL_RequerimentoAnalisis FOREIGN KEY (TN_IdRequerimientoAnalisis) REFERENCES TSOLITEL_RequerimentoAnalisis (TN_IdRequerimientoAnalisis),
-		CONSTRAINT FK_TSOLITEL_SolicitudAnalisis_Condicion_TSOLITEL_Condicion FOREIGN KEY (TN_IdCondicion) REFERENCES TSOLITEL_Condicion (TN_IdCondicion)
+		CONSTRAINT [PK_TSOLITEL_RequerimientoAnalisis_Condicion] PRIMARY KEY NONCLUSTERED (TN_IdRequerimientoAnalisis, TN_IdCondicion ASC),
+		CONSTRAINT FK_TSOLITEL_RequerimientoAnalisis_Condicion_TSOLITEL_RequerimentoAnalisis FOREIGN KEY (TN_IdRequerimientoAnalisis) REFERENCES TSOLITEL_RequerimentoAnalisis (TN_IdRequerimientoAnalisis),
+		CONSTRAINT FK_TSOLITEL_RequerimientoAnalisis_Condicion_TSOLITEL_Condicion FOREIGN KEY (TN_IdCondicion) REFERENCES TSOLITEL_Condicion (TN_IdCondicion)
 	);
 
 	-- Tabla TSOLITEL_TipoAnalisis
@@ -431,7 +428,8 @@ BEGIN
 		TN_IdUsuario INT NOT NULL,
 		CONSTRAINT [PK_TSOLITEL_Historial] PRIMARY KEY NONCLUSTERED (TN_IdHistorial ASC),
 		FOREIGN KEY (TN_IdEstado) REFERENCES TSOLITEL_Estado (TN_IdEstado),
-		FOREIGN KEY (TN_IdSolicitud) REFERENCES TSOLITEL_SolicitudProveedor (TN_IdSolicitud)
+		FOREIGN KEY (TN_IdSolicitud) REFERENCES TSOLITEL_SolicitudProveedor (TN_IdSolicitud),
+		CONSTRAINT FK_TSOLITEL_Historial_TSOLITEL_Usuario FOREIGN KEY (TN_IdUsuario) REFERENCES TSOLITEL_Usuario (TN_IdUsuario)
 	);
 
 END
