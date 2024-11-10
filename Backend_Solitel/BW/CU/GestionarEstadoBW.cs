@@ -17,9 +17,9 @@ namespace BW.CU
         {
             this.gestionarEstadoDA = gestionarEstadoDA;
         }
-        public Task<List<Estado>> ObtenerEstados()
+        public Task<List<Estado>> ObtenerEstados(int idUsuario, int idOficina)
         {
-            return this.gestionarEstadoDA.ObtenerEstados();
+            return this.gestionarEstadoDA.ObtenerEstados(idUsuario, idOficina);
         }
     }
 }

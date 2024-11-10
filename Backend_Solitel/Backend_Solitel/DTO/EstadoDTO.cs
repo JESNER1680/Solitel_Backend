@@ -9,6 +9,8 @@
         public string Descripcion { get; set; }
 
         public string Tipo { get; set; }
+
+        public int CantidadSolicitudes { get; set; }
     }
 
 }

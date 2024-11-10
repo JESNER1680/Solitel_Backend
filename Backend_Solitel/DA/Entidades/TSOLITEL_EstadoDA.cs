@@ -24,6 +24,8 @@ namespace DA.Entidades
         public string TC_Descripcion { get; set; }
 
         public string TC_Tipo { get; set; }
+
+        public int TN_CantidadSolicitudes { get; set; }
     }
 
 }

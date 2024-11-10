@@ -17,9 +17,9 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        public async Task<List<EstadoDTO>> ObtenerEstados()
+        public async Task<List<EstadoDTO>> ObtenerEstados(int idUsuario, int idOficina)
         {
-            return EstadoMapper.ToDTO(await this.gestionarEstadoBW.ObtenerEstados());
+            return EstadoMapper.ToDTO(await this.gestionarEstadoBW.ObtenerEstados(idUsuario, idOficina));
         }
     }
 }
