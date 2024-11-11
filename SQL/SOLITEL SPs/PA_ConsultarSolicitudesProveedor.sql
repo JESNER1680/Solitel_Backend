@@ -15,17 +15,48 @@ CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSolicitudesProveedor]
 AS
 BEGIN
     BEGIN TRY
+		
+		WITH SolicitudesProveedorFiltradas AS 
+		(
+			SELECT 
+				[TN_IdSolicitud]
+				,[TC_NumeroUnico]
+				,[TC_NumeroCaso]
+				,[TC_Imputado]
+				,[TC_Ofendido]
+				,[TC_Resennia]
+				,[TB_Urgente]
+				,[TB_Aprobado]
+				,[TF_FechaDeCreacion]
+				,[TN_IdDelito]
+				,[TN_IdCategoriaDelito]
+				,[TN_IdModalida]
+				,[TN_IdSubModalidad]
+				,[TN_IdEstado]
+				,[TN_IdProveedor]
+				,[TN_IdFiscalia]
+				,[TN_IdOficina]
+				,[TN_IdUsuario]
 
+			FROM TSOLITEL_SolicitudProveedor AS SP
+			WHERE (@pTN_IdEstado IS NULL OR SP.TN_IdEstado = @pTN_IdEstado)-- SE NECESITAN SOLO LAS SOLICITUDES EN EL ESTADO ESPECIFICO
+			  AND (@pTF_FechaInicio IS NULL OR SP.TF_FechaDeCreacion >= @pTF_FechaInicio)-- FILTRO POR INTERVALO DE FECHA
+			  AND (@pTF_FechaFin IS NULL OR SP.TF_FechaDeCreacion <= @pTF_FechaFin)-- FILTRO POR INTERVALO DE FECHA 
+			  AND (@pTC_NumeroUnico IS NULL OR SP.TC_NumeroUnico = @pTC_NumeroUnico)-- FILTRO POR NUMERO UNICO
+			  AND (@pTN_IdOficina IS NULL OR SP.TN_IdOficina = @pTN_IdOficina)-- FILTRO POR OFICINA
+			  AND (@pTN_IdUsuario IS NULL OR SP.TN_IdUsuario = @pTN_IdUsuario)-- FILTRO POR USUARIO
+			  AND (@pTN_IdSolicitud IS NULL OR SP.TN_IdSolicitud = @pTN_IdSolicitud)-- FILTRO POR NOMBRE
+		)-- SUB CONSULTA PARA OPTIMISAR LOS JOINS
         SELECT 
-            TN_IdSolicitud,
-            TC_NumeroUnico,
-            TC_NumeroCaso,
-            TC_Imputado,
-            TC_Ofendido,
-            TC_Resennia,
-            TB_Urgente,
-            TB_Aprobado,
-            TF_FechaDeCreacion AS TF_FechaDeCreacion,
+            SPF.TN_IdSolicitud,
+            SPF.TC_NumeroUnico,
+            SPF.TC_NumeroCaso,
+            SPF.TC_Imputado,
+            SPF.TC_Ofendido,
+            SPF.TC_Resennia,
+            SPF.TB_Urgente,
+            SPF.TB_Aprobado,
+            SPF.TF_FechaDeCreacion,
             Usuario.TN_IdUsuario,
 			Usuario.TC_Nombre AS TC_NombreUsuario, 
 			Usuario.TC_Apellido AS TC_ApellidoUsuario,
@@ -45,31 +76,24 @@ BEGIN
             SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
 			Oficina.TN_IdOficina,
 			Oficina.TC_Nombre AS TC_NombreOficina,
-			TN_IdSolicitud AS TN_NumeroSolicitud
+			SPF.TN_IdSolicitud AS TN_NumeroSolicitud
             
-        FROM TSOLITEL_SolicitudProveedor AS T
-        INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
-        INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
-        INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
-        INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
-        LEFT JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
-        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
-        LEFT JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
-		INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
-		INNER JOIN TSOLITEL_Oficina AS Oficina ON T.TN_IdOficina = Oficina.TN_IdOficina
+        FROM SolicitudesProveedorFiltradas AS SPF
+        INNER JOIN TSOLITEL_Proveedor AS Proveedor ON SPF.TN_IdProveedor = Proveedor.TN_IdProveedor
+        INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON SPF.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
+        INNER JOIN TSOLITEL_Delito AS Delito ON SPF.TN_IdDelito = Delito.TN_IdDelito
+        INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON SPF.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
+        LEFT JOIN TSOLITEL_Modalidad AS Modalidad ON SPF.TN_IdModalida = Modalidad.TN_IdModalidad
+        INNER JOIN TSOLITEL_Estado AS Estado ON SPF.TN_IdEstado = Estado.TN_IdEstado
+        LEFT JOIN TSOLITEL_SubModalidad AS SubModalidad ON SPF.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+		INNER JOIN TSOLITEL_Usuario AS Usuario ON SPF.TN_IdUsuario = Usuario.TN_IdUsuario
+		INNER JOIN TSOLITEL_Oficina AS Oficina ON SPF.TN_IdOficina = Oficina.TN_IdOficina
 		LEFT JOIN (
 			SELECT 
 				TN_IdSolicitud AS TN_IdSoli, 
 				MAX(TF_FechaDeModificacion) AS UltimaFechaDeModificacion 
 			FROM TSOLITEL_Historial GROUP BY TN_IdSolicitud
-		) AS UltimoHistorial ON T.TN_IdSolicitud = UltimoHistorial.TN_IdSoli --SUB CONSULTA PARA OPTENER LA ULTIMA MODIFICACION
-        WHERE (@pTN_IdEstado IS NULL OR Estado.TN_IdEstado = @pTN_IdEstado)-- SE NECESITAN SOLO LAS SOLICITUDES EN EL ESTADO ESPECIFICO
-          AND (@pTF_FechaInicio IS NULL OR T.TF_FechaDeCreacion >= @pTF_FechaInicio)-- FILTRO POR INTERVALO DE FECHA
-          AND (@pTF_FechaFin IS NULL OR T.TF_FechaDeCreacion <= @pTF_FechaFin)-- FILTRO POR INTERVALO DE FECHA 
-          AND (@pTC_NumeroUnico IS NULL OR T.TC_NumeroUnico = @pTC_NumeroUnico)-- FILTRO POR NUMERO UNICO
-		  AND (@pTN_IdOficina IS NULL OR T.TN_IdOficina = @pTN_IdOficina)-- FILTRO POR OFICINA
-		  AND (@pTN_IdUsuario IS NULL OR T.TN_IdUsuario = @pTN_IdUsuario)-- FILTRO POR USUARIO
-		  AND (@pTN_IdSolicitud IS NULL OR @pTN_IdSolicitud = TN_IdSolicitud)-- FILTRO POR NOMBRE
+		) AS UltimoHistorial ON SPF.TN_IdSolicitud = UltimoHistorial.TN_IdSoli --SUB CONSULTA PARA OPTENER LA ULTIMA MODIFICACION
 		ORDER BY UltimoHistorial.UltimaFechaDeModificacion DESC;-- ORDENAMIENTO POR ULTIMA MODIFICACION DESENDENTE
 
     END TRY

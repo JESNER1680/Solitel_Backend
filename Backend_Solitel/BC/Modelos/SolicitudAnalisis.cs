@@ -21,6 +21,12 @@ namespace BC.Modelos
         public int IdUsuarioAprobador { get; set; }
         public DateTime FechaDeAprobacion { get; set; }
         public DateTime FechaDeAnalizado { get; set; }
+        public string NumeroUnico { get; set; }
+        public string NombreUsuarioCreador { get; set; }
+        public string NombreOficina { get; set; }
+        public string NombreUsuarioAprobador { get; set; }
+        public string NombreUsuarioAsignado { get; set; }
+        public DateTime FechaDeAsignacion { get; set; }
 
         // Lista de requerimientos
         public List<RequerimentoAnalisis> Requerimentos { get; set; }

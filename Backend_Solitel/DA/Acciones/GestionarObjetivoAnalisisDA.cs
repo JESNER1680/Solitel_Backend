@@ -107,7 +107,7 @@ namespace DA.Acciones
                     idObjetivoAnalisis == -1 ? (object)DBNull.Value : idObjetivoAnalisis);
 
                 // Ejecutar el procedimiento almacenado pasando el parámetro
-                var ObjetivoAnalisisDA = await _context.tSOLITEL_ObjetivoAnalisisDA
+                var ObjetivoAnalisisDA = await _context.TSOLITEL_ObjetivoAnalisisDA
                     .FromSqlRaw("EXEC dbo.PA_ConsultarObjetivoAnalisis @pTN_IdObjetivoAnalisis", TN_IdObjetivoAnalisis)
                     .ToListAsync();
 

@@ -569,7 +569,7 @@ namespace DA.Acciones
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
             }
         }
-        public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
+       /* public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
         {
             try
             {
@@ -644,7 +644,7 @@ namespace DA.Acciones
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
-        }
+        }*/
 
         public async Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
         {

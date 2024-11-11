@@ -328,7 +328,7 @@ namespace DA.Acciones
                         }
                     }).ToList();
 
-                    var objetivosAnalisis = await this.solitelContext.tSOLITEL_ObjetivoAnalisisDA
+                    var objetivosAnalisis = await this.solitelContext.TSOLITEL_ObjetivoAnalisisDA
                         .FromSqlRaw("EXEC dbo.PA_ObtenerObjetivosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
                         .ToListAsync();
 
@@ -488,17 +488,21 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico)
+        public async Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int? idEstado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario)
         {
             try
             {
                 // Ejecutar el procedimiento almacenado y obtener los resultados
-                var solicitudesAnalisisDA = await this.solitelContext.TSOLITEL_SolicitudAnalisisDA
-                .FromSqlRaw("EXEC dbo.PA_ObtenerBandejaAnalisis @pTN_Estado, @pTF_FechaInicio, @pTF_FechaFin, @pTC_NumeroUnico", 
-                    new SqlParameter("@pTN_Estado", estado),
-                    new SqlParameter("@pTF_FechaInicio", (object)fechaInicio ?? DBNull.Value),
-                    new SqlParameter("@pTF_FechaFin", (object)fechaFin ?? DBNull.Value),
-                    new SqlParameter("@pTC_NumeroUnico", (object)numeroUnico ?? DBNull.Value)).ToListAsync();
+                var solicitudesAnalisisDA = await this.solitelContext.TSOLITEL_SolicitudAnalisisAnalistaDA
+                    .FromSqlInterpolated($@"
+                    EXEC dbo.PA_ObtenerBandejaAnalisis 
+                    @pTN_Estado = {idEstado ?? (object)DBNull.Value}, 
+                    @pTF_FechaInicio = {fechaInicio ?? (object)DBNull.Value}, 
+                    @pTF_FechaFin = {fechaFin ?? (object)DBNull.Value}, 
+                    @pTC_NumeroUnico = {numeroUnico ?? (object)DBNull.Value}, 
+                    @pTN_IdOficina = {idOficina ?? (object)DBNull.Value}, 
+                    @pTN_IdUsuario = {idUsuario ?? (object)DBNull.Value}
+                ").ToListAsync();
 
                 var solicitudesAnalisis = new List<SolicitudAnalisis>();
 
@@ -507,6 +511,27 @@ namespace DA.Acciones
                     var solicitudAnalisis = new SolicitudAnalisis
                     {
                         IdSolicitudAnalisis = solicitud.TN_IdAnalisis,
+                        FechaDeHecho = solicitud.TF_FechaDeHecho,
+                        OtrosDetalles = solicitud.TC_OtrosDetalles,
+                        OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
+                        FechaDeCreacion = solicitud.TF_FechaDeCreacion,
+                        Aprobado = solicitud.TB_Aprobado,
+                        Estado = new Estado
+                        {
+                            IdEstado = solicitud.TN_IdEstado,
+                            Nombre = solicitud.TC_NombreEstado
+                        },
+                        IdOficinaCreacion = solicitud.TN_IdOficinaCreacion,
+                        NumeroUnico = solicitud.TC_NumeroUnico,
+                        NombreUsuarioCreador = solicitud.TC_NombreUsuarioCreador,
+                        NombreOficina = solicitud.TC_NombreOficina,
+                        NombreUsuarioAprobador = solicitud.TC_NombreUsuarioAprobador,
+                        FechaAprobacion = solicitud.TF_FechaAprobacion,
+                        FechaAnalizado = solicitud.TF_FechaAnalizado,
+                        NombreUsuarioAsignado = solicitud.TC_NombreUsuarioAsignado,
+                        FechaAsignacion = solicitud.TF_FechaAsignacion
+
+
                         FechaDelHecho = solicitud.TF_FechaDeHecho,
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
@@ -543,7 +568,7 @@ namespace DA.Acciones
                         }
                     }).ToList();
 
-                    var objetivosAnalisis = await this.solitelContext.tSOLITEL_ObjetivoAnalisisDA
+                    var objetivosAnalisis = await this.solitelContext.TSOLITEL_ObjetivoAnalisisDA
                         .FromSqlRaw("EXEC dbo.PA_ObtenerObjetivosPorSolicitudAnalisis @TN_IdAnalisis = {0}", solicitud.TN_IdAnalisis)
                         .ToListAsync();
 

@@ -10,13 +10,94 @@ GO
 -- Fecha de creación: 	2024-10-29
 -- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
 -- =============================================
-EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 12, @pTF_FechaInicio = NULL, @pTF_FechaFin = NULL, @pTC_NumeroUnico = NULL;
+EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 8
 
 CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
     @pTN_Estado INT,
     @pTF_FechaInicio DATETIME2 = NULL,
     @pTF_FechaFin DATETIME2 = NULL,
-    @pTC_NumeroUnico VARCHAR(100) = NULL
+    @pTC_NumeroUnico VARCHAR(100) = NULL,
+    @pTN_IdOficina INT = NULL,
+    @pTN_IdUsuario INT = NULL
+AS
+BEGIN
+    BEGIN TRY
+        SELECT 
+            SOLI.TN_IdAnalisis,
+            SOLI.TF_FechaDeHecho,
+            SOLI.TC_OtrosDetalles,
+            SOLI.TC_OtrosObjetivosDeAnalisis,
+            SOLI.TF_FechaDeCreacion,
+            SOLI.TB_Aprobado,
+            ES.TN_IdEstado,
+            ES.TC_Nombre AS TC_NombreEstado,
+            SOLI.TN_IdOficinaCreacion,
+            SP.TC_NumeroUnico,
+            (SELECT TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario WHERE TN_IdUsuario = SOLI.TN_IdUsuario) AS [TC_NombreUsuarioCreador],
+            (SELECT TC_Nombre FROM TSOLITEL_Oficina WHERE TN_IdOficina = SOLI.TN_IdOficinaCreacion) AS [TC_NombreOficina],
+            (SELECT TOP 1 TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario
+             WHERE TN_IdUsuario = (SELECT TOP 1 TN_IdUsuario FROM TSOLITEL_Historial 
+                                   WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
+                                   AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Analisis')
+                                   ORDER BY TF_FechaDeModificacion DESC)) AS [TC_NombreUsuarioAprobador],
+            (SELECT MAX(TF_FechaDeModificacion) FROM TSOLITEL_Historial 
+             WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
+             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Analisis')) AS [TF_FechaAprobacion],
+            (SELECT MAX(TF_FechaDeModificacion) FROM TSOLITEL_Historial 
+             WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
+             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'Analizando')) AS [TF_FechaAnalizado],
+            (SELECT TOP 1 TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario
+             WHERE TN_IdUsuario = (SELECT TOP 1 TN_IdUsuario FROM TSOLITEL_Asignacion 
+                                   WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
+                                   ORDER BY TF_FechaDeModificacion DESC)) AS [TC_NombreUsuarioAsignado],
+            (SELECT MAX(TF_FechaDeModificacion) FROM TSOLITEL_Asignacion 
+             WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis) AS [TF_FechaAsignacion]
+
+        FROM [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
+        INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
+        INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP ON SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
+        INNER JOIN TSOLITEL_SolicitudProveedor AS SP ON SP.TN_IdSolicitud = SA_SP.TN_IdSolicitud
+        LEFT JOIN (
+            SELECT TN_IdAnalisis, MAX(TF_FechaDeModificacion) AS UltimaFechaDeModificacion
+            FROM TSOLITEL_Historial
+            GROUP BY TN_IdAnalisis
+        ) AS UltimoHistorial
+        ON SOLI.TN_IdAnalisis = UltimoHistorial.TN_IdAnalisis
+        WHERE ES.TN_IdEstado = @pTN_Estado
+          AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)
+          AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)
+          AND (@pTC_NumeroUnico IS NULL OR SP.TC_NumeroUnico = @pTC_NumeroUnico)
+          AND (@pTN_IdOficina IS NULL OR SOLI.TN_IdOficinaSolicitante = @pTN_IdOficina)
+          AND (@pTN_IdUsuario IS NULL OR SOLI.TN_IdAnalisis IN (
+              SELECT TN_IdAnalisis
+              FROM TSOLITEL_Asignacion
+              WHERE TN_IdUsuario = @pTN_IdUsuario
+          ))
+        ORDER BY UltimoHistorial.UltimaFechaDeModificacion DESC;
+
+    END TRY
+    BEGIN CATCH
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR(@ErrorMessage, @ErrorSeverity, @ErrorState);
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
+    @pTN_Estado INT,
+    @pTF_FechaInicio DATETIME2 = NULL,
+    @pTF_FechaFin DATETIME2 = NULL,
+    @pTC_NumeroUnico VARCHAR(100) = NULL,
+	@pTN_IdOficina INT = NULL,
+	@pTN_IdUsuario INT = NULL
 AS
 BEGIN
     BEGIN TRY
@@ -30,7 +111,7 @@ BEGIN
             SOLI.TB_Aprobado,
             ES.TN_IdEstado,
             ES.TC_Nombre,
-            SOLI.TN_IdOficina
+            SOLI.TN_IdOficinaCreacion
         FROM [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
         INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
         INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP ON SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
@@ -38,7 +119,9 @@ BEGIN
         WHERE ES.TN_IdEstado = @pTN_Estado
           AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)
           AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)
-          AND (@pTC_NumeroUnico IS NULL OR SP.TN_NumeroUnico = @pTC_NumeroUnico)
+          AND (@pTC_NumeroUnico IS NULL OR SP.TC_NumeroUnico = @pTC_NumeroUnico)
+		  AND (@pTN_IdOficina IS NULL OR SP.TN_IdOficina = @pTN_IdOficina)-- FILTRO POR OFICINA
+		  AND (@pTN_IdUsuario IS NULL OR SP.TN_IdUsuario = @pTN_IdUsuario)-- FILTRO POR USUARIO
         ORDER BY SOLI.TN_IdAnalisis DESC;
 
     END TRY
