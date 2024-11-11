@@ -9,6 +9,6 @@ namespace BW.Interfaces.BW
 {
     public interface IGestionarEstadoBW
     {
-        public Task<List<Estado>> ObtenerEstados(int idUsuario, int idOficina);
+        public Task<List<Estado>> ObtenerEstados(int? idUsuario, int? idOficina);
     }
 }

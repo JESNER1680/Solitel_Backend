@@ -20,16 +20,16 @@ namespace DA.Acciones
             _context = solitelContext;
         }
 
-        public async Task<List<Estado>> ObtenerEstados(int idUsuario, int idOficina)
+        public async Task<List<Estado>> ObtenerEstados(int? idUsuario, int? idOficina)
         {
             try
             {
-                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", idUsuario);
-                var idOficinaParam = new SqlParameter("@pTN_IdOficina", idOficina);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", (object)idUsuario ?? DBNull.Value);
+                var idOficinaParam = new SqlParameter("@pTN_IdOficina", (object)idOficina ?? DBNull.Value);
 
                 // Ejecutar el procedimiento almacenado
                 var estadosDA = await _context.TSOLITEL_EstadoDA
-                    .FromSqlRaw("EXEC PA_ConsultarEstados, @pTN_IdUsuario , @pTN_IdUsuario", idUsuarioParam, idOficinaParam)
+                    .FromSqlRaw("EXEC PA_ConsultarEstados @pTN_IdUsuario , @pTN_IdOficina", idUsuarioParam, idOficinaParam)
                     .ToListAsync();
 
                 // Mapeo de los resultados
@@ -39,7 +39,7 @@ namespace DA.Acciones
                     Nombre = da.TC_Nombre,
                     Descripcion = da.TC_Descripcion,
                     Tipo = da.TC_Tipo,
-                    CantidadSolicitudes = da.TN_CantidadSolicitudes
+                    CantidadSolicitudes = da.TN_CantidadDeSolicitudes
 
                 }).ToList();
 
