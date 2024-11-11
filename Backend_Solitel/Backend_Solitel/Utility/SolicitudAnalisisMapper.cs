@@ -94,9 +94,9 @@ namespace Backend_Solitel.Utility
                 IdOficinaSolicitante = solicitudAnalisis.IdOficinaSolicitante,
                 IdUsuarioCreador = solicitudAnalisis.IdUsuarioCreador,
                 IdOficinaCreacion = solicitudAnalisis.IdOficinaCreacion,
-                IdUsuarioAprobador = solicitudAnalisis.IdUsuarioAprobador,
-                FechaDeAnalizado = solicitudAnalisis.FechaDeAnalizado,
-                FechaDeAprobacion = solicitudAnalisis.FechaDeAprobacion,
+                IdUsuarioAprobador = solicitudAnalisis?.IdUsuarioAprobador ?? default(int),
+                FechaDeAnalizado = (DateTime)(solicitudAnalisis?.FechaDeAnalizado ?? default(DateTime?)),
+                FechaDeAprobacion = (DateTime)(solicitudAnalisis?.FechaDeAprobacion ?? default(DateTime?)),
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisis.Requerimentos?.Select(r => new RequerimentoAnalisisDTO

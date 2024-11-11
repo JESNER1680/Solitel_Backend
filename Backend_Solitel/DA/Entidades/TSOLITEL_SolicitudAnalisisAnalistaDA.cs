@@ -20,9 +20,9 @@ namespace DA.Entidades
         public string TC_OtrosDetalles { get; set; }
 
         [StringLength(255)]
-        public string? TC_OtrosObjetivosDeAnalisis { get; set; }
+        public string? TC_OtrosObjetivosDeAnalisis { get; set; } // Nullable
 
-        public DateTime? TF_FechaDeCreacion { get; set; }
+        public DateTime? TF_FechaDeCreacion { get; set; } // Nullable
 
         public bool TB_Aprobado { get; set; }
 
@@ -43,15 +43,16 @@ namespace DA.Entidades
         public string TC_NombreOficina { get; set; }
 
         [StringLength(200)]
-        public string TC_NombreUsuarioAprobador { get; set; }
+        public string? TC_NombreUsuarioAprobador { get; set; } // Nullable
 
-        public DateTime? TF_FechaAprobacion { get; set; }
+        public DateTime? TF_FechaAprobacion { get; set; } // Nullable
 
-        public DateTime? TF_FechaAnalizado { get; set; }
+        public DateTime? TF_FechaAnalizado { get; set; } // Nullable
 
         [StringLength(200)]
-        public string TC_NombreUsuarioAsignado { get; set; }
+        public string? TC_NombreUsuarioAsignado { get; set; } // Nullable
 
-        public DateTime? TF_FechaAsignacion { get; set; }
+        public DateTime? TF_FechaAsignacion { get; set; } // Nullable
+
     }
 }

@@ -511,10 +511,10 @@ namespace DA.Acciones
                     var solicitudAnalisis = new SolicitudAnalisis
                     {
                         IdSolicitudAnalisis = solicitud.TN_IdAnalisis,
-                        FechaDeHecho = solicitud.TF_FechaDeHecho,
+                        FechaDelHecho = solicitud.TF_FechaDeHecho,
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
-                        FechaDeCreacion = solicitud.TF_FechaDeCreacion,
+                        FechaCreacion = solicitud.TF_FechaDeCreacion,
                         Aprobado = solicitud.TB_Aprobado,
                         Estado = new Estado
                         {
@@ -526,23 +526,10 @@ namespace DA.Acciones
                         NombreUsuarioCreador = solicitud.TC_NombreUsuarioCreador,
                         NombreOficina = solicitud.TC_NombreOficina,
                         NombreUsuarioAprobador = solicitud.TC_NombreUsuarioAprobador,
-                        FechaAprobacion = solicitud.TF_FechaAprobacion,
-                        FechaAnalizado = solicitud.TF_FechaAnalizado,
                         NombreUsuarioAsignado = solicitud.TC_NombreUsuarioAsignado,
-                        FechaAsignacion = solicitud.TF_FechaAsignacion
-
-
-                        FechaDelHecho = solicitud.TF_FechaDeHecho,
-                        OtrosDetalles = solicitud.TC_OtrosDetalles,
-                        OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
-                        Aprobado = solicitud.TB_Aprobado,
-                        Estado = new Estado
-                        {
-                            IdEstado = solicitud.TN_IdEstado,
-                            Nombre = solicitud.TC_NombreEstado
-                        },
-                        FechaCreacion = solicitud.TF_FechaDeCreacion,
-                        IdOficinaSolicitante = solicitud.TN_IdOficinaSolicitante,
+                        FechaDeAprobacion = solicitud.TF_FechaAprobacion ?? default(DateTime?), // Safe handling of nullable DateTime
+                        FechaDeAnalizado = solicitud.TF_FechaAnalizado ?? default(DateTime?),   // Safe handling of nullable DateTime
+                        FechaDeAsignacion = solicitud.TF_FechaAsignacion ?? default(DateTime?), // Safe handling of nullable DateTime
                         SolicitudesProveedor = new List<SolicitudProveedor>()
                     };
 
