@@ -89,6 +89,11 @@ namespace BW.CU
         {
             return await this.gestionarSolicitudProveedorDA.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
         }
+
+        public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud) // SISTEMA PROVEEDOR
+        {
+            return await this.gestionarSolicitudProveedorDA.ObtenerSolicitudesProveedorPorId(idSolicitud);
+        }
     }
 }
 

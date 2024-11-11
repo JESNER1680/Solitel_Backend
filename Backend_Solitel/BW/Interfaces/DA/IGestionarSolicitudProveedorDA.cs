@@ -37,5 +37,8 @@ namespace BW.Interfaces.DA
 
         public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
 
+        public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud); // SISTEMA PROVEEDOR
+
+
     }
 }
