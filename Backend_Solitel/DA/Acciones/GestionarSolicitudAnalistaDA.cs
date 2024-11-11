@@ -132,8 +132,8 @@ namespace DA.Acciones
                     SolicitudesProveedor = da.SolicitudProveedor.Select(sp => new SolicitudProveedor
                     {
                         IdSolicitudProveedor = sp.TN_IdSolicitud,
-                        NumeroUnico = sp.TN_NumeroUnico,
-                        NumeroCaso = sp.TN_NumeroCaso,
+                        NumeroUnico = sp.TC_NumeroUnico,
+                        NumeroCaso = sp.TC_NumeroCaso,
                         Imputado = sp.TC_Imputado,
                         Ofendido = sp.TC_Ofendido,
                         Resennia = sp.TC_Resennia,
@@ -448,8 +448,8 @@ namespace DA.Acciones
                     solicitudAnalisis.SolicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                     {
                         IdSolicitudProveedor = da.TN_IdSolicitud,
-                        NumeroUnico = da.TN_NumeroUnico,
-                        NumeroCaso = da.TN_NumeroCaso,
+                        NumeroUnico = da.TC_NumeroUnico,
+                        NumeroCaso = da.TC_NumeroCaso,
                         Imputado = da.TC_Imputado,
                         Ofendido = da.TC_Ofendido,
                         Resennia = da.TC_Resennia,
@@ -668,8 +668,8 @@ namespace DA.Acciones
                     solicitudAnalisis.SolicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                     {
                         IdSolicitudProveedor = da.TN_IdSolicitud,
-                        NumeroUnico = da.TN_NumeroUnico,
-                        NumeroCaso = da.TN_NumeroCaso,
+                        NumeroUnico = da.TC_NumeroUnico,
+                        NumeroCaso = da.TC_NumeroCaso,
                         Imputado = da.TC_Imputado,
                         Ofendido = da.TC_Ofendido,
                         Resennia = da.TC_Resennia,

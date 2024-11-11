@@ -134,8 +134,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -349,8 +349,8 @@ namespace DA.Acciones
                 var solicitudProveedor =  new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -398,8 +398,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -449,8 +449,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso != null ? da.TN_NumeroCaso: null,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso != null ? da.TC_NumeroCaso : null,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -573,8 +573,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
