@@ -10,7 +10,7 @@ GO
 -- Fecha de creación: 	2024-10-29
 -- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
 -- =============================================
-EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 8
+EXEC [dbo].[PA_ObtenerBandejaAnalisis]
 
 CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
     @pTN_Estado INT,
