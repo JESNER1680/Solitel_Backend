@@ -104,8 +104,9 @@ namespace DA.Acciones
                 var otrosObjetivosParam = new SqlParameter("@TC_OtrosObjetivosDeAnalisis", (object)solicitudAnalisis.OtrosObjetivosDeAnalisis ?? DBNull.Value);
                 var aprobadoParam = new SqlParameter("@TB_Aprobado", solicitudAnalisis.Aprobado);
                 var fechaCreacionParam = new SqlParameter("@TF_FechaCrecion", (object)solicitudAnalisis.FechaCreacion ?? DBNull.Value);
-                var idOficinaParam = new SqlParameter("@TN_IdOficina", solicitudAnalisis.IdOficinaSolicitante);
-                var idUsuarioCreadorParam = new SqlParameter("@PN_IdUsuarioCreador", solicitudAnalisis.IdUsuarioCreador); // Asegúrate de que este es el nombre correcto
+                var idOficinaSolicitanteParam = new SqlParameter("@TN_IdOficinaSolicitante", solicitudAnalisis.IdOficinaSolicitante);
+                var idUsuarioCreadorParam = new SqlParameter("@PN_IdUsuarioCreador", solicitudAnalisis.IdUsuarioCreador);
+                var idOficinaCreacionParam = new SqlParameter("@TN_IdOficinaCreacion", solicitudAnalisis.IdOficinaCreacion);
 
                 // Parámetro de salida para capturar el ID de análisis generado
                 var idAnalisisParam = new SqlParameter("@TN_IdSolicitudAnalisis", SqlDbType.Int)
@@ -115,13 +116,14 @@ namespace DA.Acciones
 
                 // Ejecutar PA_InsertarSolicitudAnalisis para crear la solicitud de análisis
                 await solitelContext.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarSolicitudAnalisis @PN_IdUsuarioCreador, @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, @TN_IdOficina, @TN_IdSolicitudAnalisis OUTPUT",
-                    idUsuarioCreadorParam, fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, idOficinaParam, idAnalisisParam);
+                    "EXEC PA_InsertarSolicitudAnalisis @PN_IdUsuarioCreador, @TF_FechaDeHecho, @TC_OtrosDetalles, @TC_OtrosObjetivosDeAnalisis, @TB_Aprobado, @TF_FechaCrecion, " +
+                    "@TN_IdOficinaSolicitante, @TN_IdOficinaCreacion, @TN_IdSolicitudAnalisis OUTPUT",
+                    idUsuarioCreadorParam, fechaDeHechoParam, otrosDetallesParam, otrosObjetivosParam, aprobadoParam, fechaCreacionParam, idOficinaSolicitanteParam, idOficinaCreacionParam, idAnalisisParam);
 
-                Console.WriteLine("NO ME HE CAIDO");
+
                 // Obtener el ID generado para el análisis
                 var idAnalisis = (int)idAnalisisParam.Value;
-                Console.WriteLine("NO ME HE CAIDO 2");
+
                 // Insertar objetivos de análisis asociados, si existen
                 if (solicitudAnalisis.ObjetivosAnalisis != null && solicitudAnalisis.ObjetivosAnalisis.Count > 0)
                 {
