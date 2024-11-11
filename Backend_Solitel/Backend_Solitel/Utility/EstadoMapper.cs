@@ -13,6 +13,7 @@ namespace Backend_Solitel.Utility
                 Nombre = estadoDTO.Nombre,
                 Descripcion = estadoDTO.Descripcion,
                 Tipo = estadoDTO.Tipo,
+                CantidadSolicitudes = estadoDTO.CantidadSolicitudes
             };
         }
 
@@ -23,7 +24,8 @@ namespace Backend_Solitel.Utility
                 IdEstado = estado.IdEstado,
                 Nombre = estado.Nombre,
                 Descripcion = estado.Descripcion,
-                Tipo = estado.Tipo
+                Tipo = estado.Tipo,
+                CantidadSolicitudes = estado.CantidadSolicitudes
             };
         }
 

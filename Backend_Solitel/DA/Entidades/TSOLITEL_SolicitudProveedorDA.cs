@@ -80,6 +80,12 @@ namespace DA.Entidades
 
         public string TC_NombreUsuario { get;set; }
 
+        public string TC_ApellidoUsuario { get; set; }
+
+        public int TN_IdOficina { get; set; }
+
+        public string TC_NombreOficina { get; set; }
+
     }
 
 }

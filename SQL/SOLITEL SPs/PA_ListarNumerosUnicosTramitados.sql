@@ -3,11 +3,11 @@ AS
 BEGIN
     BEGIN TRY
         -- Ejecutar la consulta para listar los números únicos tramitados
-        SELECT TN_NumeroUnico 
+        SELECT TC_NumeroUnico 
         FROM TSOLITEL_SolicitudProveedor SP
         INNER JOIN TSOLITEL_Estado E ON SP.TN_IdEstado = E.TN_IdEstado
         WHERE E.TC_Nombre = 'Tramitado'
-        GROUP BY TN_NumeroUnico;
+        GROUP BY TC_NumeroUnico;
     END TRY
     BEGIN CATCH
         -- Manejar el error
