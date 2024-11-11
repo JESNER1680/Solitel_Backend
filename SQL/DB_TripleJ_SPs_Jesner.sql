@@ -557,28 +557,48 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Consultar todas solicitudes de analisis
 -- =============================================
-CREATE OR ALTER PROCEDURE [dbo].PA_ObtenerSolicitudesAnalisis
+CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSolicitudesAnalisis]
+	@pTN_IdSolicitud INT = NULL,
+	@pTN_IdEstado INT = NULL,
+    @pTF_FechaInicio DATETIME2 = NULL,
+    @pTF_FechaFin DATETIME2 = NULL,
+    @pTC_NumeroUnico VARCHAR(100) = NULL,
+	@pTN_IdOficina INT = NULL,
+	@pTN_IdUsuario INT = NULL
 AS
 BEGIN
     BEGIN TRY
         BEGIN TRANSACTION;
 
         SELECT 
-            TN_IdAnalisis,
-			TN_IdAnalisis AS TN_NumeroSolicitud,
+            SOLI.TN_IdAnalisis,
             TF_FechaDeHecho,
             TC_OtrosDetalles,
             TC_OtrosObjetivosDeAnalisis,
             TF_FechaDeCreacion,
             TB_Aprobado,
             ES.TN_IdEstado,
-			ES.TC_Nombre,
-            TN_IdOficina
+			ES.TC_Nombre AS TC_NombreEstado,
+            TN_IdOficinaSolicitante
         FROM 
             [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
 			JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
+			INNER JOIN (
+                    SELECT TN_IdAnalisis, MAX(TF_FechaDeModificacion) AS UltimaFechaDeModificacion
+                    FROM TSOLITEL_Historial
+                    GROUP BY TN_IdAnalisis
+                    ) AS UltimoHistorial
+			ON SOLI.TN_IdAnalisis = UltimoHistorial.TN_IdAnalisis
+
+		WHERE (@pTN_IdEstado IS NULL OR SOLI.TN_IdEstado = @pTN_IdEstado)-- SE NECESITAN SOLO LAS SOLICITUDES EN EL ESTADO ESPECIFICO
+          AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)-- FILTRO POR INTERVALO DE FECHA
+          AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)-- FILTRO POR INTERVALO DE FECHA 
+          --AND (@pTC_NumeroUnico IS NULL OR T.TC_NumeroUnico = @pTC_NumeroUnico)-- FILTRO POR NUMERO UNICO
+		  AND (@pTN_IdOficina IS NULL OR SOLI.TN_IdOficinaSolicitante = @pTN_IdOficina)-- FILTRO POR OFICINA
+		  AND (@pTN_IdUsuario IS NULL OR SOLI.TN_IdUsuario = @pTN_IdUsuario)-- FILTRO POR USUARIO
+		  AND (@pTN_IdSolicitud IS NULL OR SOLI.TN_IdAnalisis = @pTN_IdSolicitud)-- FILTRO POR NOMBRE
         ORDER BY 
-            TN_IdAnalisis DESC;
+			UltimoHistorial.UltimaFechaDeModificacion DESC;
 
         COMMIT TRANSACTION;
     END TRY
@@ -873,16 +893,17 @@ BEGIN
         -- Consulta las solicitudes del proveedor basadas en el ID de la solicitud de análisis
         SELECT 
             T.TN_IdSolicitud,
-            T.TN_NumeroUnico,
-            T.TN_NumeroCaso,
+            T.TC_NumeroUnico,
+            T.TC_NumeroCaso,
             T.TC_Imputado,
             T.TC_Ofendido,
             T.TC_Resennia,
             T.TB_Urgente,
             T.TB_Aprobado,
-            T.TF_FechaDeCrecion AS TF_FechaDeCreacion,
+            T.TF_FechaDeCreacion AS TF_FechaDeCreacion,
             Usuario.TN_IdUsuario,
-            CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+            Usuario.TC_Nombre AS TC_NombreUsuario,
+			Usuario.TC_Apellido AS TC_ApellidoUsuario,
             Proveedor.TN_IdProveedor,
             Proveedor.TC_Nombre AS TC_NombreProveedor,
             Fiscalia.TN_IdFiscalia,
@@ -897,7 +918,8 @@ BEGIN
             Estado.TC_Nombre AS TC_NombreEstado,
             SubModalidad.TN_IdSubModalidad,
             SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
-            T.TN_IdSolicitud AS TN_NumeroSolicitud
+			Oficina.TN_IdOficina,
+			Oficina.TC_Nombre AS TC_NombreOficina
             
         FROM TSOLITEL_SolicitudProveedor AS T
         INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
@@ -908,6 +930,7 @@ BEGIN
         INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
         INNER JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
         INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
+		INNER JOIN TSOLITEL_Oficina AS Oficina ON T.TN_IdOficina = Oficina.TN_IdOficina
         INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA ON T.TN_IdSolicitud = SA.TN_IdSolicitud
         WHERE (@pTN_IdSolicitud IS NULL OR SA.TN_IdAnalisis = @pTN_IdSolicitud)
         ORDER BY T.TN_IdSolicitud DESC;
