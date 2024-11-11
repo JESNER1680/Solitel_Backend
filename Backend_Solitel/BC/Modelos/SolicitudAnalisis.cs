@@ -14,10 +14,13 @@ namespace BC.Modelos
         public string? OtrosObjetivosDeAnalisis { get; set; }
         public bool Aprobado { get; set; }
         public Estado Estado { get; set; }
-        public DateTime? FechaCrecion { get; set; }
-        public int NumeroSolicitud { get; set; }
-        public int IdOficina { get; set; }
-        public int IdUsuario { get; set; }
+        public DateTime? FechaCreacion { get; set; }
+        public int IdOficinaSolicitante { get; set; }
+        public int IdOficinaCreacion { get; set; }
+        public int IdUsuarioCreador { get; set; }
+        public int IdUsuarioAprobador { get; set; }
+        public DateTime FechaDeAprobacion { get; set; }
+        public DateTime FechaDeAnalizado { get; set; }
 
         // Lista de requerimientos
         public List<RequerimentoAnalisis> Requerimentos { get; set; }

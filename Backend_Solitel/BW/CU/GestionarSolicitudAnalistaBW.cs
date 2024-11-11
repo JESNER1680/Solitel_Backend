@@ -32,11 +32,6 @@ namespace BW.CU
             return await this.solicitudAnalistaDA.AprobarSolicitudAnalisis(idSolicitudAnalisis,idUsuario, observacion);
         }
 
-        public async Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, DateTime? fechaFin = null, string caracterIngresado = null)
-        {
-            return await this.solicitudAnalistaDA.ConsultarSolicitudesAnalisisAsync(pageNumber, pageSize, idEstado, numeroUnico, fechaInicio, fechaFin, caracterIngresado);         
-        }
-
         public async Task<bool> CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis)
         {
             return await this.solicitudAnalistaDA.CrearSolicitudAnalista(solicitudAnalisis);
@@ -47,9 +42,9 @@ namespace BW.CU
             return await this.solicitudAnalistaDA.DevolverAnalizado(id, idUsuario, observacion);
         }
 
-        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis()
+        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis(int? idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud)
         {
-            return await this.solicitudAnalistaDA.ObtenerSolicitudesAnalisis();
+            return await this.solicitudAnalistaDA.ObtenerSolicitudesAnalisis(idEstado, fechainicio, fechaFin, numeroUnico, idOficina, idUsuario, idSolicitud);
         }
 
         public async Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null)

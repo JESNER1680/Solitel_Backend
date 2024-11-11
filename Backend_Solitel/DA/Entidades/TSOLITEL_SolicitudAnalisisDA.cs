@@ -25,21 +25,13 @@ namespace DA.Entidades
         [Required]
         public int TN_IdEstado { get; set; }
         [Required]
-        public string TC_Nombre { get; set; }
+        public string TC_NombreEstado { get; set; }
 
         public DateTime? TF_FechaDeCreacion { get; set; }
 
         [Required]
-        public int TN_NumeroSolicitud { get; set; }
+        public int TN_IdOficinaSolicitante { get; set; }
 
-        [Required]
-        public int TN_IdOficina { get; set; }
-
-        [ForeignKey("TN_NumeroSolicitud")]
-        public virtual List<TSOLITEL_SolicitudProveedorDA> SolicitudProveedor { get; set; }
-
-        [ForeignKey("TN_IdOficina")]
-        public virtual TSOLITEL_OficinaDA Oficina { get; set; }
     }
 
 }
