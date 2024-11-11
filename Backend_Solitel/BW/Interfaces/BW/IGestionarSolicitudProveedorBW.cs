@@ -36,5 +36,7 @@ namespace BW.Interfaces.BW
         public Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico);
 
         public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
+
+        public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud); // SISTEMA PROVEEDOR
     }
 }
