@@ -99,9 +99,9 @@ namespace Backend_Solitel.Utility
         {
             return new SolicitudProveedorInfoComunDTO
             {
-                FiscaliaDTO = FiscaliaMapper.ToDTO(solicitudProveedor.Fiscalia),
-                DelitoDTO = DelitoMapper.ToDTO(solicitudProveedor.Delito),
-                CategoriaDelitoDTO = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
+                Fiscalia = FiscaliaMapper.ToDTO(solicitudProveedor.Fiscalia),
+                Delito = DelitoMapper.ToDTO(solicitudProveedor.Delito),
+                CategoriaDelito = CategoriaDelitoMapper.ToDTO(solicitudProveedor.CategoriaDelito),
                 imputado = solicitudProveedor.Imputado,
                 ofendido = solicitudProveedor.Ofendido,
                 resennia = solicitudProveedor.Resennia

@@ -9,7 +9,7 @@ namespace BW.Interfaces.DA
 {
     public interface IGestionarSolicitudProveedorDA
     {
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud);
 
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor);
 
@@ -28,9 +28,9 @@ namespace BW.Interfaces.DA
         public Task<bool> ActualizarEstadoLegajo(int id, int idUsuario, string observacion = null);
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
-        public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud);
 
         public Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null);
+
         public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);
 
         public Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico);

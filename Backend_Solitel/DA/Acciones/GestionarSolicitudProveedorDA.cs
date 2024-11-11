@@ -134,8 +134,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -197,8 +197,6 @@ namespace DA.Acciones
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
-
-
 
         public async Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor)
         {
@@ -335,7 +333,7 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado
                 var resultadoConsulta = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitud @pTN_IdSolicitud", idSolicitudParam)
+                    .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesProveedor @pTN_IdSolicitud", idSolicitudParam)
                     .ToListAsync();
 
                 var da = resultadoConsulta.FirstOrDefault();
@@ -349,8 +347,8 @@ namespace DA.Acciones
                 var solicitudProveedor =  new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -362,8 +360,8 @@ namespace DA.Acciones
                     CategoriaDelito = new CategoriaDelito { Nombre = da.TC_NombreCategoriaDelito, IdCategoriaDelito = da.TN_IdCategoriaDelito },
                     Estado = new Estado { IdEstado = da.TN_IdEstado, Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { IdFiscalia = da.TN_IdFiscalia, Nombre = da.TC_NombreFiscalia },
-                    Modalidad = new Modalidad { IdModalidad = (int)da.TN_IdModalidad, Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { IdSubModalidad = (int)da.TN_IdSubModalidad, Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)da.TN_IdModalidad },
+                    Modalidad = new Modalidad { IdModalidad = (int)(da.TN_IdModalidad == null ? 0 : da.TN_IdModalidad), Nombre = da.TC_NombreModalidad },
+                    SubModalidad = new SubModalidad { IdSubModalidad = (int)(da.TN_IdSubModalidad == null ? 0 : da.TN_IdSubModalidad), Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)(da.TN_IdModalidad == null ? 0 : da.TN_IdModalidad) },
                     UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario },
 
 
@@ -383,22 +381,31 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor()
+        public async Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud)
         {
 
             try
             {
+                var idEstadoParam = new SqlParameter("@pTN_IdEstado", (object)idEstado ?? DBNull.Value);
+                var fechainicioParam = new SqlParameter("@pTF_FechaInicio", (object)fechainicio ?? DBNull.Value);
+                var fechaFinParam = new SqlParameter("@pTF_FechaFin", (object)fechaFin ?? DBNull.Value);
+                var numeroUnicoParam = new SqlParameter("@pTC_NumeroUnico", (object)numeroUnico ?? DBNull.Value);
+                var idOficinaParam = new SqlParameter("@pTN_IdOficina", (object)idOficina ?? DBNull.Value);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", (object)idUsuario ?? DBNull.Value);
+                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", (object)idSolicitud ?? DBNull.Value);
+
                 // Ejecutar el procedimiento almacenado
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesProveedor")
+                    .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesProveedor @pTN_IdSolicitud, @pTN_IdEstado, @pTF_FechaInicio, @pTF_FechaFin, @pTC_NumeroUnico, @pTN_IdOficina, " +
+                    "@pTN_IdUsuario", idSolicitudParam, idEstadoParam, fechainicioParam, fechaFinParam, numeroUnicoParam, idOficinaParam, idUsuarioParam )
                     .ToListAsync();
 
                 // Mapeo de los resultados
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -410,12 +417,15 @@ namespace DA.Acciones
                     CategoriaDelito = new CategoriaDelito { Nombre = da.TC_NombreCategoriaDelito , IdCategoriaDelito = da.TN_IdCategoriaDelito},
                     Estado = new Estado { IdEstado = da.TN_IdEstado, Nombre = da.TC_NombreEstado },
                     Fiscalia = new Fiscalia { IdFiscalia = da.TN_IdFiscalia, Nombre = da.TC_NombreFiscalia},
-                    Modalidad = new Modalidad { IdModalidad = (int)da.TN_IdModalidad, Nombre = da.TC_NombreModalidad },
-                    SubModalidad = new SubModalidad { IdSubModalidad = (int)da.TN_IdSubModalidad, Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)da.TN_IdModalidad },
-                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario },
+                    Modalidad = new Modalidad { IdModalidad = (int)(da.TN_IdModalidad == null ? 0: da.TN_IdModalidad), Nombre = da.TC_NombreModalidad },
+                    SubModalidad = new SubModalidad { IdSubModalidad = (int)(da.TN_IdSubModalidad == null ? 0: da.TN_IdSubModalidad), Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)(da.TN_IdModalidad == null ? 0 : da.TN_IdModalidad) },
+                    UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario, Apellido = da.TC_ApellidoUsuario },
+                    Oficina = new Oficina { IdOficina = da.TN_IdOficina, Nombre = da.TC_NombreOficina }
                     
 
                 }).ToList();
+
+
 
                 return solicitudesProveedor;
             }
@@ -448,8 +458,8 @@ namespace DA.Acciones
                 var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
                 {
                     IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso != null ? da.TN_NumeroCaso: null,
+                    NumeroUnico = da.TC_NumeroUnico,
+                    NumeroCaso = da.TC_NumeroCaso != null ? da.TC_NumeroCaso: null,
                     Imputado = da.TC_Imputado,
                     Ofendido = da.TC_Ofendido,
                     Resennia = da.TC_Resennia,
@@ -557,82 +567,6 @@ namespace DA.Acciones
             {
                 // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
-            }
-        }
-        public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
-        {
-            try
-            {
-                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", idSolicitud == 0 ? (object)DBNull.Value : idSolicitud);
-
-                var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedor @pTN_IdSolicitud", idSolicitudParam)
-                    .ToListAsync();
-
-                var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
-                {
-                    IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TN_NumeroUnico,
-                    NumeroCaso = da.TN_NumeroCaso,
-                    Imputado = da.TC_Imputado,
-                    Ofendido = da.TC_Ofendido,
-                    Resennia = da.TC_Resennia,
-                    Urgente = da.TB_Urgente,
-                    Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaDeCreacion,
-                    UsuarioCreador = new Usuario
-                    {
-                        IdUsuario = da.TN_IdUsuario,
-                        Nombre = da.TC_NombreUsuario
-                    },
-                    Proveedor = new Proveedor
-                    {
-                        IdProveedor = da.TN_IdProveedor,
-                        Nombre = da.TC_NombreProveedor
-                    },
-                    Delito = new Delito
-                    {
-                        IdDelito = da.TN_IdDelito,
-                        Nombre = da.TC_NombreDelito
-                    },
-                    CategoriaDelito = new CategoriaDelito
-                    {
-                        IdCategoriaDelito = da.TN_IdCategoriaDelito,
-                        Nombre = da.TC_NombreCategoriaDelito
-                    },
-                    Estado = new Estado
-                    {
-                        IdEstado = da.TN_IdEstado,
-                        Nombre = da.TC_NombreEstado
-                    },
-                    Fiscalia = new Fiscalia
-                    {
-                        IdFiscalia = da.TN_IdFiscalia,
-                        Nombre = da.TC_NombreFiscalia
-                    },
-                    Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
-                    {
-                        IdModalidad = da.TN_IdModalidad.Value,
-                        Nombre = da.TC_NombreModalidad
-                    } : null,
-                    SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
-                    {
-                        IdSubModalidad = da.TN_IdSubModalidad.Value,
-                        Nombre = da.TC_NombreSubModalidad
-                    } : null
-                }).ToList();
-
-                return solicitudesProveedor;
-            }
-            catch (SqlException ex)
-            {
-                // Captura el error específico de SQL Server
-                throw new Exception($"Error en la base de datos al obtener solicitudProveedor: {ex.Message}", ex);
-            }
-            catch (Exception ex)
-            {
-                // Manejo de cualquier otro tipo de excepción
-                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
             }
         }
 
