@@ -33,9 +33,6 @@ namespace DA.Entidades
 
         public int TN_IdOficinaCreacion { get; set; }
 
-        [StringLength(100)]
-        public string TC_NumeroUnico { get; set; }
-
         [StringLength(200)]
         public string TC_NombreUsuarioCreador { get; set; }
 
