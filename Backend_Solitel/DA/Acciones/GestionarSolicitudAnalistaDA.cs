@@ -522,7 +522,6 @@ namespace DA.Acciones
                             Nombre = solicitud.TC_NombreEstado
                         },
                         IdOficinaCreacion = solicitud.TN_IdOficinaCreacion,
-                        NumeroUnico = solicitud.TC_NumeroUnico,
                         NombreUsuarioCreador = solicitud.TC_NombreUsuarioCreador,
                         NombreOficina = solicitud.TC_NombreOficina,
                         NombreUsuarioAprobador = solicitud.TC_NombreUsuarioAprobador,

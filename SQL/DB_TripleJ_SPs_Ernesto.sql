@@ -10,7 +10,7 @@ GO
 -- Fecha de creación: 	2024-10-29
 -- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
 -- =============================================
-EXEC [dbo].[PA_ObtenerBandejaAnalisis] @pTN_Estado = 8
+EXEC [dbo].[PA_ObtenerBandejaAnalisis] 11
 
 CREATE OR ALTER PROCEDURE [dbo].[PA_ObtenerBandejaAnalisis]
     @pTN_Estado INT,
@@ -32,7 +32,6 @@ BEGIN
             ES.TN_IdEstado,
             ES.TC_Nombre AS TC_NombreEstado,
             SOLI.TN_IdOficinaCreacion,
-            SP.TC_NumeroUnico,
             (SELECT TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario WHERE TN_IdUsuario = SOLI.TN_IdUsuario) AS [TC_NombreUsuarioCreador],
             (SELECT TC_Nombre FROM TSOLITEL_Oficina WHERE TN_IdOficina = SOLI.TN_IdOficinaCreacion) AS [TC_NombreOficina],
             (SELECT TOP 1 TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario
@@ -55,8 +54,6 @@ BEGIN
 
         FROM [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
         INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
-        INNER JOIN TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP ON SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
-        INNER JOIN TSOLITEL_SolicitudProveedor AS SP ON SP.TN_IdSolicitud = SA_SP.TN_IdSolicitud
         LEFT JOIN (
             SELECT TN_IdAnalisis, MAX(TF_FechaDeModificacion) AS UltimaFechaDeModificacion
             FROM TSOLITEL_Historial
@@ -66,7 +63,13 @@ BEGIN
         WHERE ES.TN_IdEstado = @pTN_Estado
           AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)
           AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)
-          AND (@pTC_NumeroUnico IS NULL OR SP.TC_NumeroUnico = @pTC_NumeroUnico)
+          AND (@pTC_NumeroUnico IS NULL OR EXISTS (
+			SELECT 1
+			FROM TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP
+			INNER JOIN TSOLITEL_SolicitudProveedor AS SP ON SP.TN_IdSolicitud = SA_SP.TN_IdSolicitud
+			WHERE SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
+			AND SP.TC_NumeroUnico = @pTC_NumeroUnico
+		  ))
           AND (@pTN_IdOficina IS NULL OR SOLI.TN_IdOficinaSolicitante = @pTN_IdOficina)
           AND (@pTN_IdUsuario IS NULL OR SOLI.TN_IdAnalisis IN (
               SELECT TN_IdAnalisis
