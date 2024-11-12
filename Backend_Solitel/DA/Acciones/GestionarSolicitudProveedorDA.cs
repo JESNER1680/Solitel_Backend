@@ -214,8 +214,8 @@ namespace DA.Acciones
                 var idUsuarioCreadorParam = new SqlParameter("@PN_IdUsuarioCreador", solicitudProveedor.UsuarioCreador.IdUsuario);
                 var idDelitoParam = new SqlParameter("@PN_IdDelito", solicitudProveedor.Delito.IdDelito);
                 var idCategoriaDelitoParam = new SqlParameter("@PN_IdCategoriaDelito", solicitudProveedor.CategoriaDelito.IdCategoriaDelito);
-                var idModalidadParam = new SqlParameter("@PN_IdModalidad", solicitudProveedor.Modalidad.IdModalidad);
-                var idSubModalidadParam = new SqlParameter("@PN_IdSubModalidad", solicitudProveedor.SubModalidad.IdSubModalidad);
+                var idModalidadParam = new SqlParameter("@PN_IdModalidad", solicitudProveedor.Modalidad.IdModalidad == 0 ? (object)DBNull.Value : solicitudProveedor.Modalidad.IdModalidad);
+                var idSubModalidadParam = new SqlParameter("@PN_IdSubModalidad", solicitudProveedor.SubModalidad.IdSubModalidad == 0 ? (object)DBNull.Value : solicitudProveedor.Modalidad.IdModalidad);
                 var idEstadoParam = new SqlParameter("@PN_IdEstado", solicitudProveedor.Estado.IdEstado);
                 var idProveedorParam = new SqlParameter("@PN_IdProveedor", solicitudProveedor.Proveedor.IdProveedor);
                 var idFiscaliaParam = new SqlParameter("@PN_IdFiscalia", solicitudProveedor.Fiscalia.IdFiscalia);
@@ -363,6 +363,7 @@ namespace DA.Acciones
                     Modalidad = new Modalidad { IdModalidad = (int)(da.TN_IdModalidad == null ? 0 : da.TN_IdModalidad), Nombre = da.TC_NombreModalidad },
                     SubModalidad = new SubModalidad { IdSubModalidad = (int)(da.TN_IdSubModalidad == null ? 0 : da.TN_IdSubModalidad), Nombre = da.TC_NombreSubModalidad, IdModalidad = (int)(da.TN_IdModalidad == null ? 0 : da.TN_IdModalidad) },
                     UsuarioCreador = new Usuario { IdUsuario = da.TN_IdUsuario, Nombre = da.TC_NombreUsuario },
+                    Oficina = new Oficina { IdOficina = da.TN_IdOficina,Nombre = da.TC_NombreOficina }
 
 
                 };
@@ -569,82 +570,6 @@ namespace DA.Acciones
                 throw new Exception($"Error en la base de datos al aprobar la solicitud: {ex.Message}", ex);
             }
         }
-       /* public async Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
-        {
-            try
-            {
-                var idSolicitudParam = new SqlParameter("@pTN_IdSolicitud", idSolicitud == 0 ? (object)DBNull.Value : idSolicitud);
-
-                var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedor @pTN_IdSolicitud", idSolicitudParam)
-                    .ToListAsync();
-
-                var solicitudesProveedor = solicitudesProveedorDA.Select(da => new SolicitudProveedor
-                {
-                    IdSolicitudProveedor = da.TN_IdSolicitud,
-                    NumeroUnico = da.TC_NumeroUnico,
-                    NumeroCaso = da.TC_NumeroCaso,
-                    Imputado = da.TC_Imputado,
-                    Ofendido = da.TC_Ofendido,
-                    Resennia = da.TC_Resennia,
-                    Urgente = da.TB_Urgente,
-                    Aprobado = da.TB_Aprobado,
-                    FechaCrecion = da.TF_FechaDeCreacion,
-                    UsuarioCreador = new Usuario
-                    {
-                        IdUsuario = da.TN_IdUsuario,
-                        Nombre = da.TC_NombreUsuario
-                    },
-                    Proveedor = new Proveedor
-                    {
-                        IdProveedor = da.TN_IdProveedor,
-                        Nombre = da.TC_NombreProveedor
-                    },
-                    Delito = new Delito
-                    {
-                        IdDelito = da.TN_IdDelito,
-                        Nombre = da.TC_NombreDelito
-                    },
-                    CategoriaDelito = new CategoriaDelito
-                    {
-                        IdCategoriaDelito = da.TN_IdCategoriaDelito,
-                        Nombre = da.TC_NombreCategoriaDelito
-                    },
-                    Estado = new Estado
-                    {
-                        IdEstado = da.TN_IdEstado,
-                        Nombre = da.TC_NombreEstado
-                    },
-                    Fiscalia = new Fiscalia
-                    {
-                        IdFiscalia = da.TN_IdFiscalia,
-                        Nombre = da.TC_NombreFiscalia
-                    },
-                    Modalidad = da.TN_IdModalidad.HasValue ? new Modalidad
-                    {
-                        IdModalidad = da.TN_IdModalidad.Value,
-                        Nombre = da.TC_NombreModalidad
-                    } : null,
-                    SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
-                    {
-                        IdSubModalidad = da.TN_IdSubModalidad.Value,
-                        Nombre = da.TC_NombreSubModalidad
-                    } : null
-                }).ToList();
-
-                return solicitudesProveedor;
-            }
-            catch (SqlException ex)
-            {
-                // Captura el error específico de SQL Server
-                throw new Exception($"Error en la base de datos al obtener solicitudProveedor: {ex.Message}", ex);
-            }
-            catch (Exception ex)
-            {
-                // Manejo de cualquier otro tipo de excepción
-                throw new Exception($"Ocurrió un error inesperado al obtener la lista de solicitudesProveedor: {ex.Message}", ex);
-            }
-        }*/
 
         public async Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion)
         {

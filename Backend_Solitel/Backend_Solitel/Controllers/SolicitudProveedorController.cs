@@ -27,7 +27,6 @@ namespace Backend_Solitel.Controllers
         [Route("insertarSolicitudProveedor")]
         public async Task<bool> InsertarSolicitudProveedor([FromBody] SolicitudProveedorDTO solicitudProveedorDTO)
         {
-
             List<int> idListaSolicitudesCreadas = new List<int>();
 
             foreach (ProveedorDTO proveedorDTO in solicitudProveedorDTO.Operadoras)
