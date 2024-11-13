@@ -7,6 +7,69 @@ GO
 
 -- =============================================
 -- Autor:		        Ernesto Vega Rodriguez
+-- Fecha de creación: 	2024-10-13
+-- Descripción:		    Inserta una nueva signacion para un usuario analista
+-- =============================================
+
+CREATE OR ALTER PROCEDURE dbo.PA_InsertarAsignacion
+    @pTN_IdAnalisis INT,
+    @pTN_IdUsuario INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @Error INT;
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- INSERTA UNA NUEVA ASIGNACION DE UNA SOLICITUD DE UNA SOLICITUD DE ANALISIS A UN USUARIO
+		INSERT INTO [dbo].[TSOLITEL_Asignacion]
+           ([TF_FechaDeModificacion]
+           ,[TN_IdAnalisis]
+           ,[TN_IdUsuario])
+		 VALUES
+			   (GETDATE()
+			   ,@pTN_IdAnalisis
+			   ,@pTN_IdUsuario)
+
+        -- VERIFICAR SI OCURRE ALGUN ERROR
+        SET @Error = @@ERROR;
+        IF @Error <> 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+            RETURN -1;
+        END
+
+        -- SE RELIZA UN COMMIT DE SOLICITUDES DE ANALISIS
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- EN CASO DE ERROR HACE UN ROLLBACK
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT;
+        SELECT 
+            @ErrorMessage = ERROR_MESSAGE(),
+            @ErrorSeverity = ERROR_SEVERITY(),
+            @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
+        RETURN -1;
+    END CATCH
+END
+GO
+
+USE [Proyecto_Analisis]
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Autor:		        Ernesto Vega Rodriguez
 -- Fecha de creación: 	2024-10-29
 -- Descripción:		    Solicitar solicitudes de analisis por filtrado y otros datos
 -- =============================================
@@ -37,14 +100,14 @@ BEGIN
             (SELECT TOP 1 TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario
              WHERE TN_IdUsuario = (SELECT TOP 1 TN_IdUsuario FROM TSOLITEL_Historial 
                                    WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
-                                   AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Analisis')
+                                   AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Análisis')
                                    ORDER BY TF_FechaDeModificacion DESC)) AS [TC_NombreUsuarioAprobador],
             (SELECT MAX(TF_FechaDeModificacion) FROM TSOLITEL_Historial 
              WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
-             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Analisis')) AS [TF_FechaAprobacion],
+             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'En Análisis')) AS [TF_FechaAprobacion],
             (SELECT MAX(TF_FechaDeModificacion) FROM TSOLITEL_Historial 
              WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
-             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'Analizando')) AS [TF_FechaAnalizado],
+             AND TN_IdEstado = (SELECT TN_IdEstado FROM TSOLITEL_Estado WHERE TC_Nombre = 'Analizado')) AS [TF_FechaAnalizado],
             (SELECT TOP 1 TC_Nombre + ' ' + TC_Apellido FROM TSOLITEL_Usuario
              WHERE TN_IdUsuario = (SELECT TOP 1 TN_IdUsuario FROM TSOLITEL_Asignacion 
                                    WHERE TN_IdAnalisis = SOLI.TN_IdAnalisis 
