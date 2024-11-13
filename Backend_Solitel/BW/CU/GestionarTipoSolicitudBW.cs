@@ -18,7 +18,7 @@ namespace BW.CU
             this.gestionarTipoSolicitudDA = gestionarTipoSolicitudDA;
         }
 
-        public async Task<TipoSolicitud> eliminarTipoSolicitud(int id)
+        public async Task<bool> eliminarTipoSolicitud(int id)
         {
             return await this.gestionarTipoSolicitudDA.eliminarTipoSolicitud(id);
         }
@@ -31,6 +31,11 @@ namespace BW.CU
         public async Task<List<TipoSolicitud>> obtenerTipoSolicitud()
         {
             return await this.gestionarTipoSolicitudDA.obtenerTipoSolicitud();
+        }
+
+        public async Task<TipoSolicitud> obtenerTipoSolicitud(int id)
+        {
+            return await this.gestionarTipoSolicitudDA.obtenerTipoSolicitud(id);
         }
     }
 }

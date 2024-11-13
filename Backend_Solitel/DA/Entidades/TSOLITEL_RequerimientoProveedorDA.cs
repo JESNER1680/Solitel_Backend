@@ -16,20 +16,15 @@ namespace DA.Entidades
         public int TN_IdRequerimientoProveedor { get; set; }
 
         [Required]
-        public DateTime TF_FechaInicio { get; set; }
+        public DateTime TF_FechaDeInicio { get; set; }
 
         [Required]
-        public DateTime TF_FechaFinal { get; set; }
+        public DateTime TF_FechaDeFinal { get; set; }
 
         [Required]
         [StringLength(255)]
         public string TC_Requerimiento { get; set; }
 
-        [Required]
-        public int TN_NumeroSolicitud { get; set; }
-
-        [ForeignKey("TN_NumeroSolicitud")]
-        public virtual TSOLITEL_SolicitudProveedorDA SolicitudProveedor { get; set; }
     }
 
 }

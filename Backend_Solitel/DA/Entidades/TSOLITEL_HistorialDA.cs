@@ -15,31 +15,25 @@ namespace DA.Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TN_IdHistorial { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string TC_Observacion { get; set; }
+        public string? TC_Observacion { get; set; }
 
         [Required]
-        public DateTime TF_FechaEstado { get; set; }
+        public DateTime TF_FechaDeModificacion { get; set; }
 
         [Required]
         public int TN_IdUsuario { get; set; }
 
+        public string TC_NombreUsuario { get; set; }
+
         [Required]
         public int TN_IdEstado { get; set; }
 
+        public string TC_NombreEstado { get; set; }
+
         public int? TN_IdAnalisis { get; set; }
 
-        public int? TN_NumeroSolicitud { get; set; }
+        public int? TN_IdSolicitud { get; set; }
 
-        [ForeignKey("TN_IdUsuario")]
-        public virtual TSOLITEL_UsuarioDA Usuario { get; set; }
-
-        [ForeignKey("TN_IdEstado")]
-        public virtual TSOLITEL_EstadoDA Estado { get; set; }
-
-        [ForeignKey("TN_NumeroSolicitud")]
-        public virtual TSOLITEL_SolicitudProveedorDA? SolicitudProveedor { get; set; }
     }
 
 }

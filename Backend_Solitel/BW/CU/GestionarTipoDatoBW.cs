@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,19 +19,25 @@ namespace BW.CU
             this.gestionarTipoDatoDA = gestionarTipoDatoDA;
         }
 
-        public async Task<TipoDato> eliminarTipoDato(int id)
+        public async Task<bool> eliminarTipoDato(int id)
         {
             return await this.gestionarTipoDatoDA.eliminarTipoDato(id);
         }
 
         public async Task<TipoDato> insertarTipoDato(TipoDato tipoDato)
         {
+            TipoDatoBR.ValidarTipoDato(tipoDato);
             return await this.gestionarTipoDatoDA.insertarTipoDato(tipoDato);
         }
 
         public async Task<List<TipoDato>> obtenerTipoDato()
         {
             return await this.gestionarTipoDatoDA.obtenerTipoDato();
+        }
+
+        public async Task<TipoDato> obtenerTipoDato(int id)
+        {
+            return await this.gestionarTipoDatoDA.obtenerTipoDato(id);
         }
     }
 }

@@ -7,6 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins", policyBuilder =>
+    {
+        policyBuilder.AllowAnyOrigin()
+                     .AllowAnyMethod()
+                     .AllowAnyHeader();
+    });
+});
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -38,14 +49,70 @@ builder.Services.AddTransient<IGestionarTipoSolicitudDA, GestionarTipoSolicitudD
 builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
 builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
 
-//Conexión a BD
+builder.Services.AddTransient<IGestionarSolicitudAnalistaBW, GestionarSolicitudAnalistaBW>();
+builder.Services.AddTransient<IGestionarSolicitudAnalistaDA, GestionarSolicitudAnalistaDA>();
+
+builder.Services.AddTransient<IGestionarTipoDatoBW, GestionarTipoDatoBW>();
+builder.Services.AddTransient<IGestionarTipoDatoDA, GestionarTipoDatoDA>();
+builder.Services.AddTransient<IGestionarTipoAnalisisBW, GestionarTipoAnalisisBW>();
+builder.Services.AddTransient<IGestionarTipoAnalisisDA, GestionarTipoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarSolicitudProveedorBW, GestionarSolicitudProveedorBW>();
+builder.Services.AddTransient<IGestionarSolicitudProveedorDA, GestionarSolicitudProveedorDA>();
+
+builder.Services.AddTransient<IGestionarRequerimientoProveedorBW, GestionarRequerimientoProveedorBW>();
+builder.Services.AddTransient<IGestionarRequerimientoProveedorDA, GestionarRequerimientoProveedorDA>();
+
+builder.Services.AddTransient<IGestionarProveedorBW, GestionarProveedorBW>();
+builder.Services.AddTransient<IGestionarProveedorDA, GestionarProveedorDA>();
+
+builder.Services.AddTransient<IGestionarOficinaBW, GestionarOficinaBW>();
+builder.Services.AddTransient<IGestionarOficinaDA, GestionarOficinaDA>();
+
+builder.Services.AddTransient<IGestionarArchivoDA,GestionarArchivoDA>();
+builder.Services.AddTransient<IGestionarArchivoBW, GestionarArchivoBW>();
+
+builder.Services.AddTransient<IGestionarObjetivoAnalisisBW, GestionarObjetivoAnalisisBW>();
+builder.Services.AddTransient<IGestionarObjetivoAnalisisDA, GestionarObjetivoAnalisisDA>();
+
+builder.Services.AddTransient<IGestionarHistorialDA, GestionarHistorialDA>();
+builder.Services.AddTransient<IGestionarHistorialBW, GestionarHistorialBW>();
+
+builder.Services.AddTransient<IGestionarEstadoDA, GestionarEstadoDA>();
+builder.Services.AddTransient<IGestionarEstadoBW, GestionarEstadoBW>();
+
+
+//Conexiï¿½n a BD
 builder.Services.AddDbContext<SolitelContext>(options =>
 {
-    // Usar la cadena de conexión desde la configuración
+    // Usar la cadena de conexiï¿½n desde la configuraciï¿½n
     options.UseSqlServer(builder.Configuration.GetConnectionString("DBSomee.com"));
-    // Otros ajustes del contexto de base de datos pueden ser configurados aquí, si es necesario
+    // Otros ajustes del contexto de base de datos pueden ser configurados aquï¿½, si es necesario
 });
+
+// Habilitar CORS para localhost:4200
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials());
+});
+
 var app = builder.Build();
+
+//configuracion de cores
+app.UseCors("AllowOrigin");
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -55,6 +122,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

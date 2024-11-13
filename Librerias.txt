@@ -1,0 +1,7 @@
+Librerias utilizadas para el proyecto en FrontEnd Angular 18
+
+npm install
+npm install ngx-mask
+npm install ng-multiselect-dropdown
+npm install file-saver
+npm install --save-dev @types/file-saver

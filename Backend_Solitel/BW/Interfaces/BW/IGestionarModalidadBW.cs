@@ -11,8 +11,10 @@ namespace BW.Interfaces.BW
     {
         public Task<Modalidad> insertarModalidad(Modalidad modalidad);
 
-        public Task<Modalidad> eliminarModalidad(int id);
+        public Task<bool> eliminarModalidad(int id);
 
         public Task<List<Modalidad>> obtenerModalidad();
+
+        public Task<Modalidad> obtenerModalidad(int id);
     }
 }

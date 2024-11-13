@@ -13,7 +13,8 @@ namespace BW.Interfaces.BW
 
         public Task<List<TipoDato>> obtenerTipoDato();
 
-        public Task<TipoDato> eliminarTipoDato(int id);
+        public Task<bool> eliminarTipoDato(int id);
 
+        public Task<TipoDato> obtenerTipoDato(int id);
     }
 }

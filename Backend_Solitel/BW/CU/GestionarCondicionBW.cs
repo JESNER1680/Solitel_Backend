@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,19 +19,25 @@ namespace BW.CU
             this.gestionarCondicionDA = gestionarCondicionDA;
         }
 
-        public async Task<Condicion> eliminarCondicion(int id)
+        public async Task<bool> eliminarCondicion(int id)
         {
             return await this.gestionarCondicionDA.eliminarCondicion(id);
         }
 
         public async Task<Condicion> insertarCondicion(Condicion condicion)
         {
+            CondicionBR.ValidarCondicion(condicion);
             return await this.gestionarCondicionDA.insertarCondicion(condicion);
         }
 
-        public async Task<List<Condicion>> obtenerCondicion()
+        public async Task<List<Condicion>> obtenerCondicionesTodas()
         {
-            return await this.gestionarCondicionDA.obtenerCondicion();
+            return await this.gestionarCondicionDA.obtenerCondicionesTodas();
+        }
+
+        public async Task<Condicion> obtenerCondicionId(int id)
+        {
+            return await this.gestionarCondicionDA.obtenerCondicionId(id);
         }
     }
 }

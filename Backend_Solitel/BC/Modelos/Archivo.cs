@@ -9,28 +9,16 @@ namespace BC.Modelos
 {
     public class Archivo
     {
-        public int TN_IdArchivo { get; set; }
+        public int IdArchivo { get; set; }
 
-        [Required]
-        [StringLength(255)]
-        public string TC_HashAchivo { get; set; }
+        public string Nombre { get; set; }
 
-        [Required]
-        public int TC_Nombre { get; set; }
+        public byte[] Contenido { get; set; }
 
-        [Required]
-        public byte[] TV_Contenido { get; set; } // Para almacenar contenido binario
+        public string FormatoArchivo { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string TC_FormatoAchivo { get; set; }
+        public DateTime FechaModificacion { get; set; }
 
-        [Required]
-        public DateTime TF_FechaModificacion { get; set; }
-
-        // Relación opcional con TSOLITEL_RequerimientoProveedor
-        public int? TN_IdRequerimiento { get; set; }
-        public virtual RequerimientoProveedor RequerimientoProveedor { get; set; }
     }
 
 }

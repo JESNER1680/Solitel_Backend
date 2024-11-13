@@ -1,4 +1,5 @@
 ﻿using BC.Modelos;
+using BC.Reglas_de_Negocio;
 using BW.Interfaces.BW;
 using BW.Interfaces.DA;
 using System;
@@ -18,17 +19,25 @@ namespace BW.CU
             this.gestionarFiscaliaDA = gestionarFiscaliaDA;
         }
 
-        public async Task<bool> insertarFiscalia(string nombre)
+        public async Task<bool> eliminarFiscalia(int id)
         {
+            return await this.gestionarFiscaliaDA.eliminarFiscalia(id);
+        }
 
-            //llamar a reglas de negocio aqui
+        public async Task<Fiscalia> insertarFiscalia(string nombre)
+        {
+            FiscaliaBR.ValidarNombre(nombre);
             return await this.gestionarFiscaliaDA.insertarFiscalia(nombre);
         }
 
-        public List<Fiscalia> obtenerFiscalias()
+        public async Task<Fiscalia> obtenerFiscaliaId(int id)
         {
-            //llamar a reglas de negocio aqui
-            return this.gestionarFiscaliaDA.obtenerFiscalias();
+            return await this.gestionarFiscaliaDA.obtenerFiscaliaId(id);
+        }
+
+        public async Task<List<Fiscalia>> obtenerFiscaliasTodas()
+        {
+            return await this.gestionarFiscaliaDA.obtenerFiscaliasTodas();
         }
     }
 }

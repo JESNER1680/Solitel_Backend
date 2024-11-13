@@ -1,0 +1,6 @@
+@Backend_Solitel_MS_HostAddress = http://localhost:5145
+
+GET {{Backend_Solitel_MS_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -22,6 +22,10 @@ namespace DA.Entidades
         [Required]
         [StringLength(255)]
         public string TC_Descripcion { get; set; }
+
+        public string TC_Tipo { get; set; }
+
+        public int TN_CantidadDeSolicitudes { get; set; }
     }
 
 }

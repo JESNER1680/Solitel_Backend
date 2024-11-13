@@ -8,15 +8,16 @@ namespace BC.Modelos
 {
     public class RequerimentoAnalisis
     {
-        public int TN_IdRequerimientoAnalisis { get; set; }
+        public int IdRequerimientoAnalisis { get; set; }
 
-        public string TC_Objetivo { get; set; }
+        public string Objetivo { get; set; }
 
-        public string TC_UtilizadoPor { get; set; }
+        public string UtilizadoPor { get; set; }
 
-        public int TN_IdTipo { get; set; }
+        public TipoDato tipoDato  { get; set; }
 
-        public int TN_IdAnalisis { get; set; }
+        public int IdAnalisis { get; set; }
+        public Condicion condicion { get; set; }
     }
 
 }

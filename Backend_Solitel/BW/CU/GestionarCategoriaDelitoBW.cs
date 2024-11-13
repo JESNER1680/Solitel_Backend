@@ -19,7 +19,7 @@ namespace BW.CU
             this.gestionarCategoriaDelitoDA = gestionarCategoriaDelitoDA;
         }
 
-        public async Task<CategoriaDelito> eliminarCategoriaDelito(int id)
+        public async Task<bool> eliminarCategoriaDelitoId(int id)
         {
             return await this.gestionarCategoriaDelitoDA.eliminarCategoriaDelito(id);
         }
@@ -30,9 +30,14 @@ namespace BW.CU
             return await this.gestionarCategoriaDelitoDA.insertarCategoriaDelito(categoriaDelito);
         }
 
-        public async Task<List<CategoriaDelito>> obtenerCategoriaDelito()
+        public async Task<List<CategoriaDelito>> obtenerCategoriaDelitoTodas()
         {
             return await this.gestionarCategoriaDelitoDA.obtenerCategoriaDelito();
+        }
+
+        public async Task<CategoriaDelito> obtenerCategoriaDelito(int id)
+        {
+            return await this.gestionarCategoriaDelitoDA.obtenerCategoriaDelito(id);
         }
     }
 }

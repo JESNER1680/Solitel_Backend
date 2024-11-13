@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace DA.Acciones
             _context = context;
         }
 
-        public async Task<CategoriaDelito> eliminarCategoriaDelito(int id)
+        public async Task<bool> eliminarCategoriaDelito(int id)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace DA.Acciones
                 }
 
                 // Retornar un objeto CategoriaDelito con el Id de la categoría eliminada
-                return new CategoriaDelito { TN_IdCategoriaDelito = id };
+                return true;
             }
             catch (SqlException ex)
             {
@@ -57,27 +58,38 @@ namespace DA.Acciones
         {
             try
             {
-                // Definir los parámetros para el procedimiento almacenado
-                var nombreParam = new SqlParameter("@pTC_Nombre", categoriaDelito.TC_Nombre);
-                var descripcionParam = new SqlParameter("@pTC_Descripcion", categoriaDelito.TC_Descripcion);
+                // Definir los parámetros de entrada y salida para el procedimiento almacenado
+                var nombreParam = new SqlParameter("@pTC_Nombre", categoriaDelito.Nombre);
+                var descripcionParam = new SqlParameter("@pTC_Descripcion", categoriaDelito.Descripcion);
 
-                // Ejecutar el procedimiento almacenado para insertar
-                await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarCategoriaDelito @pTC_Nombre, @pTC_Descripcion",
-                    nombreParam, descripcionParam);
-
-                var resultado = await _context.SaveChangesAsync();
-
-                if (resultado < 0)
+                // Definir el parámetro de salida para capturar el ID generado
+                var idParam = new SqlParameter("@pTN_IdCategoriaDelito", SqlDbType.Int)
                 {
-                    throw new Exception("Error al insertar la categoría de delito.");
+                    Direction = ParameterDirection.Output
+                };
+
+                // Ejecutar el procedimiento almacenado con los parámetros definidos
+                await _context.Database.ExecuteSqlRawAsync(
+                    "EXEC PA_InsertarCategoriaDelito @pTN_IdCategoriaDelito OUTPUT, @pTC_Nombre, @pTC_Descripcion",
+                    idParam, nombreParam, descripcionParam
+                );
+
+                // Verificar si se generó un ID válido
+                var nuevoId = (int)idParam.Value;
+                if (nuevoId <= 0)
+                {
+                    throw new Exception("Error al obtener el ID de la categoría de delito recién insertada.");
                 }
 
+                // Asignar el ID generado a la entidad de categoría de delito
+                categoriaDelito.IdCategoriaDelito = nuevoId;
+
+                // Devolver el objeto con el ID asignado
                 return categoriaDelito;
             }
             catch (SqlException ex)
             {
-                // Si el error proviene de SQL Server, se captura el mensaje del procedimiento almacenado
+                // Captura el error específico de SQL Server
                 throw new Exception($"Error en la base de datos al insertar la categoría de delito: {ex.Message}", ex);
             }
             catch (Exception ex)
@@ -99,9 +111,9 @@ namespace DA.Acciones
                 // Mapeo de los resultados a la entidad CategoriaDelito
                 var categorias = categoriaDelitosDA.Select(da => new CategoriaDelito
                 {
-                    TN_IdCategoriaDelito = da.TN_IdCategoriaDelito,
-                    TC_Nombre = da.TC_Nombre,
-                    TC_Descripcion = da.TC_Descripcion,
+                    IdCategoriaDelito = da.TN_IdCategoriaDelito,
+                    Nombre = da.TC_Nombre,
+                    Descripcion = da.TC_Descripcion,
                 }).ToList();
 
                 return categorias;
@@ -115,6 +127,45 @@ namespace DA.Acciones
             {
                 // Manejo de cualquier otro tipo de excepción
                 throw new Exception($"Ocurrió un error inesperado al obtener la lista de categorías de delito: {ex.Message}", ex);
+            }
+        }
+
+        public async Task<CategoriaDelito> obtenerCategoriaDelito(int id)
+        {
+            try
+            {
+                // Ejecutar el procedimiento almacenado para consultar una categoría de delito por ID
+                var categoriaDelitoDA = await _context.TSOLITEL_CategoriaDelitoDA
+                    .FromSqlRaw("EXEC PA_ConsultarCategoriaDelito @pTN_IdCategoriaDelito = {0}", id)
+                    .ToListAsync(); // Usar FirstOrDefaultAsync para obtener un único resultado
+
+                var categoriaDelito = categoriaDelitoDA.FirstOrDefault();  // Obtener el primer elemento si hay
+
+                // Verificar si se encontró la categoría
+                if (categoriaDelito == null)
+                {
+                    throw new Exception($"No se encontró una categoría de delito con el ID {id}.");
+                }
+
+                // Mapear los resultados a la entidad CategoriaDelito
+                var categoria = new CategoriaDelito
+                {
+                    IdCategoriaDelito = categoriaDelito.TN_IdCategoriaDelito,
+                    Nombre = categoriaDelito.TC_Nombre,
+                    Descripcion = categoriaDelito.TC_Descripcion
+                };
+
+                return categoria;
+            }
+            catch (SqlException ex)
+            {
+                // Captura el error específico de SQL Server
+                throw new Exception($"Error en la base de datos al obtener la categoría de delito con ID {id}: {ex.Message}", ex);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de cualquier otro tipo de excepción
+                throw new Exception($"Ocurrió un error inesperado al obtener la categoría de delito con ID {id}: {ex.Message}", ex);
             }
         }
     }

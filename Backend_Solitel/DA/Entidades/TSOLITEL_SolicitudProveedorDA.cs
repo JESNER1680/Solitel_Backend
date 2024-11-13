@@ -14,10 +14,10 @@ namespace DA.Entidades
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Required]
-        public int TN_IdSolicitudProveedor { get; set; }
+        public int TN_IdSolicitud { get; set; }
 
-        public int? TN_NumeroUnico { get; set; }
-        public int? TN_NumeroCaso { get; set; }
+        public string? TC_NumeroUnico { get; set; }
+        public string? TC_NumeroCaso { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -31,73 +31,61 @@ namespace DA.Entidades
         public string? TC_Resennia { get; set; }
 
         [Required]
-        public int TN_DiasTranscurridos { get; set; }
-
-        [Required]
         public bool TB_Urgente { get; set; }
 
         [Required]
         public bool TB_Aprobado { get; set; }
 
         [Required]
-        public DateTime TF_FechaCrecion { get; set; }
+        public DateTime TF_FechaDeCreacion { get; set; }
 
         [Required]
-        public DateTime TF_FechaModificacion { get; set; }
-
-        [Required]
-        public int TN_IdUsuarioCreador { get; set; }
+        public int TN_IdUsuario { get; set; }
 
         [Required]
         public int TN_IdDelito { get; set; }
 
+        public string TC_NombreDelito { get; set; }
+
+
         [Required]
         public int TN_IdCategoriaDelito { get; set; }
 
-        [Required]
-        public int TN_IdModalida { get; set; }
+        public string TC_NombreCategoriaDelito { get; set; }
+
+       
+        public int? TN_IdModalidad { get; set; }
+
+        public string? TC_NombreModalidad { get; set; }
 
         [Required]
         public int TN_IdEstado { get; set; }
 
+        public string TC_NombreEstado { get; set; }
+
         [Required]
         public int TN_IdProveedor { get; set; }
+
+        public string TC_NombreProveedor { get; set; }
 
         [Required]
         public int TN_IdFiscalia { get; set; }
 
-        [Required]
+        public string TC_NombreFiscalia { get; set; }
+
+        
+        public int? TN_IdSubModalidad { get; set; }
+
+        public string? TC_NombreSubModalidad { get;set; }
+
+        public string TC_NombreUsuario { get;set; }
+
+        public string TC_ApellidoUsuario { get; set; }
+
         public int TN_IdOficina { get; set; }
 
-        [Required]
-        public int TN_IdSubModalidad { get; set; }
+        public string TC_NombreOficina { get; set; }
 
-        [ForeignKey("TN_IdCategoriaDelito")]
-        public virtual TSOLITEL_CategoriaDelitoDA CategoriaDelito { get; set; }
-
-        [ForeignKey("TN_IdDelito")]
-        public virtual TSOLITEL_DelitoDA Delito { get; set; }
-
-        [ForeignKey("TN_IdEstado")]
-        public virtual TSOLITEL_EstadoDA Estado { get; set; }
-
-        [ForeignKey("TN_IdFiscalia")]
-        public virtual TSOLITEL_FiscaliaDA Fiscalia { get; set; }
-
-        [ForeignKey("TN_IdModalida")]
-        public virtual TSOLITEL_ModalidadDA Modalidad { get; set; }
-
-        [ForeignKey("TN_IdOficina")]
-        public virtual TSOLITEL_OficinaDA Oficina { get; set; }
-
-        [ForeignKey("TN_IdProveedor")]
-        public virtual TSOLITEL_ProveedorDA Proveedor { get; set; }
-
-        [ForeignKey("TN_IdSubModalidad")]
-        public virtual TSOLITEL_SubModalidadDA SubModalidad { get; set; }
-
-        [ForeignKey("TN_IdUsuarioCreador")]
-        public virtual TSOLITEL_UsuarioDA UsuarioCreador { get; set; }
     }
 
 }
