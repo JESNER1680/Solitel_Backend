@@ -399,12 +399,12 @@ namespace DA.Acciones
                         {
                             IdModalidad = da.TN_IdModalidad.Value,
                             Nombre = da.TC_NombreModalidad
-                        } : null,
+                        } : new Modalidad(),
                         SubModalidad = da.TN_IdSubModalidad.HasValue ? new SubModalidad
                         {
                             IdSubModalidad = da.TN_IdSubModalidad.Value,
                             Nombre = da.TC_NombreSubModalidad
-                        } : null
+                        } : new SubModalidad()
                     }).ToList();
 
                     solicitudesAnalisis.Add(solicitudAnalisis);
