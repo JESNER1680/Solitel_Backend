@@ -57,7 +57,7 @@ BEGIN
         COMMIT TRANSACTION;
 
         -- Cambiar el estado de la solicitud
-        EXEC PA_CambiarEstadoSolicitudAnalisis @TN_IdSolicitudAnalisis, 'Aprobar Análisis', 'Analisis', @TN_IdEstado = @ResultadoIdEstado OUTPUT;
+        EXEC PA_CambiarEstadoSolicitudAnalisis @TN_IdSolicitudAnalisis, 'Aprobar Analisis', 'Analisis', @TN_IdEstado = @ResultadoIdEstado OUTPUT;
 
         -- Insertar en el historial de la solicitud
         EXEC PA_InsertarHistoricoSolicitud NULL, @TN_IdSolicitudAnalisis, @PN_IdUsuarioCreador, '', @ResultadoIdEstado;
@@ -1067,8 +1067,8 @@ SELECT * FROM TSOLITEL_Estado
 ---- Eliminar condiciones relacionadas con cada solicitud de análisis
 --DELETE FROM dbo.[TSOLITEL_RequerimientoAnalisis_Condicion];
 
----- Eliminar archivos asociados a cada solicitud de análisis
---DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
+-- Eliminar archivos asociados a cada solicitud de análisis
+DELETE FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo WHERE TN_IdAnalisis > 2;;
 
 ---- Eliminar las solicitudes de análisis
 --DELETE FROM dbo.TSOLITEL_SolicitudAnalisis WHERE TN_IdAnalisis > 2;;
