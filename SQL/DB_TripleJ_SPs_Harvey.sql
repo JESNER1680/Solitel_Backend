@@ -621,51 +621,52 @@ BEGIN
 
         -- Consulta las solicitudes del proveedor basadas en el número único y el estado 'Tramitado'
         SELECT 
-            TN_IdSolicitud,
-            TC_NumeroUnico,
-            TC_NumeroCaso,
-            TC_Imputado,
-            TC_Ofendido,
-            TC_Resennia,
-            TB_Urgente,
-            TB_Aprobado,
-            TF_FechaDeCreacion AS TF_FechaDeCreacion,
-            Usuario.TN_IdUsuario,
+			T.TN_IdSolicitud,
+			T.TC_NumeroUnico,
+			T.TC_NumeroCaso,
+			T.TC_Imputado,
+			T.TC_Ofendido,
+			T.TC_Resennia,
+			T.TB_Urgente,
+			T.TB_Aprobado,
+			T.TF_FechaDeCreacion AS TF_FechaDeCreacion,
+			Usuario.TN_IdUsuario,
 			Usuario.TC_Nombre AS TC_NombreUsuario,
 			Proveedor.TN_IdProveedor,
-            Proveedor.TC_Nombre AS TC_NombreProveedor,
-            Fiscalia.TN_IdFiscalia,
-            Fiscalia.TC_Nombre AS TC_NombreFiscalia,
-            Delito.TN_IdDelito AS TN_IdDelito,
-            Delito.TC_Nombre AS TC_NombreDelito,
-            CategoriaDelito.TN_IdCategoriaDelito,
-            CategoriaDelito.TC_Nombre AS TC_NombreCategoriaDelito,
-            Modalidad.TN_IdModalidad AS TN_IdModalidad,
-            Modalidad.TC_Nombre AS TC_NombreModalidad,
-            Estado.TN_IdEstado,
-            Estado.TC_Nombre AS TC_NombreEstado,
-            SubModalidad.TN_IdSubModalidad,
-            SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
-			TN_IdSolicitud AS TN_NumeroSolicitud,
-            Usuario.TC_Apellido AS TC_ApellidoUsuario,
+			Proveedor.TC_Nombre AS TC_NombreProveedor,
+			Fiscalia.TN_IdFiscalia,
+			Fiscalia.TC_Nombre AS TC_NombreFiscalia,
+			Delito.TN_IdDelito AS TN_IdDelito,
+			Delito.TC_Nombre AS TC_NombreDelito,
+			CategoriaDelito.TN_IdCategoriaDelito,
+			CategoriaDelito.TC_Nombre AS TC_NombreCategoriaDelito,
+			COALESCE(Modalidad.TN_IdModalidad, 0) AS TN_IdModalidad, -- Manejo de valores NULL
+			COALESCE(Modalidad.TC_Nombre, 'Sin Modalidad') AS TC_NombreModalidad, -- Manejo de valores NULL
+			Estado.TN_IdEstado,
+			Estado.TC_Nombre AS TC_NombreEstado,
+			COALESCE(SubModalidad.TN_IdSubModalidad, 0) AS TN_IdSubModalidad, -- Manejo de valores NULL
+			COALESCE(SubModalidad.TC_Nombre, 'Sin SubModalidad') AS TC_NombreSubModalidad, -- Manejo de valores NULL
+			T.TN_IdSolicitud AS TN_NumeroSolicitud,
+			Usuario.TC_Apellido AS TC_ApellidoUsuario,
 			Oficina.TC_Nombre AS TC_NombreOficina,
 			Oficina.TN_IdOficina AS TN_IdOficina
-        FROM TSOLITEL_SolicitudProveedor AS T
-        INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
-        INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
-        INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
-        INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
-        INNER JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
-        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado AND Estado.TC_Nombre = 'Tramitado'
-        INNER JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
+		FROM TSOLITEL_SolicitudProveedor AS T
+		INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
+		INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
+		INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
+		INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
+		LEFT JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
+		INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado AND Estado.TC_Nombre = 'Tramitado'
+		LEFT JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
 		INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
 		INNER JOIN TSOLITEL_Oficina AS Oficina ON Oficina.TN_IdOficina = T.TN_IdOficina
 
-        WHERE T.TC_NumeroUnico = @PN_NumeroUnico 
-		  AND T.TN_IdUsuario = @pTN_IdUsuario
-		  AND T.TN_IdOficina = @PTN_IdOficina
-        
-        ORDER BY T.TN_IdSolicitud;
+		WHERE (T.TC_NumeroUnico = @PN_NumeroUnico )
+		  AND (T.TN_IdUsuario = @pTN_IdUsuario)
+		  AND (T.TN_IdOficina = @PTN_IdOficina)
+
+		ORDER BY T.TN_IdSolicitud;
+
 
         -- Confirma la transacción si no hay errores
         COMMIT TRANSACTION;
