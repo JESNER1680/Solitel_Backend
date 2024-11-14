@@ -27,7 +27,11 @@ namespace DA.Contexto
         public DbSet<TSOLITEL_TipoSolicitudDA> TSOLITEL_TipoSolicitudDA { get; set; }
 
         public DbSet<TSOLITEL_TipoDatoDA> TSOLITEL_TipoDatoDA { get; set; }
+
         public DbSet<TSOLITEL_SolicitudAnalisisDA> TSOLITEL_SolicitudAnalisisDA { get; set; }
+
+        public DbSet<TSOLITEL_SolicitudAnalisisAnalistaDA> TSOLITEL_SolicitudAnalisisAnalistaDA { get; set; }
+
         public DbSet<TSOLITEL_RequerimentoAnalisisDA > TSOLITEL_RequerimentoAnalisisDA { get; set; }
 
         public DbSet<TSOLITEL_ProveedorDA> TSOLITEL_ProveedorDA { get; set; }
@@ -39,7 +43,8 @@ namespace DA.Contexto
         public DbSet<TSOLITEL_RequerimientoProveedorDA> TSOLITEL_RequerimientoProveedorDA { get; set; }
 
         public DbSet<TSOLITEL_DatoRequeridoDA> TSOLITEL_DatoRequeridoDA { get; set; }
-        public DbSet<TSOLITEL_ObjetivoAnalisisDA> tSOLITEL_ObjetivoAnalisisDA { get; set; }
+
+        public DbSet<TSOLITEL_ObjetivoAnalisisDA> TSOLITEL_ObjetivoAnalisisDA { get; set; }
 
         public DbSet<TSOLITEL_TipoAnalisisDA> TSOLITEL_TipoAnalisisDA { get; set; }
 
@@ -48,6 +53,7 @@ namespace DA.Contexto
         public DbSet<TSOLITEL_HistorialDA> TSOLITEL_HistorialDA { get; set; }
 
         public DbSet<TSOLITEL_EstadoDA> TSOLITEL_EstadoDA { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TSOLITEL_FiscaliaDA>().ToTable("TSOLITEL_Fiscalia").HasKey(p => p.TN_IdFiscalia);
@@ -67,6 +73,7 @@ namespace DA.Contexto
             modelBuilder.Entity<TSOLITEL_DatoRequeridoDA>().ToTable("TSOLITEL_DatoRequerido").HasKey(p => p.TN_IdDatoRequerido);
             modelBuilder.Entity<TSOLITEL_ObjetivoAnalisisDA>().ToTable("TSOLITEL_ObjetivoAnalisis").HasKey(p => p.TN_IdObjetivoAnalisis);
             modelBuilder.Entity<TSOLITEL_TipoAnalisisDA>().ToTable("TSOLITEL_TipoAnalisis").HasKey(p => p.TN_IdTipoAnalisis);
+            modelBuilder.Entity<TSOLITEL_SolicitudAnalisisAnalistaDA>().HasNoKey();
         }
     }
 }

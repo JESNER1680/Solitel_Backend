@@ -20,10 +20,13 @@ namespace Backend_Solitel.Utility
                 OtrosObjetivosDeAnalisis = solicitudAnalisisDTO.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisisDTO.Aprobado,
                 Estado = solicitudAnalisisDTO.Estado,
-                FechaCrecion = solicitudAnalisisDTO.FechaCrecion?? fechaActual,
-                NumeroSolicitud = solicitudAnalisisDTO.NumeroSolicitud,
-                IdOficina = solicitudAnalisisDTO.IdOficina,
-                IdUsuario = solicitudAnalisisDTO.IdUsuario,
+                FechaCreacion = solicitudAnalisisDTO.FechaCreacion?? fechaActual,
+                IdOficinaSolicitante = solicitudAnalisisDTO.IdOficinaSolicitante,
+                IdUsuarioCreador = solicitudAnalisisDTO.IdUsuarioCreador,
+                IdUsuarioAprobador = solicitudAnalisisDTO.IdUsuarioAprobador,
+                IdOficinaCreacion = solicitudAnalisisDTO.IdOficinaCreacion,
+                FechaDeAprobacion = solicitudAnalisisDTO.FechaDeAprobacion,
+                FechaDeAnalizado = solicitudAnalisisDTO.FechaDeAnalizado,
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisisDTO.Requerimentos?.Select(r => new RequerimentoAnalisis
@@ -87,10 +90,13 @@ namespace Backend_Solitel.Utility
                 OtrosObjetivosDeAnalisis = solicitudAnalisis.OtrosObjetivosDeAnalisis,
                 Aprobado = solicitudAnalisis.Aprobado,
                 Estado = solicitudAnalisis.Estado,
-                FechaCrecion = solicitudAnalisis.FechaCrecion,
-                NumeroSolicitud = solicitudAnalisis.NumeroSolicitud,
-                IdOficina = solicitudAnalisis.IdOficina,
-                IdUsuario = solicitudAnalisis.IdUsuario,
+                FechaCreacion = solicitudAnalisis.FechaCreacion,
+                IdOficinaSolicitante = solicitudAnalisis.IdOficinaSolicitante,
+                IdUsuarioCreador = solicitudAnalisis.IdUsuarioCreador,
+                IdOficinaCreacion = solicitudAnalisis.IdOficinaCreacion,
+                IdUsuarioAprobador = solicitudAnalisis?.IdUsuarioAprobador ?? default(int),
+                FechaDeAnalizado = (DateTime)(solicitudAnalisis?.FechaDeAnalizado ?? default(DateTime?)),
+                FechaDeAprobacion = (DateTime)(solicitudAnalisis?.FechaDeAprobacion ?? default(DateTime?)),
 
                 // Mapear Requerimientos
                 Requerimentos = solicitudAnalisis.Requerimentos?.Select(r => new RequerimentoAnalisisDTO

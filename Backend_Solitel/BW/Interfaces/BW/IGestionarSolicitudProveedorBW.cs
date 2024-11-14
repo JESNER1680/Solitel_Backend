@@ -11,11 +11,11 @@ namespace BW.Interfaces.BW
     {
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor);
 
-        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor();
+        public Task<List<SolicitudProveedor>> obtenerSolicitudesProveedor(int idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud);
 
         public Task<List<string>> ListarNumerosUnicosTramitados();
 
-        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico);
+        public Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico, int idUsuario, int idOficina);
 
         public Task<bool> relacionarRequerimientos(List<int> idSolicitudes, List<int> idRequerimientos);
 
@@ -30,13 +30,13 @@ namespace BW.Interfaces.BW
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
 
         public Task<bool> DevolverATramitado(int id, int idUsuario, string observacion = null);
-        
-        public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud);
 
         public Task<bool> ActualizarEstadoTramitado(int idSolicitudProveedor, int idUsuario, string? observacion);
 
         public Task<SolicitudProveedor> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico);
 
         public Task<SolicitudProveedor> obtenerSolicitud(int idSolicitud);
+
+        public Task<List<SolicitudProveedor>> ObtenerSolicitudesProveedorPorId(int idSolicitud); // SISTEMA PROVEEDOR
     }
 }

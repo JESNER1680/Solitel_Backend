@@ -2,11 +2,11 @@
 {
     public class SolicitudProveedorInfoComunDTO
     {
-        public FiscaliaDTO FiscaliaDTO { get; set; }
+        public FiscaliaDTO Fiscalia { get; set; }
 
-        public DelitoDTO DelitoDTO { get; set; }
+        public DelitoDTO Delito { get; set; }
 
-        public CategoriaDelitoDTO CategoriaDelitoDTO { get; set; }
+        public CategoriaDelitoDTO CategoriaDelito { get; set; }
 
         public string imputado { get; set; }
 

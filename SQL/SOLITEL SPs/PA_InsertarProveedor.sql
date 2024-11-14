@@ -1,18 +1,24 @@
 CREATE OR ALTER PROCEDURE PA_InsertarProveedor
-    @PC_Nombre VARCHAR(50)
+    @pTN_IdProveedor INT OUTPUT,   -- Parámetro de salida para el ID generado
+    @pTC_Nombre VARCHAR(50)
 AS
 BEGIN
     BEGIN TRY
+        -- Iniciar la transacción
         BEGIN TRANSACTION;
 
+        -- Insertar el proveedor
         INSERT INTO TSOLITEL_Proveedor (TC_Nombre)
-        VALUES (@PC_Nombre);
+        VALUES (@pTC_Nombre);
 
-        -- Confirma la transacción
+        -- Obtener el ID generado para el proveedor
+        SET @pTN_IdProveedor = SCOPE_IDENTITY();
+
+        -- Si todo es exitoso, hacer commit
         COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
-        -- Revierte la transacción si hay un error
+        -- Si ocurre un error, hacer rollback
         IF @@TRANCOUNT > 0
         BEGIN
             ROLLBACK TRANSACTION;
@@ -32,4 +38,3 @@ BEGIN
     END CATCH
 END
 GO
-

@@ -9,15 +9,40 @@ namespace BC.Modelos
     public class SolicitudAnalisis
     {
         public int IdSolicitudAnalisis { get; set; }
+
         public DateTime FechaDelHecho { get; set; }
+
         public string OtrosDetalles { get; set; }
-        public string? OtrosObjetivosDeAnalisis { get; set; }
+
+        public string? OtrosObjetivosDeAnalisis { get; set; } // Nullable
+
         public bool Aprobado { get; set; }
+
         public Estado Estado { get; set; }
-        public DateTime? FechaCrecion { get; set; }
-        public int NumeroSolicitud { get; set; }
-        public int IdOficina { get; set; }
-        public int IdUsuario { get; set; }
+
+        public DateTime? FechaCreacion { get; set; } // Nullable
+
+        public int IdOficinaSolicitante { get; set; }
+
+        public int IdOficinaCreacion { get; set; }
+
+        public int IdUsuarioCreador { get; set; }
+
+        public int? IdUsuarioAprobador { get; set; } // Nullable (assumes this can be null based on similar cases)
+
+        public DateTime? FechaDeAprobacion { get; set; } // Nullable
+
+        public DateTime? FechaDeAnalizado { get; set; } // Nullable
+
+        public string NombreUsuarioCreador { get; set; }
+
+        public string NombreOficina { get; set; }
+
+        public string? NombreUsuarioAprobador { get; set; } // Nullable
+
+        public string? NombreUsuarioAsignado { get; set; } // Nullable
+
+        public DateTime? FechaDeAsignacion { get; set; } // Nullable
 
         // Lista de requerimientos
         public List<RequerimentoAnalisis> Requerimentos { get; set; }

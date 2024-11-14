@@ -22,54 +22,21 @@ namespace Backend_Solitel.Controllers
         [HttpPost]
         public async Task<bool> IngresarSolicitudAnalista(SolicitudAnalisisDTO solicitudAnalisis)
         {
-            Console.WriteLine("INGRESE PARA INSERTAR LA SOLICITUD DE ANALISIS");
             return await this.gestionarSolicitudAnalistaBW.CrearSolicitudAnalista(Utility.SolicitudAnalisisMapper.ToModel(solicitudAnalisis));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<SolicitudAnalisis>>> ConsultarSolicitudesAnalisis(
-        int pageNumber = 1,
-        int pageSize = 10,
-        int? idEstado = null,
-        string numeroUnico = null,
-        DateTime? fechaInicio = null,
-        DateTime? fechaFin = null,
-        string caracterIngresado = null)
-        {
-            try
-            {
-                // Llamamos al método del servicio para obtener las solicitudes
-                var solicitudes = await this.gestionarSolicitudAnalistaBW.ConsultarSolicitudesAnalisisAsync(
-                    pageNumber,
-                    pageSize,
-                    idEstado,
-                    numeroUnico,
-                    fechaInicio,
-                    fechaFin,
-                    caracterIngresado);
-
-                // Devolvemos un OK (200) con el resultado en JSON
-                return Ok(solicitudes);
-            }
-            catch (Exception ex)
-            {
-                // En caso de error, devolvemos un error interno del servidor (500) con el mensaje de error
-                return StatusCode(500, $"Ocurrió un error al consultar las solicitudes de análisis: {ex.Message}");
-            }
-        }
-
         [HttpGet("consultar")]
-        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisisController()
+        public async Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisisBandejaInvestigador(int? idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud)
         {
-            return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis();
+            return await gestionarSolicitudAnalistaBW.ObtenerSolicitudesAnalisis(idEstado, fechainicio, fechaFin, numeroUnico, idOficina, idUsuario, idSolicitud);
         }
 
         [HttpGet("obtenerBandejaAnalista")]
-        public async Task<ActionResult<List<SolicitudAnalisis>>> ObtenerSolicitudesAnalisisController(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico)
+        public async Task<ActionResult<List<SolicitudAnalisis>>> ObtenerSolicitudesAnalisisBandejaAnalista(int? idEstado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario)
         {
             try
             {
-                var result = await gestionarSolicitudAnalistaBW.ObtenerBandejaAnalista(estado, fechaInicio, fechaFin, numeroUnico);
+                var result = await gestionarSolicitudAnalistaBW.ObtenerBandejaAnalista(idEstado, fechaInicio, fechaFin, numeroUnico, idOficina, idUsuario);
 
                 if (result == null || !result.Any())
                 {

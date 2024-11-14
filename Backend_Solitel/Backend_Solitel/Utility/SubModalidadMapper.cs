@@ -18,13 +18,13 @@ namespace Backend_Solitel.Utility
 
         public static SubModalidadDTO ToDTO(this SubModalidad subModalidad)
         {
-            return new SubModalidadDTO
+            return subModalidad != null ? new SubModalidadDTO
             {
                 IdModalida = subModalidad.IdModalidad,
                 Nombre = subModalidad.Nombre,
                 Descripcion = subModalidad.Descripcion,
                 IdSubModalidad = subModalidad.IdSubModalidad
-            };
+            } : null;
         }
 
         public static List<SubModalidadDTO> ToDTO(this List<SubModalidad> subModalidades)

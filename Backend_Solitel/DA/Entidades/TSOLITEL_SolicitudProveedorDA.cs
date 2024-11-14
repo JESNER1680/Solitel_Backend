@@ -16,8 +16,8 @@ namespace DA.Entidades
         [Required]
         public int TN_IdSolicitud { get; set; }
 
-        public string? TN_NumeroUnico { get; set; }
-        public string? TN_NumeroCaso { get; set; }
+        public string? TC_NumeroUnico { get; set; }
+        public string? TC_NumeroCaso { get; set; }
 
         [Required]
         [StringLength(150)]
@@ -79,6 +79,12 @@ namespace DA.Entidades
         public string? TC_NombreSubModalidad { get;set; }
 
         public string TC_NombreUsuario { get;set; }
+
+        public string TC_ApellidoUsuario { get; set; }
+
+        public int TN_IdOficina { get; set; }
+
+        public string TC_NombreOficina { get; set; }
 
     }
 

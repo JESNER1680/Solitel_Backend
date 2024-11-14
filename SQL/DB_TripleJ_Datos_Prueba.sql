@@ -307,3 +307,62 @@ VALUES
     ('Crear Análisis', 'Se ha creado un análisis', GETDATE()),
     ('Modificar Solicitud', 'Se ha modificado una solicitud', GETDATE());
 GO
+
+
+INSERT INTO [dbo].[TSOLITEL_Permiso] (TC_Nombre, TC_Descripcion) VALUES 
+('todos', 'Acceso total a todas las funcionalidades'),
+('Crear Solicitud Proveedor', 'Permite crear solicitudes para proveedores'),
+('Ver Solicitudes Proveedor Oficina', 'Permite ver solicitudes de proveedores asignadas a la oficina'),
+('Crear Solicitudes Analisis', 'Permite crear solicitudes de análisis'),
+('Ver Solicitudes Analisis Oficina', 'Permite ver solicitudes de análisis de la oficina'),
+('Aprobar Solicitudes Proveedor', 'Permite aprobar solicitudes de proveedores'),
+('Aprobar Solicitudes Analisis', 'Permite aprobar solicitudes de análisis'),
+('Aprobación Automatica', 'Permite aprobar automáticamente solicitudes'),
+('Asignar Solicitudes Analisis', 'Permite asignar solicitudes de análisis'),
+('Responder Solicitudes Analisis', 'Permite responder solicitudes de análisis'),
+('Ver Solicitudes Proveedor Propias', 'Permite ver solicitudes de proveedores propias'),
+('Ver Solicitudes Analisis Propias', 'Permite ver solicitudes de análisis propias');
+
+ INSERT INTO [Proyecto_Analisis].[dbo].[TSOLITEL_Usuario] (
+    [TC_Nombre],
+    [TC_Apellido],
+    [TC_Usuario],
+    [TC_Contrasennia],
+    [TC_CorreoElectronico]
+) VALUES (
+    'Daniel',
+    'Borges',
+    'daniel.borges',
+    'asdfg123!',
+    'danielborges2514@gmail.com'
+);
+INSERT INTO [dbo].[TSOLITEL_Rol_Permiso] (TN_IdRol, TN_IdPermiso) VALUES
+(1, 5),  -- Rol 1 (Administrador) - todos
+(5, 6),  -- Rol 5 (Jefatura Investigador) - Crear Solicitud Proveedor
+(5, 7),  -- Rol 5 (Jefatura Investigador) - Ver Solicitudes Proveedor Oficina
+(5, 8),  -- Rol 5 (Jefatura Investigador) - Crear Solicitudes Analisis
+(5, 9),  -- Rol 5 (Jefatura Investigador) - Ver Solicitudes Analisis Oficina
+(5, 10), -- Rol 5 (Jefatura Investigador) - Aprobar Solicitudes Proveedor
+(5, 11), -- Rol 5 (Jefatura Investigador) - Aprobar Solicitudes Analisis
+(5, 12), -- Rol 5 (Jefatura Investigador) - Aprobación Automatica
+(4, 9),  -- Rol 4 (Jefatura Analista) - Ver Solicitudes Analisis Oficina
+(4, 13), -- Rol 4 (Jefatura Analista) - Asignar Solicitudes Analisis
+(4, 14), -- Rol 4 (Jefatura Analista) - Responder Solicitudes Analisis
+(3, 6),  -- Rol 3 (Investigador) - Crear Solicitud Proveedor
+(3, 15), -- Rol 3 (Investigador) - Ver Solicitudes Proveedor Propias
+(3, 8),  -- Rol 3 (Investigador) - Crear Solicitudes Analisis
+(3, 16), -- Rol 3 (Investigador) - Ver Solicitudes Analisis Propias
+(2, 16), -- Rol 2 (Analista) - Ver Solicitudes Analisis Propias
+(2, 14); -- Rol 2 (Analista) - Responder Solicitudes Analisis
+
+INSERT INTO [dbo].[TSOLITEL_Usuario_Oficina] (TN_IdUsuario, TN_IdOficina, TN_IdRol) VALUES
+(1, 2, 1),  -- Usuario 1 (Eliecer) - Administrador en Delegación Regional de Heredia
+(1, 3, 5),  -- Usuario 1 (Eliecer) - Jefatura Investigador en Delegación Regional de Liberia
+(1, 11, 4), -- Usuario 1 (Eliecer) - Jefatura Analista en Unidad de Análisis Criminal
+(3, 3, 3),  -- Usuario 2 (Daniel) - Investigador en Delegación Regional de Liberia
+(3, 11, 2); -- Usuario 2 (Daniel) - Analista en Unidad de Análisis Criminal
+
+
+
+INSERT INTO [dbo].[TSOLITEL_Usuario_Oficina] (TN_IdUsuario, TN_IdOficina, TN_IdRol) VALUES
+(3, 11, 5)

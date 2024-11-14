@@ -27,10 +27,7 @@ namespace Backend_Solitel.Controllers
         [Route("insertarSolicitudProveedor")]
         public async Task<bool> InsertarSolicitudProveedor([FromBody] SolicitudProveedorDTO solicitudProveedorDTO)
         {
-
             List<int> idListaSolicitudesCreadas = new List<int>();
-
-            List<int> idRequerimientosCreados = new List<int>();
 
             foreach (ProveedorDTO proveedorDTO in solicitudProveedorDTO.Operadoras)
             {
@@ -40,39 +37,46 @@ namespace Backend_Solitel.Controllers
                 if (idSolicitudCreada != 0)
                 {
                     idListaSolicitudesCreadas.Add(idSolicitudCreada);
+
+                    List<int> idRequerimientosCreados = new List<int>();
+
+                    foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+                    {
+                        int idRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
+                            .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO));
+
+                        if (idRequerimientoInsertado != 0)
+                        {
+                            idRequerimientosCreados.Add(idRequerimientoInsertado);
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+
+                    bool resultadoRelacion = await this.gestionarSolicitudProveedorBW
+                        .relacionarRequerimientos(new List<int> { idSolicitudCreada }, idRequerimientosCreados);
+
+                    if (!resultadoRelacion)
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
                     return false;
                 }
-
             }
 
-            foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
-            {
-                int idRequerimientoInsertado = await this.gestionarRequerimientoProveedorBW
-                    .InsertarRequerimientoProveedor(RequerimientoProveedorMapper.ToModel(requerimientoProveedorDTO));
-
-                if (idRequerimientoInsertado != 0)
-                {
-                    idRequerimientosCreados.Add(idRequerimientoInsertado);
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            bool resultadoRelacion = await this.gestionarSolicitudProveedorBW.relacionarRequerimientos(idListaSolicitudesCreadas, idRequerimientosCreados);
-
-            return resultadoRelacion;
+            return true;
         }
 
         [HttpGet]
         [Route("consultarSolicitudesProveedor")]
-        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor()
+        public async Task<List<SolicitudProveedorDTO>> ConsultarSolicitudesProveedor(int idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud)
         {
-            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor());
+            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitudesProveedor(idEstado, fechainicio, fechaFin, numeroUnico, idOficina, idUsuario, idSolicitud));
 
             foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
             {
@@ -123,9 +127,9 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("consultarSolicitudesProveedorPorNumeroUnico")]
-        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(string numeroUnico, int idUsuario, int idOficina)
         {
-            List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
+            List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico, idUsuario, idOficina);
             return SolicitudProveedorMapper.FiltrarListaSolicitudesProveedor(solicitudes);
         }
 
@@ -207,33 +211,6 @@ namespace Backend_Solitel.Controllers
             }
         }
 
-        //[HttpGet("{idSolicitud}")]
-        //public async Task<ActionResult<SolicitudProveedorDTO>> ObtenerSolicitud(int idSolicitud)
-        //{
-        //    try
-        //    {
-        //        var solicitud = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.obtenerSolicitud(idSolicitud));
-
-        //        solicitud.Requerimientos = RequerimientoProveedorMapper
-        //            .ToDTO(await this.gestionarRequerimientoProveedorBW
-        //            .ConsultarRequerimientosProveedor(solicitud.IdSolicitudProveedor),
-        //            solicitud.IdSolicitudProveedor);
-
-
-        //        if (solicitud == null)
-        //        {
-        //            return NotFound(new { Message = "Solicitud no encontrada" });
-        //        }
-
-        //        return Ok(solicitud);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Registro de error si es necesario
-        //        return StatusCode(500, new { Message = "Ocurrió un error al obtener la solicitud", Details = ex.Message });
-        //    }
-        //}
-
         [HttpPut]
         [Route("aprobarSolicitudProveedor")]
         public async Task<IActionResult> AprobarSolicitudProveedor(int idSolicitudProveedor, int idUsuario, string? observacion)
@@ -256,30 +233,6 @@ namespace Backend_Solitel.Controllers
                 // Manejo de excepciones
                 return StatusCode(500, new { mensaje = $"Ocurrió un error al actualizar el estado a Aprobado: {ex.Message}" });
             }
-        }
-
-        [HttpGet]
-        [Route("obtenerSolicitudesProveedorPorId")]
-        public async Task<List<SolicitudProveedorDTO>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
-        {
-            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.ObtenerSolicitudesProveedorPorId(idSolicitud));
-
-            foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
-            {
-
-                solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
-                    .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
-
-                foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
-                {
-                    requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
-
-                    requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
-
-                }
-            }
-
-            return solicitudesProveedor;
         }
 
         [HttpPut("devolverATramitado")]
@@ -330,10 +283,9 @@ namespace Backend_Solitel.Controllers
             }
         }
 
-
         [HttpGet]
         [Route("consultarInformacionNumeroUnico")]
-        public async Task<ActionResult<SolicitudProveedorInfoComunDTO>> ConsultarSolicitudProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<ActionResult<SolicitudProveedorInfoComunDTO>> ConsultarInformacionNumeroUnico(string numeroUnico)
         {
             var infoComun = await this.gestionarSolicitudProveedorBW.ConsultarSolicitudProveedorPorNumeroUnico(numeroUnico);
 
@@ -347,6 +299,30 @@ namespace Backend_Solitel.Controllers
             }
 
             
+        }
+
+        [HttpGet]
+        [Route("obtenerSolicitudesProveedorPorId")] // SISTEMA PROVEEDOR
+        public async Task<List<SolicitudProveedorDTO>> ObtenerSolicitudesProveedorPorId(int idSolicitud)
+        {
+            var solicitudesProveedor = SolicitudProveedorMapper.ToDTO(await this.gestionarSolicitudProveedorBW.ObtenerSolicitudesProveedorPorId(idSolicitud));
+
+            foreach (SolicitudProveedorDTO solicitudProveedorDTO in solicitudesProveedor)
+            {
+
+                solicitudProveedorDTO.Requerimientos = RequerimientoProveedorMapper
+                    .ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarRequerimientosProveedor(solicitudProveedorDTO.IdSolicitudProveedor), solicitudProveedorDTO.IdSolicitudProveedor);
+
+                foreach (RequerimientoProveedorDTO requerimientoProveedorDTO in solicitudProveedorDTO.Requerimientos)
+                {
+                    requerimientoProveedorDTO.datosRequeridos = DatoRequeridoMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarDatosRequeridos(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+                    requerimientoProveedorDTO.tipoSolicitudes = TipoSolicitudMapper.ToDTO(await this.gestionarRequerimientoProveedorBW.ConsultarTipoSolicitudes(requerimientoProveedorDTO.IdRequerimientoProveedor));
+
+                }
+            }
+
+            return solicitudesProveedor;
         }
     }
 }

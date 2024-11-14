@@ -11,13 +11,9 @@ namespace BW.Interfaces.DA
     {
         public Task<bool>CrearSolicitudAnalista(SolicitudAnalisis solicitudAnalisis);
 
-        public Task<List<SolicitudAnalisis>> ConsultarSolicitudesAnalisisAsync(int pageNumber, int pageSize, 
-            int? idEstado = null, string numeroUnico = null, DateTime? fechaInicio = null, 
-            DateTime? fechaFin = null, string caracterIngresado = null);
-        public Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis();
+        public Task<List<SolicitudAnalisis>> ObtenerSolicitudesAnalisis(int? idEstado, DateTime? fechainicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario, int? idSolicitud);
 
         public Task<bool> ActualizarEstadoAnalizadoSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion);
-
 
         public Task<bool> DevolverAnalizado(int id, int idUsuario, string observacion = null);
 
@@ -25,7 +21,7 @@ namespace BW.Interfaces.DA
 
         public Task<bool> ActualizarEstadoFinalizado(int id, int idUsuario, string observacion = null);
 
-        public Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int estado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico);
+        public Task<List<SolicitudAnalisis>> ObtenerBandejaAnalista(int? idEstado, DateTime? fechaInicio, DateTime? fechaFin, string? numeroUnico, int? idOficina, int? idUsuario);
         
         public Task<bool> AprobarSolicitudAnalisis(int idSolicitudAnalisis, int idUsuario, string? observacion);
     }
