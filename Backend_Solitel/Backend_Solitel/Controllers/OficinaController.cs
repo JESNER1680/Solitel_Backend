@@ -1,5 +1,6 @@
 ﻿using Backend_Solitel.DTO;
 using Backend_Solitel.Utility;
+using BC.Modelos;
 using BW.Interfaces.BW;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,11 +18,20 @@ namespace Backend_Solitel.Controllers
         }
 
         [HttpGet]
-        [Route("consultarOficinas")]
-        public async Task<List<OficinaDTO>> ConsultarOficinas()
+        [Route("ObtenerOficinas")]
+        public async Task<ActionResult<List<OficinaDTO>>> ObtenerOficinas(string? tipo)
         {
-            var oficinasDTOs = await this.gestionarOficinaBW.ConsultarOficinas();
-            return OficinaMapper.ToDTO(oficinasDTOs);
+            try
+            {
+                var oficinas = await this.gestionarOficinaBW.ObtenerOficinas(tipo);
+
+                return OficinaMapper.ToDTO(oficinas);
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet]

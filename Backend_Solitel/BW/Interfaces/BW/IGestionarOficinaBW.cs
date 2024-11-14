@@ -11,7 +11,7 @@ namespace BW.Interfaces.BW
     {
         public Task<bool> InsertarOficina(Oficina oficina);
 
-        public Task<List<Oficina>> ConsultarOficinas();
+        public Task<List<Oficina>> ObtenerOficinas(string? tipo);
 
         public Task<Oficina> ConsultarOficina(int idOficina);
 

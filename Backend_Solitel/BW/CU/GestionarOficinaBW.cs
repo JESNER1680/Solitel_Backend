@@ -23,10 +23,10 @@ namespace BW.CU
             return await this.gestionarOficinaDA.ConsultarOficina(idOficina);
         }
 
-        public async Task<List<Oficina>> ConsultarOficinas()
+        public async Task<List<Oficina>> ObtenerOficinas(string? tipo)
         {
             //Reglas de Negocio
-            return await this.gestionarOficinaDA.ConsultarOficinas();
+            return await this.gestionarOficinaDA.ObtenerOficinas(tipo);
         }
 
         public async Task<bool> EliminarOficina(int idProveedor)
