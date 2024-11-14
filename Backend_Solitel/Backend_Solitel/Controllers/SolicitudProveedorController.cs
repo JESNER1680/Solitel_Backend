@@ -127,9 +127,9 @@ namespace Backend_Solitel.Controllers
 
         [HttpGet]
         [Route("consultarSolicitudesProveedorPorNumeroUnico")]
-        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<List<SolicitudFiltradaProveedorDTO>> ConsultarSolicitudesProveedorPorNumeroUnico(string numeroUnico, int idUsuario, int idOficina)
         {
-            List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
+            List<SolicitudProveedor> solicitudes = await this.gestionarSolicitudProveedorBW.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico, idUsuario, idOficina);
             return SolicitudProveedorMapper.FiltrarListaSolicitudesProveedor(solicitudes);
         }
 

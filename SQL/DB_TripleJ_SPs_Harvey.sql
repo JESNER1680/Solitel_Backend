@@ -1,3 +1,6 @@
+USE Proyecto_Analisis
+GO
+
 CREATE OR ALTER PROCEDURE PA_InsertarHistoricoSolicitud
     @PN_IdSolicitudProveedor INT = NULL,
     @PN_IdSolicitudAnalisis INT = NULL,
@@ -316,7 +319,7 @@ BEGIN
 END;
 
 GO
-EXEC PA_ConsultarArchivosDeRequerimiento 9
+
 CREATE OR ALTER PROCEDURE PA_ConsultarArchivosDeRequerimiento
     @PN_IdRequerimiento INT
 AS
@@ -608,7 +611,9 @@ END
 GO
 
 CREATE OR ALTER PROCEDURE PA_ConsultarSolicitudesProveedorPorNumeroUnico
-    @PN_NumeroUnico VARCHAR(100)
+    @PN_NumeroUnico VARCHAR(100),
+	@pTN_IdUsuario INT,
+	@PTN_IdOficina INT
 AS
 BEGIN
     BEGIN TRY
@@ -617,16 +622,16 @@ BEGIN
         -- Consulta las solicitudes del proveedor basadas en el número único y el estado 'Tramitado'
         SELECT 
             TN_IdSolicitud,
-            TN_NumeroUnico,
-            TN_NumeroCaso,
+            TC_NumeroUnico,
+            TC_NumeroCaso,
             TC_Imputado,
             TC_Ofendido,
             TC_Resennia,
             TB_Urgente,
             TB_Aprobado,
-            TF_FechaDeCrecion AS TF_FechaDeCreacion,
+            TF_FechaDeCreacion AS TF_FechaDeCreacion,
             Usuario.TN_IdUsuario,
-			CONCAT(Usuario.TC_Nombre, ' ', Usuario.TC_Apellido) AS TC_NombreUsuario,
+			Usuario.TC_Nombre AS TC_NombreUsuario,
 			Proveedor.TN_IdProveedor,
             Proveedor.TC_Nombre AS TC_NombreProveedor,
             Fiscalia.TN_IdFiscalia,
@@ -641,20 +646,24 @@ BEGIN
             Estado.TC_Nombre AS TC_NombreEstado,
             SubModalidad.TN_IdSubModalidad,
             SubModalidad.TC_Nombre AS TC_NombreSubModalidad,
-			TN_IdSolicitud AS TN_NumeroSolicitud
-            
+			TN_IdSolicitud AS TN_NumeroSolicitud,
+            Usuario.TC_Apellido AS TC_ApellidoUsuario,
+			Oficina.TC_Nombre AS TC_NombreOficina,
+			Oficina.TN_IdOficina AS TN_IdOficina
         FROM TSOLITEL_SolicitudProveedor AS T
         INNER JOIN TSOLITEL_Proveedor AS Proveedor ON T.TN_IdProveedor = Proveedor.TN_IdProveedor
         INNER JOIN TSOLITEL_Fiscalia AS Fiscalia ON T.TN_IdFiscalia = Fiscalia.TN_IdFiscalia
         INNER JOIN TSOLITEL_Delito AS Delito ON T.TN_IdDelito = Delito.TN_IdDelito
         INNER JOIN TSOLITEL_CategoriaDelito AS CategoriaDelito ON T.TN_IdCategoriaDelito = CategoriaDelito.TN_IdCategoriaDelito
         INNER JOIN TSOLITEL_Modalidad AS Modalidad ON T.TN_IdModalida = Modalidad.TN_IdModalidad
-        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado
+        INNER JOIN TSOLITEL_Estado AS Estado ON T.TN_IdEstado = Estado.TN_IdEstado AND Estado.TC_Nombre = 'Tramitado'
         INNER JOIN TSOLITEL_SubModalidad AS SubModalidad ON T.TN_IdSubModalidad = SubModalidad.TN_IdSubModalidad
 		INNER JOIN TSOLITEL_Usuario AS Usuario ON T.TN_IdUsuario = Usuario.TN_IdUsuario
+		INNER JOIN TSOLITEL_Oficina AS Oficina ON Oficina.TN_IdOficina = T.TN_IdOficina
 
-        WHERE T.TN_NumeroUnico = @PN_NumeroUnico 
-          AND Estado.TC_Nombre = 'Tramitado'
+        WHERE T.TC_NumeroUnico = @PN_NumeroUnico 
+		  AND T.TN_IdUsuario = @pTN_IdUsuario
+		  AND T.TN_IdOficina = @PTN_IdOficina
         
         ORDER BY T.TN_IdSolicitud;
 

@@ -119,15 +119,18 @@ namespace DA.Acciones
             }
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico, int idUsuario, int idOficina)
         {
             try
             {
                 var numeroUnicoParam = new SqlParameter("@PN_NumeroUnico", numeroUnico);
+                var idUsuarioParam = new SqlParameter("@pTN_IdUsuario", idUsuario);
+                var idOficinaParam = new SqlParameter("@PTN_IdOficina", idOficina);
 
-                // Ejecutar el procedimiento almacenado
+                // Ejecutar el procedimiento almacenado con todos los parámetros
                 var solicitudesProveedorDA = await _context.TSOLITEL_SolicitudProveedorDA
-                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedorPorNumeroUnico @PN_NumeroUnico", numeroUnicoParam)
+                    .FromSqlRaw("EXEC PA_ConsultarSolicitudesProveedorPorNumeroUnico @PN_NumeroUnico, @pTN_IdUsuario, @PTN_IdOficina",
+                        numeroUnicoParam, idUsuarioParam, idOficinaParam)
                     .ToListAsync();
 
                 // Mapeo de los resultados
@@ -145,7 +148,8 @@ namespace DA.Acciones
                     UsuarioCreador = new Usuario
                     {
                         IdUsuario = da.TN_IdUsuario,
-                        Nombre = da.TC_NombreUsuario
+                        Nombre = da.TC_NombreUsuario,
+                        Apellido = da.TC_ApellidoUsuario
                     },
                     Proveedor = new Proveedor
                     {
