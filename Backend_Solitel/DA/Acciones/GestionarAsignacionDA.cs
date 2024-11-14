@@ -25,7 +25,7 @@ namespace DA.Acciones
 
                 // Ejecutar el procedimiento almacenado para insertar
                 await _context.Database.ExecuteSqlRawAsync(
-                    "EXEC PA_InsertarAsignacion @pTN_IdAnalisis, @pTN_IdUsuario, ",
+                    "EXEC PA_InsertarAsignacion @pTN_IdAnalisis, @pTN_IdUsuario",
                     idSolicitudAnalisisParam, idUsuarioParam );
 
                 var resultado = await _context.SaveChangesAsync();
