@@ -1027,7 +1027,7 @@ SELECT * FROM dbo.TSOLITEL_SolicitudAnalisis_Archivo ORDER BY TN_IdAnalisis ASC 
 
 
 
-SELECT * FROM TSOLITEL_RequerimentoAnalisis WHERE TN_IdAnalisis = 59
+SELECT * FROM TSOLITEL_RequerimentoAnalisis WHERE TN_IdAnalisis = 21
 -- Condiciones relacionadas con cada solicitud de análisis
 SELECT * FROM [TSOLITEL_RequerimientoAnalisis_Condicion];
 

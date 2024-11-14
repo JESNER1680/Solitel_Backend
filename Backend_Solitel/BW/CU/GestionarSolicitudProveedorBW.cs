@@ -33,9 +33,9 @@ namespace BW.CU
             return await this.gestionarSolicitudProveedorDA.ActualizarEstadoLegajo(id, idUsuario, observacion);
         }
 
-        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico)
+        public async Task<List<SolicitudProveedor>> consultarSolicitudesProveedorPorNumeroUnico(string numeroUnico, int idUsuario, int idOficina)
         {
-            return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico);
+            return await this.gestionarSolicitudProveedorDA.consultarSolicitudesProveedorPorNumeroUnico(numeroUnico,idUsuario,idOficina);
         }
 
         public Task<int> InsertarSolicitudProveedor(SolicitudProveedor solicitudProveedor)
