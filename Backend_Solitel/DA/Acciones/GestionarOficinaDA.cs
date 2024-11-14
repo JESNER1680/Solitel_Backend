@@ -20,13 +20,14 @@ namespace DA.Acciones
             _context = context;
         }
 
-        public async Task<List<Oficina>> ConsultarOficinas()
+        public async Task<List<Oficina>> ObtenerOficinas(string? tipo)
         {
             try
             {
+                var tipoParam = new SqlParameter("@pTC_Tipo", tipo ?? (object)DBNull.Value);
                 // Ejecutar el procedimiento almacenado
                 var oficinasDA = await _context.TSOLITEL_OficinaDA
-                    .FromSqlRaw("EXEC PA_ConsultarOficina")
+                    .FromSqlRaw("EXEC PA_ConsultarOficina NULL, @pTC_Tipo", tipoParam)
                     .ToListAsync();
 
                 // Mapeo de los resultados
@@ -56,10 +57,10 @@ namespace DA.Acciones
         {
             try
             {
-                var idOficinaParam = new SqlParameter("@PN_IdOficina", idOficina);
+                var idOficinaParam = new SqlParameter("@pTN_IdOficina", idOficina);
                 // Ejecutar el procedimiento almacenado
                 var oficinasDA = await _context.TSOLITEL_OficinaDA
-                    .FromSqlRaw("EXEC PA_ConsultarOficina @PN_IdOficina", idOficinaParam)
+                    .FromSqlRaw("EXEC PA_ConsultarOficina @pTN_IdOficina", idOficinaParam)
                     .ToListAsync();
 
                 // Mapeo de los resultados

@@ -8,6 +8,7 @@ VALUES
     ('Pendiente', 'Una solicitud es creada pero esta pendiente de aprobacion', 'Proveedor'),
     ('Tramitado', 'Una solicitud fue espera ser respondida por un provedor de telecomunicaciones', 'Proveedor'),
     ('Finalizado', 'Una solicitud tramitada que la fue analizada por el investigador o fiscal solicitante', 'Proveedor'),
+    ('Solicitado', '', 'Proveedor'),
     ('Sin Efecto', 'Una solicitud de analisis no tramitada deja de ser valida o necesaria', 'Analisis'),
     ('Legajo', 'Una solicitud de analisis tramitada deja de ser valida o necesaria', 'Analisis'),
     ('Finalizado', 'Una solicitud de analisis respondida ya fue estudiada por el fiscal o investigador', 'Analisis'),
@@ -45,18 +46,18 @@ GO
 -- Paso 4: Insertar en TSOLITEL_Oficina
 INSERT INTO [dbo].[TSOLITEL_Oficina] (TC_Nombre, TC_Tipo, TB_Borrado)
 VALUES 
-    ('CENTRO JUDICIAL DE INTERVENCION DE LAS COMUNICACIONES (CJIC)', 'Investigacion', 0),
-    ('DELEGACION REGIONAL DE HEREDIA', 'Investigacion', 0),
-    ('DELEGACION REGIONAL DE LIBERIA', 'Investigacion', 0),
-    ('FISCALIA GENERAL', 'Investigacion', 0),
-    ('OFICINA ESPECIALIZADA CONTRA LA DELINCUENCIA ORGANIZADA (OECDO)', 'Investigacion', 0),
-    ('PLATAFORMA DE INFORMACION POLICIAL', 'Analisis', 0),
-    ('SECCION DELITOS VARIOS', 'Investigacion', 0),
-    ('SECCION ESPECIALIZADA CONTRA EL CIBERCRIMEN', 'Investigacion', 0),
-    ('SECCION ESPECIALIZADA CONTRA EL FRAUDE INFORMATICO (SECFI)', 'Investigacion', 0),
-    ('SECCION HOMICIDIOS', 'Investigacion', 0),
-    ('UNIDAD DE ANALISIS CRIMINAL', 'Analisis', 0),
-    ('UNIDAD DE RECOLECCION DE INFORMACION POLICIAL', 'Analisis', 0);
+    ('1101-CENTRO JUDICIAL DE INTERVENCION DE LAS COMUNICACIONES (CJIC)', 'Descripción de Centro Judicial de Intervención de las Comunicaciones', 0),
+    ('0059-DELEGACION REGIONAL DE HEREDIA', 'Descripción de Delegación Regional de Heredia', 0),
+    ('0060-DELEGACION REGIONAL DE LIBERIA', 'Descripción de Delegación Regional de Liberia', 0),
+    ('0033-FISCALIA GENERAL', 'Descripción de Fiscalía General', 0),
+    ('1982-OFICINA ESPECIALIZADA CONTRA LA DELINCUENCIA ORGANIZADA (OECDO)', 'Descripción de Oficina Especializada Contra la Delincuencia Organizada', 0),
+    ('1132-PLATAFORMA DE INFORMACION POLICIAL', 'Descripción de Plataforma de Información Policial', 0),
+    ('0051-SECCION DELITOS VARIOS', 'Descripción de Sección Delitos Varios', 0),
+    ('0682-SECCION ESPECIALIZADA CONTRA EL CIBERCRIMEN', 'Descripción de Sección Especializada Contra el Cibercrimen', 0),
+    ('2026-SECCION ESPECIALIZADA CONTRA EL FRAUDE INFORMATICO (SECFI)', 'Descripción de Sección Especializada Contra el Fraude Informático', 0),
+    ('0048-SECCION HOMICIDIOS', 'Descripción de Sección Homicidios', 0),
+    ('0955-UNIDAD DE ANALISIS CRIMINAL', 'Descripción de Unidad de Análisis Criminal', 0),
+    ('1134-UNIDAD DE RECOLECCION DE INFORMACION POLICIAL', 'Descripción de Unidad de Recolección de Información Policial', 0);
 GO
 
 -- Paso 5: Insertar en TSOLITEL_TipoDato
@@ -112,8 +113,7 @@ GO
 INSERT INTO [dbo].[TSOLITEL_Usuario]
            ([TC_Nombre], [TC_Apellido], [TC_Usuario], [TC_Contrasennia], [TC_CorreoElectronico])
 VALUES
-           ('Eliecer', 'Melgara', 'eliecer.melgara', 'asdfg123!', 'eliecermelgara1680@gmail.com'),
-		   ('Ernesto', 'Vargas', 'ernesto.vargas', 'asdfh123!', 'ernesto226@gmail.com');
+           ('Eliecer', 'Melgara', 'eliecer.melgara', 'contrasenniaSegura123', 'eliecermelgara1680@gmail.com');
 GO
 
 -- Paso 10: Insertar en TSOLITEL_TipoSolicitud
@@ -164,23 +164,23 @@ GO
 -- Paso 11: Insertar en TSOLITEL_Fiscalia
 INSERT INTO [dbo].[TSOLITEL_Fiscalia] (TC_Nombre, TB_Borrado)
 VALUES 
-    ('FISCALIA GENERAL', 0),
-    ('FISCALIA ADJUNTA II CIRCUITO JUD. SAN JOSE (PENAL)', 0),
-    ('FISCALIA ADJUNTA I CIRC. JUD. ZONA SUR (PENAL)', 0),
-    ('FISCALIA DE TURNO EXTRAORDINARIO DE SAN JOSE (PENAL)', 0),
-    ('FISCALIA ADJUNTA III CIRCUITO JUDICIAL DE SAN JOSE, SEDE DESAMPARADOS (PENAL)', 0),
-    ('FISCALIA DE HATILLO (PENAL)', 0),
-    ('FISCALIA DE PURISCAL (PENAL)', 0),
-    ('FISCALIA ADJUNTA DE PAVAS (PENAL)', 0),
-    ('FISCALIA ADJUNTA I CIRCUITO JUD. ALAJUELA (PENAL)', 0),
-    ('FISCALIA ADJUNTA II CIRCUITO JUDICIAL DE ALAJUELA (PENAL)', 0),
-    ('FISCALIA DE GRECIA (PENAL)', 0),
-    ('FISCALIA DEL III CIRCUITO JUDICIAL ALAJUELA (SAN RAMON) (PENAL)', 0),
-    ('FISCALIA ADJUNTA CARTAGO (PENAL)', 0),
-    ('FISCALIA DE TURRIALBA (PENAL)', 0),
-    ('FISCALIA ADJUNTA HEREDIA (PENAL)', 0),
-    ('FISCALIA DE SAN JOAQUIN DE FLORES (PENAL)', 0),
-    ('FISCALIA ADJUNTA I CIRC. JUD. GUANACASTE (PENAL)', 0);
+    ('0033-FISCALIA GENERAL', 0),
+    ('0175-FISCALIA ADJUNTA II CIRCUITO JUD. SAN JOSE (PENAL)', 0),
+    ('0219-FISCALIA ADJUNTA I CIRC. JUD. ZONA SUR (PENAL)', 0),
+    ('0275-FISCALIA DE TURNO EXTRAORDINARIO DE SAN JOSE (PENAL)', 0),
+    ('0276-FISCALIA ADJUNTA III CIRCUITO JUDICIAL DE SAN JOSE, SEDE DESAMPARADOS (PENAL)', 0),
+    ('0278-FISCALIA DE HATILLO (PENAL)', 0),
+    ('0283-FISCALIA DE PURISCAL (PENAL)', 0),
+    ('0285-FISCALIA ADJUNTA DE PAVAS (PENAL)', 0),
+    ('0306-FISCALIA ADJUNTA I CIRCUITO JUD. ALAJUELA (PENAL)', 0),
+    ('0307-FISCALIA ADJUNTA II CIRCUITO JUDICIAL DE ALAJUELA (PENAL)', 0),
+    ('0325-FISCALIA DE GRECIA (PENAL)', 0),
+    ('0326-FISCALIA DEL III CIRCUITO JUDICIAL ALAJUELA (SAN RAMON) (PENAL)', 0),
+    ('0356-FISCALIA ADJUNTA CARTAGO (PENAL)', 0),
+    ('0359-FISCALIA DE TURRIALBA (PENAL)', 0),
+    ('0382-FISCALIA ADJUNTA HEREDIA (PENAL)', 0),
+    ('0385-FISCALIA DE SAN JOAQUIN DE FLORES (PENAL)', 0),
+    ('0396-FISCALIA ADJUNTA I CIRC. JUD. GUANACASTE (PENAL)', 0);
 GO
 
 -- Paso 12: Insertar en TSOLITEL_CategoriaDelito
@@ -200,41 +200,21 @@ VALUES
 GO
 
 -- Paso 14: Insertar en TSOLITEL_SolicitudProveedor
-INSERT INTO [dbo].[TSOLITEL_SolicitudProveedor] 
-	([TC_NumeroUnico]
-    ,[TC_NumeroCaso]
-    ,[TC_Imputado]
-    ,[TC_Ofendido]
-    ,[TC_Resennia]
-    ,[TB_Urgente]
-    ,[TB_Aprobado]
-    ,[TF_FechaDeCreacion]
-    ,[TN_IdDelito]
-    ,[TN_IdCategoriaDelito]
-    ,[TN_IdModalida]
-    ,[TN_IdSubModalidad]
-    ,[TN_IdEstado]
-    ,[TN_IdProveedor]
-    ,[TN_IdFiscalia]
-    ,[TN_IdOficina]
-    ,[TN_IdUsuario])
+INSERT INTO [dbo].[TSOLITEL_SolicitudProveedor] ([TN_NumeroUnico], [TN_NumeroCaso], [TC_Imputado], [TC_Ofendido], [TC_Resennia], [TB_Urgente], [TB_Aprobado], [TF_FechaDeCrecion], [TN_IdDelito], [TN_IdCategoriaDelito], [TN_IdModalida], [TN_IdSubModalidad], [TN_IdEstado], [TN_IdProveedor], [TN_IdFiscalia], [TN_IdOficina], [TN_IdUsuario])
 VALUES
-    ('24-000100-1132-pe', NULL, 'PRUEBA', 'PRUEBA', 'PRUEBA', 1, 0, GETDATE(), 1, 1, 1, NULL, 3, 1, 1, 1, 1),
-	('24-000101-1133-pe', NULL, 'PRUEBA1', 'PRUEBA1', 'PRUEBA1', 0, 0, GETDATE(), 1, 1, 1, NULL, 5, 2, 1, 1, 1);
+    ('24-000100-1132-pe', NULL, 'PRUEBA', 'PRUEBA', 'PRUEBA', 1, 0, GETDATE(), 1, 1, 1, NULL, 1, 1, 1, 1, 1);
 GO
 
 -- Paso 15: Insertar en TSOLITEL_RequerimientoProveedor
 INSERT INTO [dbo].[TSOLITEL_RequerimientoProveedor] ([TF_FechaDeInicio], [TF_FechaDeFinal], [TC_Requerimiento])
 VALUES
-    (GETDATE(), GETDATE(), 'Pruebas de datos de solitel'),
-	(GETDATE(), GETDATE(), 'Pruebas de datos de solitel1');
+    ('2024-07-01 14:31:14', '2024-07-31 14:31:14', 'Pruebas de datos de solitel');
 GO
 
 -- Paso 16: Insertar en TSOLITEL_SolicitudProveedor_RequerimientoProveedor
 INSERT INTO [dbo].[TSOLITEL_SolicitudProveedor_RequerimientoProveedor] ([TN_IdSolicitud], [TN_IdRequerimientoProveedor])
 VALUES
-    (1, 1),
-	(2, 2);
+    (1, 1);
 GO
 
 -- Paso 17: Insertar en TSOLITEL_TipoSolicitud_RequerimientoProveedor
@@ -242,10 +222,7 @@ INSERT INTO [dbo].[TSOLITEL_TipoSolicitud_RequerimientoProveedor] ([TN_IdTipoSol
 VALUES
     (1, 1),
     (2, 1),
-    (3, 1),
-	(1, 2),
-    (2, 2),
-    (3, 2);
+    (3, 1);
 GO
 
 -- Paso 18: Insertar en TSOLITEL_DatoRequerido
@@ -253,14 +230,6 @@ INSERT INTO [dbo].[TSOLITEL_DatoRequerido] ([TC_DatoRequerido], [TC_Motivacion],
 VALUES
     ('88888888', 'Prueba de datos de SOLITEL', 1),
     ('77777777', 'Prueba de datos de SOLITEL', 1);
-GO
-
-INSERT INTO [dbo].[TSOLITEL_RequerimientoProveedor_DatoRequerido]
-           ([TN_IdRequerimientoProveedor]
-           ,[TN_IdDatoRequerido])
-     VALUES
-           (1,1),
-		   (2,2)
 GO
 
 -- Paso 19: Insertar en TSOLITEL_Archivo
@@ -275,75 +244,26 @@ GO
 INSERT INTO [dbo].[TSOLITEL_RequerimientoProveedor_Archivo] ([TN_IdRequerimientoProveedor], [TN_IdArchivo])
 VALUES
     (1, 1),
-    (2, 2);
+    (1, 2);
 GO
-
-USE Proyecto_Analisis;
-GO
-
--- Insertar en TSOLITEL_Rol
-INSERT INTO [dbo].[TSOLITEL_Rol] (TC_Nombre, TC_Descripcion)
-VALUES 
-    ('Admin', 'Administrador del sistema'),
-    ('Analista', 'Analista de solicitudes'),
-    ('Investigador', 'Operador de solicitudes'),
-    ('Jefatura Analista', 'Analista de solicitudes'),
-    ('Jefatura Investigador', 'Operador de solicitudes');
-GO
-
--- Insertar en TSOLITEL_Permiso
-INSERT INTO [dbo].[TSOLITEL_Permiso] (TC_Nombre, TC_Descripcion)
-VALUES 
-    ('CrearSolicitud', 'Permiso para crear solicitudes'),
-    ('VerReporte', 'Permiso para ver reportes'),
-    ('ModificarSolicitud', 'Permiso para modificar solicitudes');
-GO
-
--- Insertar en TSOLITEL_Rol_Permiso
-INSERT INTO [dbo].[TSOLITEL_Rol_Permiso] (TN_IdRol, TN_IdPermiso)
-VALUES
-    (1, 1),  -- Admin - CrearSolicitud
-    (1, 2),  -- Admin - VerReporte
-    (1, 3),  -- Admin - ModificarSolicitud
-    (2, 2),  -- Analista - VerReporte
-    (3, 1);  -- Operador - CrearSolicitud
-GO
-
 -- Insertar en TSOLITEL_TipoAnalisis
 INSERT INTO [dbo].[TSOLITEL_TipoAnalisis] (TC_Nombre, TC_Descripcion, TB_Borrado)
 VALUES
-    ('Tipo A', 'Análisis de tipo A', 0),
-    ('Tipo B', 'Análisis de tipo B', 0);
-GO
-
--- Insertar en TSOLITEL_ObjetivoAnalisis
-INSERT INTO [dbo].[TSOLITEL_ObjetivoAnalisis] (TC_Nombre, TC_Descripcion, TB_Borrado)
-VALUES
-    ('Objetivo 1', 'Descripción del objetivo 1', 0),
-    ('Objetivo 2', 'Descripción del objetivo 2', 0);
+    ('Análisis Telefónico', 'Análisis de tipo Telefónico', 0)
 GO
 
 -- Insertar en TSOLITEL_SolicitudAnalisis
-INSERT INTO [dbo].[TSOLITEL_SolicitudAnalisis]
-	([TF_FechaDeHecho]
-           ,[TC_OtrosDetalles]
-           ,[TC_OtrosObjetivosDeAnalisis]
-           ,[TF_FechaDeCreacion]
-           ,[TB_Aprobado]
-           ,[TN_IdEstado]
-           ,[TN_IdOficinaCreacion]
-           ,[TN_IdOficinaSolicitante]
-           ,[TN_IdUsuario])
+INSERT INTO [dbo].[TSOLITEL_SolicitudAnalisis] (TF_FechaDeHecho, TC_OtrosDetalles, TC_OtrosObjetivosDeAnalisis, TF_FechaDeCreacion, TB_Aprobado, TN_IdEstado, TN_IdOficina)
 VALUES
-    ('2024-07-01 12:00:00', 'Detalles adicionales para análisis 1', 'Objetivos adicionales', GETDATE(), 0, 11, 1, 11 , 1),
-    ('2024-08-01 15:30:00', 'Detalles adicionales para análisis 2', 'Objetivos adicionales', GETDATE(), 0, 12, 2, 11, 1);
+    ('2024-07-01 12:00:00', 'Detalles adicionales para análisis 1', 'Objetivos adicionales', GETDATE(), 0, 4, 11),
+    ('2024-08-01 15:30:00', 'Detalles adicionales para análisis 2', 'Objetivos adicionales', GETDATE(), 0, 4,11);
 GO
 
 -- Insertar en TSOLITEL_TipoAnalisis_SolicitudAnalisis
 INSERT INTO [dbo].[TSOLITEL_TipoAnalisis_SolicitudAnalisis] (TN_IdTipoAnalisis, TN_IdAnalisis)
 VALUES
     (1, 1),  -- Tipo A - Análisis 1
-    (2, 2);  -- Tipo B - Análisis 2
+    (1, 2);  -- Tipo B - Análisis 2
 GO
 
 -- Insertar en TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis
@@ -377,8 +297,8 @@ GO
 -- Insertar en TSOLITEL_Historial
 INSERT INTO [dbo].[TSOLITEL_Historial] (TC_Observacion, TF_FechaDeModificacion, TN_IdEstado, TN_IdAnalisis, TN_IdSolicitud, TN_IdUsuario)
 VALUES
-    ('Observación para análisis 1', GETDATE(), 3, NULL, 1, 1),
-    ('Observación para análisis 2', GETDATE(), 5, NULL, 2, 1);
+    ('Observación para análisis 1', GETDATE(), 1, 1, 1, 1),
+    ('Observación para análisis 2', GETDATE(), 2, 2, 2, 1);
 GO
 
 -- Insertar en TSOLITEL_Logger
@@ -387,3 +307,62 @@ VALUES
     ('Crear Análisis', 'Se ha creado un análisis', GETDATE()),
     ('Modificar Solicitud', 'Se ha modificado una solicitud', GETDATE());
 GO
+
+
+INSERT INTO [dbo].[TSOLITEL_Permiso] (TC_Nombre, TC_Descripcion) VALUES 
+('todos', 'Acceso total a todas las funcionalidades'),
+('Crear Solicitud Proveedor', 'Permite crear solicitudes para proveedores'),
+('Ver Solicitudes Proveedor Oficina', 'Permite ver solicitudes de proveedores asignadas a la oficina'),
+('Crear Solicitudes Analisis', 'Permite crear solicitudes de análisis'),
+('Ver Solicitudes Analisis Oficina', 'Permite ver solicitudes de análisis de la oficina'),
+('Aprobar Solicitudes Proveedor', 'Permite aprobar solicitudes de proveedores'),
+('Aprobar Solicitudes Analisis', 'Permite aprobar solicitudes de análisis'),
+('Aprobación Automatica', 'Permite aprobar automáticamente solicitudes'),
+('Asignar Solicitudes Analisis', 'Permite asignar solicitudes de análisis'),
+('Responder Solicitudes Analisis', 'Permite responder solicitudes de análisis'),
+('Ver Solicitudes Proveedor Propias', 'Permite ver solicitudes de proveedores propias'),
+('Ver Solicitudes Analisis Propias', 'Permite ver solicitudes de análisis propias');
+
+ INSERT INTO [Proyecto_Analisis].[dbo].[TSOLITEL_Usuario] (
+    [TC_Nombre],
+    [TC_Apellido],
+    [TC_Usuario],
+    [TC_Contrasennia],
+    [TC_CorreoElectronico]
+) VALUES (
+    'Daniel',
+    'Borges',
+    'daniel.borges',
+    'asdfg123!',
+    'danielborges2514@gmail.com'
+);
+INSERT INTO [dbo].[TSOLITEL_Rol_Permiso] (TN_IdRol, TN_IdPermiso) VALUES
+(1, 5),  -- Rol 1 (Administrador) - todos
+(5, 6),  -- Rol 5 (Jefatura Investigador) - Crear Solicitud Proveedor
+(5, 7),  -- Rol 5 (Jefatura Investigador) - Ver Solicitudes Proveedor Oficina
+(5, 8),  -- Rol 5 (Jefatura Investigador) - Crear Solicitudes Analisis
+(5, 9),  -- Rol 5 (Jefatura Investigador) - Ver Solicitudes Analisis Oficina
+(5, 10), -- Rol 5 (Jefatura Investigador) - Aprobar Solicitudes Proveedor
+(5, 11), -- Rol 5 (Jefatura Investigador) - Aprobar Solicitudes Analisis
+(5, 12), -- Rol 5 (Jefatura Investigador) - Aprobación Automatica
+(4, 9),  -- Rol 4 (Jefatura Analista) - Ver Solicitudes Analisis Oficina
+(4, 13), -- Rol 4 (Jefatura Analista) - Asignar Solicitudes Analisis
+(4, 14), -- Rol 4 (Jefatura Analista) - Responder Solicitudes Analisis
+(3, 6),  -- Rol 3 (Investigador) - Crear Solicitud Proveedor
+(3, 15), -- Rol 3 (Investigador) - Ver Solicitudes Proveedor Propias
+(3, 8),  -- Rol 3 (Investigador) - Crear Solicitudes Analisis
+(3, 16), -- Rol 3 (Investigador) - Ver Solicitudes Analisis Propias
+(2, 16), -- Rol 2 (Analista) - Ver Solicitudes Analisis Propias
+(2, 14); -- Rol 2 (Analista) - Responder Solicitudes Analisis
+
+INSERT INTO [dbo].[TSOLITEL_Usuario_Oficina] (TN_IdUsuario, TN_IdOficina, TN_IdRol) VALUES
+(1, 2, 1),  -- Usuario 1 (Eliecer) - Administrador en Delegación Regional de Heredia
+(1, 3, 5),  -- Usuario 1 (Eliecer) - Jefatura Investigador en Delegación Regional de Liberia
+(1, 11, 4), -- Usuario 1 (Eliecer) - Jefatura Analista en Unidad de Análisis Criminal
+(3, 3, 3),  -- Usuario 2 (Daniel) - Investigador en Delegación Regional de Liberia
+(3, 11, 2); -- Usuario 2 (Daniel) - Analista en Unidad de Análisis Criminal
+
+
+
+INSERT INTO [dbo].[TSOLITEL_Usuario_Oficina] (TN_IdUsuario, TN_IdOficina, TN_IdRol) VALUES
+(3, 11, 5)
