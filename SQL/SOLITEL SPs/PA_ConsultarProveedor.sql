@@ -5,9 +5,13 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Consulta los proveedores que no están marcados como borrados
-        SELECT TN_IdProveedor, TC_Nombre 
+        SELECT 
+			TN_IdProveedor, 
+			TC_Nombre
+			
         FROM TSOLITEL_Proveedor
-        WHERE TB_Borrado = 0;
+        WHERE TB_Borrado = 0
+		ORDER BY TN_IdProveedor DESC;
 
         -- Confirma la transacción
         COMMIT TRANSACTION;

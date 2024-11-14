@@ -48,6 +48,50 @@ BEGIN
 END
 GO
 
+BEGIN
+	-- Eliminar contenido de las tablas del módulo principal en orden de relaciones
+	DELETE FROM TSOLITEL_Historial;
+	DELETE FROM TSOLITEL_Logger;
+	DELETE FROM TSOLITEL_TipoAnalisis_SolicitudAnalisis;
+	DELETE FROM TSOLITEL_TipoAnalisis;
+	DELETE FROM TSOLITEL_RequerimientoAnalisis_Condicion;
+	DELETE FROM TSOLITEL_Condicion;
+	DELETE FROM TSOLITEL_ObjetivoAnalisis_SolicitudAnalisis;
+	DELETE FROM TSOLITEL_ObjetivoAnalisis;
+	DELETE FROM TSOLITEL_Asignacion;
+	DELETE FROM TSOLITEL_SolicitudAnalisis_Archivo;
+	DELETE FROM TSOLITEL_RequerimentoAnalisis;
+	DELETE FROM TSOLITEL_SolicitudAnalisis_SolicitudProveedor;
+	DELETE FROM TSOLITEL_SolicitudAnalisis;
+	DELETE FROM TSOLITEL_RequerimientoProveedor_Archivo;
+	DELETE FROM TSOLITEL_Archivo;
+	DELETE FROM TSOLITEL_RequerimientoProveedor_DatoRequerido;
+	DELETE FROM TSOLITEL_DatoRequerido;
+	DELETE FROM TSOLITEL_SolicitudProveedor_RequerimientoProveedor;
+	DELETE FROM TSOLITEL_TipoSolicitud_RequerimientoProveedor;
+	DELETE FROM TSOLITEL_RequerimientoProveedor;
+	DELETE FROM TSOLITEL_TipoSolicitud;
+	DELETE FROM TSOLITEL_SolicitudProveedor;
+	DELETE FROM TSOLITEL_TipoDato;
+	DELETE FROM TSOLITEL_Fiscalia;
+	DELETE FROM TSOLITEL_SubModalidad;
+	DELETE FROM TSOLITEL_Modalidad;
+	DELETE FROM TSOLITEL_Estado;
+	DELETE FROM TSOLITEL_Delito;
+	DELETE FROM TSOLITEL_CategoriaDelito;
+	DELETE FROM TSOLITEL_Proveedor;
+
+	-- Eliminar contenido de las tablas del módulo de seguridad en orden de relaciones
+	DELETE FROM TSOLITEL_Usuario_Oficina;
+	DELETE FROM TSOLITEL_Rol_Permiso;
+	DELETE FROM TSOLITEL_Oficina;
+	DELETE FROM TSOLITEL_Permiso;
+	DELETE FROM TSOLITEL_Rol;
+	DELETE FROM TSOLITEL_Usuario;
+
+END
+GO
+
 -- Modulo De Seguridad
 BEGIN
 	
@@ -101,7 +145,7 @@ BEGIN
 		TN_IdUsuario INT NOT NULL,
 		TN_IdOficina INT NOT NULL,
 		TN_IdRol INT NOT NULL,
-		CONSTRAINT [PK_TSOLITEL_Usuario_Oficina] PRIMARY KEY NONCLUSTERED (TN_IdUsuario, TN_IdOficina ASC),
+		CONSTRAINT [PK_TSOLITEL_Usuario_Oficina] PRIMARY KEY NONCLUSTERED (TN_IdUsuario, TN_IdOficina, TN_IdRol ASC),
 		CONSTRAINT FK_TSOLITEL_Usuario_Oficina_TSOLITEL_Usuario FOREIGN KEY (TN_IdUsuario) REFERENCES TSOLITEL_Usuario (TN_IdUsuario),
 		CONSTRAINT FK_TSOLITEL_Usuario_Oficina_TSOLITEL_Oficina FOREIGN KEY (TN_IdOficina) REFERENCES TSOLITEL_Oficina (TN_IdOficina),
 		CONSTRAINT FK_TSOLITEL_Usuario_Oficina_TSOLITEL_Rol FOREIGN KEY (TN_IdRol) REFERENCES TSOLITEL_Rol (TN_IdRol)

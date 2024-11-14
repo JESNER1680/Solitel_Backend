@@ -23,8 +23,9 @@ SET NOCOUNT ON;
 			(
 				SELECT COUNT(*) 
 				FROM TSOLITEL_SolicitudAnalisis AS SA
+				LEFT JOIN TSOLITEL_Asignacion AS ASIG ON SA.TN_IdAnalisis = ASIG.TN_IdAnalisis
 				WHERE SA.TN_IdEstado = EST.TN_IdEstado
-				AND (@pTN_IdUsuario IS NULL OR SA.TN_IdUsuario = @pTN_IdUsuario)
+				AND (@pTN_IdUsuario IS NULL OR SA.TN_IdUsuario = @pTN_IdUsuario OR ASIG.TN_IdUsuario = @pTN_IdUsuario)
 				AND (@pTN_IdOficina IS NULL OR SA.TN_IdOficinaCreacion = @pTN_IdOficina OR SA.TN_IdOficinaSolicitante = @pTN_IdOficina)
 			) AS TN_CantidadDeSolicitudes
 		FROM TSOLITEL_Estado AS EST
