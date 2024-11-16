@@ -84,6 +84,9 @@ builder.Services.AddTransient<IGestionarHistorialBW, GestionarHistorialBW>();
 builder.Services.AddTransient<IGestionarEstadoDA, GestionarEstadoDA>();
 builder.Services.AddTransient<IGestionarEstadoBW, GestionarEstadoBW>();
 
+builder.Services.AddTransient<IGestionarAsignacionDA, GestionarAsignacionDA>();
+builder.Services.AddTransient<IGestionarAsignacionBW, GestionarAsignacionBW>();
+
 
 //Conexi�n a BD
 builder.Services.AddDbContext<SolitelContext>(options =>

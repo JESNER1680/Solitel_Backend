@@ -22,7 +22,18 @@ BEGIN
 
     BEGIN TRY
         -- INSERTA UNA NUEVA ASIGNACION DE UNA SOLICITUD DE UNA SOLICITUD DE ANALISIS A UN USUARIO
-		INSERT INTO [dbo].[TSOLITEL_Asignacion]
+
+		IF EXISTS (
+			SELECT TOP 1 1 FROM TSOLITEL_Asignacion WHERE TN_IdAnalisis = @pTN_IdAnalisis
+		)
+		BEGIN
+			UPDATE TSOLITEL_Asignacion
+			SET TN_IdUsuario = @pTN_IdUsuario
+			WHERE TN_IdAnalisis = @pTN_IdAnalisis
+		END
+		ELSE
+		BEGIN
+			INSERT INTO [dbo].[TSOLITEL_Asignacion]
            ([TF_FechaDeModificacion]
            ,[TN_IdAnalisis]
            ,[TN_IdUsuario])
@@ -30,6 +41,8 @@ BEGIN
 			   (GETDATE()
 			   ,@pTN_IdAnalisis
 			   ,@pTN_IdUsuario)
+		END
+		
 
         -- VERIFICAR SI OCURRE ALGUN ERROR
         SET @Error = @@ERROR;
