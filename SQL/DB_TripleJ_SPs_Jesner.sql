@@ -62,6 +62,32 @@ BEGIN
         -- Insertar en el historial de la solicitud
         EXEC PA_InsertarHistoricoSolicitud NULL, @TN_IdSolicitudAnalisis, @PN_IdUsuarioCreador, '', @ResultadoIdEstado;
 
+		
+		IF EXISTS 
+		(
+			SELECT TOP 1 1 
+			FROM TSOLITEL_Usuario_Oficina AS UO 
+				INNER JOIN TSOLITEL_Rol AS RO ON UO.TN_IdRol = RO.TN_IdRol
+				INNER JOIN TSOLITEL_Rol_Permiso AS ROPE ON RO.TN_IdRol = ROPE.TN_IdRol
+				INNER JOIN TSOLITEL_Permiso AS PE ON ROPE.TN_IdPermiso = PE.TN_IdPermiso
+			WHERE @PN_IdUsuarioCreador = UO.TN_IdUsuario 
+			AND UO.TN_IdOficina = @TN_IdOficina 
+			AND PE.TC_Nombre LIKE '%Aprobación Automatica%'
+		)
+        BEGIN
+			BEGIN TRY
+				-- RELIZA APROBACION AUTOMATICA DE LA SOLICITUD
+				EXEC [dbo].[PA_AprobarSolicitudAnalisis]
+					@pTN_IdSolicitud =  @TN_IdSolicitudAnalisis,
+					@PN_IdUsuario = @PN_IdUsuarioCreador,
+					@PC_Observacion = NULL
+			END TRY
+			BEGIN CATCH
+				RAISERROR('Error al cambiar el estado de la solicitud a "Aprobado".', 16, 1);
+				RETURN;
+			END CATCH
+		END
+
     END TRY
     BEGIN CATCH
         -- Si ocurre un error, revertir la transacción
