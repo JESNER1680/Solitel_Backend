@@ -137,7 +137,6 @@ namespace DA.Acciones
                             idObjetivoParam, idAnalisisIntermedioParam);
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 3");
                 // Insertar requerimientos asociados, si existen
                 if (solicitudAnalisis.Requerimentos != null && solicitudAnalisis.Requerimentos.Count > 0)
                 {
@@ -296,6 +295,13 @@ namespace DA.Acciones
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
                         Aprobado = solicitud.TB_Aprobado,
+                        usuarioCreador = new Usuario
+                        {
+                            IdUsuario = solicitud.TN_IdUsuario,
+                            Nombre =   solicitud.TC_NombreUsuario,
+                            Apellido = solicitud.TC_ApellidoUsuario
+                        }
+                        ,
                         Estado = new Estado
                         {
                             IdEstado = solicitud.TN_IdEstado,

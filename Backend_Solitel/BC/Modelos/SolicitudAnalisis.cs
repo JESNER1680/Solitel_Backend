@@ -35,6 +35,7 @@ namespace BC.Modelos
         public DateTime? FechaDeAnalizado { get; set; } // Nullable
 
         public string NombreUsuarioCreador { get; set; }
+        public Usuario usuarioCreador { get;set; }
 
         public string NombreOficina { get; set; }
 

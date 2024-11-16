@@ -107,11 +107,8 @@ namespace Backend_Solitel.Controllers
         {
             try
             {
-                Console.WriteLine("CAPA CONTROLLER");
-                Console.WriteLine(idSolicitudAnalisis + " " + idUsuario + " " + observacion);
                 bool resultado = await gestionarSolicitudAnalistaBW.AprobarSolicitudAnalisis(idSolicitudAnalisis,idUsuario, observacion);
-                Console.WriteLine("BOOLEAN CONFIRMACION");
-                Console.WriteLine(idSolicitudAnalisis + " " + idUsuario + " " + observacion);
+
                 if (resultado)
                 {
                     return Ok(new { mensaje = "Estado actualizado a Analizado correctamente." });
