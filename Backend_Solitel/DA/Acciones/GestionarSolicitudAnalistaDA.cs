@@ -162,7 +162,6 @@ namespace DA.Acciones
                         );
 
                         int idRequerimiento = (int)idRequerimientoParam.Value;
-                        Console.WriteLine("REQUERIMIENTO ANALISIS INSERTADO CON ID: " + idRequerimiento);
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarRequerimientoAnalisis_Condicion @TN_IdRequerimiento, @TN_IdCondicion",
@@ -173,7 +172,7 @@ namespace DA.Acciones
 
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 4");
+
                 // Insertar archivos asociados, si existen
                 if (solicitudAnalisis.Archivos != null && solicitudAnalisis.Archivos.Count > 0)
                 {
@@ -187,7 +186,6 @@ namespace DA.Acciones
                         );
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 5");
                 // Insertar tipos de análisis asociados, si existen
                 if (solicitudAnalisis.TiposAnalisis != null && solicitudAnalisis.TiposAnalisis.Count > 0)
                 {
@@ -199,7 +197,7 @@ namespace DA.Acciones
                             new SqlParameter("@pIdAnalisis", idAnalisis));
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 6");
+
                 // Insertar proveedores asociados a la solicitud, si existen
                 if (solicitudAnalisis.SolicitudesProveedor != null && solicitudAnalisis.SolicitudesProveedor.Count > 0)
                 {
@@ -281,8 +279,6 @@ namespace DA.Acciones
                     .FromSqlRaw("EXEC dbo.PA_ConsultarSolicitudesAnalisis @pTN_IdSolicitud, @pTN_IdEstado, @pTF_FechaInicio, @pTF_FechaFin, @pTC_NumeroUnico, @pTN_IdOficina," +
                     "@pTN_IdUsuario", idSolicitudParam, idEstadoParam, fechainicioParam, fechaFinParam, numeroUnicoParam, idOficinaParam, idUsuarioParam)
                     .ToListAsync();
-
-                Console.WriteLine($"Cantidad de solicitudes obtenidas: {solicitudesAnalisisDA.Count}");
 
                 var solicitudesAnalisis = new List<SolicitudAnalisis>();
 
