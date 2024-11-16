@@ -62,6 +62,32 @@ BEGIN
         -- Insertar en el historial de la solicitud
         EXEC PA_InsertarHistoricoSolicitud NULL, @TN_IdSolicitudAnalisis, @PN_IdUsuarioCreador, '', @ResultadoIdEstado;
 
+		
+		IF EXISTS 
+		(
+			SELECT TOP 1 1 
+			FROM TSOLITEL_Usuario_Oficina AS UO 
+				INNER JOIN TSOLITEL_Rol AS RO ON UO.TN_IdRol = RO.TN_IdRol
+				INNER JOIN TSOLITEL_Rol_Permiso AS ROPE ON RO.TN_IdRol = ROPE.TN_IdRol
+				INNER JOIN TSOLITEL_Permiso AS PE ON ROPE.TN_IdPermiso = PE.TN_IdPermiso
+			WHERE @PN_IdUsuarioCreador = UO.TN_IdUsuario 
+			AND UO.TN_IdOficina = @TN_IdOficina 
+			AND PE.TC_Nombre LIKE '%Aprobación Automatica%'
+		)
+        BEGIN
+			BEGIN TRY
+				-- RELIZA APROBACION AUTOMATICA DE LA SOLICITUD
+				EXEC [dbo].[PA_AprobarSolicitudAnalisis]
+					@pTN_IdSolicitud =  @TN_IdSolicitudAnalisis,
+					@PN_IdUsuario = @PN_IdUsuarioCreador,
+					@PC_Observacion = NULL
+			END TRY
+			BEGIN CATCH
+				RAISERROR('Error al cambiar el estado de la solicitud a "Aprobado".', 16, 1);
+				RETURN;
+			END CATCH
+		END
+
     END TRY
     BEGIN CATCH
         -- Si ocurre un error, revertir la transacción
@@ -557,7 +583,7 @@ GO
 -- Fecha de creación:    2024-10-16
 -- Descripción:          Consultar todas solicitudes de analisis
 -- =============================================
-CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSolicitudesAnalisis]
+CREATE OR ALTER   PROCEDURE [dbo].[PA_ConsultarSolicitudesAnalisis]
 	@pTN_IdSolicitud INT = NULL,
 	@pTN_IdEstado INT = NULL,
     @pTF_FechaInicio DATETIME2 = NULL,
@@ -568,7 +594,6 @@ CREATE OR ALTER PROCEDURE [dbo].[PA_ConsultarSolicitudesAnalisis]
 AS
 BEGIN
     BEGIN TRY
-        BEGIN TRANSACTION;
 
         SELECT 
             SOLI.TN_IdAnalisis,
@@ -579,11 +604,16 @@ BEGIN
             TB_Aprobado,
             ES.TN_IdEstado,
 			ES.TC_Nombre AS TC_NombreEstado,
-            TN_IdOficinaSolicitante
+            TN_IdOficinaSolicitante,
+			USU.TN_IdUsuario,
+			USU.TC_Nombre AS TC_NombreUsuario,
+			USU.TC_Apellido AS TC_ApellidoUsuario
+
         FROM 
             [Proyecto_Analisis].[dbo].[TSOLITEL_SolicitudAnalisis] AS SOLI
-			JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
-			INNER JOIN (
+			INNER JOIN TSOLITEL_Usuario AS USU ON USU.TN_IdUsuario = SOLI.TN_IdUsuario
+			INNER JOIN TSOLITEL_Estado AS ES ON ES.TN_IdEstado = SOLI.TN_IdEstado
+			LEFT JOIN (
                     SELECT TN_IdAnalisis, MAX(TF_FechaDeModificacion) AS UltimaFechaDeModificacion
                     FROM TSOLITEL_Historial
                     GROUP BY TN_IdAnalisis
@@ -593,20 +623,21 @@ BEGIN
 		WHERE (@pTN_IdEstado IS NULL OR SOLI.TN_IdEstado = @pTN_IdEstado)-- SE NECESITAN SOLO LAS SOLICITUDES EN EL ESTADO ESPECIFICO
           AND (@pTF_FechaInicio IS NULL OR SOLI.TF_FechaDeCreacion >= @pTF_FechaInicio)-- FILTRO POR INTERVALO DE FECHA
           AND (@pTF_FechaFin IS NULL OR SOLI.TF_FechaDeCreacion <= @pTF_FechaFin)-- FILTRO POR INTERVALO DE FECHA 
-          --AND (@pTC_NumeroUnico IS NULL OR T.TC_NumeroUnico = @pTC_NumeroUnico)-- FILTRO POR NUMERO UNICO
-		  AND (@pTN_IdOficina IS NULL OR SOLI.TN_IdOficinaSolicitante = @pTN_IdOficina)-- FILTRO POR OFICINA
+		  AND (@pTN_IdOficina IS NULL OR SOLI.TN_IdOficinaCreacion = @pTN_IdOficina)-- FILTRO POR OFICINA
 		  AND (@pTN_IdUsuario IS NULL OR SOLI.TN_IdUsuario = @pTN_IdUsuario)-- FILTRO POR USUARIO
 		  AND (@pTN_IdSolicitud IS NULL OR SOLI.TN_IdAnalisis = @pTN_IdSolicitud)-- FILTRO POR NOMBRE
+		  AND (@pTC_NumeroUnico IS NULL OR EXISTS (
+			SELECT 1
+			FROM TSOLITEL_SolicitudAnalisis_SolicitudProveedor AS SA_SP
+			INNER JOIN TSOLITEL_SolicitudProveedor AS SP ON SP.TN_IdSolicitud = SA_SP.TN_IdSolicitud
+			WHERE SA_SP.TN_IdAnalisis = SOLI.TN_IdAnalisis
+			AND SP.TC_NumeroUnico = @pTC_NumeroUnico
+		  ))-- FILTRO POR NUMERO UNICO
         ORDER BY 
 			UltimoHistorial.UltimaFechaDeModificacion DESC;
 
-        COMMIT TRANSACTION;
     END TRY
     BEGIN CATCH
-        IF @@TRANCOUNT > 0
-        BEGIN
-            ROLLBACK TRANSACTION;
-        END
 
         DECLARE @ErrorMessage NVARCHAR(4000);
         DECLARE @ErrorSeverity INT;

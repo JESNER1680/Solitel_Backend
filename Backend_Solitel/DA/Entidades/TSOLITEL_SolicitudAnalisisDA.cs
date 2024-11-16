@@ -14,6 +14,9 @@ namespace DA.Entidades
         public DateTime TF_FechaDeHecho { get; set; }
 
         [Required]
+        public int TN_IdUsuario { get; set; }
+
+        [Required]
         [StringLength(255)]
         public string TC_OtrosDetalles { get; set; }
 
@@ -28,6 +31,10 @@ namespace DA.Entidades
         public string TC_NombreEstado { get; set; }
 
         public DateTime? TF_FechaDeCreacion { get; set; }
+
+        public string TC_NombreUsuario { get;set; }
+
+        public string TC_ApellidoUsuario { get; set; }
 
         [Required]
         public int TN_IdOficinaSolicitante { get; set; }

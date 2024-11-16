@@ -82,7 +82,6 @@ namespace Backend_Solitel.Controllers
         [HttpGet]
         public async Task<List<Archivo>> obtenerArchivosDeSolicitudesProveedor([FromQuery] List<int> idSolicitudes)
         {
-            Console.WriteLine("ID RECIBIDA EN EL CONTROLADOR: " + string.Join(", ", idSolicitudes));
             return await this.gestionarArchivoBW.ObtenerArchivosDeSolicitudesProveedor(idSolicitudes);
         }
 

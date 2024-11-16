@@ -34,7 +34,6 @@ namespace Backend_Solitel.Controllers
         [Route("obtenerObjetivoAnalisis")]
         public async Task<List<ObjetivoAnalisisDTO>> ObtenerObjetivoAnalisis(int idObtenerObjetivoAnalisis) {
             var ObjetivosObtenidos = await this.gestionarObjetivoAnalisisBW.ObtenerObjetivoAnalisis(idObtenerObjetivoAnalisis);
-            Console.WriteLine("ID OBJETIVO ANALISTA: "+idObtenerObjetivoAnalisis);
             return Utility.ObjetivoAnalisisMapper.ToDTOS(ObjetivosObtenidos);
         }
     }

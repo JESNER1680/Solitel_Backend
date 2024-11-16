@@ -137,7 +137,6 @@ namespace DA.Acciones
                             idObjetivoParam, idAnalisisIntermedioParam);
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 3");
                 // Insertar requerimientos asociados, si existen
                 if (solicitudAnalisis.Requerimentos != null && solicitudAnalisis.Requerimentos.Count > 0)
                 {
@@ -163,7 +162,6 @@ namespace DA.Acciones
                         );
 
                         int idRequerimiento = (int)idRequerimientoParam.Value;
-                        Console.WriteLine("REQUERIMIENTO ANALISIS INSERTADO CON ID: " + idRequerimiento);
 
                         await solitelContext.Database.ExecuteSqlRawAsync(
                             "EXEC PA_InsertarRequerimientoAnalisis_Condicion @TN_IdRequerimiento, @TN_IdCondicion",
@@ -174,7 +172,7 @@ namespace DA.Acciones
 
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 4");
+
                 // Insertar archivos asociados, si existen
                 if (solicitudAnalisis.Archivos != null && solicitudAnalisis.Archivos.Count > 0)
                 {
@@ -188,7 +186,6 @@ namespace DA.Acciones
                         );
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 5");
                 // Insertar tipos de análisis asociados, si existen
                 if (solicitudAnalisis.TiposAnalisis != null && solicitudAnalisis.TiposAnalisis.Count > 0)
                 {
@@ -200,7 +197,7 @@ namespace DA.Acciones
                             new SqlParameter("@pIdAnalisis", idAnalisis));
                     }
                 }
-                Console.WriteLine("NO ME HE CAIDO 6");
+
                 // Insertar proveedores asociados a la solicitud, si existen
                 if (solicitudAnalisis.SolicitudesProveedor != null && solicitudAnalisis.SolicitudesProveedor.Count > 0)
                 {
@@ -283,8 +280,6 @@ namespace DA.Acciones
                     "@pTN_IdUsuario", idSolicitudParam, idEstadoParam, fechainicioParam, fechaFinParam, numeroUnicoParam, idOficinaParam, idUsuarioParam)
                     .ToListAsync();
 
-                Console.WriteLine($"Cantidad de solicitudes obtenidas: {solicitudesAnalisisDA.Count}");
-
                 var solicitudesAnalisis = new List<SolicitudAnalisis>();
 
                 foreach (var solicitud in solicitudesAnalisisDA)
@@ -296,6 +291,13 @@ namespace DA.Acciones
                         OtrosDetalles = solicitud.TC_OtrosDetalles,
                         OtrosObjetivosDeAnalisis = solicitud.TC_OtrosObjetivosDeAnalisis,
                         Aprobado = solicitud.TB_Aprobado,
+                        usuarioCreador = new Usuario
+                        {
+                            IdUsuario = solicitud.TN_IdUsuario,
+                            Nombre =   solicitud.TC_NombreUsuario,
+                            Apellido = solicitud.TC_ApellidoUsuario
+                        }
+                        ,
                         Estado = new Estado
                         {
                             IdEstado = solicitud.TN_IdEstado,
